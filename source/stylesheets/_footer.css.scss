@@ -1,6 +1,13 @@
 .footer {
-  padding: 6em 5em 2em 5em;
-  background-color: #121b1f;
-  color: #fff;
-  font-size: 90%;
+  margin: 30px 0 0 0;
+  padding: 20px 0;
+
+  p {
+    max-width: 1000px;
+    margin: 0 auto 0 auto;
+    padding: 0 20px;
+    font-size: 85%;
+    font-family: serif;
+    font-style: italic;
+  }
 }

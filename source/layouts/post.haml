@@ -39,6 +39,17 @@
             .body
               = yield
 
+    %aside.pure-g-r
+      .pure-u-1-2
+        aaaaaaa
+      .publisher.pure-u-1-2
+        %p.avatar
+          %img{:src => image_path("avatar.jpeg"), :width => 120, :height => 120}
+        %dl
+          %dt Published by
+          %dd.name Dai Akatsuka
+          %dd.description 東京都在住のWebエンジニアです。好きな言語はRubyですが仕事ではPHPばかり触っています。サーバサイドプログラミングからインフラ構築まで手広くやっています。
+
     %footer.footer
       %p.license
         %span{"xmlns:dct" => "http://purl.org/dc/terms/", "property" => "dct:title"} FIRN.JP
