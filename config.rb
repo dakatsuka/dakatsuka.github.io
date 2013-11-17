@@ -8,15 +8,15 @@ activate :livereload
 
 activate :blog do |blog|
   # blog.prefix = "blog"
-  blog.permalink = ":year/:month/:day/:title"
+  blog.permalink = ":year/:month/:day/:title.html"
   # blog.sources = ":year-:month-:day-:title"
-  blog.taglink = "tags/:tag"
+  blog.taglink = "tags/:tag.html"
   blog.layout = "layouts/post"
   # blog.summary_separator = /(READMORE)/
   # blog.summary_length = 250
-  blog.year_link = ":year"
-  blog.month_link = ":year/:month"
-  blog.day_link = ":year/:month/:day"
+  #blog.year_link = ":year"
+  #blog.month_link = ":year/:month"
+  #blog.day_link = ":year/:month/:day"
   blog.default_extension = ".markdown"
 
   blog.tag_template = "tag.html"
