@@ -1,0 +1,62 @@
+<!doctype html>
+%html
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:content => "IE=edge;chrome=1", "http-equiv" => "X-UA-Compatible"}
+    %meta{:content => "width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0", :name => "viewport"}
+    %title
+      #{current_article.title unless current_article.nil?} | FIRN.JP
+    = stylesheet_link_tag "http://yui.yahooapis.com/pure/0.3.0/pure-min.css", "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css", "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", "post", "syntax"
+
+  %body
+    %header.header
+      %h1 FIRN.JP
+
+    .pure-g-r
+      %article.article.pure-u-1
+        .article-header
+          %h1= current_article.title
+        .article-content
+          .entry
+            %ul.metadata
+              %li.published
+                %i.glyphicon.glyphicon-calendar
+                = current_article.date.strftime("%Y-%d-%m")
+              %li.tags
+                %i.glyphicon.glyphicon-tags
+                &nbsp;
+                = current_article.tags.map {|tag| link_to tag, tag_path(tag) }.join(", ")
+            .body
+              = yield
+
+    %footer.footer
+      %p.license
+        %span{"xmlns:dct" => "http://purl.org/dc/terms/", "property" => "dct:title"} FIRN.JP
+        by
+        %a{"xmlns:cc" => "http://creativecommons.org/ns#", "href" => "http://firn.jp/", "property" => "cc:attributionName", "rel" => "cc:attributionURL"} Dai Akatsuka
+        is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.ja">Creative Commons 表示 - 非営利 3.0 非移植 License</a>
+
+      %p.powered
+        Powered by <a href="http://pages.github.com/">GitHub Pages</a> &amp; <a href="http://middlemanapp.com/">Middleman</a>.
+
+    /
+      %aside
+        %h2 Recent Articles
+        %ol
+          - blog.articles[0...10].each do |article|
+            %li
+              = link_to article.title, article
+              %span= article.date.strftime('%b %e')
+        %h2 Tags
+        %ol
+          - blog.tags.each do |tag, articles|
+            %li
+              = link_to tag, tag_path(tag)
+              (#{articles.size})
+        %h2 By Year
+        %ol
+          - blog.articles.group_by {|a| a.date.year }.each do |year, articles|
+            %li
+              = link_to year, blog_year_path(year)
+              (#{articles.size})
+

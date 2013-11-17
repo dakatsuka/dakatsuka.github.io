@@ -1,0 +1,14 @@
+!!! 5
+%html
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:content => "IE=edge;chrome=1", "http-equiv" => "X-UA-Compatible"}
+    %meta{:content => "width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0", :name => "viewport"}
+    %title FIRN.JP | 意識低い系ギーク
+    = stylesheet_link_tag "http://yui.yahooapis.com/pure/0.2.1/pure-min.css"
+
+  %body
+    - page_articles.each_with_index do |article, i|
+      %h2
+        = link_to article.title, article
+        %span= article.date.strftime('%b %e')
