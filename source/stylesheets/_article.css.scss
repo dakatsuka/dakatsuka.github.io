@@ -1,0 +1,55 @@
+.article-header {
+  margin: 20px 0 0 0;
+  padding: 4em 1em 6em 1em;
+  background-color: #14343f;
+  color: #fff;
+}
+
+.page .article-header {
+  background-color: #c0392b;
+}
+
+.article-header h1 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: 260%;
+}
+
+.article-content {
+  max-width: 1000px;
+  margin: -2.5em auto 0 auto;
+}
+
+.article-content .entry {
+  margin: 0 20px;
+  padding: 2em 4em;
+  border: 1px solid #fff;
+  background-color: #fff;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  color: #444;
+  font-size: 120%;
+}
+
+.article-content .entry h2 {
+  margin-top: 1.7em;
+}
+
+.article-content .metadata {
+  list-style: none;
+  margin: 0 0 2em 0;
+  padding: 0;
+  font-size: 90%;
+}
+
+.article-content .metadata li {
+  display: inline;
+}
+
+.article-content .metadata .published,
+.article-content .metadata .tags {
+  padding-right: 1em;
+}
+

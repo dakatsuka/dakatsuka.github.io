@@ -1,0 +1,59 @@
+.header {
+  position: relative;
+  display: block;
+  max-width: 1000px;
+  margin: 20px auto 0 auto;
+  padding: 0 20px 60px 20px;
+
+  .brand-title {
+    margin: 0;
+    padding: 0;
+    font-size: 250%;
+
+    a {
+      color: #444;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+  }
+
+  .brand-tagline {
+    margin: 0 0 2em 0;
+    padding: 0;
+  }
+
+  .menu {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: inline;
+
+      a {
+        display: block;
+        float: left;
+        width: 120px;
+        height: 80px;
+        margin: 0 0 0 20px;
+        line-height: 80px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        background-color: #c0392b;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      a:hover {
+        background-color: #e74c3c;
+      }
+    }
+  }
+}
