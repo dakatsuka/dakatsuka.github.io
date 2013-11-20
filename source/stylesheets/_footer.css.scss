@@ -1,6 +1,7 @@
 .footer {
   margin: 50px 0 0 0;
   padding: 0 0 20px 0;
+  text-align: center;
 
   p {
     max-width: 1000px;
@@ -9,5 +10,13 @@
     font-size: 85%;
     font-family: serif;
     font-style: italic;
+  }
+  
+  a {
+    color: #256276;
+  }
+
+  a:hover {
+    color: #3793B0;
   }
 }

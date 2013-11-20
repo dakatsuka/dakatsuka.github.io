@@ -6,7 +6,11 @@
 
 a {
     text-decoration: none;
-    color: rgb(142, 142, 214);
+    color: #2980b9;
+}
+
+a:hover {
+  color: #3498db;
 }
 
 a:hover,
@@ -16,4 +20,10 @@ a:focus {
 
 body {
   background-color: #f9f9f7;
+  font-family:'Lucida Grande','Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+}
+
+pre {
+  font-family: Consolas, 'Courier New', Monaco, monospace;
+  font-size: 85%;
 }

@@ -14,7 +14,7 @@ aside {
     .prev a {
       display: block;
       height: 60px;
-      background-color: #2980b9;
+      background-color: #256276;
       color: #fff;
       text-align: center;
       line-height: 60px;
@@ -23,13 +23,13 @@ aside {
     }
 
     .prev a:hover {
-      background-color: #3498db;
+      background-color: #3793B0;
     }
 
     .next a {
       display: block;
       height: 60px;
-      background-color: #2980b9;
+      background-color: #256276;
       color: #fff;
       text-align: center;
       line-height: 60px;
@@ -37,37 +37,34 @@ aside {
     }
 
     .next a:hover {
-      background-color: #3498db;
+      background-color: #3793B0;
     }
   }
 
   .publisher {
     position: relative;
-    height: 130px;
-    padding-left: 60px;
 
     .avatar {
+      position: absolute;
+      top: 0;
+      left: 60px;
       margin: 0;
       padding: 0;
 
       img {
-        -moz-border-radius: 100px;
-        -webkit-border-radius: 100px;
-        border-radius: 100px;
+        border-radius: 10px;
+        box-shadow: 1px 1px 1px rgb(0, 0, 0.4);
       }
     }
 
     dl {
-      position: absolute;
-      top: 0;
-      left: 160px;
       margin: 0;
-      padding: 0;
+      padding: 0 0 0 160px;
 
       dt {
         margin: 0 0 5px 0;
         padding: 0;
-        font-size: 90%;
+        font-size: 70%;
         font-family: serif;
         font-style: italic;
         color: #888;
@@ -80,11 +77,26 @@ aside {
       }
 
       dd.name {
+        font-size: 80%;
         font-weight: bold;
       }
 
       dd.description {
-        font-size: 90%;
+        font-size: 80%;
+      }
+
+      dd.accounts {
+        margin-top: 5px;
+        font-size: 160%;
+
+        a {
+          color: #256276;
+        }
+
+        a:hover {
+          color: #3793B0;
+          text-decoration: none;
+        }
       }
     }
   }

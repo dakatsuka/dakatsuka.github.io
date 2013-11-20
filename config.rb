@@ -96,7 +96,7 @@ set :markdown,
 set :markdown_engine, :redcarpet
 set :haml, { ugly: true }
 
-activate :syntax, line_numbers: true
+activate :syntax, line_numbers: false
 
 # Build-specific configuration
 configure :build do

@@ -3,7 +3,7 @@
   display: block;
   max-width: 1000px;
   margin: 20px auto 0 auto;
-  padding: 0 20px 60px 20px;
+  padding: 0 20px 30px 20px;
 
   .brand-title {
     margin: 0;
@@ -39,11 +39,9 @@
         display: block;
         float: left;
         width: 120px;
-        height: 80px;
+        height: 60px;
         margin: 0 0 0 20px;
-        line-height: 80px;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
+        line-height: 60px;
         border-radius: 5px;
         background-color: #c0392b;
         color: #fff;

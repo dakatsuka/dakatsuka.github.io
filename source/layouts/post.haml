@@ -6,19 +6,13 @@
     %meta{:content => "width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0", :name => "viewport"}
     %title
       #{current_article.title unless current_article.nil?} | dakatsuka's blog
-    = stylesheet_link_tag "http://yui.yahooapis.com/pure/0.3.0/pure-min.css", "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css", "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", "all"
+    = stylesheet_link_tag "http://yui.yahooapis.com/pure/0.3.0/pure-min.css", "font-awesome/css/font-awesome.min.css", "all"
+    <script src="http://codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="http://b.st-hatena.com/js/bookmark_button.js" async="async"></script>
+    = javascript_include_tag "application"
 
   %body
-    %header.header
-      %h1.brand-title
-        %a{:href => "/"} dakatsuka's blog
-      %p.brand-tagline 開発な日々
-
-      %ul.menu
-        %li
-          %a{:href => "/about.html"} About
-        %li
-          %a{:href => "/archives.html"} Archives
+    = partial "layouts/header"
 
     .pure-g-r
       %article.article.pure-u-1
@@ -28,14 +22,51 @@
           .entry
             %ul.metadata
               %li.published
-                %i.glyphicon.glyphicon-calendar
+                %i.fa.fa-clock-o
                 = current_article.date.strftime("%Y年%m月%d日")
               %li.tags
-                %i.glyphicon.glyphicon-tags
-                &nbsp;
-                = current_article.tags.map {|tag| link_to tag, tag_path(tag) }.join(", ")
+                %i.fa.fa-tags
+                  = current_article.tags.map {|tag| link_to tag, tag_path(tag) }.join(", ")
             .body
               = yield
+
+            %p.share-link
+              %a{:href => "#"}
+                %i.fa.fa-share-square &nbsp;Share and bookmark
+
+            :javascript
+              $(".share-link a").on('click', function(e) {
+                e.preventDefault();
+                $("ul.share").toggle();
+              });
+
+            %ul.share
+              %li.hatebu
+                %a.button{"href"  => "http://b.hatena.ne.jp/entry/http://blog.dakatsuka.jp#{current_article.url}",
+                   "class" => "hatena-bookmark-button",
+                   "data-hatena-bookmark-title"  => "#{current_article.title} | dakatsuka's blog",
+                   "data-hatena-bookmark-layout" => "simple",
+                   "title" => "このエントリーをはてなブックマークに追加"} <span class="name">B!</span><span class="count">0</span>
+
+              %li.facebook
+                %a.button{"href" => "http://www.facebook.com/share.php?u=http://blog.dakatsuka.jp/#{current_article.url}"} <span class="name"><i class="fa fa-facebook"></i></span><span class="count">0</span>
+
+              %li.twitter
+                %a.button <span class="name"><i class="fa fa-twitter"></i></span><span class="count">0</span>
+
+              %li.googleplus
+                %a.button <span class="name"><i class="fa fa-google-plus"></i></span><span class="count">0</span>
+
+            :javascript
+              var permalink = "http://blog.dakatsuka.jp#{current_article.url}";
+              getHatebuCount(permalink);
+              getFacebookShareCount(permalink);
+
+              $(".share .facebook a").on('click', function(e) {
+                e.preventDefault();
+                window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes');
+              });
+
 
     %aside.pure-g-r
       .pure-u-1-2
@@ -44,23 +75,23 @@
             %a{:href => ""} Prev
           .next.pure-u-1-2
             %a{:href => ""} Next
+
       .publisher.pure-u-1-2
         %p.avatar
           %img{:src => image_path("avatar.jpeg"), :width => 80, :height => 80}
         %dl
-          %dt Published by
+          %dt Written by
           %dd.name Dai Akatsuka
           %dd.description 東京都在住のWebエンジニアです。好きな言語はRubyですが仕事ではPHPばかり触っています。サーバサイドプログラミングからインフラ構築まで手広くやっています。
+          %dd.accounts
+            %a{:href => "http://twitter.com/d_akatsuka"}
+              %i.fa.fa-twitter
+            %a{:href => "http://facebook.com/dai.akatsuka"}
+              %i.fa.fa-facebook-square
+            %a{:href => "http://github.com/dakatsuka"}
+              %i.fa.fa-github
 
-    %footer.footer
-      %p.license
-        %span{"xmlns:dct" => "http://purl.org/dc/terms/", "property" => "dct:title"} dakatsuka's blog
-        by
-        %a{"xmlns:cc" => "http://creativecommons.org/ns#", "href" => "http://firn.jp/", "property" => "cc:attributionName", "rel" => "cc:attributionURL"} Dai Akatsuka
-        is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.ja">Creative Commons 表示 - 非営利 3.0 非移植 License</a>
-
-      %p.powered
-        Powered by <a href="http://pages.github.com/">GitHub Pages</a> &amp; <a href="http://middlemanapp.com/">Middleman</a>
+    = partial "layouts/footer"
 
     /
       %aside
