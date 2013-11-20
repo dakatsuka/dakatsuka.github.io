@@ -19,8 +19,6 @@
           %a{:href => "/about.html"} About
         %li
           %a{:href => "/archives.html"} Archives
-        %li
-          %a{:href => "/products.html"} Products
 
     .pure-g-r
       %article.article.pure-u-1
@@ -41,10 +39,14 @@
 
     %aside.pure-g-r
       .pure-u-1-2
-        aaaaaaa
+        .nav.pure-g-r
+          .prev.pure-u-1-2
+            %a{:href => ""} Prev
+          .next.pure-u-1-2
+            %a{:href => ""} Next
       .publisher.pure-u-1-2
         %p.avatar
-          %img{:src => image_path("avatar.jpeg"), :width => 120, :height => 120}
+          %img{:src => image_path("avatar.jpeg"), :width => 80, :height => 80}
         %dl
           %dt Published by
           %dd.name Dai Akatsuka

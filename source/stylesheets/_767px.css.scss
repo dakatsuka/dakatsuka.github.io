@@ -1,0 +1,15 @@
+@media (max-width: 767px) {
+  aside {
+    .nav a {
+      margin-right: 0;
+    }
+
+    .publisher {
+      padding-left: 0;
+
+      dl {
+        left: 100px;
+      }
+    }
+  }
+}

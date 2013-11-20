@@ -19,4 +19,18 @@
     margin: 0;
     padding: 1em;
   }
+
+  aside {
+    .nav a {
+      margin-right: 0;
+    }
+
+    .publisher {
+      padding-left: 0;
+
+      dl {
+        left: 100px;
+      }
+    }
+  }
 }
