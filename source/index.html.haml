@@ -1,11 +1,17 @@
 !!! 5
-%html
+%html{:lang => "ja", :prefix => "og: http://ogp.me/ns#"}
   %head
     %meta{:charset => "utf-8"}
     %meta{:content => "IE=edge;chrome=1", "http-equiv" => "X-UA-Compatible"}
     %meta{:content => "width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0", :name => "viewport"}
+    %meta{:content => "dakatsuka's blog", :property => "og:title"}
+    %meta{:content => "website", :property => "og:type"}
+    %meta{:content => "http://blog.dakatsuka.jp", :property => "og:url"}
+    %meta{:content => "http://blog.dakatsuka.jp/images/ogp.png", :property => "og:image"}
+    %meta{:content => "開発な日々", :property => "og:description"}
     %link{:rel => "shortcut icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
     %link{:rel => "icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
+    %link{:rel => "alternate", :title => "dakatsuka's blog", :href => "/feed.xml", :type => "application/atom+xml"}
     %title dakatsuka's blog
     = stylesheet_link_tag "http://yui.yahooapis.com/pure/0.3.0/pure-min.css", "font-awesome/css/font-awesome.min.css", "all"
     <script src="http://codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
