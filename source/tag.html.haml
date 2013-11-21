@@ -1,15 +1,30 @@
-%h1
-  Articles tagged '#{tagname}'
-- if paginate && num_pages > 1
-  %p
-    Page #{page_number} of #{num_pages}
-  - if prev_page
-    %p= link_to 'Previous page', prev_page
-%ul
-  - page_articles.each_with_index do |article, i|
-    %li
-      = link_to article.title, article
-      %span= article.date.strftime('%b %e')
-- if paginate
-  - if next_page
-    %p= link_to 'Next page', next_page
+<!doctype html>
+%html
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:content => "IE=edge;chrome=1", "http-equiv" => "X-UA-Compatible"}
+    %meta{:content => "width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0", :name => "viewport"}
+    %link{:rel => "shortcut icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
+    %link{:rel => "icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
+    %title
+      Articles tagged '#{tagname}' | dakatsuka's blog
+    = stylesheet_link_tag "http://yui.yahooapis.com/pure/0.3.0/pure-min.css", "font-awesome/css/font-awesome.min.css", "all"
+
+  %body#tags
+    = partial "layouts/header"
+
+    .pure-g-r
+      %article.article.page.pure-u-1
+        .article-header
+          %h1
+            Articles tagged '#{tagname}'
+        .article-content
+          .entry
+            %h2 Entries
+            %ol
+              - page_articles.each_with_index do |article, i|
+                %li
+                  = link_to article.title, article
+                  %span= article.date.strftime('%Y年%m月%d日')
+
+    = partial "layouts/footer"
