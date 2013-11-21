@@ -36,54 +36,55 @@
             .body
               = yield
 
-            %p.share-link
-              %a{:href => "#"}
-                %i.fa.fa-share-square &nbsp;Share and bookmark
+            - if build?
+              %p.share-link
+                %a{:href => "#"}
+                  %i.fa.fa-share-square &nbsp;Share and bookmark
 
-            :javascript
-              $(".share-link a").on('click', function(e) {
-                e.preventDefault();
-                $("ul.share").toggle();
-              });
+              :javascript
+                $(".share-link a").on('click', function(e) {
+                  e.preventDefault();
+                  $("ul.share").toggle();
+                });
 
-            %ul.share
-              %li.hatebu
-                %a.button{"href"  => "http://b.hatena.ne.jp/entry/http://blog.dakatsuka.jp#{current_article.url}",
-                   "class" => "hatena-bookmark-button",
-                   "data-hatena-bookmark-title"  => "#{current_article.title} | dakatsuka's blog",
-                   "data-hatena-bookmark-layout" => "simple",
-                   "title" => "このエントリーをはてなブックマークに追加"} <span class="name">B!</span><span class="count">0</span>
+              %ul.share
+                %li.hatebu
+                  %a.button{"href"  => "http://b.hatena.ne.jp/entry/http://blog.dakatsuka.jp#{current_article.url}",
+                     "class" => "hatena-bookmark-button",
+                     "data-hatena-bookmark-title"  => "#{current_article.title} | dakatsuka's blog",
+                     "data-hatena-bookmark-layout" => "simple",
+                     "title" => "このエントリーをはてなブックマークに追加"} <span class="name">B!</span><span class="count">0</span>
 
-              %li.facebook
-                %a.button{"href" => "http://www.facebook.com/share.php?u=http://blog.dakatsuka.jp#{current_article.url}"} <span class="name"><i class="fa fa-facebook"></i></span><span class="count">0</span>
+                %li.facebook
+                  %a.button{"href" => "http://www.facebook.com/share.php?u=http://blog.dakatsuka.jp#{current_article.url}"} <span class="name"><i class="fa fa-facebook"></i></span><span class="count">0</span>
 
-              %li.twitter
-                - encoded_text = URI.escape("#{current_article.title} | dakatsuka's blog")
-                %a.button{"href" => "http://twitter.com/share?url=http://blog.dakatsuka.jp#{current_article.url}&via=d_akatsuka&text=#{encoded_text}"} <span class="name"><i class="fa fa-twitter"></i></span><span class="count">0</span>
+                %li.twitter
+                  - encoded_text = URI.escape("#{current_article.title} | dakatsuka's blog")
+                  %a.button{"href" => "http://twitter.com/share?url=http://blog.dakatsuka.jp#{current_article.url}&via=d_akatsuka&text=#{encoded_text}"} <span class="name"><i class="fa fa-twitter"></i></span><span class="count">0</span>
 
-              %li.googleplus
-                %a.button{"href" => "https://plus.google.com/share?url=http://blog.dakatsuka.jp#{current_article.url}"} <span class="name"><i class="fa fa-google-plus"></i></span><span class="count">-</span>
+                %li.googleplus
+                  %a.button{"href" => "https://plus.google.com/share?url=http://blog.dakatsuka.jp#{current_article.url}"} <span class="name"><i class="fa fa-google-plus"></i></span><span class="count">-</span>
 
-            :javascript
-              var permalink = "http://blog.dakatsuka.jp#{current_article.url}";
-              getHatebuCount(permalink);
-              getFacebookShareCount(permalink);
-              getTweetCount(permalink);
+              :javascript
+                var permalink = "http://blog.dakatsuka.jp#{current_article.url}";
+                getHatebuCount(permalink);
+                getFacebookShareCount(permalink);
+                getTweetCount(permalink);
 
-              $(".share .facebook a").on('click', function(e) {
-                e.preventDefault();
-                window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes');
-              });
+                $(".share .facebook a").on('click', function(e) {
+                  e.preventDefault();
+                  window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes');
+                });
 
-              $(".share .twitter a").on('click', function(e) {
-                e.preventDefault();
-                window.open(this.href, 'TWwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes');
-              });
+                $(".share .twitter a").on('click', function(e) {
+                  e.preventDefault();
+                  window.open(this.href, 'TWwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes');
+                });
 
-              $(".share .googleplus a").on('click', function(e) {
-                e.preventDefault();
-                window.open(this.href, 'TWwindow', 'width=500, height=600, menubar=no, toolbar=no, scrollbars=yes');
-              });
+                $(".share .googleplus a").on('click', function(e) {
+                  e.preventDefault();
+                  window.open(this.href, 'TWwindow', 'width=500, height=600, menubar=no, toolbar=no, scrollbars=yes');
+                });
 
 
     %aside.pure-g-r
