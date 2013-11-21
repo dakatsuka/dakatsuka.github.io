@@ -11,6 +11,18 @@ aside {
       text-decoration: none;
     }
 
+    .disable {
+      display: block;
+      height: 60px;
+      margin: 0 30px 20px 0;
+      background-color: #ddd;
+      color: #fff;
+      text-align: center;
+      line-height: 60px;
+      font-weight: bold;
+      font-size: 140%;
+    }
+
     .prev a {
       display: block;
       height: 60px;

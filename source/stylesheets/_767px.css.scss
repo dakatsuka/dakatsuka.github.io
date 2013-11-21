@@ -1,6 +1,7 @@
 @media (max-width: 767px) {
   aside {
-    .nav a {
+    .nav a,
+    .nav .disable {
       margin-right: 0;
     }
 

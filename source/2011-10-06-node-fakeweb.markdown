@@ -1,7 +1,7 @@
 ---
 title: Node.jsで使えるHTTP偽装モジュール node-fakeweb
 date: 2011-10-06
-tags: node.js
+tags: Node.js
 ---
 主に外部のAPIが絡んでくるアプリのテストに使えるモジュールです。Node.jsの標準モジュールであるhttpではなく、requestというモジュール経由のHTTPアクセスを乗っ取ってレスポンスを偽装します。
 

@@ -1,4 +1,4 @@
-!!! 5
+<!doctype html>
 %html
   %head
     %meta{:charset => "utf-8"}
@@ -6,23 +6,33 @@
     %meta{:content => "width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0", :name => "viewport"}
     %link{:rel => "shortcut icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
     %link{:rel => "icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
-    %title dakatsuka's blog
+    %title
+      Archives | dakatsuka's blog
     = stylesheet_link_tag "http://yui.yahooapis.com/pure/0.3.0/pure-min.css", "font-awesome/css/font-awesome.min.css", "all"
-    <script src="http://codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
-    = javascript_include_tag "application"
 
-  %body#index
+  %body#archives
     = partial "layouts/header"
 
     .pure-g-r
       %article.article.page.pure-u-1
+        .article-header
+          %h1 Archives
         .article-content
-          #recent-entries.entry
-            %h2 Recent entries
-            %ol
-              - blog.articles[0...15].each do |article|
-                %li
-                  = link_to article.title, article
-                  %span= article.date.strftime('%Y年%m月%d日')
+          .entry
+            %section#tags
+              %h2 Tags
+              %ol
+                - blog.tags.each do |tag, articles|
+                  %li
+                    = link_to tag, tag_path(tag)
+
+            %section#calendar
+              - blog.articles.group_by {|a| a.date.year}.each do |year, articles|
+                %h2= year
+                %ol
+                  - articles.each do |article|
+                    %li
+                      = link_to article.title, article
+                      %span= article.date.strftime("%Y年%m月%d日")
 
     = partial "layouts/footer"
