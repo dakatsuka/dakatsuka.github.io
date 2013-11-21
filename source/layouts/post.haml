@@ -62,7 +62,7 @@
                 %a.button{"href" => "http://twitter.com/share?url=http://blog.dakatsuka.jp#{current_article.url}&via=d_akatsuka&text=#{encoded_text}"} <span class="name"><i class="fa fa-twitter"></i></span><span class="count">0</span>
 
               %li.googleplus
-                %a.button <span class="name"><i class="fa fa-google-plus"></i></span><span class="count">0</span>
+                %a.button{"href" => "https://plus.google.com/share?url=http://blog.dakatsuka.jp#{current_article.url}"} <span class="name"><i class="fa fa-google-plus"></i></span><span class="count">-</span>
 
             :javascript
               var permalink = "http://blog.dakatsuka.jp#{current_article.url}";
@@ -78,6 +78,11 @@
               $(".share .twitter a").on('click', function(e) {
                 e.preventDefault();
                 window.open(this.href, 'TWwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes');
+              });
+
+              $(".share .googleplus a").on('click', function(e) {
+                e.preventDefault();
+                window.open(this.href, 'TWwindow', 'width=500, height=600, menubar=no, toolbar=no, scrollbars=yes');
               });
 
 
