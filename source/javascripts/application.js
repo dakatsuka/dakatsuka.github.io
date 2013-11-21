@@ -24,3 +24,15 @@ var getFacebookShareCount = function(permalink) {
     }
   });
 };
+
+var getTweetCount = function(permalink) {
+  $.ajax({
+    type: 'GET',
+    url: 'http://urls.api.twitter.com/1/urls/count.json?url=' + permalink,
+    dataType: 'jsonp',
+    success: function(data) {
+      var count = (data) ? data.count : 0;
+      $('.twitter .count').text(count);
+    }
+  });
+};
