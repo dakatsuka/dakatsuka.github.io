@@ -2,7 +2,6 @@
 title: WordPressからMiddlemanに移行してGitHub Pagesで運用することにした
 date: 2013-11-22
 tags: Middleman, Blog
-published: false
 ---
 
 今まで惰性でWordPressを使い続けてきたが、ふと思い立ってMiddlemanで全面的に作り直すことにした。折角作り直すのだからブログのデザインもたまには自分でやってみようと思い、数年ぶりにHTMLやCSSを超時間触ることに。最近はネイティブアプリの案件が多く、JSONを吐く仕事ばかりだったので中々刺激的だった。
