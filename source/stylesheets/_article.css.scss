@@ -27,9 +27,12 @@
   color: #444;
 }
 
-.article-content .entry h2,
-.article-content .entry h3 {
+.article-content .entry h2 {
   margin-top: 1.7em;
+}
+
+.article-content .entry h3 {
+  margin-top: 1em;
 }
 
 .article-content .entry ul li {

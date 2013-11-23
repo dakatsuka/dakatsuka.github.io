@@ -10,6 +10,7 @@
     %meta{:content => "http://blog.dakatsuka.jp/images/ogp.png", :property => "og:image"}
     %link{:rel => "shortcut icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
     %link{:rel => "icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
+    %link{:rel => "alternate", :title => "dakatsuka's blog", :href => "/feed.xml", :type => "application/atom+xml"}
     %title
       #{current_article.title unless current_article.nil?} | dakatsuka's blog
     = stylesheet_link_tag "http://yui.yahooapis.com/pure/0.3.0/pure-min.css", "font-awesome/css/font-awesome.min.css", "all"
