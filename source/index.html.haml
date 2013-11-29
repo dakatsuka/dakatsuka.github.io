@@ -26,9 +26,11 @@
           #recent-entries.entry
             %h2 Recent entries
             %ol
-              - blog.articles[0...15].each do |article|
+              - blog.articles[0...10].each do |article|
                 %li
                   = link_to article.title, article
                   %span= article.date.strftime('%Y年%m月%d日')
+
+            = partial "layouts/ads"
 
     = partial "layouts/footer"

@@ -19,12 +19,13 @@ Web技術全般について思ったこと、調べたこと、実験したこ�
 
 下記アカウントまでお問い合わせください。
 
-<ul class="contacts">
-<li><a href="http://twitter.com/d_akatsuka"><i class="fa fa-twitter-square"></i></a></li>
-<li><a href="http://facebook.com/dai.akatsuka"><i class="fa fa-facebook-square"></i></a></li>
-<li><a href="http://github.com/dakatsuka"><i class="fa fa-github-square"></i></a></li>
-</ul>
+* [Twitter](http://twitter.com/d_akatsuka)
+* [Facebook](http://facebook.com/dai.akatsuka)
+* [GitHub](http://github.com/dakatsuka)
 
+## 広告
+
+このブログ内の広告バナーは[Google AdSense](http://www.google.com/adsense/)です。Google AdSenseが収集している情報に関しては[ポリシーと原則](http://www.google.com/intl/ja/policies/technologies/ads/)を参照してください。
 
 ## ライセンス
 
