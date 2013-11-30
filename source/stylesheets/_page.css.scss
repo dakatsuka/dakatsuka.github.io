@@ -1,0 +1,260 @@
+.page {
+  main {
+    margin: 0 20px;
+  }
+
+  .entry {
+    header {
+      margin: 20px -20px 0 -20px;
+      padding: 4em 1em 6em 1em;
+      background-color: #14343f;
+      color: #fff;
+
+      h1 {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-size: 260%;
+      }
+    }
+
+    .body {
+      max-width: 960px;
+      margin: -2.5em auto 0 auto;
+      padding: 2em 4em 1em 4em;
+      border: 1px solid #fff;
+      background-color: #fff;
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+      color: #444;
+
+      h2 {
+        margin-top: 1.7em;
+      }
+
+      h3 {
+        margin-top: 1em;
+      }
+
+      ul li {
+        margin-bottom: .5em;
+      }
+
+      .metadata ul {
+        list-style: none;
+        margin: 0 0 2em 0;
+        padding: 0;
+        color: #999;
+        font-size: 90%;
+
+        li {
+          display: inline;
+          padding-right: 1em;
+        }
+
+        li.published:before {
+          content: "\f017";
+          font-family: FontAwesome;
+        }
+
+        li.tags:before {
+          padding-right: 5px;
+          content: "\f02c";
+          font-family: FontAwesome;
+        }
+      }
+
+      .adsense {
+        margin-top: 4em;
+
+        h2 {
+          margin: 0 0 5px 0;
+          padding: 0;
+          color: #999;
+          font-size: 70%;
+          font-weight: normal;
+        }
+      }
+
+      .share {
+        margin: 3em 0 0 0;
+        padding: .5em 0 0 0;
+        border-top: 1px solid #eee;
+
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+        }
+
+        li {
+          display: inline-block;
+          padding-right: 1.5em;
+          font-size: 90%;
+        }
+
+        li:before {
+          font-family: FontAwesome;
+          font-weight: normal;
+          font-style: normal;
+          display: inline-block;
+        }
+
+        li.twitter:before {
+          content: "\f099";
+        }
+
+        li.facebook:before {
+          content: "\f082";
+        }
+
+        li.hatebu:before {
+          content: "B!";
+          color: #2c6ebd;
+        }
+
+        li.twitter {
+          color: #00acee;
+
+          a {
+            color: #00acee;
+          }
+        }
+
+        li.facebook {
+          color: #3b5998;
+
+          a {
+            color: #3b5998;
+          }
+        }
+
+        li.hatebu a {
+          color: #2c6ebd;
+        }
+      }
+    }
+  }
+
+  main > aside {
+    max-width: 960px;
+    height: 100px;
+    margin: 40px auto 0 auto;
+  }
+
+  .entry-navigation {
+    float: left;
+    width: 55%;
+    margin: 0;
+    padding: 0 0 20px 0;
+
+    ul {
+      list-style: none;
+      height: 60px;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      display: inline;
+      margin: 0;
+      padding: 0;
+    }
+
+    a, .disable {
+      display: block;
+      float: left;
+      width: 40%;
+      height: 60px;
+      margin: 0 5% 20px 0;
+      text-decoration: none;
+      color: #fff;
+      text-align: center;
+      line-height: 60px;
+    }
+
+    .prev {
+      font-weight: bold;
+      font-size: 140%;
+    }
+
+    .next {
+      font-size: 100%;
+    }
+
+    .disable {
+      background-color: #ddd;
+    }
+
+    .prev a,
+    .next a {
+      background-color: #256276;
+    }
+
+    .prev a:hover,
+    .next a:hover {
+      background-color: #3793B0;
+    }
+  }
+
+  .author {
+    position: relative;
+    float: left;
+    width: 45%;
+    padding: 0 0 20px 0;
+
+    .avatar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 0;
+      padding: 0;
+
+      img {
+        border-radius: 5px;
+      }
+    }
+
+    dl {
+      margin: 0;
+      padding: 0 0 0 100px;
+    }
+
+    dt {
+      margin: 0 0 5px 0;
+      padding: 0;
+      font-size: 70%;
+      font-family: serif;
+      font-style: italic;
+      color: #888;
+    }
+
+    dd {
+      margin: 0;
+      padding: 0;
+      color: #666;
+      font-family: 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+    }
+
+    dd.name {
+      font-size: 80%;
+      font-weight: bold;
+    }
+
+    dd.description {
+      font-size: 80%;
+    }
+
+    dd.accounts {
+      font-size: 160%;
+
+      a {
+        color: #256276;
+      }
+
+      a:hover {
+        color: #3793B0;
+        text-decoration: none;
+      }
+    }
+  }
+}

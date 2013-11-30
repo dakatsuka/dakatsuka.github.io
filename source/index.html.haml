@@ -13,22 +13,30 @@
     %link{:rel => "icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
     %link{:rel => "alternate", :title => "dakatsuka's blog", :href => "/feed.xml", :type => "application/atom+xml"}
     %title dakatsuka's blog
-    = stylesheet_link_tag "http://yui.yahooapis.com/pure/0.3.0/pure-min.css", "font-awesome/css/font-awesome.min.css", "all"
+    = stylesheet_link_tag "normalize.css", "font-awesome/css/font-awesome.min.css", "all"
     <script src="http://codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
     = javascript_include_tag "application"
 
-  %body#index
+  %body.page#index
     = partial "layouts/header"
 
-    .pure-g-r
-      %article.article.page.pure-u-1
-        .article-content
-          #recent-entries.entry
-            %h2 Recent entries
-            %ol
-              - blog.articles[0...10].each do |article|
-                %li
-                  = link_to article.title, article
-                  %span= article.date.strftime('%Y年%m月%d日')
+    %main
+      %article.entry
+        %div.body
+          %section#recent-entries
+            %h1 Recent entries
+            %nav
+              %ol
+                - blog.articles[0...10].each do |article|
+                  %li
+                    = link_to article.title, article
+                    %span= article.date.strftime('%Y年%m月%d日')
+
+          %section#tags
+            %h1 Tags
+            %nav
+              %ol
+                - blog.tags.each do |tag, articles|
+                  %li= link_to tag, tag_path(tag)
 
     = partial "layouts/footer"

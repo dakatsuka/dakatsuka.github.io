@@ -14,29 +14,22 @@
       Archives | dakatsuka's blog
     = stylesheet_link_tag "http://yui.yahooapis.com/pure/0.3.0/pure-min.css", "font-awesome/css/font-awesome.min.css", "all"
 
-  %body#archives
+  %body.page
     = partial "layouts/header"
 
-    .pure-g-r
-      %article.article.page.pure-u-1
-        .article-header
+    %main
+      %article.entry
+        %header
           %h1 Archives
-        .article-content
-          .entry
-            %section#tags
-              %h2 Tags
-              %ol
-                - blog.tags.each do |tag, articles|
-                  %li
-                    = link_to tag, tag_path(tag)
 
-            %section#calendar
-              - blog.articles.group_by {|a| a.date.year}.each do |year, articles|
-                %h2= year
-                %ol
-                  - articles.each do |article|
-                    %li
-                      = link_to article.title, article
-                      %span= article.date.strftime("%Y年%m月%d日")
+        %div.body
+          %section#recent-entries
+            - blog.articles.group_by {|a| a.date.year}.each do |year, articles|
+              %h2= year
+              %ol
+                - articles.each do |article|
+                  %li
+                    = link_to article.title, article
+                    %span= article.date.strftime("%Y年%m月%d日")
 
     = partial "layouts/footer"

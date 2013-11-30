@@ -1,11 +1,10 @@
-.header {
+body > header {
   position: relative;
-  display: block;
   max-width: 1000px;
   margin: 20px auto 0 auto;
   padding: 0 20px 30px 20px;
 
-  .brand-title {
+  h1 {
     margin: 0;
     padding: 0;
     font-size: 250%;
@@ -15,42 +14,47 @@
     }
 
     a:hover {
+      color: #444;
       text-decoration: none;
     }
   }
 
-  .brand-tagline {
+  p {
     margin: 0 0 2em 0;
     padding: 0;
   }
 
-  .menu {
+  nav {
     position: absolute;
     top: 0;
     right: 20px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
 
-    li {
-      display: inline;
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
 
-      a {
-        display: block;
-        float: left;
-        width: 120px;
-        height: 60px;
-        margin: 0 0 0 20px;
-        line-height: 60px;
-        border-radius: 5px;
-        background-color: #c0392b;
-        color: #fff;
-        text-align: center;
-        text-decoration: none;
-      }
+      li {
+        display: inline;
 
-      a:hover {
-        background-color: #e74c3c;
+        a {
+          display: inline-block;
+          width: 120px;
+          height: 60px;
+          margin: 0 0 0 20px;
+          border-radius: 5px;
+          background-color: #c0392b;
+          color: #fff;
+          line-height: 60px;
+          text-align: center;
+          text-decoration: none;
+        }
+
+        a:hover {
+          background-color: #e74c3c;
+          text-decoration: none;
+          color: #fff;
+        }
       }
     }
   }

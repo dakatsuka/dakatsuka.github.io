@@ -1,4 +1,4 @@
-<!doctype html>
+!!! html5
 %html{:lang => "ja", :prefix => "og: http://ogp.me/ns#"}
   %head
     %meta{:charset => "utf-8"}
@@ -18,28 +18,26 @@
     <script src="http://b.st-hatena.com/js/bookmark_button.js" async="async"></script>
     = javascript_include_tag "application"
 
-  %body
+  %body.page
     = partial "layouts/header"
 
-    .pure-g-r
-      %article.article.pure-u-1
-        .article-header
+    %main
+      %article.entry
+        %header
           %h1= current_article.title
-        .article-content
-          .entry
-            %ul.metadata
+
+        %div.body
+          %aside.metadata
+            %ul
               %li.published
-                %i.fa.fa-clock-o
-                = current_article.date.strftime("%Y年%m月%d日")
-              %li.tags
-                %i.fa.fa-tags
-                  = current_article.tags.map {|tag| link_to tag, tag_path(tag) }.join(", ")
-            .body
-              = yield
+                %time{:datetime => current_article.date.iso8601}= current_article.date.strftime("%Y年%m月%d日")
+              %li.tags= current_article.tags.map {|tag| link_to tag, tag_path(tag) }.join(", ")
 
-            = partial "layouts/ads"
+          = yield
+          = partial "layouts/ads"
 
-            %ul.share
+          %aside.share
+            %ul
               %li.twitter
                 - encoded_text = URI.escape("#{current_article.title} | dakatsuka's blog")
                 %a{:href => "http://twitter.com/share?url=http://blog.dakatsuka.jp#{current_article.url}&via=d_akatsuka&text=#{encoded_text}"} Twitterでシェアする
@@ -52,36 +50,39 @@
                   "data-hatena-bookmark-layout" => "simple",
                   "title" => "このエントリーをはてなブックマークに追加"} はてブする
 
-    %aside.pure-g-r
-      .pure-u-1-2
-        .nav.pure-g-r
-          .prev.pure-u-1-2
-            - previous_article = current_article.previous_article
-            - if previous_article
-              %a{:href => previous_article.url, :title => previous_article.title} Prev
-            - else
-              %span.disable Prev
-          .next.pure-u-1-2
-            - next_article = current_article.next_article
-            - if next_article
-              %a{:href => next_article.url, :title => next_article.title} Next
-            - else
-              %span.disable Next
+      %aside
+        %nav.entry-navigation
+          %ul
+            %li.prev
+              - previous_article = current_article.previous_article
+              - if previous_article
+                %a{:href => previous_article.url, :title => previous_article.title} Prev
+              - else
+                %span.disable Prev
+            %li.next
+              - next_article = current_article.next_article
+              - if next_article
+                %a{:href => next_article.url, :title => next_article.title} Next
+              - else
+                %span.disable Next
 
-      .publisher.pure-u-1-2
-        %p.avatar
-          %img{:src => image_path("avatar.jpeg"), :width => 80, :height => 80}
-        %dl
-          %dt Written by
-          %dd.name Dai Akatsuka
-          %dd.description 東京都在住のWebエンジニアです。好きな言語はRubyですが仕事ではPHPばかり触っています。サーバサイドプログラミングからインフラ構築まで手広くやっています。
-          %dd.accounts
-            %a{:href => "http://twitter.com/d_akatsuka"}
-              %i.fa.fa-twitter-square
-            %a{:href => "http://facebook.com/dai.akatsuka"}
-              %i.fa.fa-facebook-square
-            %a{:href => "http://github.com/dakatsuka"}
-              %i.fa.fa-github-square
+        %section.author
+          %p.avatar
+            %img{:src => image_path("avatar.jpeg"), :width => 80, :height => 80}
+            
+          %dl
+            %dt Written by
+            %dd.name Dai Akatsuka
+            %dd.description 東京都在住のWebエンジニアです。好きな言語はRubyですが仕事ではPHPばかり触っています。サーバサイドプログラミングからインフラ構築まで手広くやっています。
+            %dd.accounts
+              %a{:href => "http://twitter.com/d_akatsuka"}
+                %i.fa.fa-twitter-square
+              %a{:href => "http://facebook.com/dai.akatsuka"}
+                %i.fa.fa-facebook-square
+              %a{:href => "http://github.com/dakatsuka"}
+                %i.fa.fa-github-square
+              %a{:href => "mailto:d.akatsuka@gmail.com"}
+                %i.fa.fa-envelope
 
     = partial "layouts/footer"
 

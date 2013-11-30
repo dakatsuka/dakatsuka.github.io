@@ -14,16 +14,15 @@
       #{current_page.data.title unless current_page.nil?} | dakatsuka's blog
     = stylesheet_link_tag "http://yui.yahooapis.com/pure/0.3.0/pure-min.css", "font-awesome/css/font-awesome.min.css", "all"
 
-  %body
+  %body.page
     = partial "layouts/header"
 
-    .pure-g-r
-      %article.article.page.pure-u-1
-        .article-header
+    %main
+      %article.entry
+        %header
           %h1= current_page.data.title
-        .article-content
-          .entry
-            .body
-              = yield
+
+        %div.body
+          = yield
 
     = partial "layouts/footer"

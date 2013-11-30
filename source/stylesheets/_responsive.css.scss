@@ -1,101 +1,92 @@
 @media (max-width: 640px) {
-  .article-header {
-    margin: 0;
-    padding: 1em 1em;
-  }
-
-  .article-header h1 {
-    font-size: 160%;
-    text-align: left;
-  }
-
-  .article-content {
-    margin: 0;
-    padding: 0;
-    border: none;
-  }
-
-  .article-content .entry {
-    margin: 0;
-    padding: 1em;
-  }
-
-  aside {
-    .nav a {
-      margin-right: 0;
+  .page {
+    main {
+      margin: 0;
     }
 
-    .publisher {
-      padding-left: 0;
+    .entry {
+      header {
+        margin: 0;
+        padding: 1em 1em;
 
-      dl {
-        left: 100px;
+        h1 {
+          font-size: 160%;
+          text-align: left;
+        }
+      }
+
+      .body {
+        margin: 0;
+        padding: 1em;
+        border: none;
       }
     }
-  }
-}
 
-@media (max-width: 767px) {
-  aside {
-    .nav a,
-    .nav .disable {
-      margin-right: 0;
+    main > aside {
+      height: auto;
+      padding: 0 20px 0 20px;
     }
 
-    .publisher {
-      .avatar {
-        left: 0;
+    .entry-navigation {
+      float: none;
+      width: 100%;
+
+      ul {
+        height: auto;
       }
 
-      dl {
-        padding: 0 0 0 100px;
+      a, .disable {
+        float: none;
+        width: 100%;
       }
+    }
+
+    .author {
+      float: none;
+      width: 100%;
+      padding: 0;
     }
   }
 }
 
 @media (max-width: 900px) {
-  .header {
+  body > header {
     padding-bottom: 20px;
     text-align: center;
-  }
 
-  .header .menu {
-    position: static;
-    text-align: center;
-  }
+    nav {
+      position: static;
+      text-align: center;
 
-  .header .menu li a {
-    float: none;
-    display: inline-block;
-    margin: 0 10px 10px;
+      ul li a {
+        margin-bottom: 10px;
+      }
+    }
   }
 }
 
 @media (min-width: 1500px) {
-  .header {
+  body > header,
+  body > footer {
     max-width: 1400px;
   }
 
-  .article-content {
-    max-width: 1400px;
+  .page main > aside,
+  .page .entry .body {
+    max-width: 1360px;
+  }
 
-    .entry {
-      padding-left: 5em;
-      padding-right: 5em;
-      font-size: 130%;
+  .page .entry .body {
+    padding-left: 5em;
+    padding-right: 5em;
+    font-size: 130%;
 
-      pre {
-        line-height: 110%;
-      }
+    pre {
+      line-height: 110%;
     }
   }
 
-  aside {
-    max-width: 1400px;
-
-    .publisher {
-      font-size: 130%;
-    }
+  .page .author {
+    font-size: 130%;
   }
 }
