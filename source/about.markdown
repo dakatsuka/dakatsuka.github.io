@@ -17,8 +17,9 @@ Web技術全般について思ったこと、調べたこと、実験したこ�
 
 ## 問い合わせ
 
-下記アカウントまでお問い合わせください。
+下記アカウントまたはメールアドレスまでお問い合わせください。
 
+* [d.akatsuka@gmail.com](mailto:d.akatsuka@gmail.com)
 * [Twitter](http://twitter.com/d_akatsuka)
 * [Facebook](http://facebook.com/dai.akatsuka)
 * [GitHub](http://github.com/dakatsuka)
