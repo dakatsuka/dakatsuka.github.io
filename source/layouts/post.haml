@@ -11,6 +11,15 @@
     %link{:rel => "shortcut icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
     %link{:rel => "icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
     %link{:rel => "alternate", :title => "dakatsuka's blog", :href => "/feed.xml", :type => "application/atom+xml"}
+    %link{:rel => "canonical", :href => current_article.url}
+    %link{:rel => "license", :href => "http://creativecommons.org/licenses/by-nc/3.0/deed.ja"}
+    %link{:rel => "author", :href => "/about.html"}
+    - previous_article = current_article.previous_article
+    - next_article = current_article.next_article
+    - if previous_article
+      %link{:rel => "prev", :href => previous_article.url}
+    - if next_article
+      %link{:rel => "next", :href => next_article.url}
     %title
       #{current_article.title unless current_article.nil?} | dakatsuka's blog
     = stylesheet_link_tag "http://yui.yahooapis.com/pure/0.3.0/pure-min.css", "font-awesome/css/font-awesome.min.css", "all"
@@ -54,13 +63,11 @@
         %nav.entry-navigation
           %ul
             %li.prev
-              - previous_article = current_article.previous_article
               - if previous_article
                 %a{:href => previous_article.url, :title => previous_article.title} Prev
               - else
                 %span.disable Prev
             %li.next
-              - next_article = current_article.next_article
               - if next_article
                 %a{:href => next_article.url, :title => next_article.title} Next
               - else
