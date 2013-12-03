@@ -1,4 +1,9 @@
 @media (max-width: 640px) {
+  body > header nav ul li a {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
   .page {
     main {
       margin: 0;
