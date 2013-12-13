@@ -30,7 +30,7 @@
   %body.page
     = partial "layouts/header"
 
-    %main
+    %main(role="main")
       %article.entry
         %header
           %h1= current_article.title
@@ -60,7 +60,7 @@
                   "title" => "このエントリーをはてなブックマークに追加"} はてブする
 
       %aside
-        %nav.entry-navigation
+        %nav.entry-navigation(role="navigation")
           %ul
             %li.prev
               - if previous_article
@@ -75,7 +75,7 @@
 
         %section.author
           %p.avatar
-            %img{:src => image_path("avatar.jpeg"), :width => 80, :height => 80}
+            %img{:src => image_path("avatar.jpeg"), :width => 80, :height => 80, :alt => "avatar"}
             
           %dl
             %dt Written by
