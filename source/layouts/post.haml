@@ -44,7 +44,7 @@
           %h1(itemprop="name")= current_article.title
           %link{:href => current_article.url, :itemprop => "url"}
 
-        %div.body()
+        %div.body
           %aside.metadata
             %ul
               %li.published
@@ -68,6 +68,17 @@
                   "data-hatena-bookmark-title"  => "#{current_article.title} | dakatsuka's blog",
                   "data-hatena-bookmark-layout" => "simple",
                   "title" => "このエントリーをはてなブックマークに追加"} はてブする
+
+        :javascript
+          $(".share .facebook a").on('click', function(e) {
+            e.preventDefault();
+            window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes');
+          });
+
+          $(".share .twitter a").on('click', function(e) {
+            e.preventDefault();
+            window.open(this.href, 'TWwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes');
+          });
 
       %aside
         %nav.entry-navigation(role="navigation")
