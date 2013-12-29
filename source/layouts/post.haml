@@ -31,18 +31,20 @@
     = partial "layouts/header"
 
     %main(role="main")
-      %article.entry
+      %article.entry(itemscope itemtype="http://schema.org/BlogPosting" itemref="author")
         %header
-          %h1= current_article.title
+          %h1(itemprop="name")= current_article.title
+          %link{:href => current_article.url, :itemprop => "url"}
 
-        %div.body
+        %div.body()
           %aside.metadata
             %ul
               %li.published
-                %time{:datetime => current_article.date.iso8601}= current_article.date.strftime("%Y年%m月%d日")
-              %li.tags= current_article.tags.map {|tag| link_to tag, tag_path(tag) }.join(", ")
+                %time{:datetime => current_article.date.iso8601, :itemprop => "datePublished"}= current_article.date.strftime("%Y年%m月%d日")
+              %li.tags(itemprop="keywords")= current_article.tags.map {|tag| link_to tag, tag_path(tag) }.join(", ")
 
-          = yield
+          .entry-content(itemprop="articleBody")
+            = yield
           = partial "layouts/ads"
 
           %aside.share
@@ -73,13 +75,13 @@
               - else
                 %span.disable Next
 
-        %section.author
+        %section.author#author(itemprop="author" itemscope itemtype="http://schema.org/Person")
           %p.avatar
             %img{:src => image_path("avatar.jpeg"), :width => 80, :height => 80, :alt => "avatar"}
             
           %dl
             %dt Written by
-            %dd.name Dai Akatsuka
+            %dd.name(itemprop="name") Dai Akatsuka
             %dd.description 東京都在住のWebエンジニアです。好きな言語はRubyですが仕事ではPHPばかり触っています。サーバサイドプログラミングからインフラ構築まで手広くやっています。
             %dd.accounts
               %a{:href => "http://twitter.com/d_akatsuka"}
