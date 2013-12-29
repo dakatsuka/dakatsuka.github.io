@@ -1,38 +1,9 @@
-var getHatebuCount = function(permalink) {
-  $.ajax({
-    type: 'GET',
-    url: 'http://api.b.st-hatena.com/entry.count',
-    data: {
-      url: permalink
-    },
-    dataType: 'jsonp',
-    success: function(data) {
-      var count = (data) ? data : 0;
-      $('.hatebu .count').text(count);
-    }
-  });
-};
+$(".share .facebook a").on('click', function(e) {
+  e.preventDefault();
+  window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes');
+});
 
-var getFacebookShareCount = function(permalink) {
-  $.ajax({
-    type: 'GET',
-    url: 'http://graph.facebook.com/' + permalink,
-    dataType: 'jsonp',
-    success: function(data) {
-      var count = (data) ? data.shares : 0;
-      $('.facebook .count').text(count);
-    }
-  });
-};
-
-var getTweetCount = function(permalink) {
-  $.ajax({
-    type: 'GET',
-    url: 'http://urls.api.twitter.com/1/urls/count.json?url=' + permalink,
-    dataType: 'jsonp',
-    success: function(data) {
-      var count = (data) ? data.count : 0;
-      $('.twitter .count').text(count);
-    }
-  });
-};
+$(".share .twitter a").on('click', function(e) {
+  e.preventDefault();
+  window.open(this.href, 'TWwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes');
+});

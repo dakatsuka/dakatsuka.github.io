@@ -96,3 +96,6 @@
     font-size: 130%;
   }
 }
+
+@media(min-width: 500px) { .my_adslot { width: 468px; height: 60px; } }
+@media(min-width: 800px) { .my_adslot { width: 728px; height: 90px; } }
