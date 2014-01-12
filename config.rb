@@ -6,6 +6,10 @@ Time.zone = "Tokyo"
 
 activate :livereload
 
+activate :disqus do |d|
+  d.shortname = "dakatsuka-blog"
+end
+
 activate :blog do |blog|
   # blog.prefix = "blog"
   blog.permalink = ":year/:month/:day/:title.html"

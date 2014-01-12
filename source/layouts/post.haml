@@ -69,6 +69,10 @@
                   "data-hatena-bookmark-layout" => "simple",
                   "title" => "このエントリーをはてなブックマークに追加"} はてブする
 
+          - if build?
+            .disqus
+              = disqus
+
         :javascript
           $(".share .facebook a").on('click', function(e) {
             e.preventDefault();
