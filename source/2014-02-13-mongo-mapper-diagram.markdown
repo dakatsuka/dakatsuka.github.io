@@ -8,7 +8,7 @@ tags: Ruby,Rails
 
 こんな感じの画像を生成できる。
 
-![ダイアグラム](http://localhost:4567/uploads/2014/02/13/diagram.png)
+![ダイアグラム](/uploads/2014/02/13/diagram.png)
 
 まだ One-To-Many だけで Many-To-Many や Embedded には対応していないのだけど、ひとまず全体を把握するのには役にたった。余裕があれば対応していきたい。Pull requestも待ってます！
 
