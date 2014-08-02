@@ -71,6 +71,11 @@ pre {
   word-wrap: inherit;
 }
 
+pre code {
+  border: none;
+  font-family: monospace;
+}
+
 .highlight td {
   padding: 5px 10px;
 }
