@@ -1,7 +1,7 @@
 ---
 title: Play framework を CircleCI でテストする
 date: 2014-08-24
-tags: Scala,Play
+tags: Scala,Play,CI
 ---
 
 Play framework 2.3 (Scala版）で開発しているアプリをTravis ProでCIしていたのだけど、ビルド時間がネックになってきたのでインスタンス性能が高いと噂のCircleCIに移行することにした。
