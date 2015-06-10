@@ -23,3 +23,9 @@ with open("/tmp/packer.log", "r") as file:
 ```python
 ami_id = commands.getoutput("tail -n1 /tmp/packer.log").split(": ")[-1]
 ```
+
+追記：これだ
+
+```python
+ami_id = commands.getoutput("tail -n1 /tmp/packer.log | sed -e 's/^ami: //'")
+```
