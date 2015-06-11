@@ -73,7 +73,8 @@ pre {
 
 pre code {
   border: none;
-  font-family: monospace;
+  font-family: 'Monaco', 'Consolas', 'Courier New', Courier, monospace, sans-serif;
+  font-size: 0.7em;
 }
 
 .highlight td {
