@@ -35,7 +35,7 @@ chefserver:$ sudo apt-get install chef-server
 
 ![q1](/uploads/2011/12/08/chef-q1.png)
 
-これはChef Server内にインストールされるChef ClientからみたChef Server APIのURIを入力します（分かりにくいｗ）。同一サーバなのでここではhttp://localhost:4000と入力してください。
+これはChef Server内にインストールされるChef ClientからみたChef Server APIのURIを入力します。同一サーバなのでここでは `http://localhost:4000` と入力してください。
 
 ![q2](/uploads/2011/12/08/chef-q2.png)
 
