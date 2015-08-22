@@ -73,27 +73,27 @@
 @media (min-width: 1500px) {
   body > header,
   body > footer {
-    max-width: 1400px;
+    max-width: 1300px;
   }
 
   .page main > aside,
   .page .entry .body,
-  .page .entry .header h1 {
-    max-width: 1360px;
+  .page .entry header h1 {
+    max-width: 1260px;
   }
 
   .page .entry .body {
     padding-left: 5em;
     padding-right: 5em;
-    font-size: 130%;
+    font-size: 110%;
 
     pre {
-      line-height: 110%;
+      line-height: 105%;
     }
   }
 
   .page .author {
-    font-size: 130%;
+    font-size: 110%;
   }
 }
 
