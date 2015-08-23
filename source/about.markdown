@@ -3,7 +3,7 @@ layout: page
 title: About
 ---
 
-<img src="/images/ogp.png" style="float: right; margin-left: 20px; border-radius: 10px;" width="200" height="200">
+<img src="/images/logo.png" style="float: right; margin-left: 20px; border-radius: 10px;" width="200" height="200">
 
 ## このサイトについて
 
