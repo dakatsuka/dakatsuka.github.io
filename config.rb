@@ -95,7 +95,8 @@ set :markdown,
   gh_blockcode:       true, 
   with_toc_data:      true,
   fenced_code_blocks: true,
-  smartypants:        true
+  smartypants:        true,
+  footnotes:          true
 
 set :markdown_engine, :redcarpet
 set :haml, { ugly: true }

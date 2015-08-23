@@ -4,7 +4,7 @@ date: 2015-08-22
 tags: CI, Elasticsearch
 ---
 
-CircleCIでElasticsearchの最新版とKuromojiを使うならDockerが便利だった。circle.ymlでwgetして頑張るよりはこちらのほうがスマートだし、ここで用意したDockerfileはCI以外でも使える。
+CircleCIでElasticsearchの最新版とKuromojiを使うならDockerが便利だった。circle.ymlでwgetして頑張るよりは[^1]こちらのほうがスマートだし、ここで用意したDockerfileはCI以外でも使える。
 
 下記コードをcontainers/elasticsearch/Dockerfileに保存する。
 
@@ -29,3 +29,5 @@ dependencies:
 ```
 
 で、このエントリを書いている最中に https://github.com/circleci/docker-elasticsearch そのものズバリのリポジトリを発見した。こちらのほうがイメージのキャッシュまでしているので参考になると思う。
+
+[^1]: [Install a custom version of Elasticsearch](https://circleci.com/docs/installing-elasticsearch)
