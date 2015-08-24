@@ -73,19 +73,19 @@
 @media (min-width: 1500px) {
   body > header,
   body > footer {
-    max-width: 1300px;
+    max-width: 1240px;
   }
 
   .page main > aside,
   .page .entry .body,
   .page .entry header h1 {
-    max-width: 1260px;
+    max-width: 1200px;
   }
 
   .page .entry .body {
     padding-left: 5em;
     padding-right: 5em;
-    font-size: 110%;
+    font-size: 120%;
 
     pre {
       line-height: 105%;

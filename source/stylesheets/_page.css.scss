@@ -26,14 +26,20 @@
       border: 1px solid #fff;
       background-color: #fff;
       box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-      color: #444;
+      color: #555;
+      line-height: 170%;
 
       h2 {
+        font-size: 170%;
         margin-top: 1.7em;
+        padding-bottom: .5em;
+        border-bottom: 1px solid #ddd;
       }
 
       h3 {
-        margin-top: 1em;
+        font-size: 140%;
+        margin-top: 1.5em;
+        margin-bottom: .8em;
       }
 
       ul li {
