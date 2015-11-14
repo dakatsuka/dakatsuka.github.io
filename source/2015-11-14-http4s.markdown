@@ -170,7 +170,7 @@ val service = HttpService {
       case _ => NotFound()
     }
 
-  casa req @ POST -> Root / "users" =>
+  case req @ POST -> Root / "users" =>
     req.decode[UrlForm] { data =>
       val UserParams = for {
         email <- data.getFirst("email")
