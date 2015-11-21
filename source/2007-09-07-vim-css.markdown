@@ -1,0 +1,13 @@
+---
+title: Vim7でCSSをオムニ補完
+date: 2007-09-07
+tags: vim
+---
+
+CSSも標準で対応してるみたい。以下の行を.vimrcに貼り付けるだけ。
+
+```vim
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+```
+
+C-x C-oで動作しますが、場合によっては普通に入力したほうが早いかも…。background-color等を入力する時には効果を発揮しそうです。

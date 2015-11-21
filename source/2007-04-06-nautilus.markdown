@@ -1,0 +1,23 @@
+---
+title: Nautilusの右クリックメニューをカスタマイズ
+date: 2007-04-06
+tags: Linux, Ubuntu
+---
+
+Xfce4.4のファイルマネージャであるThunarやKDEのKonquerorには「ターミナルで開く」みたいなメニューがあるんですが、何故かNautilusにはデフォルトでありません。
+
+あまりにも不便なので自作でもしようかと思ったのですが既にパッケージとして存在していました。
+
+```
+$ sudo apt-get install nautilus-open-terminal
+```
+
+一度ログアウトして、再ログインすると使えるようになります。
+
+ちなみに自分でメニューを作成する場合はnautilus-actionsを入れます。
+
+```
+$ sudo apt-get install nautilus-actions
+```
+
+[メインメニュー] → [システム] → [設定] → [Nautilus アクションの設定] で新規アクションを設定できます。
