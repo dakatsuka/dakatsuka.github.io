@@ -11,7 +11,7 @@
     %link{:rel => "icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
     %link{:rel => "alternate", :title => "dakatsuka's blog", :href => "/feed.xml", :type => "application/atom+xml"}
     %link{:rel => "canonical", :href => current_article.url}
-    %link{:rel => "license", :href => "http://creativecommons.org/licenses/by-nc/3.0/deed.ja"}
+    %link{:rel => "license", :href => "https://creativecommons.org/licenses/by-nc/3.0/deed.ja"}
     %link{:rel => "author", :href => "/about.html"}
     - previous_article = current_article.previous_article
     - next_article = current_article.next_article
@@ -22,8 +22,8 @@
     %title
       #{current_article.title unless current_article.nil?} | dakatsuka's blog
     = stylesheet_link_tag "normalize.css", "font-awesome/css/font-awesome.min.css", "all"
-    <script src="http://codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
-    <script src="http://b.st-hatena.com/js/bookmark_button.js" async="async"></script>
+    <script src="//codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="//b.st-hatena.com/js/bookmark_button.js" async="async"></script>
     = javascript_include_tag "application"
     - if build?
       :javascript
@@ -39,7 +39,7 @@
     = partial "layouts/header"
 
     %main(role="main")
-      %article.entry(itemscope itemtype="http://schema.org/BlogPosting" itemref="author")
+      %article.entry(itemscope itemtype="//schema.org/BlogPosting" itemref="author")
         %header
           %h1(itemprop="name")= current_article.title
           %link{:href => current_article.url, :itemprop => "url"}
@@ -59,11 +59,11 @@
             %ul
               %li.twitter
                 - encoded_text = URI.escape("#{current_article.title} | dakatsuka's blog")
-                %a{:href => "http://twitter.com/share?url=http://blog.dakatsuka.jp#{current_article.url}&via=d_akatsuka&text=#{encoded_text}"} Twitterでシェアする
+                %a{:href => "//twitter.com/share?url=http://blog.dakatsuka.jp#{current_article.url}&via=d_akatsuka&text=#{encoded_text}"} Twitterでシェアする
               %li.facebook
-                %a{:href => "http://www.facebook.com/share.php?u=http://blog.dakatsuka.jp#{current_article.url}"} Facebookでシェアする
+                %a{:href => "//www.facebook.com/share.php?u=http://blog.dakatsuka.jp#{current_article.url}"} Facebookでシェアする
               %li.hatebu
-                %a{:href => "http://b.hatena.ne.jp/entry/http://blog.dakatsuka.jp#{current_article.url}",
+                %a{:href => "//b.hatena.ne.jp/entry/http://blog.dakatsuka.jp#{current_article.url}",
                   "class" => "hatena-bookmark-button",
                   "data-hatena-bookmark-title"  => "#{current_article.title} | dakatsuka's blog",
                   "data-hatena-bookmark-layout" => "simple",
@@ -107,11 +107,11 @@
             %dd.name(itemprop="name") Dai Akatsuka
             %dd.description 東京都在住のWebエンジニアです。好きな言語はRuby。仕事ではRuby, Scala成分高めで最近は関数型に興味があります。Goにも手を出したい今日この頃。
             %dd.accounts
-              %a{:href => "http://twitter.com/d_akatsuka"}
+              %a{:href => "https://twitter.com/d_akatsuka"}
                 %i.fa.fa-twitter-square
-              %a{:href => "http://facebook.com/dai.akatsuka"}
+              %a{:href => "https://facebook.com/dai.akatsuka"}
                 %i.fa.fa-facebook-square
-              %a{:href => "http://github.com/dakatsuka"}
+              %a{:href => "https://github.com/dakatsuka"}
                 %i.fa.fa-github-square
               %a{:href => "mailto:d.akatsuka@gmail.com"}
                 %i.fa.fa-envelope
