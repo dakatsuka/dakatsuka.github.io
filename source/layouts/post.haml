@@ -61,11 +61,11 @@
             %ul
               %li.twitter
                 - encoded_text = URI.escape("#{current_article.title} | dakatsuka's blog")
-                %a{:href => "//twitter.com/share?url=http://blog.dakatsuka.jp#{current_article.url}&via=d_akatsuka&text=#{encoded_text}"} Twitterでシェアする
+                %a{:href => "//twitter.com/share?url=#{data.site.url}#{current_article.url}&via=d_akatsuka&text=#{encoded_text}"} Twitterでシェアする
               %li.facebook
-                %a{:href => "//www.facebook.com/share.php?u=http://blog.dakatsuka.jp#{current_article.url}"} Facebookでシェアする
+                %a{:href => "//www.facebook.com/share.php?u=#{data.site.url}#{current_article.url}"} Facebookでシェアする
               %li.hatebu
-                %a{:href => "//b.hatena.ne.jp/entry/http://blog.dakatsuka.jp#{current_article.url}",
+                %a{:href => "//b.hatena.ne.jp/entry/#{data.site.url}#{current_article.url}",
                   "class" => "hatena-bookmark-button",
                   "data-hatena-bookmark-title"  => "#{current_article.title} | dakatsuka's blog",
                   "data-hatena-bookmark-layout" => "simple",
