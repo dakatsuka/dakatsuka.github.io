@@ -3,17 +3,18 @@
   %head
     %meta{:charset => "utf-8"}
     %meta{:content => "width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0", :name => "viewport"}
-    %meta{:content => "#{current_page.data.title} | dakatsuka's blog", :property => "og:title"}
+    %meta{:content => "#{current_page.data.title} | #{data.site.name}", :property => "og:title"}
     %meta{:content => "article", :property => "og:type"}
-    %meta{:content => "http://blog.dakatsuka.jp#{current_page.url}", :property => "og:url"}
-    %meta{:content => "http://blog.dakatsuka.jp/images/logo.png", :property => "og:image"}
+    %meta{:content => "#{data.site.url}#{current_page.url}", :property => "og:url"}
+    %meta{:content => "#{data.site.url}/images/logo.png", :property => "og:image"}
+    %meta{:content => "#{data.site.url}/images/logo.png", :property => "og:image:secure_url"}
     %link{:rel => "shortcut icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
     %link{:rel => "icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
     %link{:rel => "canonical", :href => current_page.url}
-    %link{:rel => "license", :href => "https://creativecommons.org/licenses/by-nc/3.0/deed.ja"}
+    %link{:rel => "license", :href => "//creativecommons.org/licenses/by-nc/3.0/deed.ja"}
     %link{:rel => "author", :href => "/about.html"}
     %title
-      #{current_page.data.title unless current_page.nil?} | dakatsuka's blog
+      #{current_page.data.title unless current_page.nil?} | #{data.site.name}
     = stylesheet_link_tag "normalize.css", "font-awesome/css/font-awesome.min.css", "all"
     - if build?
       :javascript

@@ -126,7 +126,15 @@ configure :build do
   # set :http_path, "/Content/images/"
 end
 
+#activate :deploy do |deploy|
+#  deploy.method = :git
+#  deploy.branch = 'master'
+#end
+
 activate :deploy do |deploy|
-  deploy.method = :git
-  deploy.branch = 'master'
+  deploy.method = :sftp
+  deploy.host   = "153.126.149.62"
+  deploy.port   = 22
+  deploy.user   = "akatsuka"
+  deploy.path   = "/var/www/blog.dakatsuka.jp"
 end

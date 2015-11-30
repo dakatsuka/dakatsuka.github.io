@@ -3,15 +3,16 @@
   %head
     %meta{:charset => "utf-8"}
     %meta{:content => "width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0", :name => "viewport"}
-    %meta{:content => "#{current_article.title} | dakatsuka's blog", :property => "og:title"}
+    %meta{:content => "#{current_article.title} | #{data.site.name}", :property => "og:title"}
     %meta{:content => "article", :property => "og:type"}
-    %meta{:content => "http://blog.dakatsuka.jp#{current_article.url}", :property => "og:url"}
-    %meta{:content => "http://blog.dakatsuka.jp/images/logo.png", :property => "og:image"}
+    %meta{:content => "#{data.site.url}#{current_article.url}", :property => "og:url"}
+    %meta{:content => "#{data.site.url}/images/logo.png", :property => "og:image"}
+    %meta{:content => "#{data.site.url}/images/logo.png", :property => "og:image:secure_url"}
     %link{:rel => "shortcut icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
     %link{:rel => "icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
-    %link{:rel => "alternate", :title => "dakatsuka's blog", :href => "/feed.xml", :type => "application/atom+xml"}
+    %link{:rel => "alternate", :title => data.site.name, :href => "/feed.xml", :type => "application/atom+xml"}
     %link{:rel => "canonical", :href => current_article.url}
-    %link{:rel => "license", :href => "https://creativecommons.org/licenses/by-nc/3.0/deed.ja"}
+    %link{:rel => "license", :href => "//creativecommons.org/licenses/by-nc/3.0/deed.ja"}
     %link{:rel => "author", :href => "/about.html"}
     - previous_article = current_article.previous_article
     - next_article = current_article.next_article
@@ -20,10 +21,11 @@
     - if next_article
       %link{:rel => "next", :href => next_article.url}
     %title
-      #{current_article.title unless current_article.nil?} | dakatsuka's blog
+      #{current_article.title unless current_article.nil?} | #{data.site.name}
     = stylesheet_link_tag "normalize.css", "font-awesome/css/font-awesome.min.css", "all"
     <script src="//codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="//b.st-hatena.com/js/bookmark_button.js" async="async"></script>
+    = javascript_include_tag "jquery-2.0.3.min.js"
     = javascript_include_tag "application"
     - if build?
       :javascript
