@@ -1,0 +1,30 @@
+---
+title: HTTPSに移行した
+date: 2015-12-01
+tags: HTTPS, HTTP/2
+---
+
+[さくらのSSL](http://ssl.sakura.ad.jp/)[^1]でRapidSSLが1年分無料になるキャンペーンをやっていたので、このブログを思い切ってHTTPSに移行した。最初は[CloudFlare](https://www.cloudflare.com/)を使おうかと考えていたのだけど、どうせならHTTP/2にしたいと思い、さくらのVPSにnginx 1.9.7を入れて運用してみることにした。
+
+概ね問題なく移行出来た気がするけど、まぁぶっちゃけた話、個人サイトでHTTPS, HTTP/2に急いで移行するメリットは無さそうだ。画像やJavaScript, CSSが大量に使われているサイトなら効果出るかもしれない？
+
+作業内容は主に下記4点。これといって難しいことはしていない。
+
+* nginxを最新の1.9.7に上げた[^2]
+* Strict-Transport-Securityヘッダを返すようにした
+* HTTPはHTTPSに301リダイレクトするようにした
+* サイト内のパーマリンク修正
+
+また、ずっと放置していた検索エンジン向けの対応もついでに行った。
+
+* robots.txt用意した
+* sitemap.xml用意した
+
+### 参考にしたサイト
+
+* [HTTPSへ - Weblog - Hail2u.net](https://hail2u.net/blog/webdesign/moved-to-https.html)
+* [nginxでHTTP2接続(not spdy3.1)の検証 - Qiita](http://qiita.com/takapan/items/756be5b47134f9e51a11)
+* [Nginx 1.9.5 でHTTP2を試そう！ - あすのかぜ](http://d.hatena.ne.jp/ASnoKaze/20150923/1442937121)
+
+[^1]: SSLの証明書を販売するサービスがHTTPのままなのでとてもシュール
+[^2]: [http://nginx.org/en/download.html](http://nginx.org/en/download.html)
