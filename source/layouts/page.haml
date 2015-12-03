@@ -10,7 +10,7 @@
     %meta{:content => "#{data.site.url}/images/logo.png", :property => "og:image:secure_url"}
     %link{:rel => "shortcut icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
     %link{:rel => "icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
-    %link{:rel => "canonical", :href => current_page.url}
+    %link{:rel => "canonical", :href => "#{data.site.url}#{current_page.url}"}
     %link{:rel => "license", :href => "//creativecommons.org/licenses/by-nc/3.0/deed.ja"}
     %link{:rel => "author", :href => "/about.html"}
     %title

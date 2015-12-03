@@ -11,7 +11,7 @@
     %link{:rel => "shortcut icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
     %link{:rel => "icon", :href => "/favicon.ico", :type => "image/vnd.microsoft.icon" }
     %link{:rel => "alternate", :title => data.site.name, :href => "/feed.xml", :type => "application/atom+xml"}
-    %link{:rel => "canonical", :href => current_article.url}
+    %link{:rel => "canonical", :href => "#{data.site.url}#{current_article.url}"}
     %link{:rel => "license", :href => "//creativecommons.org/licenses/by-nc/3.0/deed.ja"}
     %link{:rel => "author", :href => "/about.html"}
     - previous_article = current_article.previous_article
