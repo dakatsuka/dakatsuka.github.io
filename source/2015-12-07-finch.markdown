@@ -6,7 +6,7 @@ tags: Scala, Finagle, Finch
 
 これは[Scala Advent Calendar 2015（Adventar版）](http://www.adventar.org/calendars/904)7日目です。6日目はHiroyuki-Nagataさんの[Scalatraとnon-blocking APIについてメモ - なんとな～くしあわせ？の日記](http://nantonaku-shiawase.hatenablog.com/entry/2015/12/06/003259)でした。
 
-さて、わたしは[Finch](https://github.com/finagle/finch)というFinagleラッパーを紹介しようと思います。よくあるSinatraライクなマイクロフレームワークのひとつです。Hello Wordをブラウザに出力してはい終わりというのも味気ないので、MySQLに接続してレコードを取り出したり登録出来るところまで持っていきます。
+さて、7日目は[Finch](https://github.com/finagle/finch)というFinagleラッパーを紹介しようと思います。よくあるSinatraライクなマイクロフレームワークのひとつです。Hello Wordをブラウザに出力してはい終わりというのも味気ないので、MySQLに接続してレコードを取り出したり登録出来るところまで持っていきます。
 
 ## はじめに
 
@@ -53,7 +53,7 @@ libraryDependencies ++= Seq(
 
 ## 実装
 
-日本語の情報が一切ないことや公式のドキュメントがやや分かりづらいことを除けば[^1]Finch自体の使いかたはそんなに難しくないです。Finchよりもfinagle-mysqlの使いかたを調べるのに苦労したのは内緒です。
+日本語の情報がほとんどないことや公式のドキュメントがやや分かりづらいことを除けば[^1]Finch自体の使いかたはそんなに難しくないです。Finchよりもfinagle-mysqlの使いかたを調べるのに苦労したのは内緒です。
 
 今回はDBのCRUD操作をする`User.scala`と`Main.scala`の2ファイル書きました。
 
@@ -75,7 +75,7 @@ object User {
     client.select("SELECT * FROM users")(convertToEntity)
 
   def find(id: Long)(implicit client: Client): Future[Option[User]] =
-    client.prepare("SELECt * FROM users WHERE id = ?")(id) map { result =>
+    client.prepare("SELECT * FROM users WHERE id = ?")(id) map { result =>
       result.asInstanceOf[ResultSet].rows.map(convertToEntity).headOption
     }
 
@@ -192,8 +192,10 @@ $ curl http://localhost:8080/users/1
 
 Finchはいかがでしたか？
 
-Finagleのエコシステムの上に乗っているので、Finagleに慣れている人がサクッとREST APIを実装するには良い選択肢だと思います。Finagle使ったことない人にも、このコード量で静的型付けの恩恵を受けながらSinatraライクに開発出来るというのは魅力的に映るかもしれませんね。個人的にはエンドポイントの返り値が型で保証出来るのが高ポイントです。
+Finagleのエコシステムの上に乗っているので、Finagleに慣れている人がサクッとREST APIを実装するには良い選択肢だと思います。finagle-*なライブラリも当然使えます。Finagle使ったことない人にも、静的型付けの恩恵を受けながらSinatraライクに開発出来るというのは魅力的に映るかもしれませんね。
 
-ちなみに、似たようなフレームワークとして[http4s](http://http4s.org/)というものもあります。[ScalaのHTTPインターフェース http4s 超入門](https://blog.dakatsuka.jp/2015/11/14/http4s.html)で雑に紹介しているので、興味ある方はどうぞ。
+個人的にはエンドポイントの戻り値が型で保証出来るのが高ポイントです！
 
-[^1]: Scalaライブラリにはよくあること
+ちなみに、似たようなフレームワークとして[Finagle](https://twitter.github.io/finagle/), [Akka HTTP](http://doc.akka.io/docs/akka-stream-and-http-experimental/2.0-M2/scala/http/), [Scalatra](http://www.scalatra.org/), [http4s](http://http4s.org/)などがあります。http4sは[ScalaのHTTPインターフェース http4s 超入門](https://blog.dakatsuka.jp/2015/11/14/http4s.html)で雑に紹介しているので、興味ある方はどうぞ。
+
+[^1]: Scalaライブラリにはよくあることなので頑張って貢献したい…
