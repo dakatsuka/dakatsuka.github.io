@@ -14,7 +14,7 @@ tags: Scala, Lua
 libraryDependencies += "org.luaj" % "luaj-jse" % "3.0.1"
 ```
 
-ただ実行するだけなら`JsePlatform.standardGlobals().load`を使うだけです。また`loadFile`メソッドでファイルも指定できるようです。
+ただ実行するだけなら`JsePlatform.standardGlobals().load`を使います。また`loadFile`メソッドでファイルも指定できるようです。
 
 ```scala
 import org.luaj.vm2.lib.jse._
