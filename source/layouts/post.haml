@@ -71,10 +71,6 @@
                   "data-hatena-bookmark-layout" => "simple",
                   "title" => "このエントリーをはてなブックマークに追加"} はてブする
 
-          - if build?
-            .disqus
-              = disqus
-
         :javascript
           $(".share .facebook a").on('click', function(e) {
             e.preventDefault();
@@ -103,7 +99,7 @@
         %section.author#author(itemprop="author" itemscope itemtype="http://schema.org/Person")
           %p.avatar
             %img{:src => image_path("avatar.jpeg"), :width => 80, :height => 80, :alt => "avatar"}
-            
+
           %dl
             %dt Written by
             %dd.name(itemprop="name") Dai Akatsuka

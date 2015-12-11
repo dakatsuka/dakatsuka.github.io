@@ -7,7 +7,6 @@ gem "middleman-blog", "~> 3.5.3"
 gem "middleman-livereload", "~> 3.4.3"
 gem "middleman-deploy"
 gem "middleman-syntax"
-gem "middleman-disqus"
 gem "redcarpet"
 gem "erb2haml"
 
