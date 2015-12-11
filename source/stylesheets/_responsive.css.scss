@@ -1,7 +1,53 @@
+@media (max-width: 900px) {
+  body > header {
+    padding-bottom: 20px;
+    text-align: center;
+
+    nav {
+      position: static;
+      text-align: center;
+
+      ul li a {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
 @media (max-width: 640px) {
-  body > header nav ul li a {
-    margin-left: 10px;
-    margin-right: 10px;
+  body > header {
+    h1 {
+      text-align: left;
+      font-size: 90%;
+    }
+
+    p {
+      text-align: left;
+      font-size: 80%;
+      color: #666;
+    }
+
+    nav {
+      position: absolute;
+      top: 0;
+      right: 20px;
+
+      ul {
+        li {
+          a {
+            width: auto;
+            height: auto;
+            padding-left: 1em;
+            padding-right: 1em;
+            line-height: 3em;
+            font-size: 80%;
+          }
+
+          a:hover {
+          }
+        }
+      }
+    }
   }
 
   .page {
@@ -15,7 +61,7 @@
         padding: 1em 1em;
 
         h1 {
-          font-size: 160%;
+          font-size: 140%;
           text-align: left;
         }
       }
@@ -24,6 +70,11 @@
         margin: 0;
         padding: 1em;
         border: none;
+        line-height: 160%;
+
+        p, ul {
+          margin-bottom: 1.7em;
+        }
       }
     }
 
@@ -54,22 +105,6 @@
   }
 }
 
-@media (max-width: 900px) {
-  body > header {
-    padding-bottom: 20px;
-    text-align: center;
-
-    nav {
-      position: static;
-      text-align: center;
-
-      ul li a {
-        margin-bottom: 10px;
-      }
-    }
-  }
-}
-
 @media (min-width: 1500px) {
   body > header,
   body > footer {
@@ -96,6 +131,3 @@
     font-size: 110%;
   }
 }
-
-@media(min-width: 500px) { .my_adslot { width: 468px; height: 60px; } }
-@media(min-width: 800px) { .my_adslot { width: 728px; height: 90px; } }
