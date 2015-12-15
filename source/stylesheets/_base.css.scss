@@ -32,6 +32,11 @@ code {
   padding-right: .2em;
 }
 
+pre code {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 table {
   border: 1px solid #ccc;
 
