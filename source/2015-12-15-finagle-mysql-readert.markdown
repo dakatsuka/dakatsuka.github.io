@@ -35,13 +35,13 @@ import com.twitter.finagle.exp.mysql._
 case class User(id: Long, email: String, screen_name: String)
 
 object User {
-  def find(id: Long) = ReaderTFuture[Client, Option[User]] { client =>
+  def find(id: Long): ReaderTFuture[Client, Option[User]] = ReaderTFuture { client =>
     client.prepare("SELECT * FROM users WHERE id = ?")(id) map { result =>
       result.asInstanceOf[ResultSet].rows.map(convertToEntity).headOption
     }
   }
 
-  def create(email: String, screen_name: String) = ReaderTFuture[Client, Long] { client =>
+  def create(email: String, screen_name: String): ReaderTFuture[Client, Long] = ReaderTFuture { client =>
     client.prepare("INSERT INTO users (email, screen_name) VALUES(?, ?)")(email, screen_name) map { result =>
       result.asInstanceOf[OK].insertId
     }
