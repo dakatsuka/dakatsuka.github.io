@@ -30,11 +30,14 @@ pre {
 code {
   padding-left: .2em;
   padding-right: .2em;
+  background-color: #fcfcfc;
+  color: #333;
 }
 
 pre code {
   padding-left: 0;
   padding-right: 0;
+  background-color: transparent;
 }
 
 table {

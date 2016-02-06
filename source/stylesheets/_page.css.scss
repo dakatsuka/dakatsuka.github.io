@@ -48,6 +48,7 @@
 
       ul {
         margin-bottom: 1.7em;
+        padding-left: 1.5em;
       }
 
       ul li {
@@ -110,15 +111,15 @@
           margin-left: 0;
           padding-left: 1.5em;
           font-size: 85%;
+          line-height: 120%;
 
           li {
-            margin: 0 0 .4em 0;
+            margin: 0 0 .3em 0;
             padding: 0;
 
             p {
               margin: 0;
               padding: 0;
-              line-height: 110%;
             }
           }
         }
