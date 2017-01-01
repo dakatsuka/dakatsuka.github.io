@@ -125,6 +125,60 @@
         }
       }
 
+      .amazlet-box {
+        position: relative;
+        margin: 0 0 1em 0;
+        border: 1px solid #eee;
+        box-shadow: 2px 2px 2px rgba(200,200,200,0.2);
+
+        .amazlet-image {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          width: 130px;
+          margin: 0;
+          padding: 0;
+
+          img {
+            max-width: 110px;
+            max-height: 110px;
+            border: none;
+          }
+        }
+
+        .amazlet-info {
+          min-height: 110px;
+          border-left: 1px solid #eee;
+          background-color: #fefefe;
+          margin-left: 130px;
+          padding: 10px;
+        }
+
+        .amazlet-name {
+          margin-bottom: 1em;
+        }
+
+        .amazlet-powered-date {
+          margin-bottom: .8em;
+          font-size: 70%;
+          line-height: 110%;
+        }
+
+        .amazlet-detail,
+        .amazlet-link {
+          font-size: 90%;
+          line-height: 120%;
+        }
+
+        .amazlet-detail {
+          margin-bottom: .8em;
+        }
+
+        .amazlet-footer {
+          clear: both;
+        }
+      }
+
       .adsense {
         margin-top: 3em;
 
