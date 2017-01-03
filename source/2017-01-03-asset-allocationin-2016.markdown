@@ -11,8 +11,14 @@ tags: Asset
 当然ですが、投資は自己責任です。あまり他人のは参考にしないほうが良いと思われます。
 
 <style>
-img {
+.entry-content img {
   width: 60%;
+}
+
+@media (max-width: 900px) {
+  .entry-content img {
+    width: 100%;
+  }
 }
 </style>
 
