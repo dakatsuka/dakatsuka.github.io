@@ -111,9 +111,11 @@ configure :build do
 end
 
 activate :deploy do |deploy|
-  deploy.deploy_method = :git
-  deploy.branch        = 'master'
-  deploy.build_before  = true
+  deploy.deploy_method = :sftp
+  deploy.host   = "153.126.149.62"
+  deploy.port   = 22
+  deploy.user   = "akatsuka"
+  deploy.path   = "/var/www/blog.dakatsuka.jp"
 end
 
 activate :external_pipeline,
