@@ -16,7 +16,9 @@
     %link{:rel => "license", :href => "https://creativecommons.org/licenses/by-nc/3.0/deed.ja"}
     %link{:rel => "author", :href => "#{data.site.url}/about.html"}
     %title= data.site.name
-    = stylesheet_link_tag "normalize.css", "font-awesome/css/font-awesome.min.css", "all"
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/stylesheets/normalize.css"}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/font-awesome/css/font-awesome.min.css"}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/stylesheets/all.css"}
     = javascript_include_tag "jquery-2.0.3.min.js"
     = javascript_include_tag "application"
     - if build?
