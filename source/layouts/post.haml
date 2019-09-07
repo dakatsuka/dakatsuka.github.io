@@ -14,8 +14,8 @@
     %link{:rel => "canonical", :href => "#{data.site.url}#{current_article.url}"}
     %link{:rel => "license", :href => "//creativecommons.org/licenses/by-nc/3.0/deed.ja"}
     %link{:rel => "author", :href => "/about.html"}
-    - previous_article = current_article.previous_article
-    - next_article = current_article.next_article
+    - previous_article = current_article.article_previous
+    - next_article = current_article.article_next
     - if previous_article
       %link{:rel => "prev", :href => previous_article.url}
     - if next_article
