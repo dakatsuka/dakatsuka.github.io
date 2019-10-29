@@ -11,7 +11,7 @@ gem "kramdown"
 gem "puma"
 gem "rack-contrib"
 gem "erb2haml"
-gem "haml", "~> 4.0.7"
+gem "haml", "~> 5.0.0"
 
 # For feed.xml.builder
 gem "builder", "~> 3.0"
