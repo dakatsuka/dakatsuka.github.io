@@ -1,5 +1,5 @@
 theme = "harbor"
-baseurl = "https://blog.dakatsuka.jp"
+baseurl = "https://blog.dakatsuka.jp/"
 title = "dakatsuka's blog"
 paginate = 5
 languageCode = "ja"
@@ -33,28 +33,28 @@ googleAnalytics = "UA-45923728-1"
   identifier = "about"
   name = "About"
   icon = "fas fa-user fa-lg"
-  url = "/about.html"
+  url = "about.html"
   weight = 3
 
 [[params.nav]]
   identifier = "categories"
   name = "Categories"
   icon = "fas fa-folder-open fa-lg"
-  url = "/categories.html"
+  url = "categories.html"
   weight = 3
 
 [[params.nav]]
   identifier = "tags"
   name = "Tags"
   icon = "fas fa-tag fa-lg"
-  url = "/tags.html"
+  url = "tags.html"
   weight = 3
 
 [[params.nav]]
   identifier = "archives"
   name = "Archives"
   icon = "fas fa-archive fa-lg"
-  url = "/archives.html"
+  url = "archives.html"
   weight = 3
 
 [[params.social]]
@@ -72,7 +72,7 @@ googleAnalytics = "UA-45923728-1"
   mainSections = ["post"]
   favicon = "favicon.ico"
   customCSS = ["/css/override.css"]
-  images = ["/images/logo.png"]
+  images = ["images/logo.png"]
 
   [params.logo]
     url = "logo.png"
