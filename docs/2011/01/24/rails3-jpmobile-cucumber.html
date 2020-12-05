@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+<title>Ruby1.9 &#43; Rails3 &#43; jpmobileで構築したサイトをcucumberでテストするためのTips | dakatsuka&#39;s blog</title>
+
+
+  
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-45923728-1');
+  </script>
+  
+
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  href="https://blog.dakatsuka.jpindex.xml"
+  title="dakatsuka&#39;s blog"
+/>
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+<meta name="theme-color" content="#ffffff" />
+
+<meta property="og:title" content="Ruby1.9 &#43; Rails3 &#43; jpmobileで構築したサイトをcucumberでテストするためのTips" />
+<meta property="og:description" content="地味に苦戦したのでメモしておきます。これだから携帯向けサイトは大変・・・ 開発環境 Ruby 1.9.2-p136 Ruby on Rails 3.0.3 jpmobile 0.1.4 cucumber 0.10.0 ( capybara 0.4.0 ) インストール cucumberを動" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2011/01/24/rails3-jpmobile-cucumber.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+<meta property="article:published_time" content="2011-01-24T00:00:00+00:00" />
+<meta property="article:modified_time" content="2011-01-24T00:00:00+00:00" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+
+<meta name="twitter:title" content="Ruby1.9 &#43; Rails3 &#43; jpmobileで構築したサイトをcucumberでテストするためのTips"/>
+<meta name="twitter:description" content="地味に苦戦したのでメモしておきます。これだから携帯向けサイトは大変・・・ 開発環境 Ruby 1.9.2-p136 Ruby on Rails 3.0.3 jpmobile 0.1.4 cucumber 0.10.0 ( capybara 0.4.0 ) インストール cucumberを動"/>
+
+
+<link rel="stylesheet" href="https://blog.dakatsuka.jpfontawesome/css/all.min.css" />
+
+  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
+
+<link
+  id="dark-mode-theme"
+  rel="stylesheet"
+  href="https://blog.dakatsuka.jpcss/dark.css"
+/>
+
+<script>
+  var darkTheme = document.getElementById('dark-mode-theme')
+  var storedTheme = localStorage.getItem('dark-mode-storage')
+  if (storedTheme === 'dark') {
+    darkTheme.disabled = false
+  } else if (storedTheme === 'light') {
+    darkTheme.disabled = true
+  }
+</script>
+
+<script src="https://blog.dakatsuka.jpjs/bundle.js"></script>
+<script src="https://blog.dakatsuka.jpjs/instantpage.min.js" type="module" defer></script>
+<meta name="generator" content="Hugo 0.80.0-DEV" />
+  </head>
+  <body>
+    
+  
+
+
+
+
+  <header>
+    <nav class="navbar">
+  <div class="nav">
+    
+      <a href="https://blog.dakatsuka.jp" class="nav-logo">
+        <img
+          src="https://blog.dakatsuka.jpimages/logo.png"
+          width="80"
+          height="80"
+          alt="logo"
+        />
+      </a>
+    
+
+    <ul class="nav-links">
+      
+        
+          <li>
+            <a href="/about.html" id="About"
+              ><em class="fas fa-user fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/categories.html" id="Categories"
+              ><em class="fas fa-folder-open fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/tags.html" id="Tags"
+              ><em class="fas fa-tag fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/archives.html" id="Archives"
+              ><em class="fas fa-archive fa-lg"></em
+            ></a>
+          </li>
+          
+      
+    </ul>
+  </div>
+</nav>
+
+    <div class="intro-header">
+      <div class="container">
+        <div class="post-heading">
+          
+            <h1>
+              Ruby1.9 &#43; Rails3 &#43; jpmobileで構築したサイトをcucumberでテストするためのTips
+            </h1>
+          
+          
+            <span class="meta-post">
+  <em class="fa fa-calendar-alt"></em
+  >&nbsp;Jan 24, 2011
+  
+</span>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+    
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      
+  <p>地味に苦戦したのでメモしておきます。これだから携帯向けサイトは大変・・・</p>
+<p>開発環境</p>
+<ul>
+<li>Ruby 1.9.2-p136</li>
+<li>Ruby on Rails 3.0.3</li>
+<li>jpmobile 0.1.4</li>
+<li>cucumber 0.10.0 ( capybara 0.4.0 )</li>
+</ul>
+<h2 id="インストール">インストール</h2>
+<p>cucumberを動かすためのgemをインストールします。今回はバックエンドにcapybaraを使用します。（WebratはRails3だとうまく動きませんでした）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Gemfile</span>
+group <span style="color:#e6db74">:test</span> <span style="color:#66d9ef">do</span>
+  gem <span style="color:#e6db74">&#39;rspec-rails&#39;</span>
+  gem <span style="color:#e6db74">&#39;cucumber-rails&#39;</span>
+  gem <span style="color:#e6db74">&#39;capybara&#39;</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Bundlerでインストールし、cucumberをRailsプロジェクトに組み込みます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">bundle install
+rails g cucumber:install ja --rspec --capybara
+</code></pre></div><h2 id="capybaraのuseragentを偽装する">capybaraのUserAgentを偽装する</h2>
+<p>モバイルサイトのテストなので、UAを偽装してアクセスしたいところです。ところがcapybaraは、HTTPヘッダをカスタマイズする機能が標準では備わっていないようなので、自力で何とかしないといけません。ググってみると、<a href="http://aflatter.de/2010/06/testing-headers-and-ssl-with-cucumber-and-capybara/">Testing custom headers and ssl with Cucumber and Capybara</a> という記事を発見しました。ここにcapybaraでHTTPヘッダを変える方法が書いてあります。</p>
+<p>この記事を参考に下記ソースを features/support/headers_hack.rb に保存します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">module</span> RackTestMixin
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">self</span><span style="color:#f92672">.</span><span style="color:#a6e22e">included</span>(mod)
+    mod<span style="color:#f92672">.</span>class_eval <span style="color:#66d9ef">do</span>
+      <span style="color:#75715e"># This is where we save additional entries.</span>
+      <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hacked_env</span>
+        @hacked_env <span style="color:#f92672">||=</span> {}
+      <span style="color:#66d9ef">end</span>
+      
+      <span style="color:#75715e"># Alias the original method for further use.</span>
+      alias_method  <span style="color:#e6db74">:original_env</span>, <span style="color:#e6db74">:env</span>
+ 
+      <span style="color:#75715e"># Override the method to merge additional headers.</span>
+      <span style="color:#75715e"># Plus this implicitly makes it public.</span>
+      <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">env</span>
+        original_env<span style="color:#f92672">.</span>merge(hacked_env)
+      <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+ 
+<span style="color:#66d9ef">Capybara</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Driver</span><span style="color:#f92672">::</span><span style="color:#66d9ef">RackTest</span><span style="color:#f92672">.</span>send <span style="color:#e6db74">:include</span>, <span style="color:#66d9ef">RackTestMixin</span>
+ 
+<span style="color:#66d9ef">module</span> HeadersHackHelper
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_headers</span>(headers)
+    page<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>hacked_env<span style="color:#f92672">.</span>merge!(headers)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+ 
+<span style="color:#66d9ef">World</span>(<span style="color:#66d9ef">HeadersHackHelper</span>)
+</code></pre></div><p>そして、features/step_definitions/mobile_support.rb というファイルを作成して、下記コードを貼り付けます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># coding: utf-8</span>
+ 
+<span style="color:#960050;background-color:#1e0010">前提</span> <span style="color:#e6db74">/^携帯端末でアクセスしている$/</span> <span style="color:#66d9ef">do</span>
+  add_headers({<span style="color:#e6db74">&#39;HTTP_USER_AGENT&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;KDDI-CA39 UP.Browser/6.2.0.13.1.5 (GUI) MMP/2.0&#39;</span>,
+               <span style="color:#e6db74">&#39;HTTP_X_UP_SUBNO&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;subscriber&#39;</span>})
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>これで、各シナリオの前提に「携帯端末でアクセスしている」と書くことによってUAが偽装された状態でテストが実行されます。</p>
+<p>ちなみに偽装するUAは、セッション・クッキーの仕様上、DoCoMoではなくauをお勧めします。</p>
+<h2 id="invalid-byte-sequence-in-shift_jis-を黙らせる">invalid byte sequence in Shift_JIS を黙らせる</h2>
+<p>capybaraの仕様なのかcucumberの仕様なのか分からないのですが、フォームで入力される文字はUTF-8固定になるようです。</p>
+<p>jpmobileのmobile_filterを有効にしていると、半角カタカナなどが混ざったデータがポストされた時に invalid byte sequence in Shift_JIS というエラーが発生してしまいます。</p>
+<p>これを回避するために、テストが実行される時のみmobile_filterを動作させないようにします。若干無理矢理ですが、config/application.rb の mobile_filter 呼び出し箇所を次のように変更します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">unless</span> <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>env <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;test&#34;</span>
+  config<span style="color:#f92672">.</span>jpmobile<span style="color:#f92672">.</span>mobile_filter
+  config<span style="color:#f92672">.</span>jpmobile<span style="color:#f92672">.</span>form_accept_charset_conversion <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>以上で、通常のサイトをテストする感じでモバイルサイトもテスト出来るようになるはずです。</p>
+<p>何か間違っている箇所やもっとベストな方法があったら教えて下さい！</p>
+
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://blog.dakatsuka.jp/tags/ruby.html">Ruby</a
+            >&nbsp;
+          
+            <a href="https://blog.dakatsuka.jp/tags/rails.html">Rails</a
+            >&nbsp;
+          
+        </div>
+      
+    </article>
+    
+    
+      
+
+    
+  </div>
+
+    <footer>
+  
+  <div>
+    
+      <a href="https://twitter.com/d_akatsuka" name="twitter"
+        ><em class="fab fa-twitter"></em
+      ></a>
+    
+      <a href="https://github.com/dakatsuka" name="github"
+        ><em class="fab fa-github"></em
+      ></a>
+    
+  </div>
+
+
+  <div class="container">
+    <p class="credits copyright">
+      <a href="https://blog.dakatsuka.jpabout">Dai Akatsuka</a>
+      &nbsp;&copy;
+      2017
+      
+        &nbsp;/&nbsp;
+        <a href="https://blog.dakatsuka.jp">dakatsuka&#39;s blog</a>
+      
+      &nbsp;&ndash;&nbsp;
+      <em class="fas fa-moon" id="dark-mode-toggle"></em>
+    </p>
+
+    <p class="credits theme-by">
+       <a href="https://gohugo.io">Hugo</a>&nbsp;
+      
+      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
+    </p>
+  </div>
+</footer>
+
+  </body>
+</html>

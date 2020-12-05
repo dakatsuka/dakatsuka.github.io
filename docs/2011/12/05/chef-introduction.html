@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+<title>Chefで始めるシステム構成管理入門 その1 | dakatsuka&#39;s blog</title>
+
+
+  
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-45923728-1');
+  </script>
+  
+
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  href="https://blog.dakatsuka.jpindex.xml"
+  title="dakatsuka&#39;s blog"
+/>
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+<meta name="theme-color" content="#ffffff" />
+
+<meta property="og:title" content="Chefで始めるシステム構成管理入門 その1" />
+<meta property="og:description" content="最近 Chef というシステムの構成を自動で管理するツールを使い始めました。同様のツールとして Puppet が有名ですが、レシピを内部DSLで記述出来るほうが自分" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2011/12/05/chef-introduction.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+<meta property="article:published_time" content="2011-12-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2011-12-05T00:00:00+00:00" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+
+<meta name="twitter:title" content="Chefで始めるシステム構成管理入門 その1"/>
+<meta name="twitter:description" content="最近 Chef というシステムの構成を自動で管理するツールを使い始めました。同様のツールとして Puppet が有名ですが、レシピを内部DSLで記述出来るほうが自分"/>
+
+
+<link rel="stylesheet" href="https://blog.dakatsuka.jpfontawesome/css/all.min.css" />
+
+  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
+
+<link
+  id="dark-mode-theme"
+  rel="stylesheet"
+  href="https://blog.dakatsuka.jpcss/dark.css"
+/>
+
+<script>
+  var darkTheme = document.getElementById('dark-mode-theme')
+  var storedTheme = localStorage.getItem('dark-mode-storage')
+  if (storedTheme === 'dark') {
+    darkTheme.disabled = false
+  } else if (storedTheme === 'light') {
+    darkTheme.disabled = true
+  }
+</script>
+
+<script src="https://blog.dakatsuka.jpjs/bundle.js"></script>
+<script src="https://blog.dakatsuka.jpjs/instantpage.min.js" type="module" defer></script>
+<meta name="generator" content="Hugo 0.80.0-DEV" />
+  </head>
+  <body>
+    
+  
+
+
+
+
+  <header>
+    <nav class="navbar">
+  <div class="nav">
+    
+      <a href="https://blog.dakatsuka.jp" class="nav-logo">
+        <img
+          src="https://blog.dakatsuka.jpimages/logo.png"
+          width="80"
+          height="80"
+          alt="logo"
+        />
+      </a>
+    
+
+    <ul class="nav-links">
+      
+        
+          <li>
+            <a href="/about.html" id="About"
+              ><em class="fas fa-user fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/categories.html" id="Categories"
+              ><em class="fas fa-folder-open fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/tags.html" id="Tags"
+              ><em class="fas fa-tag fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/archives.html" id="Archives"
+              ><em class="fas fa-archive fa-lg"></em
+            ></a>
+          </li>
+          
+      
+    </ul>
+  </div>
+</nav>
+
+    <div class="intro-header">
+      <div class="container">
+        <div class="post-heading">
+          
+            <h1>
+              Chefで始めるシステム構成管理入門 その1
+            </h1>
+          
+          
+            <span class="meta-post">
+  <em class="fa fa-calendar-alt"></em
+  >&nbsp;Dec 5, 2011
+  
+</span>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+    
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      
+  <p>最近 Chef というシステムの構成を自動で管理するツールを使い始めました。同様のツールとして Puppet が有名ですが、レシピを内部DSLで記述出来るほうが自分には合っていると思ったので、今回は Chef を採用しました。折角覚えたので復習も兼ねてエントリを起こしてみます。このエントリがChefの導入を検討している方への手助けになれば幸いです。</p>
+<h2 id="chefの仕組み--意外と依存関係が面倒なchef-server">Chefの仕組み – 意外と依存関係が面倒なChef Server</h2>
+<figure>
+    <img src="/media/2011-12-05-chef-introduction/chef.png"/> 
+</figure>
+
+<p>Chefの基本的な仕組みは、サーバに設定を置き、クライアントがサーバに問い合わせるPull型のシステムです。クライアントはサーバからのレスポンスに従いパッケージのインストールなどを行います。しかし、Chef ServerはRuby(Merb), CouchDB, RabbitMQなど依存が多く、お世辞にもシンプルなシステムとは言えません。そのせいかネットで検索して出てくる情報もサーバを必要としない Chef-Solo を使ったものが多い印象です。</p>
+<h2 id="最低限覚えておきたい用語">最低限覚えておきたい用語</h2>
+<p>Chefをインストールする前に覚えておきたい用語集です。たくさんありますがどれもChefを使いこなすためには必須の用語と言えるでしょう。ざっくりと概要を書いてみます。</p>
+<h3 id="knife">knife</h3>
+<p>Chef Server上で使用する管理コマンドです。後述のClinet, Node, Environmentなど全てこのコマンドで制御します。</p>
+<h3 id="client">Client</h3>
+<p>Chef Serverに接続するもの全てを指します。Chef Serverからみた場合、Chefで管理するサーバ群は勿論のこと、knifeコマンドを使用する管理者もClinetになります。</p>
+<h3 id="node">Node</h3>
+<p>Nodeは、Chef Serverに接続するClientのうち、Chefで管理するサーバ／マシンを指します。Clientとごっちゃになりやすいので注意。</p>
+<figure>
+    <img src="/media/2011-12-05-chef-introduction/chef-node-client.png"/> 
+</figure>
+
+<p>ClientとNodeの関係を図で表すと上のようなイメージになります。</p>
+<h3 id="attributes">Attributes</h3>
+<p>Attributesは、NodeのKernelのバージョンやディストリビューションの種類・バージョン、IPアドレスなどの様々な情報が記述されています。これらの情報はCookbookから参照することが可能で、Cookbook, Role, Environmentで値を追加・上書きすることも出来ます。</p>
+<h3 id="cookbook">Cookbook</h3>
+<p>Cookbookは、NodeにソフトウェアをインストールためのレシピでChefのメイン機能ですね。実際はインストールだけではなくてサーバの各種設定を変更したりユーザーやグループを作成したりと何でも出来ます。ERBで記述するTemplatesを使って動的に*.confを生成する事も可能です。CookbookはNodeに直接割り当てるか、もしくはRole経由で使用します。</p>
+<h3 id="role">Role</h3>
+<p>Roleは、Cookbookを複数束ねることができ、同じ構成のNodeをたくさん作るときに使用します。例えば昨今のWebサービスですと proxy, app, db という風に定義をするとイイ感じです。RoleはNodeに対して複数割り当てることが可能です。</p>
+<h3 id="environment">Environment</h3>
+<p>Environmentは、環境名を定義してNodeに割り当てる事ができます。RailsのEnvironmentと同じ概念ですね。環境毎にAttributesの値を変えたり、使用するCookbookのバージョンを指定・固定したり出来ます。本番環境とステージング環境ではデータベースのアドレスが違うだけなんて構成はよくあると思いますが、そういう時にこのEnvironmentが活躍します。</p>
+<p>EnvironmentとRoleを制する者はChefを制す（大げさ）</p>
+<hr>
+<p>と、長くなったのでその1はここで終了です。その2では実際にChef Serverをインストールして環境を整えるところまで書こうと思います。多分今週中には…</p>
+
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://blog.dakatsuka.jp/tags/chef.html">Chef</a
+            >&nbsp;
+          
+        </div>
+      
+    </article>
+    
+    
+      
+
+    
+  </div>
+
+    <footer>
+  
+  <div>
+    
+      <a href="https://twitter.com/d_akatsuka" name="twitter"
+        ><em class="fab fa-twitter"></em
+      ></a>
+    
+      <a href="https://github.com/dakatsuka" name="github"
+        ><em class="fab fa-github"></em
+      ></a>
+    
+  </div>
+
+
+  <div class="container">
+    <p class="credits copyright">
+      <a href="https://blog.dakatsuka.jpabout">Dai Akatsuka</a>
+      &nbsp;&copy;
+      2017
+      
+        &nbsp;/&nbsp;
+        <a href="https://blog.dakatsuka.jp">dakatsuka&#39;s blog</a>
+      
+      &nbsp;&ndash;&nbsp;
+      <em class="fas fa-moon" id="dark-mode-toggle"></em>
+    </p>
+
+    <p class="credits theme-by">
+       <a href="https://gohugo.io">Hugo</a>&nbsp;
+      
+      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
+    </p>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" width="1200" height="850" onload="init(evt)" viewBox="0 0 1200 850" xmlns="http://www.w3.org/2000/svg" >
+    <defs >
+        <linearGradient id="background" y1="0" y2="1" x1="0" x2="0" >
+            <stop stop-color="#eeeeee" offset="5%" />
+            <stop stop-color="#eeeeb0" offset="95%" />
+        </linearGradient>
+    </defs>
+    <style type="text/css" >
+	rect[rx]:hover { stroke:black; stroke-width:1; }
+	text:hover { stroke:black; stroke-width:1; stroke-opacity:0.35; }
+    </style>
+    <script type="text/ecmascript" >
+	var details;
+	function init(evt) {
+		details = document.getElementById(&quot;details&quot;).
+		    firstChild;
+	}
+	function s(info) { details.nodeValue = info; }
+	function c() { details.nodeValue = &quot; &quot;; }
+    </script>
+    <rect x="0.0" y="0.0" width="1200.0" height="850.0" fill="url(#background)" />
+    <text text-anchor="middle" x="600" y="24" font-size="17" font-family="Verdana" fill="rgb(0, 0, 0)" >Flame Graph</text>
+    <text text-anchor="left" x="10" y="833" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" >Function:</text>
+    <text text-anchor="left" x="70" y="833" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" id="details" > </text>
+    <rect x="10.0" y="785.0" width="21.8" height="15.0" fill="rgb(205,142,141)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal9HashTableINS0_29UnseededNumberDictionaryShapeEjE9FindEntryEPNS0_7IsolateEj (103 samples, 1.84%)&quot;)" onmouseout="c()" />
+    <rect x="31.8" y="257.0" width="0.2" height="15.0" fill="rgb(240,219,168)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal4Heap10DoScavengeEPNS0_13ObjectVisitorEPh (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="31.8" y="273.0" width="0.2" height="15.0" fill="rgb(239,217,167)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal4Heap8ScavengeEv (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="31.8" y="289.0" width="0.2" height="15.0" fill="rgb(238,214,167)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal4Heap24PerformGarbageCollectionENS0_16GarbageCollectorEPNS0_8GCTracerE (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="31.8" y="305.0" width="0.2" height="15.0" fill="rgb(237,212,166)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal4Heap14CollectGarbageENS0_15AllocationSpaceENS0_16GarbageCollectorE (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="31.8" y="321.0" width="0.2" height="15.0" fill="rgb(236,209,165)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal7Runtime9PerformGCEPNS0_6ObjectE (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="31.8" y="337.0" width="0.2" height="15.0" fill="rgb(235,207,164)" rx="2" ry="2" onmouseover="s(&quot;&lt;&lt; internal code &gt;&gt; (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="31.8" y="353.0" width="0.2" height="15.0" fill="rgb(234,205,164)" rx="2" ry="2" onmouseover="s(&quot;formatValue at util.js position 8390 (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="31.8" y="369.0" width="0.2" height="15.0" fill="rgb(233,202,163)" rx="2" ry="2" onmouseover="s(&quot;inspect at util.js position 6008 (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="31.8" y="385.0" width="0.2" height="15.0" fill="rgb(232,200,162)" rx="2" ry="2" onmouseover="s(&quot;&lt;&lt; adaptor &gt;&gt; (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="31.8" y="401.0" width="0.2" height="15.0" fill="rgb(231,197,161)" rx="2" ry="2" onmouseover="s(&quot;(anon) as exports.format at util.js position 2488 (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="31.8" y="417.0" width="0.2" height="15.0" fill="rgb(230,195,161)" rx="2" ry="2" onmouseover="s(&quot;&lt;&lt; internal &gt;&gt; (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="31.8" y="433.0" width="0.2" height="15.0" fill="rgb(228,193,160)" rx="2" ry="2" onmouseover="s(&quot;(anon) as exports.log at console.js position 2478 (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="31.8" y="449.0" width="0.2" height="15.0" fill="rgb(227,190,159)" rx="2" ry="2" onmouseover="s(&quot;&lt;&lt; adaptor &gt;&gt; (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="32.0" y="369.0" width="0.2" height="15.0" fill="rgb(233,202,163)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal8JSObject11LocalLookupEPNS0_6StringEPNS0_12LookupResultE (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="32.0" y="385.0" width="0.2" height="15.0" fill="rgb(232,200,162)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal6Object6LookupEPNS0_6StringEPNS0_12LookupResultE (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="32.0" y="401.0" width="0.2" height="15.0" fill="rgb(231,197,161)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal13LookupForReadEPNS0_6ObjectEPNS0_6StringEPNS0_12LookupResultE (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="32.2" y="337.0" width="0.2" height="15.0" fill="rgb(235,207,164)" rx="2" ry="2" onmouseover="s(&quot;libc.so.1`pthread_getspecific (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="32.2" y="353.0" width="0.2" height="15.0" fill="rgb(234,205,164)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal6Thread14GetThreadLocalENS1_15LocalStorageKeyE (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="32.4" y="337.0" width="0.2" height="15.0" fill="rgb(235,207,164)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal6InvokeEbNS0_6HandleINS0_10JSFunctionEEENS1_INS0_6ObjectEEEiPPPS4_Pb (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="32.4" y="353.0" width="0.2" height="15.0" fill="rgb(234,205,164)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal9Execution4CallENS0_6HandleINS0_6ObjectEEES4_iPPPS3_Pbb (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="32.2" y="369.0" width="0.4" height="15.0" fill="rgb(233,202,163)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal6Object28GetPropertyWithDefinedGetterEPS1_PNS0_10JSFunctionE (2 samples, 0.04%)&quot;)" onmouseout="c()" />
+    <rect x="32.2" y="385.0" width="0.4" height="15.0" fill="rgb(232,200,162)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal6Object23GetPropertyWithCallbackEPS1_S2_PNS0_6StringES2_ (2 samples, 0.04%)&quot;)" onmouseout="c()" />
+    <rect x="32.2" y="401.0" width="0.4" height="15.0" fill="rgb(231,197,161)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal6Object11GetPropertyEPS1_PNS0_12LookupResultEPNS0_6StringEP18PropertyAttributes (2 samples, 0.04%)&quot;)" onmouseout="c()" />
+    <rect x="32.0" y="417.0" width="0.6" height="15.0" fill="rgb(230,195,161)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal6LoadIC4LoadENS0_16InlineCacheStateENS0_6HandleINS0_6ObjectEEENS3_INS0_6StringEEE (3 samples, 0.05%)&quot;)" onmouseout="c()" />
+    <rect x="32.0" y="433.0" width="0.6" height="15.0" fill="rgb(228,193,160)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal11LoadIC_MissENS0_9ArgumentsEPNS0_7IsolateE (3 samples, 0.05%)&quot;)" onmouseout="c()" />
+    <rect x="32.0" y="449.0" width="0.6" height="15.0" fill="rgb(227,190,159)" rx="2" ry="2" onmouseover="s(&quot;&lt;&lt; internal code &gt;&gt; (3 samples, 0.05%)&quot;)" onmouseout="c()" />
+    <rect x="1189.8" y="33.0" width="0.2" height="15.0" fill="rgb(255,255,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (1 samples, 0.02%)&quot;)" onmouseout="c()" />
+    <rect x="1184.7" y="49.0" width="5.3" height="15.0" fill="rgb(254,249,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (25 samples, 0.45%)&quot;)" onmouseout="c()" />
+    <rect x="1162.9" y="65.0" width="27.1" height="15.0" fill="rgb(253,242,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (128 samples, 2.29%)&quot;)" onmouseout="c()" />
+    <rect x="1097.2" y="81.0" width="92.8" height="15.0" fill="rgb(252,236,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (439 samples, 7.86%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="1100.214759090095" y="91.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (439 samples, 7.86%)&quot;)" onmouseout="c()" >fib at /tmp..</text>
+    <rect x="976.3" y="97.0" width="213.7" height="15.0" fill="rgb(251,230,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (1011 samples, 18.11%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="979.31918323482" y="107.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (1011 samples, 18.11%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js positi..</text>
+    <rect x="770.5" y="113.0" width="419.5" height="15.0" fill="rgb(250,224,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (1985 samples, 35.55%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="773.4585348379007" y="123.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (1985 samples, 35.55%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="548.1" y="129.0" width="641.9" height="15.0" fill="rgb(249,218,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (3037 samples, 54.40%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="551.1121260970804" y="139.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (3037 samples, 54.40%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="352.2" y="145.0" width="837.8" height="15.0" fill="rgb(248,211,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (3964 samples, 71.00%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="355.18520508687084" y="155.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (3964 samples, 71.00%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="205.3" y="161.0" width="984.7" height="15.0" fill="rgb(247,205,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (4659 samples, 83.45%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="208.2928533046749" y="171.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (4659 samples, 83.45%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="121.8" y="177.0" width="1068.2" height="15.0" fill="rgb(245,199,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5054 samples, 90.52%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="124.80727207594482" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5054 samples, 90.52%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="79.7" y="193.0" width="1110.3" height="15.0" fill="rgb(244,193,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5253 samples, 94.09%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="82.74744760881246" y="203.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5253 samples, 94.09%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="56.9" y="209.0" width="1133.1" height="15.0" fill="rgb(243,188,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5361 samples, 96.02%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="59.92101020956475" y="219.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5361 samples, 96.02%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="46.6" y="225.0" width="1143.4" height="15.0" fill="rgb(242,182,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5410 samples, 96.90%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="49.56457101916532" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5410 samples, 96.90%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="40.4" y="241.0" width="1149.6" height="15.0" fill="rgb(241,176,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5439 samples, 97.42%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="43.43524986566362" y="251.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5439 samples, 97.42%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="35.8" y="257.0" width="1154.2" height="15.0" fill="rgb(240,170,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5461 samples, 97.81%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="38.78542002507612" y="267.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5461 samples, 97.81%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="33.9" y="273.0" width="1156.1" height="15.0" fill="rgb(239,164,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5470 samples, 97.98%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="36.88321690847215" y="283.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5470 samples, 97.98%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="33.2" y="289.0" width="1156.8" height="15.0" fill="rgb(238,159,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5473 samples, 98.03%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="36.24914920293749" y="299.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5473 samples, 98.03%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="32.6" y="305.0" width="1157.4" height="15.0" fill="rgb(237,153,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="35.61508149740283" y="315.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="32.6" y="321.0" width="1157.4" height="15.0" fill="rgb(236,147,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="35.61508149740283" y="331.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="32.6" y="337.0" width="1157.4" height="15.0" fill="rgb(235,142,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="35.61508149740283" y="347.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="32.6" y="353.0" width="1157.4" height="15.0" fill="rgb(234,136,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="35.61508149740283" y="363.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="32.6" y="369.0" width="1157.4" height="15.0" fill="rgb(233,131,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="35.61508149740283" y="379.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="32.6" y="385.0" width="1157.4" height="15.0" fill="rgb(232,126,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="35.61508149740283" y="395.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="32.6" y="401.0" width="1157.4" height="15.0" fill="rgb(231,120,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="35.61508149740283" y="411.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="32.6" y="417.0" width="1157.4" height="15.0" fill="rgb(230,115,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="35.61508149740283" y="427.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="32.6" y="433.0" width="1157.4" height="15.0" fill="rgb(228,110,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="35.61508149740283" y="443.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="32.6" y="449.0" width="1157.4" height="15.0" fill="rgb(227,104,0)" rx="2" ry="2" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="35.61508149740283" y="459.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;fib at /tmp/fib.js position 124 (5476 samples, 98.08%)&quot;)" onmouseout="c()" >fib at /tmp/fib.js position 124</text>
+    <rect x="31.8" y="465.0" width="1158.2" height="15.0" fill="rgb(226,99,0)" rx="2" ry="2" onmouseover="s(&quot;(anon) as  (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="475.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;(anon) as  (5480 samples, 98.16%)&quot;)" onmouseout="c()" >(anon) as </text>
+    <rect x="31.8" y="481.0" width="1158.2" height="15.0" fill="rgb(225,94,0)" rx="2" ry="2" onmouseover="s(&quot;&lt;&lt; internal &gt;&gt; (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="491.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;&lt;&lt; internal &gt;&gt; (5480 samples, 98.16%)&quot;)" onmouseout="c()" >&lt;&lt; internal &gt;&gt;</text>
+    <rect x="31.8" y="497.0" width="1158.2" height="15.0" fill="rgb(224,89,0)" rx="2" ry="2" onmouseover="s(&quot;(anon) as Module._compile at module.js position 20766 (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="507.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;(anon) as Module._compile at module.js position 20766 (5480 samples, 98.16%)&quot;)" onmouseout="c()" >(anon) as Module._compile at module.js position 20766</text>
+    <rect x="31.8" y="513.0" width="1158.2" height="15.0" fill="rgb(223,84,0)" rx="2" ry="2" onmouseover="s(&quot;(anon) as Module._extensions..js at module.js position 25888 (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="523.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;(anon) as Module._extensions..js at module.js position 25888 (5480 samples, 98.16%)&quot;)" onmouseout="c()" >(anon) as Module._extensions..js at module.js position 25888</text>
+    <rect x="31.8" y="529.0" width="1158.2" height="15.0" fill="rgb(222,79,0)" rx="2" ry="2" onmouseover="s(&quot;(anon) as Module.load at module.js position 19354 (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="539.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;(anon) as Module.load at module.js position 19354 (5480 samples, 98.16%)&quot;)" onmouseout="c()" >(anon) as Module.load at module.js position 19354</text>
+    <rect x="31.8" y="545.0" width="1158.2" height="15.0" fill="rgb(221,74,0)" rx="2" ry="2" onmouseover="s(&quot;(anon) as Module._load at module.js position 16020 (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="555.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;(anon) as Module._load at module.js position 16020 (5480 samples, 98.16%)&quot;)" onmouseout="c()" >(anon) as Module._load at module.js position 16020</text>
+    <rect x="31.8" y="561.0" width="1158.2" height="15.0" fill="rgb(220,69,0)" rx="2" ry="2" onmouseover="s(&quot;(anon) as Module.runMain at module.js position 27000 (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="571.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;(anon) as Module.runMain at module.js position 27000 (5480 samples, 98.16%)&quot;)" onmouseout="c()" >(anon) as Module.runMain at module.js position 27000</text>
+    <rect x="31.8" y="577.0" width="1158.2" height="15.0" fill="rgb(219,64,0)" rx="2" ry="2" onmouseover="s(&quot;(anon) as startup.process._tickCallback at node.js position 12450 (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="587.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;(anon) as startup.process._tickCallback at node.js position 12450 (5480 samples, 98.16%)&quot;)" onmouseout="c()" >(anon) as startup.process._tickCallback at node.js position 12450</text>
+    <rect x="31.8" y="593.0" width="1158.2" height="15.0" fill="rgb(218,59,0)" rx="2" ry="2" onmouseover="s(&quot;&lt;&lt; internal &gt;&gt; (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="603.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;&lt;&lt; internal &gt;&gt; (5480 samples, 98.16%)&quot;)" onmouseout="c()" >&lt;&lt; internal &gt;&gt;</text>
+    <rect x="31.8" y="609.0" width="1158.2" height="15.0" fill="rgb(217,54,0)" rx="2" ry="2" onmouseover="s(&quot;&lt;&lt; entry &gt;&gt; (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="619.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;&lt;&lt; entry &gt;&gt; (5480 samples, 98.16%)&quot;)" onmouseout="c()" >&lt;&lt; entry &gt;&gt;</text>
+    <rect x="31.8" y="625.0" width="1158.2" height="15.0" fill="rgb(216,49,0)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal6InvokeEbNS0_6HandleINS0_10JSFunctionEEENS1_INS0_6ObjectEEEiPPPS4_Pb (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="635.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;node`_ZN2v88internal6InvokeEbNS0_6HandleINS0_10JSFunctionEEENS1_INS0_6ObjectEEEiPPPS4_Pb (5480 samples, 98.16%)&quot;)" onmouseout="c()" >node`_ZN2v88internal6InvokeEbNS0_6HandleINS0_10JSFunctionEEENS1_INS0_6ObjectEEEiPPPS4_Pb</text>
+    <rect x="31.8" y="641.0" width="1158.2" height="15.0" fill="rgb(215,45,0)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88internal9Execution4CallENS0_6HandleINS0_6ObjectEEES4_iPPPS3_Pbb (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="651.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;node`_ZN2v88internal9Execution4CallENS0_6HandleINS0_6ObjectEEES4_iPPPS3_Pbb (5480 samples, 98.16%)&quot;)" onmouseout="c()" >node`_ZN2v88internal9Execution4CallENS0_6HandleINS0_6ObjectEEES4_iPPPS3_Pbb</text>
+    <rect x="31.8" y="657.0" width="1158.2" height="15.0" fill="rgb(214,40,0)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN2v88Function4CallENS_6HandleINS_6ObjectEEEiPNS1_INS_5ValueEEE (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="667.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;node`_ZN2v88Function4CallENS_6HandleINS_6ObjectEEEiPNS1_INS_5ValueEEE (5480 samples, 98.16%)&quot;)" onmouseout="c()" >node`_ZN2v88Function4CallENS_6HandleINS_6ObjectEEEiPNS1_INS_5ValueEEE</text>
+    <rect x="31.8" y="673.0" width="1158.2" height="15.0" fill="rgb(212,35,0)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN4node4TickEv (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="683.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;node`_ZN4node4TickEv (5480 samples, 98.16%)&quot;)" onmouseout="c()" >node`_ZN4node4TickEv</text>
+    <rect x="31.8" y="689.0" width="1158.2" height="15.0" fill="rgb(211,31,0)" rx="2" ry="2" onmouseover="s(&quot;node`uv__prepare (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="699.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;node`uv__prepare (5480 samples, 98.16%)&quot;)" onmouseout="c()" >node`uv__prepare</text>
+    <rect x="31.8" y="705.0" width="1158.2" height="15.0" fill="rgb(210,26,0)" rx="2" ry="2" onmouseover="s(&quot;node`ev_invoke_pending (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="715.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;node`ev_invoke_pending (5480 samples, 98.16%)&quot;)" onmouseout="c()" >node`ev_invoke_pending</text>
+    <rect x="31.8" y="721.0" width="1158.2" height="15.0" fill="rgb(209,22,0)" rx="2" ry="2" onmouseover="s(&quot;node`ev_run (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="731.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;node`ev_run (5480 samples, 98.16%)&quot;)" onmouseout="c()" >node`ev_run</text>
+    <rect x="31.8" y="737.0" width="1158.2" height="15.0" fill="rgb(208,17,0)" rx="2" ry="2" onmouseover="s(&quot;node`uv_run (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="747.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;node`uv_run (5480 samples, 98.16%)&quot;)" onmouseout="c()" >node`uv_run</text>
+    <rect x="31.8" y="753.0" width="1158.2" height="15.0" fill="rgb(207,13,0)" rx="2" ry="2" onmouseover="s(&quot;node`_ZN4node5StartEiPPc (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="763.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;node`_ZN4node5StartEiPPc (5480 samples, 98.16%)&quot;)" onmouseout="c()" >node`_ZN4node5StartEiPPc</text>
+    <rect x="31.8" y="769.0" width="1158.2" height="15.0" fill="rgb(206,9,0)" rx="2" ry="2" onmouseover="s(&quot;node`main (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="779.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;node`main (5480 samples, 98.16%)&quot;)" onmouseout="c()" >node`main</text>
+    <rect x="31.8" y="785.0" width="1158.2" height="15.0" fill="rgb(205,7,3)" rx="2" ry="2" onmouseover="s(&quot;node`_start (5480 samples, 98.16%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="34.76965789002328" y="795.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;node`_start (5480 samples, 98.16%)&quot;)" onmouseout="c()" >node`_start</text>
+    <rect x="10.0" y="801.0" width="1180.0" height="15.0" fill="rgb(204,0,0)" rx="2" ry="2" onmouseover="s(&quot;all samples (5583 samples, 100%)&quot;)" onmouseout="c()" />
+    <text text-anchor="left" x="13" y="811.5" font-size="12" font-family="Verdana" fill="rgb(0, 0, 0)" onmouseover="s(&quot;all samples (5583 samples, 100%)&quot;)" onmouseout="c()" ></text>
+</svg>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+<title>Akka HTTPで認証機能を手軽に実装する方法 | dakatsuka&#39;s blog</title>
+
+
+  
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-45923728-1');
+  </script>
+  
+
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  href="https://blog.dakatsuka.jpindex.xml"
+  title="dakatsuka&#39;s blog"
+/>
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+<meta name="theme-color" content="#ffffff" />
+
+<meta property="og:title" content="Akka HTTPで認証機能を手軽に実装する方法" />
+<meta property="og:description" content="これはScala Advent Calendar 2016の5日目です。埋まっていなかったので1日遅れでしれっと書くよ。 Akka HTTPには AuthenticationDirective という認証のためのディレクティブが" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+<meta property="article:published_time" content="2016-12-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2016-12-05T00:00:00+00:00" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+
+<meta name="twitter:title" content="Akka HTTPで認証機能を手軽に実装する方法"/>
+<meta name="twitter:description" content="これはScala Advent Calendar 2016の5日目です。埋まっていなかったので1日遅れでしれっと書くよ。 Akka HTTPには AuthenticationDirective という認証のためのディレクティブが"/>
+
+
+<link rel="stylesheet" href="https://blog.dakatsuka.jpfontawesome/css/all.min.css" />
+
+  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
+
+<link
+  id="dark-mode-theme"
+  rel="stylesheet"
+  href="https://blog.dakatsuka.jpcss/dark.css"
+/>
+
+<script>
+  var darkTheme = document.getElementById('dark-mode-theme')
+  var storedTheme = localStorage.getItem('dark-mode-storage')
+  if (storedTheme === 'dark') {
+    darkTheme.disabled = false
+  } else if (storedTheme === 'light') {
+    darkTheme.disabled = true
+  }
+</script>
+
+<script src="https://blog.dakatsuka.jpjs/bundle.js"></script>
+<script src="https://blog.dakatsuka.jpjs/instantpage.min.js" type="module" defer></script>
+<meta name="generator" content="Hugo 0.80.0-DEV" />
+  </head>
+  <body>
+    
+  
+
+
+
+
+  <header>
+    <nav class="navbar">
+  <div class="nav">
+    
+      <a href="https://blog.dakatsuka.jp" class="nav-logo">
+        <img
+          src="https://blog.dakatsuka.jpimages/logo.png"
+          width="80"
+          height="80"
+          alt="logo"
+        />
+      </a>
+    
+
+    <ul class="nav-links">
+      
+        
+          <li>
+            <a href="/about.html" id="About"
+              ><em class="fas fa-user fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/categories.html" id="Categories"
+              ><em class="fas fa-folder-open fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/tags.html" id="Tags"
+              ><em class="fas fa-tag fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/archives.html" id="Archives"
+              ><em class="fas fa-archive fa-lg"></em
+            ></a>
+          </li>
+          
+      
+    </ul>
+  </div>
+</nav>
+
+    <div class="intro-header">
+      <div class="container">
+        <div class="post-heading">
+          
+            <h1>
+              Akka HTTPで認証機能を手軽に実装する方法
+            </h1>
+          
+          
+            <span class="meta-post">
+  <em class="fa fa-calendar-alt"></em
+  >&nbsp;Dec 5, 2016
+  
+    &nbsp;&nbsp;&nbsp;<em class="fa fa-folder-open"></em>&nbsp;
+    
+      <a href="https://blog.dakatsuka.jpcategories/programming.html">Programming</a
+      >&nbsp;
+    
+  
+</span>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+    
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      
+  <p>これは<a href="http://www.adventar.org/calendars/1492">Scala Advent Calendar 2016</a>の5日目です。埋まっていなかったので1日遅れでしれっと書くよ。</p>
+<p>Akka HTTPには <code>AuthenticationDirective</code> という認証のためのディレクティブが標準で用意されていて、Bearer Token を自前で認証したいケースで使える。使いかたはコードを見たほうが分かりやすいと思うのでサンプルを乗せた。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">import</span> akka.actor.ActorSystem
+<span style="color:#66d9ef">import</span> akka.http.scaladsl.Http
+<span style="color:#66d9ef">import</span> akka.http.scaladsl.model.headers.<span style="color:#f92672">{</span><span style="color:#a6e22e">HttpChallenge</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">OAuth2BearerToken</span><span style="color:#f92672">}</span>
+<span style="color:#66d9ef">import</span> akka.http.scaladsl.server.directives.<span style="color:#f92672">{</span><span style="color:#a6e22e">AuthenticationDirective</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">AuthenticationResult</span><span style="color:#f92672">}</span>
+<span style="color:#66d9ef">import</span> akka.http.scaladsl.server.Directives._
+<span style="color:#66d9ef">import</span> akka.stream.ActorMaterializer
+
+<span style="color:#66d9ef">import</span> scala.concurrent.Future
+
+<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Account</span><span style="color:#f92672">(</span>name<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span>
+
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Main</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">App</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">val</span> system <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">ActorSystem</span><span style="color:#f92672">()</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">val</span> materializer <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">ActorMaterializer</span><span style="color:#f92672">()</span>
+
+  <span style="color:#66d9ef">val</span> route <span style="color:#66d9ef">=</span> pathEndOrSingleSlash <span style="color:#f92672">{</span>
+    authenticate <span style="color:#f92672">{</span> account <span style="color:#66d9ef">=&gt;</span>
+      complete<span style="color:#f92672">(</span>account<span style="color:#f92672">.</span>name<span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+
+  <span style="color:#a6e22e">Http</span><span style="color:#f92672">().</span>bindAndHandle<span style="color:#f92672">(</span>route<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">8080</span><span style="color:#f92672">)</span>
+
+  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">def</span> authenticate<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">AuthenticationDirective</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Account</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
+    authenticateOrRejectWithChallenge<span style="color:#f92672">[</span><span style="color:#66d9ef">OAuth2BearerToken</span>, <span style="color:#66d9ef">Account</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
+      <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Some</span><span style="color:#f92672">(</span><span style="color:#a6e22e">OAuth2BearerToken</span><span style="color:#f92672">(</span>token<span style="color:#f92672">))</span> <span style="color:#66d9ef">if</span> token <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;123456789&#34;</span> <span style="color:#66d9ef">=&gt;</span>
+        <span style="color:#a6e22e">Future</span><span style="color:#f92672">.</span>successful<span style="color:#f92672">(</span><span style="color:#a6e22e">AuthenticationResult</span><span style="color:#f92672">.</span>success<span style="color:#f92672">(</span><span style="color:#a6e22e">Account</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;user&#34;</span><span style="color:#f92672">)))</span>
+      <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">=&gt;</span>
+        <span style="color:#a6e22e">Future</span><span style="color:#f92672">.</span>successful<span style="color:#f92672">(</span><span style="color:#a6e22e">AuthenticationResult</span><span style="color:#f92672">.</span>failWithChallenge<span style="color:#f92672">(</span>
+          <span style="color:#a6e22e">HttpChallenge</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;bearer&#34;</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">None</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Map</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;error&#34;</span> <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;invalid_token&#34;</span><span style="color:#f92672">)))</span>
+        <span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><code>sbt run</code> して <code>curl</code> で動作確認をしてみる。正しいトークンでアクセスすると <code>complete(account.name)</code> が実行されることが確認できる。</p>
+<pre><code>$ curl -H &quot;Authorization: Bearer 123456789&quot; --dump-header - http://localhost:8080/
+HTTP/1.1 200 OK
+Server: akka-http/10.0.0
+Date: Tue, 06 Dec 2016 02:28:29 GMT
+Content-Type: text/plain; charset=UTF-8
+Content-Length: 4
+
+user
+</code></pre><p>トークンが間違っていた場合</p>
+<pre><code>$ curl -H &quot;Authorization: Bearer invalid&quot; --dump-header - http://localhost:8080/
+HTTP/1.1 401 Unauthorized
+WWW-Authenticate: bearer,error=invalid_token
+Server: akka-http/10.0.0
+Date: Tue, 06 Dec 2016 02:31:10 GMT
+Content-Type: text/plain; charset=UTF-8
+Content-Length: 38
+
+The supplied authentication is invalid
+</code></pre><p><code>Authorization</code>ヘッダーを付けなかった場合</p>
+<pre><code>$ curl --dump-header - http://localhost:8080/
+HTTP/1.1 401 Unauthorized
+WWW-Authenticate: bearer,error=invalid_token
+Server: akka-http/10.0.0
+Date: Tue, 06 Dec 2016 02:32:42 GMT
+Content-Type: text/plain; charset=UTF-8
+Content-Length: 77
+
+The resource requires authentication, which was not supplied with the request
+</code></pre><p>ちなみに <code>AuthenticationDirective[T]</code> のようなディレクティブは簡単に作ることができる。よく使うのは <code>Directive0</code> と <code>Directive1[T]</code> の2つで、AuthenticationDirectiveもDirective1[T]が元になっている。前者は値を返さないディレクティブで後者は次の処理に値を渡す。</p>
+<p>Directive0は<code>pass</code>か<code>reject</code>でハンドリングする。Directive1は<code>provide</code>で返す値を包む。汎用的なディレクティブを作っておけば、RailsのActionControllerのfilterのように使うことが出来るので活用していきましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> directive0<span style="color:#f92672">(</span>str<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Directive0</span> <span style="color:#f92672">=</span>
+  <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>str <span style="color:#f92672">==</span> <span style="color:#f92672">????)</span> pass
+  <span style="color:#66d9ef">else</span> reject<span style="color:#f92672">()</span>
+
+<span style="color:#66d9ef">def</span> directive1<span style="color:#f92672">(</span>str<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Directive1</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span>
+  <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>str <span style="color:#f92672">==</span> <span style="color:#f92672">????)</span> provide<span style="color:#f92672">(</span>str<span style="color:#f92672">.</span>toUpperCase<span style="color:#f92672">)</span>
+  <span style="color:#66d9ef">else</span> reject<span style="color:#f92672">()</span>
+
+<span style="color:#66d9ef">val</span> routes <span style="color:#66d9ef">=</span> path<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;users&#34;</span> <span style="color:#f92672">/</span> <span style="color:#a6e22e">Segment</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span> str <span style="color:#66d9ef">=&gt;</span>
+  directive0<span style="color:#f92672">(</span>str<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    directive1<span style="color:#f92672">(</span>str<span style="color:#f92672">)</span> <span style="color:#f92672">{</span> result <span style="color:#66d9ef">=&gt;</span>
+      complete<span style="color:#f92672">(</span>result<span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://blog.dakatsuka.jp/tags/scala.html">Scala</a
+            >&nbsp;
+          
+            <a href="https://blog.dakatsuka.jp/tags/akka.html">Akka</a
+            >&nbsp;
+          
+        </div>
+      
+    </article>
+    
+    
+      
+
+    
+  </div>
+
+    <footer>
+  
+  <div>
+    
+      <a href="https://twitter.com/d_akatsuka" name="twitter"
+        ><em class="fab fa-twitter"></em
+      ></a>
+    
+      <a href="https://github.com/dakatsuka" name="github"
+        ><em class="fab fa-github"></em
+      ></a>
+    
+  </div>
+
+
+  <div class="container">
+    <p class="credits copyright">
+      <a href="https://blog.dakatsuka.jpabout">Dai Akatsuka</a>
+      &nbsp;&copy;
+      2017
+      
+        &nbsp;/&nbsp;
+        <a href="https://blog.dakatsuka.jp">dakatsuka&#39;s blog</a>
+      
+      &nbsp;&ndash;&nbsp;
+      <em class="fas fa-moon" id="dark-mode-toggle"></em>
+    </p>
+
+    <p class="credits theme-by">
+       <a href="https://gohugo.io">Hugo</a>&nbsp;
+      
+      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
+    </p>
+  </div>
+</footer>
+
+  </body>
+</html>

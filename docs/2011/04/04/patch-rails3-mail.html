@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+<title>RFCに違反している（ドットが連続する）メールアドレスをRails3で扱うには | dakatsuka&#39;s blog</title>
+
+
+  
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-45923728-1');
+  </script>
+  
+
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  href="https://blog.dakatsuka.jpindex.xml"
+  title="dakatsuka&#39;s blog"
+/>
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+<meta name="theme-color" content="#ffffff" />
+
+<meta property="og:title" content="RFCに違反している（ドットが連続する）メールアドレスをRails3で扱うには" />
+<meta property="og:description" content="Rails3のActionMailer（Mail）で、DoCoMoやauに存在するRFC違反のメールアドレス（@の前にドットが連続するやつ）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2011/04/04/patch-rails3-mail.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+<meta property="article:published_time" content="2011-04-04T00:00:00+00:00" />
+<meta property="article:modified_time" content="2011-04-04T00:00:00+00:00" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+
+<meta name="twitter:title" content="RFCに違反している（ドットが連続する）メールアドレスをRails3で扱うには"/>
+<meta name="twitter:description" content="Rails3のActionMailer（Mail）で、DoCoMoやauに存在するRFC違反のメールアドレス（@の前にドットが連続するやつ）"/>
+
+
+<link rel="stylesheet" href="https://blog.dakatsuka.jpfontawesome/css/all.min.css" />
+
+  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
+
+<link
+  id="dark-mode-theme"
+  rel="stylesheet"
+  href="https://blog.dakatsuka.jpcss/dark.css"
+/>
+
+<script>
+  var darkTheme = document.getElementById('dark-mode-theme')
+  var storedTheme = localStorage.getItem('dark-mode-storage')
+  if (storedTheme === 'dark') {
+    darkTheme.disabled = false
+  } else if (storedTheme === 'light') {
+    darkTheme.disabled = true
+  }
+</script>
+
+<script src="https://blog.dakatsuka.jpjs/bundle.js"></script>
+<script src="https://blog.dakatsuka.jpjs/instantpage.min.js" type="module" defer></script>
+<meta name="generator" content="Hugo 0.80.0-DEV" />
+  </head>
+  <body>
+    
+  
+
+
+
+
+  <header>
+    <nav class="navbar">
+  <div class="nav">
+    
+      <a href="https://blog.dakatsuka.jp" class="nav-logo">
+        <img
+          src="https://blog.dakatsuka.jpimages/logo.png"
+          width="80"
+          height="80"
+          alt="logo"
+        />
+      </a>
+    
+
+    <ul class="nav-links">
+      
+        
+          <li>
+            <a href="/about.html" id="About"
+              ><em class="fas fa-user fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/categories.html" id="Categories"
+              ><em class="fas fa-folder-open fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/tags.html" id="Tags"
+              ><em class="fas fa-tag fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/archives.html" id="Archives"
+              ><em class="fas fa-archive fa-lg"></em
+            ></a>
+          </li>
+          
+      
+    </ul>
+  </div>
+</nav>
+
+    <div class="intro-header">
+      <div class="container">
+        <div class="post-heading">
+          
+            <h1>
+              RFCに違反している（ドットが連続する）メールアドレスをRails3で扱うには
+            </h1>
+          
+          
+            <span class="meta-post">
+  <em class="fa fa-calendar-alt"></em
+  >&nbsp;Apr 4, 2011
+  
+</span>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+    
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      
+  <p>Rails3のActionMailer（Mail）で、DoCoMoやauに存在するRFC違反のメールアドレス（@の前にドットが連続するやつ）を受信するときの対処方法を書いておきます。</p>
+<p>Rails2以前（TMail）のときはFromがnilになって取得出来なくて、仕方なくパーサを書き換えるという結構面倒な事をしていましたが、Rails3では一応取得することは出来ます。ただし、Fromのフォーマットによって挙動が変わってきますので注意が必要です。</p>
+<p>具体的には下記のようになります。</p>
+<pre><code># 通常のメールアドレスの場合
+ruby-1.9.2-p180 &gt; mail.from
+=&gt; [&quot;d.akatsuka@gmail.com&quot;]
+ruby-1.9.2-p180 &gt; mail.from.class
+=&gt; Mail::AddressContainer
+ 
+# @の前にドットが連続するメールアドレスの場合
+ruby-1.9.2-p180 &gt; mail.from
+=&gt; d.akatsuka...@gmail.com
+ruby-1.9.2-p180 &gt; mail.from.class
+=&gt; ActiveSupport::Multibyte::Chars 
+ 
+# @の前にドットが連続し、かつ名前が入っている場合
+ruby-1.9.2-p180 &gt; mail.from
+=&gt; Dai Akatsuka &lt;d.akatsuka...@gmail.com&gt;
+ruby-1.9.2-p180 &gt; mail.from.class
+=&gt; ActiveSupport::Multibyte::Chars
+ 
+# @の前にドットが連続し、かつマルチバイトな名前が入っている場合
+ruby-1.9.2-p180 &gt; mail.from
+=&gt; &quot;赤塚 &lt;d.akatsuka...@gmail.com&gt;&quot;
+ruby-1.9.2-p180 &gt; mail.from.class
+=&gt; String
+</code></pre><p>こ、これは面倒臭い（# ＾ω＾）</p>
+<p>Fromのフォーマットによってオブジェクトまで変わってしまうと扱うのが面倒です。（しかもメールアドレスだけではなくて名前まで取得してしまうという。。）</p>
+<p>そこでどのフォーマットのメールアドレスが来ても、FromをStringで取得出来るパッチを書きました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># coding: utf-8</span>
+ 
+<span style="color:#66d9ef">module</span> Mail
+  <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Message</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">from_with_patch_rfc_violation</span>
+      str <span style="color:#f92672">=</span> from_without_patch_rfc_violation
+ 
+      <span style="color:#66d9ef">begin</span>
+        str <span style="color:#f92672">=</span> str<span style="color:#f92672">.</span>join
+      <span style="color:#66d9ef">rescue</span>
+        str <span style="color:#f92672">=</span> str<span style="color:#f92672">.</span>to_s
+      <span style="color:#66d9ef">end</span>
+ 
+      str<span style="color:#f92672">.</span>scan(<span style="color:#e6db74">/^.*?([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+?)(?![a-zA-Z0-9._-]).*$/</span>)<span style="color:#f92672">.</span>flatten<span style="color:#f92672">.</span>first
+    <span style="color:#66d9ef">end</span>
+ 
+    alias_method_chain <span style="color:#e6db74">:from</span>, <span style="color:#e6db74">:patch_rfc_violation</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>上記パッチを config/initializers に mail_patch.rb として保存するだけでOKです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">ruby-1.9.2-p180 &gt; mail.from
+<span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#34;d.akatsuka...@gmail.com&#34;</span>
+ruby-1.9.2-p180 &gt; mail.from.class
+<span style="color:#f92672">=</span>&gt; String
+</code></pre></div><p>一応某サイトに仕込んで2週間ほど経過していますが、特に不具合は出ていないようです。もし同様の件で困っている方が居ましたらお試しください。</p>
+
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://blog.dakatsuka.jp/tags/ruby.html">Ruby</a
+            >&nbsp;
+          
+            <a href="https://blog.dakatsuka.jp/tags/rails.html">Rails</a
+            >&nbsp;
+          
+        </div>
+      
+    </article>
+    
+    
+      
+
+    
+  </div>
+
+    <footer>
+  
+  <div>
+    
+      <a href="https://twitter.com/d_akatsuka" name="twitter"
+        ><em class="fab fa-twitter"></em
+      ></a>
+    
+      <a href="https://github.com/dakatsuka" name="github"
+        ><em class="fab fa-github"></em
+      ></a>
+    
+  </div>
+
+
+  <div class="container">
+    <p class="credits copyright">
+      <a href="https://blog.dakatsuka.jpabout">Dai Akatsuka</a>
+      &nbsp;&copy;
+      2017
+      
+        &nbsp;/&nbsp;
+        <a href="https://blog.dakatsuka.jp">dakatsuka&#39;s blog</a>
+      
+      &nbsp;&ndash;&nbsp;
+      <em class="fas fa-moon" id="dark-mode-toggle"></em>
+    </p>
+
+    <p class="credits theme-by">
+       <a href="https://gohugo.io">Hugo</a>&nbsp;
+      
+      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
+    </p>
+  </div>
+</footer>
+
+  </body>
+</html>

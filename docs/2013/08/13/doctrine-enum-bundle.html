@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+<title>Symfony2(Doctrine2)でENUMを使うならDoctrineEnumBundleが便利 | dakatsuka&#39;s blog</title>
+
+
+  
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-45923728-1');
+  </script>
+  
+
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  href="https://blog.dakatsuka.jpindex.xml"
+  title="dakatsuka&#39;s blog"
+/>
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+<meta name="theme-color" content="#ffffff" />
+
+<meta property="og:title" content="Symfony2(Doctrine2)でENUMを使うならDoctrineEnumBundleが便利" />
+<meta property="og:description" content="DoctrineEnumBundleというBundleを導入することによって、Doctrine2でMySQLのENUM型を扱うことができます" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2013/08/13/doctrine-enum-bundle.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+<meta property="article:published_time" content="2013-08-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2013-08-13T00:00:00+00:00" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+
+<meta name="twitter:title" content="Symfony2(Doctrine2)でENUMを使うならDoctrineEnumBundleが便利"/>
+<meta name="twitter:description" content="DoctrineEnumBundleというBundleを導入することによって、Doctrine2でMySQLのENUM型を扱うことができます"/>
+
+
+<link rel="stylesheet" href="https://blog.dakatsuka.jpfontawesome/css/all.min.css" />
+
+  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
+
+<link
+  id="dark-mode-theme"
+  rel="stylesheet"
+  href="https://blog.dakatsuka.jpcss/dark.css"
+/>
+
+<script>
+  var darkTheme = document.getElementById('dark-mode-theme')
+  var storedTheme = localStorage.getItem('dark-mode-storage')
+  if (storedTheme === 'dark') {
+    darkTheme.disabled = false
+  } else if (storedTheme === 'light') {
+    darkTheme.disabled = true
+  }
+</script>
+
+<script src="https://blog.dakatsuka.jpjs/bundle.js"></script>
+<script src="https://blog.dakatsuka.jpjs/instantpage.min.js" type="module" defer></script>
+<meta name="generator" content="Hugo 0.80.0-DEV" />
+  </head>
+  <body>
+    
+  
+
+
+
+
+  <header>
+    <nav class="navbar">
+  <div class="nav">
+    
+      <a href="https://blog.dakatsuka.jp" class="nav-logo">
+        <img
+          src="https://blog.dakatsuka.jpimages/logo.png"
+          width="80"
+          height="80"
+          alt="logo"
+        />
+      </a>
+    
+
+    <ul class="nav-links">
+      
+        
+          <li>
+            <a href="/about.html" id="About"
+              ><em class="fas fa-user fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/categories.html" id="Categories"
+              ><em class="fas fa-folder-open fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/tags.html" id="Tags"
+              ><em class="fas fa-tag fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/archives.html" id="Archives"
+              ><em class="fas fa-archive fa-lg"></em
+            ></a>
+          </li>
+          
+      
+    </ul>
+  </div>
+</nav>
+
+    <div class="intro-header">
+      <div class="container">
+        <div class="post-heading">
+          
+            <h1>
+              Symfony2(Doctrine2)でENUMを使うならDoctrineEnumBundleが便利
+            </h1>
+          
+          
+            <span class="meta-post">
+  <em class="fa fa-calendar-alt"></em
+  >&nbsp;Aug 13, 2013
+  
+</span>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+    
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      
+  <p><a href="https://github.com/fre5h/DoctrineEnumBundle">DoctrineEnumBundle</a>というBundleを導入することによって、Doctrine2でMySQLのENUM型を扱うことができます。</p>
+<h2 id="インストール">インストール</h2>
+<p>composer.jsonにfresh/doctrine-enum-bundleを追加します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+    <span style="color:#f92672">&#34;require&#34;</span>: {
+        <span style="color:#f92672">&#34;php&#34;</span>: <span style="color:#e6db74">&#34;&gt;=5.3.3&#34;</span>,
+        <span style="color:#f92672">&#34;symfony/symfony&#34;</span>: <span style="color:#e6db74">&#34;2.3.*&#34;</span>,
+        <span style="color:#960050;background-color:#1e0010">........</span>
+        <span style="color:#f92672">&#34;fresh/doctrine-enum-bundle&#34;</span>: <span style="color:#e6db74">&#34;dev-master&#34;</span>
+    }
+}
+</code></pre></div><p>composer.phar installを実行します。</p>
+<pre><code>$ php composer.phar install
+</code></pre><p>app/AppKernel.phpにDoctrineEnumBundleを追加します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">registerBundles</span>()
+{
+    $bundles <span style="color:#f92672">=</span> [
+        <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Fresh\Bundle\DoctrineEnumBundle\FreshDoctrineEnumBundle</span>()
+    ];
+}
+</code></pre></div><h2 id="使い方">使い方</h2>
+<p>まずEnumTypeクラスを作成します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+ 
+<span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">Acme\DemoBundle\EnumType</span>;
+ 
+<span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Fresh\Bundle\DoctrineEnumBundle\DBAL\Types\AbstractEnumType</span>;
+ 
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GenderType</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">AbstractEnumType</span>
+{
+    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">MALE</span>   <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;male&#39;</span>;
+    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">FEMALE</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;female&#39;</span>;
+ 
+    <span style="color:#66d9ef">protected</span> $name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;GenderType&#39;</span>;
+ 
+    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">static</span> $choices <span style="color:#f92672">=</span> [
+        <span style="color:#a6e22e">self</span><span style="color:#f92672">::</span><span style="color:#a6e22e">MALE</span>   <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;男性&#39;</span>,
+        <span style="color:#a6e22e">self</span><span style="color:#f92672">::</span><span style="color:#a6e22e">FEMALE</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;女性&#39;</span>
+    ];
+}
+</code></pre></div><p>app/config/config.yml で上で作ったEnumTypeをDBALに登録します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">doctrine</span>:
+    <span style="color:#f92672">dbal</span>:
+        <span style="color:#f92672">mapping_types</span>:
+            <span style="color:#f92672">enum</span>: <span style="color:#ae81ff">string</span>
+        <span style="color:#f92672">types</span>:
+            <span style="color:#f92672">GenderType</span>: <span style="color:#ae81ff">Acme\DemoBundle\EnumType\GenderType</span>
+</code></pre></div><p>あとはENUM型にしたいメンバ変数に対してアノテーションでマッピングし、app/console doctrine:schema:updateを実行すればENUM型のカラムが作られます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+ 
+<span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">Acme\DemoBundle\Entity</span>;
+ 
+<span style="color:#66d9ef">use</span> <span style="color:#a6e22e">Doctrine\ORM\Mapping</span> <span style="color:#66d9ef">as</span> <span style="color:#a6e22e">ORM</span>;
+ 
+<span style="color:#e6db74">/**
+</span><span style="color:#e6db74"> * @ORM\Table
+</span><span style="color:#e6db74"> * @ORM\Entity
+</span><span style="color:#e6db74"> */</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span>
+{
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * @ORM\Column(name=&#34;gender&#34;, type=&#34;GenderType&#34;)
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">private</span> $gender;
+}
+</code></pre></div>
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://blog.dakatsuka.jp/tags/php.html">PHP</a
+            >&nbsp;
+          
+            <a href="https://blog.dakatsuka.jp/tags/symfony2.html">Symfony2</a
+            >&nbsp;
+          
+        </div>
+      
+    </article>
+    
+    
+      
+
+    
+  </div>
+
+    <footer>
+  
+  <div>
+    
+      <a href="https://twitter.com/d_akatsuka" name="twitter"
+        ><em class="fab fa-twitter"></em
+      ></a>
+    
+      <a href="https://github.com/dakatsuka" name="github"
+        ><em class="fab fa-github"></em
+      ></a>
+    
+  </div>
+
+
+  <div class="container">
+    <p class="credits copyright">
+      <a href="https://blog.dakatsuka.jpabout">Dai Akatsuka</a>
+      &nbsp;&copy;
+      2017
+      
+        &nbsp;/&nbsp;
+        <a href="https://blog.dakatsuka.jp">dakatsuka&#39;s blog</a>
+      
+      &nbsp;&ndash;&nbsp;
+      <em class="fas fa-moon" id="dark-mode-toggle"></em>
+    </p>
+
+    <p class="credits theme-by">
+       <a href="https://gohugo.io">Hugo</a>&nbsp;
+      
+      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
+    </p>
+  </div>
+</footer>
+
+  </body>
+</html>

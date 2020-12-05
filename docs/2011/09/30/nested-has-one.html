@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+<title>has_one関連でaccepts_nested_attributes_for / fields_forを使う | dakatsuka&#39;s blog</title>
+
+
+  
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-45923728-1');
+  </script>
+  
+
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  href="https://blog.dakatsuka.jpindex.xml"
+  title="dakatsuka&#39;s blog"
+/>
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+<meta name="theme-color" content="#ffffff" />
+
+<meta property="og:title" content="has_one関連でaccepts_nested_attributes_for / fields_forを使う" />
+<meta property="og:description" content="先日、has_one関連でaccepts_nested_attributesを使ってフォームを作ろうとしたら、ネスト先のフィールドが画面に出" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2011/09/30/nested-has-one.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+<meta property="article:published_time" content="2011-09-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2011-09-30T00:00:00+00:00" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+
+<meta name="twitter:title" content="has_one関連でaccepts_nested_attributes_for / fields_forを使う"/>
+<meta name="twitter:description" content="先日、has_one関連でaccepts_nested_attributesを使ってフォームを作ろうとしたら、ネスト先のフィールドが画面に出"/>
+
+
+<link rel="stylesheet" href="https://blog.dakatsuka.jpfontawesome/css/all.min.css" />
+
+  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
+
+<link
+  id="dark-mode-theme"
+  rel="stylesheet"
+  href="https://blog.dakatsuka.jpcss/dark.css"
+/>
+
+<script>
+  var darkTheme = document.getElementById('dark-mode-theme')
+  var storedTheme = localStorage.getItem('dark-mode-storage')
+  if (storedTheme === 'dark') {
+    darkTheme.disabled = false
+  } else if (storedTheme === 'light') {
+    darkTheme.disabled = true
+  }
+</script>
+
+<script src="https://blog.dakatsuka.jpjs/bundle.js"></script>
+<script src="https://blog.dakatsuka.jpjs/instantpage.min.js" type="module" defer></script>
+<meta name="generator" content="Hugo 0.80.0-DEV" />
+  </head>
+  <body>
+    
+  
+
+
+
+
+  <header>
+    <nav class="navbar">
+  <div class="nav">
+    
+      <a href="https://blog.dakatsuka.jp" class="nav-logo">
+        <img
+          src="https://blog.dakatsuka.jpimages/logo.png"
+          width="80"
+          height="80"
+          alt="logo"
+        />
+      </a>
+    
+
+    <ul class="nav-links">
+      
+        
+          <li>
+            <a href="/about.html" id="About"
+              ><em class="fas fa-user fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/categories.html" id="Categories"
+              ><em class="fas fa-folder-open fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/tags.html" id="Tags"
+              ><em class="fas fa-tag fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/archives.html" id="Archives"
+              ><em class="fas fa-archive fa-lg"></em
+            ></a>
+          </li>
+          
+      
+    </ul>
+  </div>
+</nav>
+
+    <div class="intro-header">
+      <div class="container">
+        <div class="post-heading">
+          
+            <h1>
+              has_one関連でaccepts_nested_attributes_for / fields_forを使う
+            </h1>
+          
+          
+            <span class="meta-post">
+  <em class="fa fa-calendar-alt"></em
+  >&nbsp;Sep 30, 2011
+  
+</span>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+    
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      
+  <p>先日、has_one関連でaccepts_nested_attributesを使ってフォームを作ろうとしたら、ネスト先のフィールドが画面に出てこなくて小一時間ハマりました。そういえば以前も同じ事で悩んだような気がしたのでブログに残しておきます。</p>
+<p>UserモデルとProfileモデルが存在し、1対1の関連で結ばれているよくある構成を例にします。ユーザー登録を行うフォームで同時にプロフィールも登録出来るようにします。</p>
+<p>Userモデル</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ActiveRecord</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Base</span>
+  has_one <span style="color:#e6db74">:profile</span>
+  accepts_nested_attributes_for <span style="color:#e6db74">:profile</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Profileモデル</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Profile</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ActiveRecord</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Base</span>
+  belongs_to <span style="color:#e6db74">:profile</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>_form.html.hamlビュー</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#f92672">=</span> form_for @user <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>f<span style="color:#f92672">|</span>
+  <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>fields_for <span style="color:#e6db74">:profile</span>, @user<span style="color:#f92672">.</span>profile <span style="color:#f92672">||</span> <span style="color:#66d9ef">Profile</span><span style="color:#f92672">.</span>new <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>p<span style="color:#f92672">|</span>
+    <span style="color:#f92672">.</span>field
+      <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>label <span style="color:#e6db74">:nickname</span>
+      <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>text_field <span style="color:#e6db74">:nickname</span>
+</code></pre></div><p>上のコードのように fields_for の第二引数で@user.profileが存在するかチェックし、存在しない場合はProfileのインスタンスを新規に作成します。こうすることで new, edit 両方に対応することが出来ます。</p>
+
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://blog.dakatsuka.jp/tags/ruby.html">Ruby</a
+            >&nbsp;
+          
+            <a href="https://blog.dakatsuka.jp/tags/rails.html">Rails</a
+            >&nbsp;
+          
+        </div>
+      
+    </article>
+    
+    
+      
+
+    
+  </div>
+
+    <footer>
+  
+  <div>
+    
+      <a href="https://twitter.com/d_akatsuka" name="twitter"
+        ><em class="fab fa-twitter"></em
+      ></a>
+    
+      <a href="https://github.com/dakatsuka" name="github"
+        ><em class="fab fa-github"></em
+      ></a>
+    
+  </div>
+
+
+  <div class="container">
+    <p class="credits copyright">
+      <a href="https://blog.dakatsuka.jpabout">Dai Akatsuka</a>
+      &nbsp;&copy;
+      2017
+      
+        &nbsp;/&nbsp;
+        <a href="https://blog.dakatsuka.jp">dakatsuka&#39;s blog</a>
+      
+      &nbsp;&ndash;&nbsp;
+      <em class="fas fa-moon" id="dark-mode-toggle"></em>
+    </p>
+
+    <p class="credits theme-by">
+       <a href="https://gohugo.io">Hugo</a>&nbsp;
+      
+      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
+    </p>
+  </div>
+</footer>
+
+  </body>
+</html>

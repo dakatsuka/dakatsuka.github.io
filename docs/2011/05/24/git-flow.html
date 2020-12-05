@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+<title>Gitを使った開発・運用フローの紹介 | dakatsuka&#39;s blog</title>
+
+
+  
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-45923728-1');
+  </script>
+  
+
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  href="https://blog.dakatsuka.jpindex.xml"
+  title="dakatsuka&#39;s blog"
+/>
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+<meta name="theme-color" content="#ffffff" />
+
+<meta property="og:title" content="Gitを使った開発・運用フローの紹介" />
+<meta property="og:description" content="私の所属している会社では、2年程前にバージョン管理システムをSubversionからGitに移行し、現在まで開発フローを試行錯誤してきました" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2011/05/24/git-flow.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+<meta property="article:published_time" content="2011-05-24T00:00:00+00:00" />
+<meta property="article:modified_time" content="2011-05-24T00:00:00+00:00" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+
+<meta name="twitter:title" content="Gitを使った開発・運用フローの紹介"/>
+<meta name="twitter:description" content="私の所属している会社では、2年程前にバージョン管理システムをSubversionからGitに移行し、現在まで開発フローを試行錯誤してきました"/>
+
+
+<link rel="stylesheet" href="https://blog.dakatsuka.jpfontawesome/css/all.min.css" />
+
+  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
+
+<link
+  id="dark-mode-theme"
+  rel="stylesheet"
+  href="https://blog.dakatsuka.jpcss/dark.css"
+/>
+
+<script>
+  var darkTheme = document.getElementById('dark-mode-theme')
+  var storedTheme = localStorage.getItem('dark-mode-storage')
+  if (storedTheme === 'dark') {
+    darkTheme.disabled = false
+  } else if (storedTheme === 'light') {
+    darkTheme.disabled = true
+  }
+</script>
+
+<script src="https://blog.dakatsuka.jpjs/bundle.js"></script>
+<script src="https://blog.dakatsuka.jpjs/instantpage.min.js" type="module" defer></script>
+<meta name="generator" content="Hugo 0.80.0-DEV" />
+  </head>
+  <body>
+    
+  
+
+
+
+
+  <header>
+    <nav class="navbar">
+  <div class="nav">
+    
+      <a href="https://blog.dakatsuka.jp" class="nav-logo">
+        <img
+          src="https://blog.dakatsuka.jpimages/logo.png"
+          width="80"
+          height="80"
+          alt="logo"
+        />
+      </a>
+    
+
+    <ul class="nav-links">
+      
+        
+          <li>
+            <a href="/about.html" id="About"
+              ><em class="fas fa-user fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/categories.html" id="Categories"
+              ><em class="fas fa-folder-open fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/tags.html" id="Tags"
+              ><em class="fas fa-tag fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/archives.html" id="Archives"
+              ><em class="fas fa-archive fa-lg"></em
+            ></a>
+          </li>
+          
+      
+    </ul>
+  </div>
+</nav>
+
+    <div class="intro-header">
+      <div class="container">
+        <div class="post-heading">
+          
+            <h1>
+              Gitを使った開発・運用フローの紹介
+            </h1>
+          
+          
+            <span class="meta-post">
+  <em class="fa fa-calendar-alt"></em
+  >&nbsp;May 24, 2011
+  
+</span>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+    
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      
+  <p>私の所属している会社では、2年程前にバージョン管理システムをSubversionからGitに移行し、現在まで開発フローを試行錯誤してきました。ようやく形になってきたということで、守秘義務に接触しない程度に紹介＆考察していきたいと思います。</p>
+<p>形になってきたとはいえ、まだまだ試行錯誤中ですので色々なツッコミは大歓迎です。</p>
+<h2 id="現在の開発フローの俯瞰図">現在の開発フローの俯瞰図</h2>
+<p>現在の開発フローを俯瞰してみると大体下記図のような感じになっています。途中で図を書くのが面倒になった都合上、Jenkinsさんが１人しか居ませんが、実際はmasterブランチの他にreleaseブランチも監視してもらっています。</p>
+<p>以降この図を元に話を進めていきたと思います。</p>
+<figure>
+    <img src="/media/2011-05-24-git-flow/git-flow.png"/> 
+</figure>
+
+<h2 id="gitoriousを利用して自由に開発">Gitoriousを利用して自由に開発</h2>
+<p><a href="http://gitorious.org/">Gitorious</a>というGitHubに似たサービスがあります。この<a href="http://gitorious.org/gitorious">Gitoriousはオープンソースとしても公開されています</a>ので社内に設置して利用する事が出来ます。</p>
+<p>見た目はGitHubとだいぶ違いますが利用方法は似通っていて、まずプロジェクトの中央リポジトリが存在し、それを各人がフォークして開発をしていくスタイルになります。GitHubのPull request（GitoriousではMerge requestと呼ぶ）と同等の機能もあるので、俯瞰図にも書いてある通り非常にGitHubを利用した開発に近くなっていると思います。</p>
+<h2 id="gitoriousを利用するメリットデメリット">Gitoriousを利用するメリット・デメリット</h2>
+<p>このGitoriousを利用した開発フローのメリットとしては以下が挙げられます。</p>
+<ul>
+<li>必ずフォークしてから開発するので、仮に滅茶苦茶な実装をコミットしても周りに影響が無い。</li>
+<li>周りに影響が無いので、Git初心者の社員にも心置きなくGitを弄り倒してもらう事が出来る。</li>
+<li>Pull request で変更内容がDiffで見れるので、コードレビューするのが楽になる。</li>
+<li>Pull request は独立したブランチになっているので、開発者はダメ出しされた後にPull requestに対して再度push出来る。</li>
+</ul>
+<p>まぁ、GitHubを利用した場合と同じようなメリットですね。逆にデメリットとしては以下が挙がってきます。</p>
+<ul>
+<li>管理者が休んだりサボったりするとあっという間にPull requestが溜まってしまう。</li>
+<li>管理者、開発者共にGitの知識がかなり要求される。</li>
+<li>push, pull, merge, rebaseのルールを決めておかないとコンフリクト地獄に陥る可能性が大。</li>
+</ul>
+<h2 id="マスターブランチの運用と新規開発時のフロー">マスターブランチの運用と新規開発時のフロー</h2>
+<p>マスターブランチは開発の先端として扱っています。開発途中なのでバグが含まれている可能性がありますが、毎日・もしくはプッシュ後にナイトリー環境にデプロイしています。常に最新のコードをデプロイしておくことは重要で、バグの早期発見は勿論ですが、「プロジェクトの動いている感」を偉い方々に見てもらう狙いもあります（うちは自社企画が多いので…）</p>
+<p>新規開発を担当する開発者は、mainlineのマスターブランチとローカルリポジトリのマスターブランチをPullで同期を取りつつ、作業毎にトピックブランチを切って開発を行っています。</p>
+<p>開発が終わったらトピックブランチをリモートリポジトリにpushして、そのブランチをPull requestします。一連の流れをコマンドで表すと次の通りになります。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ git checkout master
+$ git pull mainline master
+$ git checkout -b feature-hoge
+ 
+     --commit--
+ 
+$ git pull --rebase mainline master
+$ git push origin feature-hoge
+</code></pre></div><p>管理者がPull requestを取り込む際は次のようにします。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ git checkout master
+$ git checkout -b merge-request/198
+$ git pull git://xxxxx/project_name/mainline.git refs/merge-request/198
+$ git rebase master
+$ git checkout master
+$ git merge merge-request/198 --no-ff
+</code></pre></div><p>マスターブランチにマージする時に–no-ffオプションを付けることで下記コマンドで取り込んだトピックブランチ一覧を表示する事が出来ます。開発が活発な初期段階では大量にPull requestが飛んでくるのでどのトピックブランチまでマージ出来たか判断するのに有効です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ git log --oneline --abbrev-commit --merges master
+</code></pre></div><h2 id="リリースブランチの運用とメンテナンスフロー">リリースブランチの運用とメンテナンスフロー</h2>
+<p>リリースブランチはあるタイミングでマスターブランチから作成されます。このリリースブランチをプロダクション環境にデプロイし、サイト運用中に出た不具合の修正や次期リリースまでの繋ぎ機能の開発をこのブランチで行っていきます。</p>
+<p>うちはサイトの性質上、且つ社内事情的にリリースの間隔がかなり空いてしまう場合が多いので、マスターブランチが次期リリースに向けての開発用、リリースブランチが現行安定版の保守用という感じにしています。</p>
+<p>基本的なフローはマスターブランチの運用と同じで、開発者がトピックブランチをPull requestし、管理者が取り込む流れになります。マスターブランチでも直っていないバグ修正は、cherry-pickでマスターブランチに取り込む事もあります。</p>
+<h2 id="今後の課題">今後の課題</h2>
+<p>若干諦めてはいるのですが、マスターブランチとリリースブランチの内容が完全に違うモノになっていった時にcherry-pickすら厳しくなったらどうしようかな・・・と思ってたりします。まぁ、そんなになるまでリリースを温存しておくなって話なんですけどね…。社風の改革は開発フローを変えるより大変です。</p>
+<p>あとこのフローとRedmineを使ったTiDDをどうシームレスに連携していくかが現在最大の課題となっています。例えばコミットログにcloses #1って記述したコミットをcherry-pickで各ブランチに取り込むと、二重に処理が走ったりなど…。この辺りはまだ手探りですね。</p>
+<h2 id="まとめ">まとめ</h2>
+<p>Gitは非常に柔軟なバージョン管理システムだと思います。ここで紹介した開発フロー以外にも様々なフローがありますので、参考にしながら開発現場にあったやり方を見つけていくと良いんじゃないでしょうか。</p>
+
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://blog.dakatsuka.jp/tags/git.html">Git</a
+            >&nbsp;
+          
+        </div>
+      
+    </article>
+    
+    
+      
+
+    
+  </div>
+
+    <footer>
+  
+  <div>
+    
+      <a href="https://twitter.com/d_akatsuka" name="twitter"
+        ><em class="fab fa-twitter"></em
+      ></a>
+    
+      <a href="https://github.com/dakatsuka" name="github"
+        ><em class="fab fa-github"></em
+      ></a>
+    
+  </div>
+
+
+  <div class="container">
+    <p class="credits copyright">
+      <a href="https://blog.dakatsuka.jpabout">Dai Akatsuka</a>
+      &nbsp;&copy;
+      2017
+      
+        &nbsp;/&nbsp;
+        <a href="https://blog.dakatsuka.jp">dakatsuka&#39;s blog</a>
+      
+      &nbsp;&ndash;&nbsp;
+      <em class="fas fa-moon" id="dark-mode-toggle"></em>
+    </p>
+
+    <p class="credits theme-by">
+       <a href="https://gohugo.io">Hugo</a>&nbsp;
+      
+      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
+    </p>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+<title>Ubuntu on EC2でRabbitMQクラスタを構築する手順 | dakatsuka&#39;s blog</title>
+
+
+  
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-45923728-1');
+  </script>
+  
+
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  href="https://blog.dakatsuka.jpindex.xml"
+  title="dakatsuka&#39;s blog"
+/>
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+<meta name="theme-color" content="#ffffff" />
+
+<meta property="og:title" content="Ubuntu on EC2でRabbitMQクラスタを構築する手順" />
+<meta property="og:description" content="EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。 RabbitMQ" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+<meta property="article:published_time" content="2012-04-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2012-04-18T00:00:00+00:00" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+
+<meta name="twitter:title" content="Ubuntu on EC2でRabbitMQクラスタを構築する手順"/>
+<meta name="twitter:description" content="EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。 RabbitMQ"/>
+
+
+<link rel="stylesheet" href="https://blog.dakatsuka.jpfontawesome/css/all.min.css" />
+
+  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
+
+<link
+  id="dark-mode-theme"
+  rel="stylesheet"
+  href="https://blog.dakatsuka.jpcss/dark.css"
+/>
+
+<script>
+  var darkTheme = document.getElementById('dark-mode-theme')
+  var storedTheme = localStorage.getItem('dark-mode-storage')
+  if (storedTheme === 'dark') {
+    darkTheme.disabled = false
+  } else if (storedTheme === 'light') {
+    darkTheme.disabled = true
+  }
+</script>
+
+<script src="https://blog.dakatsuka.jpjs/bundle.js"></script>
+<script src="https://blog.dakatsuka.jpjs/instantpage.min.js" type="module" defer></script>
+<meta name="generator" content="Hugo 0.80.0-DEV" />
+  </head>
+  <body>
+    
+  
+
+
+
+
+  <header>
+    <nav class="navbar">
+  <div class="nav">
+    
+      <a href="https://blog.dakatsuka.jp" class="nav-logo">
+        <img
+          src="https://blog.dakatsuka.jpimages/logo.png"
+          width="80"
+          height="80"
+          alt="logo"
+        />
+      </a>
+    
+
+    <ul class="nav-links">
+      
+        
+          <li>
+            <a href="/about.html" id="About"
+              ><em class="fas fa-user fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/categories.html" id="Categories"
+              ><em class="fas fa-folder-open fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/tags.html" id="Tags"
+              ><em class="fas fa-tag fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/archives.html" id="Archives"
+              ><em class="fas fa-archive fa-lg"></em
+            ></a>
+          </li>
+          
+      
+    </ul>
+  </div>
+</nav>
+
+    <div class="intro-header">
+      <div class="container">
+        <div class="post-heading">
+          
+            <h1>
+              Ubuntu on EC2でRabbitMQクラスタを構築する手順
+            </h1>
+          
+          
+            <span class="meta-post">
+  <em class="fa fa-calendar-alt"></em
+  >&nbsp;Apr 18, 2012
+  
+</span>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+    
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      
+  <p>EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。</p>
+<h2 id="rabbitmqをインストール">RabbitMQをインストール</h2>
+<p>オフィシャルで配布されているパッケージを使うのがお手軽です。</p>
+<pre><code>cd /tmp
+wget wget http://www.rabbitmq.com/releases/rabbitmq-server/v2.8.1/rabbitmq-server_2.8.1-1_all.deb
+sudo apt-get install erlang-nox
+sudo dpkg -i rabbitmq-server_2.8.1-1_all.deb
+</code></pre><p>下記コマンドでエラーが出なければ、正常にRabbitMQが起動しています。</p>
+<pre><code>sudo rabbitmqctl status
+</code></pre><h2 id="rabbitmqの初期設定">RabbitMQの初期設定</h2>
+<p>RabbitMQはデフォルトでノード名がインストールしたサーバのhostname -sになっています。このノード名を変更するには /etc/rabbitmq/rabbitmq-env.conf でNODENAMEを指定すれば良いのですが、何故かNODENAMEにはFQDNが使えません。</p>
+<p>このままだと、別のRabbitMQサーバをクラスタに追加する時にノード名の不一致が起き、正常に追加出来ないという罠が待っています。まぁ、/etc/hosts に全サーバのホスト名を書いていけば問題無いのですが、EC2だとインスタンスの再起動でIPとホスト名が変わったりするので、あまり現実的ではありませんね。極力ドメイン名で処理したいところです。</p>
+<p>そこで /etc/rabbitmq/rabbitmq-env.conf でFQDNが使えるようにRabbitMQ本体に若干手を加えます。といってもオプションを書き換えるだけです。</p>
+<p>書き換える前にサーバを停止しておきます。</p>
+<pre><code>sudo /etc/init.d/rabbitmq-server stop
+</code></pre><p>/usr/lib/rabbitmq/lib/rabbitmq_server-2.8.1/sbin/rabbitmq-server</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"><span style="color:#f92672">--- rabbitmq-Server2012-04-18 16:17:39.168100001 +0900
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ rabbitmq-Server2012-04-18 16:17:13.304100001 +0900
+</span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -102,7 +102,7 @@
+</span><span style="color:#75715e"></span> exec erl \
+     ${RABBITMQ_EBIN_PATH} \
+     ${RABBITMQ_START_RABBIT} \
+<span style="color:#f92672">-    -sname ${RABBITMQ_NODENAME} \
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+    -name ${RABBITMQ_NODENAME} \
+</span><span style="color:#a6e22e"></span>     -boot ${RABBITMQ_BOOT_FILE} \
+     ${RABBITMQ_CONFIG_ARG} \
+     +W w \
+</code></pre></div><p>/usr/lib/rabbitmq/lib/rabbitmq_server-2.8.1/sbin/rabbitmqctl</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"><span style="color:#f92672">--- rabbitmqctl2012-04-18 16:12:54.016100001 +0900
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ rabbitmqctl2012-04-18 16:12:32.828100000 +0900
+</span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -31,7 +31,7 @@
+</span><span style="color:#75715e"></span>     -noinput \
+     -hidden \
+     ${RABBITMQ_CTL_ERL_ARGS} \
+<span style="color:#f92672">-    -sname rabbitmqctl$$ \
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+    -name rabbitmqctl$$ \
+</span><span style="color:#a6e22e"></span>     -s rabbit_control \
+     -nodename $RABBITMQ_NODENAME \
+     -extra &#34;$@&#34;
+</code></pre></div><p>/etc/rabbitmq/rabbitmq-env.conf は下記のようにします。</p>
+<pre><code>NODENAME=rabbit@rabbit1.foo.bar.internal
+</code></pre><p>これでRabbitMQを再度起動させてエラーが出なければ設定完了です。</p>
+<h2 id="クラスタ化する">クラスタ化する</h2>
+<p>rabbit1.foo.bar.internal と rabbit2.foobar.internal に対して、上記手順に則ってRabbitMQをインストールしたと仮定します。</p>
+<p>rabbit1を初期化する</p>
+<pre><code>rabbit1% sudo rabbitmqctl stop_app
+rabbit1% sudo rabbitmqctl reset
+</code></pre><p>rabbit1上でrabbit2をクラスタに参加させる</p>
+<pre><code>rabbit1% sudo rabbitmqctl cluster rabbit2.foo.bar.internal
+rabbit1% sudo rabbitmqctl start_app
+</code></pre><p>クラスタに追加されているか確認する</p>
+<pre><code>rabbit1% sudo rabbitmqctl cluster_status
+ 
+Cluster status of node 'rabbit@rabbit1.foo.bar.internal' ...
+[{nodes,[{disc,['rabbit@rabbit2.foo.bar.internal']},
+         {ram,['rabbit@rabbit1.foo.bar.internal']}]},
+ {running_nodes,['rabbit@rabbit2.foo.bar.internal',
+                 'rabbit@rabbit1.foo.bar.internal']}]
+...done.
+</code></pre><p>追加されてますね。rabbit2からも確認してみます。</p>
+<pre><code>rabbit2% sudo rabbitmqctl cluster_status
+ 
+Cluster status of node 'rabbit@rabbit2.foo.bar.internal' ...
+[{nodes,[{disc,['rabbit@rabbit2.foo.bar.internal']},
+         {ram,['rabbit@rabbit1.foo.bar.internal']}]},
+ {running_nodes,['rabbit@rabbit1.foo.bar.internal',
+                 'rabbit@rabbit2.foo.bar.internal']}]
+...done.
+</code></pre><p>これでrabbit1, rabbit2どちらに接続してもキューをpublish, subscribeすることが出来ます。クラスタ化自体はそこまで難しくないと思います。</p>
+<p>詳しくは<a href="http://www.rabbitmq.com/clustering.html">オフィシャルドキュメント</a>に全部書いてあるので、そちらを参照してください。</p>
+
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://blog.dakatsuka.jp/tags/ubuntu.html">Ubuntu</a
+            >&nbsp;
+          
+            <a href="https://blog.dakatsuka.jp/tags/rabbitmq.html">RabbitMQ</a
+            >&nbsp;
+          
+            <a href="https://blog.dakatsuka.jp/tags/aws.html">AWS</a
+            >&nbsp;
+          
+        </div>
+      
+    </article>
+    
+    
+      
+
+    
+  </div>
+
+    <footer>
+  
+  <div>
+    
+      <a href="https://twitter.com/d_akatsuka" name="twitter"
+        ><em class="fab fa-twitter"></em
+      ></a>
+    
+      <a href="https://github.com/dakatsuka" name="github"
+        ><em class="fab fa-github"></em
+      ></a>
+    
+  </div>
+
+
+  <div class="container">
+    <p class="credits copyright">
+      <a href="https://blog.dakatsuka.jpabout">Dai Akatsuka</a>
+      &nbsp;&copy;
+      2017
+      
+        &nbsp;/&nbsp;
+        <a href="https://blog.dakatsuka.jp">dakatsuka&#39;s blog</a>
+      
+      &nbsp;&ndash;&nbsp;
+      <em class="fas fa-moon" id="dark-mode-toggle"></em>
+    </p>
+
+    <p class="credits theme-by">
+       <a href="https://gohugo.io">Hugo</a>&nbsp;
+      
+      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
+    </p>
+  </div>
+</footer>
+
+  </body>
+</html>

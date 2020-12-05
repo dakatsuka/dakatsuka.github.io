@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+<title>Redis の Pub/Sub を使って Node.js &#43; WebSocket のスケールアウトを実現する方法 | dakatsuka&#39;s blog</title>
+
+
+  
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-45923728-1');
+  </script>
+  
+
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  href="https://blog.dakatsuka.jpindex.xml"
+  title="dakatsuka&#39;s blog"
+/>
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+<meta name="theme-color" content="#ffffff" />
+
+<meta property="og:title" content="Redis の Pub/Sub を使って Node.js &#43; WebSocket のスケールアウトを実現する方法" />
+<meta property="og:description" content="Node におけるスケールアーキテクチャ考察(Scale 編)というエントリーを読んで、RedisはPub/Sub型通信をサポートしているという事を知" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2011/06/19/nodejs-redis-pubsub.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+<meta property="article:published_time" content="2011-06-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2011-06-19T00:00:00+00:00" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+
+<meta name="twitter:title" content="Redis の Pub/Sub を使って Node.js &#43; WebSocket のスケールアウトを実現する方法"/>
+<meta name="twitter:description" content="Node におけるスケールアーキテクチャ考察(Scale 編)というエントリーを読んで、RedisはPub/Sub型通信をサポートしているという事を知"/>
+
+
+<link rel="stylesheet" href="https://blog.dakatsuka.jpfontawesome/css/all.min.css" />
+
+  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
+
+<link
+  id="dark-mode-theme"
+  rel="stylesheet"
+  href="https://blog.dakatsuka.jpcss/dark.css"
+/>
+
+<script>
+  var darkTheme = document.getElementById('dark-mode-theme')
+  var storedTheme = localStorage.getItem('dark-mode-storage')
+  if (storedTheme === 'dark') {
+    darkTheme.disabled = false
+  } else if (storedTheme === 'light') {
+    darkTheme.disabled = true
+  }
+</script>
+
+<script src="https://blog.dakatsuka.jpjs/bundle.js"></script>
+<script src="https://blog.dakatsuka.jpjs/instantpage.min.js" type="module" defer></script>
+<meta name="generator" content="Hugo 0.80.0-DEV" />
+  </head>
+  <body>
+    
+  
+
+
+
+
+  <header>
+    <nav class="navbar">
+  <div class="nav">
+    
+      <a href="https://blog.dakatsuka.jp" class="nav-logo">
+        <img
+          src="https://blog.dakatsuka.jpimages/logo.png"
+          width="80"
+          height="80"
+          alt="logo"
+        />
+      </a>
+    
+
+    <ul class="nav-links">
+      
+        
+          <li>
+            <a href="/about.html" id="About"
+              ><em class="fas fa-user fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/categories.html" id="Categories"
+              ><em class="fas fa-folder-open fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/tags.html" id="Tags"
+              ><em class="fas fa-tag fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/archives.html" id="Archives"
+              ><em class="fas fa-archive fa-lg"></em
+            ></a>
+          </li>
+          
+      
+    </ul>
+  </div>
+</nav>
+
+    <div class="intro-header">
+      <div class="container">
+        <div class="post-heading">
+          
+            <h1>
+              Redis の Pub/Sub を使って Node.js &#43; WebSocket のスケールアウトを実現する方法
+            </h1>
+          
+          
+            <span class="meta-post">
+  <em class="fa fa-calendar-alt"></em
+  >&nbsp;Jun 19, 2011
+  
+</span>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+    
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      
+  <p><a href="http://d.hatena.ne.jp/Jxck/20110618/1308378963">Node におけるスケールアーキテクチャ考察(Scale 編)</a>というエントリーを読んで、RedisはPub/Sub型通信をサポートしているという事を知りました。エントリーでも言及されているように、Pub/Subを使えば Node.js + WebSocket サーバをスケールする際に、中継サーバの役割を果たす事が出来るはずです。</p>
+<p>そんな訳で実際に Node.js と Redis を使って Pub/Sub の実験を行なってみました。ユーザが別々のNode.jsサーバに接続していてもWebSocketを通してメッセージのやり取りを出来るようにします。</p>
+<p>イメージとしてはこんな感じです。</p>
+<figure>
+    <img src="/media/2011-06-19-nodejs-redis-pubsub/node_redis.png"/> 
+</figure>
+
+<h2 id="下準備">下準備</h2>
+<p>Ubuntuの場合は apt-get で1発でインストールする事が出来ます。</p>
+<pre><code>$ sudo apt-get install redis
+</code></pre><p>npmでredisモジュールをインストールします。</p>
+<pre><code>$ npm install redis
+</code></pre><h2 id="nodejs-から-redis-の-pubsub-を使ってみる">Node.js から Redis の Pub/Sub を使ってみる</h2>
+<p>試しにPub/Subとはどんなものか試してみましょう。Node.jsのコンソールを起動します。</p>
+<pre><code>$ node
+</code></pre><p>コンソールに下記コードを入力します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sys</span>        <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;sys&#39;</span>);
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">redis</span>      <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;redis&#39;</span>);
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">subscriber</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">redis</span>.<span style="color:#a6e22e">createClient</span>(<span style="color:#ae81ff">6379</span>, <span style="color:#e6db74">&#39;localhost&#39;</span>);
+ 
+<span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">subscribe</span>(<span style="color:#e6db74">&#39;hoge channel&#39;</span>);
+<span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;message&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">channel</span>, <span style="color:#a6e22e">message</span>) {
+    <span style="color:#a6e22e">sys</span>.<span style="color:#a6e22e">puts</span>(<span style="color:#a6e22e">channel</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; :&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">message</span>);
+});
+</code></pre></div><p>別のターミナルで、下記コマンドを実行します。</p>
+<pre><code>$ redis-cli publish &quot;hoge channel&quot; &quot;Hello World!&quot;
+</code></pre><p>Node.js のコンソール画面に 「Hello World!」と表示されるはずです。これがPub/SubのSubにあたります。</p>
+<p>では、今度はNode.js側からメッセージを送ってみましょう。先ほどのredis-cliを実行したターミナルで下記コマンドを実行します。</p>
+<pre><code>$ redis-cli subscribe &quot;hoge channel&quot;
+Reading messages... (press Ctrl-c to quit)
+1. &quot;subscribe&quot;
+2. &quot;hoge channel&quot;
+3. (integer) 1
+</code></pre><p>Node.jsのコンソールに下記コードを入力します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">publisher</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">redis</span>.<span style="color:#a6e22e">createClient</span>(<span style="color:#ae81ff">6379</span>, <span style="color:#e6db74">&#39;localhost&#39;</span>);
+<span style="color:#a6e22e">publisher</span>.<span style="color:#a6e22e">publish</span>(<span style="color:#e6db74">&#34;hoge channel&#34;</span>, <span style="color:#e6db74">&#34;FooBar&#34;</span>);
+</code></pre></div><p>Node.js のコンソール画面と redis-cli を実行した画面両方に「FooBar」と表示されますね。これで Redis の Pub/Sub の動きは何となく掴めたかと思います。</p>
+<h2 id="websocket-を使ったチャットもどきを実装する">WebSocket を使ったチャットもどきを実装する</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// This program is free software. It comes without any warranty, to
+</span><span style="color:#75715e">// the extent permitted by applicable law. You can redistribute it
+</span><span style="color:#75715e">// and/or modify it under the terms of the Do What The Fuck You Want
+</span><span style="color:#75715e">// To Public License, Version 2, as published by Sam Hocevar. See
+</span><span style="color:#75715e">// http://sam.zoy.org/wtfpl/COPYING for more details.
+</span><span style="color:#75715e"></span> 
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sys</span>        <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;sys&#39;</span>)
+  , <span style="color:#a6e22e">opts</span>       <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;opts&#39;</span>)
+  , <span style="color:#a6e22e">ws</span>         <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;websocket-server&#39;</span>)
+  , <span style="color:#a6e22e">redis</span>      <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;redis&#39;</span>)
+  , <span style="color:#a6e22e">server</span>     <span style="color:#f92672">=</span> <span style="color:#a6e22e">ws</span>.<span style="color:#a6e22e">createServer</span>()
+  , <span style="color:#a6e22e">subscriber</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">redis</span>.<span style="color:#a6e22e">createClient</span>(<span style="color:#ae81ff">6379</span>, <span style="color:#e6db74">&#39;localhost&#39;</span>)
+  , <span style="color:#a6e22e">publisher</span>  <span style="color:#f92672">=</span> <span style="color:#a6e22e">redis</span>.<span style="color:#a6e22e">createClient</span>(<span style="color:#ae81ff">6379</span>, <span style="color:#e6db74">&#39;localhost&#39;</span>);
+ 
+<span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">parse</span>([
+    {
+        <span style="color:#e6db74">&#39;short&#39;</span><span style="color:#f92672">:</span>       <span style="color:#e6db74">&#39;p&#39;</span>,
+        <span style="color:#e6db74">&#39;long&#39;</span><span style="color:#f92672">:</span>        <span style="color:#e6db74">&#39;port&#39;</span>,
+        <span style="color:#e6db74">&#39;description&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;WebSocket Port&#39;</span>,
+        <span style="color:#e6db74">&#39;value&#39;</span><span style="color:#f92672">:</span>       <span style="color:#66d9ef">true</span>,
+        <span style="color:#e6db74">&#39;required&#39;</span><span style="color:#f92672">:</span>    <span style="color:#66d9ef">true</span>
+    }
+]);
+ 
+<span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;error&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">err</span>) {
+    <span style="color:#a6e22e">sys</span>.<span style="color:#a6e22e">debug</span>(<span style="color:#a6e22e">err</span>);
+});
+ 
+<span style="color:#a6e22e">publisher</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;error&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">err</span>) {
+    <span style="color:#a6e22e">sys</span>.<span style="color:#a6e22e">debug</span>(<span style="color:#a6e22e">err</span>);
+});
+ 
+<span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">subscribe</span>(<span style="color:#e6db74">&#34;chat&#34;</span>);
+<span style="color:#a6e22e">subscriber</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;message&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">channel</span>, <span style="color:#a6e22e">message</span>) {
+    <span style="color:#a6e22e">sys</span>.<span style="color:#a6e22e">puts</span>(<span style="color:#a6e22e">message</span>);
+    <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">broadcast</span>(<span style="color:#a6e22e">message</span>);
+});
+ 
+<span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">addListener</span>(<span style="color:#e6db74">&#34;connection&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">connection</span>) {
+    <span style="color:#a6e22e">sys</span>.<span style="color:#a6e22e">puts</span>(<span style="color:#e6db74">&#34;client connected: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">id</span>);
+ 
+    <span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">addListener</span>(<span style="color:#e6db74">&#34;message&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">message</span>) {
+        <span style="color:#a6e22e">publisher</span>.<span style="color:#a6e22e">publish</span>(<span style="color:#e6db74">&#34;chat&#34;</span>, <span style="color:#a6e22e">message</span>);
+    });
+});
+ 
+<span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">addListener</span>(<span style="color:#e6db74">&#34;close&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">connection</span>) {
+    <span style="color:#a6e22e">sys</span>.<span style="color:#a6e22e">puts</span>(<span style="color:#e6db74">&#34;client disconnected: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">id</span>);
+});
+ 
+<span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">listen</span>(<span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;port&#39;</span>));
+</code></pre></div><p>上記コードをapp.jsとして保存し、複数のポートで立ち上げます（別途 npm で websocket-server と opts をインストールする必要があります）。</p>
+<pre><code>$ node app.js -p 8001
+$ node app.js -p 8002
+$ node app.js -p 8003
+$ node app.js -p 8004
+</code></pre><p>Google Chrome の JavaScript コンソールを複数のタブで開き、下記のように入力します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">connection</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">WebSocket</span>(<span style="color:#e6db74">&#34;ws://localhost:8001&#34;</span>);
+<span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">onmessage</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">event</span>) { <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">data</span>) }
+<span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">send</span>(<span style="color:#e6db74">&#34;Hello!!&#34;</span>);
+</code></pre></div><p>複数のタブで connection.send(……) をたくさん入力してみると分かりやすいと思います。どのタブで入力してもメッセージが表示されるはずです。</p>
+<h2 id="まとめ">まとめ</h2>
+<p>今回は Redis の Pub/Sub を試す目的でしたので、チャットプログラム自体はメッセージを broadcast する事しか出来ません。しかし、Redis を通してやり取りするデータ形式をJSONにしておけば、色々な情報を各々の node.js サーバで共有する事ができるので、実用性が上がるのではないでしょうか。</p>
+<p>また、Redis自体もレプリケーションが可能なので中継サーバもスケールする事が出来ると思います（未検証）。</p>
+
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://blog.dakatsuka.jp/tags/node.js.html">Node.js</a
+            >&nbsp;
+          
+        </div>
+      
+    </article>
+    
+    
+      
+
+    
+  </div>
+
+    <footer>
+  
+  <div>
+    
+      <a href="https://twitter.com/d_akatsuka" name="twitter"
+        ><em class="fab fa-twitter"></em
+      ></a>
+    
+      <a href="https://github.com/dakatsuka" name="github"
+        ><em class="fab fa-github"></em
+      ></a>
+    
+  </div>
+
+
+  <div class="container">
+    <p class="credits copyright">
+      <a href="https://blog.dakatsuka.jpabout">Dai Akatsuka</a>
+      &nbsp;&copy;
+      2017
+      
+        &nbsp;/&nbsp;
+        <a href="https://blog.dakatsuka.jp">dakatsuka&#39;s blog</a>
+      
+      &nbsp;&ndash;&nbsp;
+      <em class="fas fa-moon" id="dark-mode-toggle"></em>
+    </p>
+
+    <p class="credits theme-by">
+       <a href="https://gohugo.io">Hugo</a>&nbsp;
+      
+      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
+    </p>
+  </div>
+</footer>
+
+  </body>
+</html>

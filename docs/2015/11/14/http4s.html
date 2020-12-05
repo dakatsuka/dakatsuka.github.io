@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+<title>ScalaのHTTPインターフェース http4s 超入門 | dakatsuka&#39;s blog</title>
+
+
+  
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-45923728-1');
+  </script>
+  
+
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  href="https://blog.dakatsuka.jpindex.xml"
+  title="dakatsuka&#39;s blog"
+/>
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+<meta name="theme-color" content="#ffffff" />
+
+<meta property="og:title" content="ScalaのHTTPインターフェース http4s 超入門" />
+<meta property="og:description" content="What&rsquo;s http4s RackやWSGIのScala版といったところ。公式サイトの説明も次のように書いてある。 http4s is a minimal, idiomatic Scala interface for HTTP. http4s is Scala&rsquo;s answer to Ruby&rsquo;s Rack, Python&rsquo;s WSGI, Haskell&rsquo;s WAI, and Java&rsquo;s Servlets. ま" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2015/11/14/http4s.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+<meta property="article:published_time" content="2015-11-14T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-11-14T00:00:00+00:00" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+
+<meta name="twitter:title" content="ScalaのHTTPインターフェース http4s 超入門"/>
+<meta name="twitter:description" content="What&rsquo;s http4s RackやWSGIのScala版といったところ。公式サイトの説明も次のように書いてある。 http4s is a minimal, idiomatic Scala interface for HTTP. http4s is Scala&rsquo;s answer to Ruby&rsquo;s Rack, Python&rsquo;s WSGI, Haskell&rsquo;s WAI, and Java&rsquo;s Servlets. ま"/>
+
+
+<link rel="stylesheet" href="https://blog.dakatsuka.jpfontawesome/css/all.min.css" />
+
+  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
+
+<link
+  id="dark-mode-theme"
+  rel="stylesheet"
+  href="https://blog.dakatsuka.jpcss/dark.css"
+/>
+
+<script>
+  var darkTheme = document.getElementById('dark-mode-theme')
+  var storedTheme = localStorage.getItem('dark-mode-storage')
+  if (storedTheme === 'dark') {
+    darkTheme.disabled = false
+  } else if (storedTheme === 'light') {
+    darkTheme.disabled = true
+  }
+</script>
+
+<script src="https://blog.dakatsuka.jpjs/bundle.js"></script>
+<script src="https://blog.dakatsuka.jpjs/instantpage.min.js" type="module" defer></script>
+<meta name="generator" content="Hugo 0.80.0-DEV" />
+  </head>
+  <body>
+    
+  
+
+
+
+
+  <header>
+    <nav class="navbar">
+  <div class="nav">
+    
+      <a href="https://blog.dakatsuka.jp" class="nav-logo">
+        <img
+          src="https://blog.dakatsuka.jpimages/logo.png"
+          width="80"
+          height="80"
+          alt="logo"
+        />
+      </a>
+    
+
+    <ul class="nav-links">
+      
+        
+          <li>
+            <a href="/about.html" id="About"
+              ><em class="fas fa-user fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/categories.html" id="Categories"
+              ><em class="fas fa-folder-open fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/tags.html" id="Tags"
+              ><em class="fas fa-tag fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/archives.html" id="Archives"
+              ><em class="fas fa-archive fa-lg"></em
+            ></a>
+          </li>
+          
+      
+    </ul>
+  </div>
+</nav>
+
+    <div class="intro-header">
+      <div class="container">
+        <div class="post-heading">
+          
+            <h1>
+              ScalaのHTTPインターフェース http4s 超入門
+            </h1>
+          
+          
+            <span class="meta-post">
+  <em class="fa fa-calendar-alt"></em
+  >&nbsp;Nov 14, 2015
+  
+    &nbsp;&nbsp;&nbsp;<em class="fa fa-folder-open"></em>&nbsp;
+    
+      <a href="https://blog.dakatsuka.jpcategories/programming.html">Programming</a
+      >&nbsp;
+    
+  
+</span>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+    
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      
+  <h2 id="whats-http4s">What&rsquo;s http4s</h2>
+<p>RackやWSGIのScala版といったところ。<a href="http://http4s.org/">公式サイト</a>の説明も次のように書いてある。</p>
+<blockquote>
+<p>http4s is a minimal, idiomatic Scala interface for HTTP. http4s is Scala&rsquo;s answer to Ruby&rsquo;s Rack, Python&rsquo;s WSGI, Haskell&rsquo;s WAI, and Java&rsquo;s Servlets.</p>
+</blockquote>
+<p>まだまだ開発途中でドキュメントなどはあまり整備されていなくて、まともに使おうと思ったらソースコードを読む必要が出てきそう。次期Scalatraのバックエンドになるとかならないとか噂されているけどはてさて？もしかしたらAkkaやFinagleに押されて流行らずに終わる可能性もある。</p>
+<p>ちなみにscalaz-streamが使われている。</p>
+<h2 id="install">Install</h2>
+<p>最小構成で使う場合は <code>http4s-server</code> と <code>http4s-blaze-server</code> だけで良い。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">resolvers <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;Scalaz Bintray Repo&#34;</span> at <span style="color:#e6db74">&#34;http://dl.bintray.com/scalaz/releases&#34;</span>
+
+libraryDependencies <span style="color:#f92672">++=</span> <span style="color:#a6e22e">Seq</span><span style="color:#f92672">(</span>
+  <span style="color:#e6db74">&#34;org.http4s&#34;</span> <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;http4s-server&#34;</span>       <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.10.1&#34;</span><span style="color:#f92672">,</span>
+  <span style="color:#e6db74">&#34;org.http4s&#34;</span> <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;http4s-blaze-server&#34;</span> <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.10.1&#34;</span>
+<span style="color:#f92672">)</span>
+</code></pre></div><h2 id="specification">Specification</h2>
+<p>http4sの仕様に準拠したアプリケーション（http4sではサービスという）として最低限必要なことは次の通り。</p>
+<ul>
+<li><code>org.http4s.server.HttpService</code> 型であること</li>
+</ul>
+<p>以上！めちゃくちゃシンプルですね。HttpServiceの定義を覗いてみるとこう書いてある。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">type</span> <span style="color:#66d9ef">Service</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Kleisli</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Task</span>, <span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">B</span><span style="color:#f92672">]</span>
+<span style="color:#66d9ef">type</span> <span style="color:#66d9ef">HttpService</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Service</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Request</span>, <span style="color:#66d9ef">Response</span><span style="color:#f92672">]</span>
+</code></pre></div><p>実際はHttpServiceを作るための関数が <code>HttpService.apply</code> として用意されているのでこれを使っていく。この関数は<code>Request</code>型を受け取って<code>Task[Response]</code>型を返す<code>PartialFunction</code>を引数に取る。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">HttpService</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">(</span>pf<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">PartialFunction</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Request</span>, <span style="color:#66d9ef">Task</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Response</span><span style="color:#f92672">]],</span> default<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">HttpService</span> <span style="color:#f92672">=</span> empty<span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">HttpService</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Rackなどを触ったことがある人ならピンと来るはず。</p>
+<h2 id="introduction">Introduction</h2>
+<p>アクセスすると画面にHello WorldとQueryStringを表示する簡単なサービスを作ってみる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#75715e">// src/main/scala/jp/dakatsuka/http4stest/Bootstrap.scala
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">package</span> jp.dakatsuka.http4stest
+
+<span style="color:#66d9ef">import</span> org.http4s.<span style="color:#f92672">{</span><span style="color:#a6e22e">Status</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Response</span><span style="color:#f92672">}</span>
+<span style="color:#66d9ef">import</span> org.http4s.server.HttpService
+<span style="color:#66d9ef">import</span> org.http4s.server.blaze.BlazeBuilder
+
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Bootstrap</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">val</span> service <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">HttpService</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">case</span> req <span style="color:#66d9ef">=&gt;</span>
+      <span style="color:#a6e22e">Response</span><span style="color:#f92672">()</span>
+        <span style="color:#f92672">.</span>withStatus<span style="color:#f92672">(</span><span style="color:#a6e22e">Status</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Ok</span><span style="color:#f92672">)</span>
+        <span style="color:#f92672">.</span>withBody<span style="color:#f92672">(</span><span style="color:#e6db74">s&#34;Hello World!! </span><span style="color:#e6db74">${</span>req<span style="color:#f92672">.</span>queryString<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
+
+  <span style="color:#66d9ef">def</span> main<span style="color:#f92672">(</span>args<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Array</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Unit</span> <span style="color:#f92672">=</span>
+    <span style="color:#a6e22e">BlazeBuilder</span>
+      <span style="color:#f92672">.</span>bindHttp<span style="color:#f92672">(</span><span style="color:#ae81ff">8080</span><span style="color:#f92672">)</span>
+      <span style="color:#f92672">.</span>mountService<span style="color:#f92672">(</span>service<span style="color:#f92672">)</span>
+      <span style="color:#f92672">.</span>run
+      <span style="color:#f92672">.</span>awaitShutdown<span style="color:#f92672">()</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><code>sbt run</code>を実行してブラウザで <code>http://localhost:8080/?foo=bar&amp;fizz=buzz</code> にアクセス。次のような文字がブラウザ上に表示されるはず。</p>
+<pre><code>Hello World!! foo=bar&amp;fizz=buzz
+</code></pre><h2 id="middleware">Middleware</h2>
+<p>ミドルウェアも簡単につくれる。ミドルウェアは既存のHttpServiceに組み込んで（合成して）使う。試しに<code>X-HTTP4S-MESSAGE</code>というヘッダーを付与するミドルウェアを作ってみる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#75715e">// src/main/scala/jp/dakatsuka/http4stest/MessageMiddleware.scala
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">package</span> jp.dakatsuka.http4stest
+
+<span style="color:#66d9ef">import</span> org.http4s.Header
+<span style="color:#66d9ef">import</span> org.http4s.server.HttpService
+
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">MessageMiddleware</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> apply<span style="color:#f92672">(</span>service<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">HttpService</span><span style="color:#f92672">,</span> message<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">HttpService</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">HttpService</span><span style="color:#f92672">.</span>lift <span style="color:#f92672">{</span> req <span style="color:#66d9ef">=&gt;</span>
+    service<span style="color:#f92672">.</span>map <span style="color:#f92672">{</span> res <span style="color:#66d9ef">=&gt;</span>
+      res<span style="color:#f92672">.</span>putHeaders<span style="color:#f92672">(</span><span style="color:#a6e22e">Header</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;X-HTTP4S-MESSAGE&#34;</span><span style="color:#f92672">,</span> message<span style="color:#f92672">))</span>
+    <span style="color:#f92672">}.</span>apply<span style="color:#f92672">(</span>req<span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>組み込み方はこう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> main<span style="color:#f92672">(</span>args<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Array</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Unit</span> <span style="color:#f92672">=</span>
+  <span style="color:#a6e22e">BlazeBuilder</span>
+    <span style="color:#f92672">.</span>bindHttp<span style="color:#f92672">(</span><span style="color:#ae81ff">8080</span><span style="color:#f92672">)</span>
+    <span style="color:#f92672">.</span>mountService<span style="color:#f92672">(</span><span style="color:#a6e22e">MessageMiddleware</span><span style="color:#f92672">(</span>service<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;Hello!!!!!&#34;</span><span style="color:#f92672">))</span>
+    <span style="color:#f92672">.</span>run
+    <span style="color:#f92672">.</span>awaitShutdown<span style="color:#f92672">()</span>
+</code></pre></div><p>ちゃんとヘッダーに追加されていることが分かる。</p>
+<pre><code>$ curl --dump-header - http://localhost:8080
+HTTP/1.1 200 OK
+Content-Length: 14
+Content-Type: text/plain; charset=UTF-8
+X-HTTP4S-MESSAGE: Hello!!!!!
+Date: Sat, 14 Nov 2015 13:30:32 GMT
+
+Hello World!!
+</code></pre><h2 id="http4s-dsl">http4s-dsl</h2>
+<p>http4s-dslというパッケージを追加すればSinatraのようにDSLを使ってルーティングを定義できる。</p>
+<p>build.sbtに依存関係を追加する。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">libraryDependencies <span style="color:#f92672">++=</span> <span style="color:#a6e22e">Seq</span><span style="color:#f92672">(</span>
+  <span style="color:#e6db74">&#34;org.http4s&#34;</span> <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;http4s-server&#34;</span>       <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.10.1&#34;</span><span style="color:#f92672">,</span>
+  <span style="color:#e6db74">&#34;org.http4s&#34;</span> <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;http4s-dsl&#34;</span>          <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.10.1&#34;</span><span style="color:#f92672">,</span>
+  <span style="color:#e6db74">&#34;org.http4s&#34;</span> <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;http4s-blaze-server&#34;</span> <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.10.1&#34;</span>
+<span style="color:#f92672">)</span>
+</code></pre></div><p>DSLを使うと次のように直感的にルーティングできるようになる。ちょっとしたマイクロサービスを作りたいときにはこれで十分な気がする。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">import</span> org.http4s._
+<span style="color:#66d9ef">import</span> org.http4s.dsl._
+<span style="color:#66d9ef">import</span> org.http4s.server.HttpService
+<span style="color:#66d9ef">import</span> jp.dakatsuka.http4stest.model.User
+
+<span style="color:#66d9ef">val</span> service <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">HttpService</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">GET</span> <span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">Root</span> <span style="color:#66d9ef">=&gt;</span>
+    <span style="color:#a6e22e">Ok</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Document Root&#34;</span><span style="color:#f92672">)</span>
+
+  <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">GET</span> <span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">Root</span> <span style="color:#f92672">/</span> <span style="color:#e6db74">&#34;users&#34;</span> <span style="color:#66d9ef">=&gt;</span>
+    <span style="color:#a6e22e">Ok</span><span style="color:#f92672">(</span><span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>all<span style="color:#f92672">)</span>
+
+  <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">GET</span> <span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">Root</span> <span style="color:#f92672">/</span> <span style="color:#e6db74">&#34;users&#34;</span> <span style="color:#f92672">/</span> <span style="color:#a6e22e">LongVar</span><span style="color:#f92672">(</span>id<span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span>
+    <span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>find<span style="color:#f92672">(</span>id<span style="color:#f92672">)</span> <span style="color:#66d9ef">match</span> <span style="color:#f92672">{</span>
+      <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Some</span><span style="color:#f92672">(</span>user<span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">Ok</span><span style="color:#f92672">(</span>user<span style="color:#f92672">)</span>
+      <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">NotFound</span><span style="color:#f92672">()</span>
+    <span style="color:#f92672">}</span>
+
+  <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">GET</span> <span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">Root</span> <span style="color:#f92672">/</span> <span style="color:#e6db74">&#34;users&#34;</span> <span style="color:#f92672">/</span> screen_name <span style="color:#66d9ef">=&gt;</span>
+    <span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>findOneByScreenName<span style="color:#f92672">(</span>screen_name<span style="color:#f92672">)</span> <span style="color:#66d9ef">match</span> <span style="color:#f92672">{</span>
+      <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Some</span><span style="color:#f92672">(</span>user<span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">Ok</span><span style="color:#f92672">(</span>user<span style="color:#f92672">)</span>
+      <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">NotFound</span><span style="color:#f92672">()</span>
+    <span style="color:#f92672">}</span>
+
+  <span style="color:#66d9ef">case</span> req <span style="color:#66d9ef">@</span> <span style="color:#a6e22e">POST</span> <span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">Root</span> <span style="color:#f92672">/</span> <span style="color:#e6db74">&#34;users&#34;</span> <span style="color:#66d9ef">=&gt;</span>
+    req<span style="color:#f92672">.</span>decode<span style="color:#f92672">[</span><span style="color:#66d9ef">UrlForm</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span> data <span style="color:#66d9ef">=&gt;</span>
+      <span style="color:#66d9ef">val</span> <span style="color:#a6e22e">UserParams</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">for</span> <span style="color:#f92672">{</span>
+        email <span style="color:#66d9ef">&lt;-</span> data<span style="color:#f92672">.</span>getFirst<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">)</span>
+        screen_name <span style="color:#66d9ef">&lt;-</span> data<span style="color:#f92672">.</span>getFirst<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;screen_name&#34;</span><span style="color:#f92672">)</span>
+      <span style="color:#f92672">}</span> <span style="color:#66d9ef">yield</span> <span style="color:#a6e22e">UserParams</span><span style="color:#f92672">(</span>email<span style="color:#f92672">,</span> screen_name<span style="color:#f92672">)</span>
+
+      <span style="color:#f92672">???</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="json-レスポンスを返したい">JSON レスポンスを返したい</h3>
+<p>厳密にはcase classを<code>Ok</code>や<code>NotFound</code>に渡したらJSON文字列に変換してレスポンスを返して欲しい。になる。</p>
+<p>http4sは <code>EntityEncoder[T]</code> を定義しておけばどんな型でもレスポンスとして返せるという仕組みがある（逆の<code>EntityDecoder</code>もある）JSONに関しては http4s-argonaut という公式パッケージが用意されているのでそれを利用するのが良いだろう。Argonautが嫌な人はJson4s用のパッケージも用意されているのでそちらを。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">libraryDependencies <span style="color:#f92672">++=</span> <span style="color:#a6e22e">Seq</span><span style="color:#f92672">(</span>
+  <span style="color:#e6db74">&#34;org.http4s&#34;</span> <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;http4s-server&#34;</span>       <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.10.1&#34;</span><span style="color:#f92672">,</span>
+  <span style="color:#e6db74">&#34;org.http4s&#34;</span> <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;http4s-dsl&#34;</span>          <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.10.1&#34;</span><span style="color:#f92672">,</span>
+  <span style="color:#e6db74">&#34;org.http4s&#34;</span> <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;http4s-blaze-server&#34;</span> <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.10.1&#34;</span><span style="color:#f92672">,</span>
+  <span style="color:#e6db74">&#34;org.http4s&#34;</span> <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;http4s-argonaut&#34;</span>     <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.10.1&#34;</span>
+<span style="color:#f92672">)</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#75715e">// src/main/scala/jp/dakatsuka/http4stest/model/User.scala
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">package</span> jp.dakatsuka.http4s.model
+
+<span style="color:#66d9ef">import</span> argonaut.Argonaut._
+<span style="color:#66d9ef">import</span> argonaut.CodecJson
+<span style="color:#66d9ef">import</span> org.http4s.argonaut._
+<span style="color:#66d9ef">import</span> org.http4s.EntityEncoder
+
+<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">(</span>id<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Long</span><span style="color:#f92672">,</span> email<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> screen_name<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span>
+
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">User</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">val</span> userCodec<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">CodecJson</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> casecodec3<span style="color:#f92672">(</span><span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>apply<span style="color:#f92672">,</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>unapply<span style="color:#f92672">)(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;screen_name&#34;</span><span style="color:#f92672">)</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">val</span> userEntityEncoder<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">EntityEncoder</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> jsonEncoderOf<span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">val</span> usersEntityEncoder<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">EntityEncoder</span><span style="color:#f92672">[</span><span style="color:#66d9ef">List</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]]</span> <span style="color:#66d9ef">=</span> jsonEncoderOf<span style="color:#f92672">[</span><span style="color:#66d9ef">List</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]]</span>
+
+  <span style="color:#66d9ef">def</span> all<span style="color:#f92672">()</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">List</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">???</span>
+  <span style="color:#66d9ef">def</span> find<span style="color:#f92672">(</span>id<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Long</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Option</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">???</span>
+  <span style="color:#66d9ef">def</span> findOneByScreenName<span style="color:#f92672">(</span>screen_name<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Option</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">???</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="まとめ">まとめ</h2>
+<p>駆け足でhttp4sを紹介してみたけど、個人的にはかなり使い勝手が良いと思う。Akka, Playframeworkのような重厚感もないし http4s-dsl を使えば簡単にAPIの実装も出来るだろう。お手軽感って大事だと思う。ルーティングやレスポンスを型安全に書けるのもポイントが高い。</p>
+<p>懸念点としては最初にも書いたようにライバルが多くて消えてしまうのでは…ってところ。http4sはServletでも動くので頑張って欲しい。</p>
+
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://blog.dakatsuka.jp/tags/scala.html">Scala</a
+            >&nbsp;
+          
+            <a href="https://blog.dakatsuka.jp/tags/http4s.html">http4s</a
+            >&nbsp;
+          
+        </div>
+      
+    </article>
+    
+    
+      
+
+    
+  </div>
+
+    <footer>
+  
+  <div>
+    
+      <a href="https://twitter.com/d_akatsuka" name="twitter"
+        ><em class="fab fa-twitter"></em
+      ></a>
+    
+      <a href="https://github.com/dakatsuka" name="github"
+        ><em class="fab fa-github"></em
+      ></a>
+    
+  </div>
+
+
+  <div class="container">
+    <p class="credits copyright">
+      <a href="https://blog.dakatsuka.jpabout">Dai Akatsuka</a>
+      &nbsp;&copy;
+      2017
+      
+        &nbsp;/&nbsp;
+        <a href="https://blog.dakatsuka.jp">dakatsuka&#39;s blog</a>
+      
+      &nbsp;&ndash;&nbsp;
+      <em class="fas fa-moon" id="dark-mode-toggle"></em>
+    </p>
+
+    <p class="credits theme-by">
+       <a href="https://gohugo.io">Hugo</a>&nbsp;
+      
+      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
+    </p>
+  </div>
+</footer>
+
+  </body>
+</html>

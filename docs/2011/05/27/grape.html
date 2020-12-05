@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+<title>APIの作成に特化したRuby製フレームワーク grape を試してみた | dakatsuka&#39;s blog</title>
+
+
+  
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-45923728-1');
+  </script>
+  
+
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  href="https://blog.dakatsuka.jpindex.xml"
+  title="dakatsuka&#39;s blog"
+/>
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+<meta name="theme-color" content="#ffffff" />
+
+<meta property="og:title" content="APIの作成に特化したRuby製フレームワーク grape を試してみた" />
+<meta property="og:description" content="RESTful API の作成に特化したマイクロフレームワーク grape の存在を知ったので調査してみる事にしました。API の実装 に Rails の ActionController は重厚すぎる、Sinatra は軽" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2011/05/27/grape.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+<meta property="article:published_time" content="2011-05-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2011-05-27T00:00:00+00:00" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/logo.png"/>
+
+<meta name="twitter:title" content="APIの作成に特化したRuby製フレームワーク grape を試してみた"/>
+<meta name="twitter:description" content="RESTful API の作成に特化したマイクロフレームワーク grape の存在を知ったので調査してみる事にしました。API の実装 に Rails の ActionController は重厚すぎる、Sinatra は軽"/>
+
+
+<link rel="stylesheet" href="https://blog.dakatsuka.jpfontawesome/css/all.min.css" />
+
+  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
+
+<link
+  id="dark-mode-theme"
+  rel="stylesheet"
+  href="https://blog.dakatsuka.jpcss/dark.css"
+/>
+
+<script>
+  var darkTheme = document.getElementById('dark-mode-theme')
+  var storedTheme = localStorage.getItem('dark-mode-storage')
+  if (storedTheme === 'dark') {
+    darkTheme.disabled = false
+  } else if (storedTheme === 'light') {
+    darkTheme.disabled = true
+  }
+</script>
+
+<script src="https://blog.dakatsuka.jpjs/bundle.js"></script>
+<script src="https://blog.dakatsuka.jpjs/instantpage.min.js" type="module" defer></script>
+<meta name="generator" content="Hugo 0.80.0-DEV" />
+  </head>
+  <body>
+    
+  
+
+
+
+
+  <header>
+    <nav class="navbar">
+  <div class="nav">
+    
+      <a href="https://blog.dakatsuka.jp" class="nav-logo">
+        <img
+          src="https://blog.dakatsuka.jpimages/logo.png"
+          width="80"
+          height="80"
+          alt="logo"
+        />
+      </a>
+    
+
+    <ul class="nav-links">
+      
+        
+          <li>
+            <a href="/about.html" id="About"
+              ><em class="fas fa-user fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/categories.html" id="Categories"
+              ><em class="fas fa-folder-open fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/tags.html" id="Tags"
+              ><em class="fas fa-tag fa-lg"></em
+            ></a>
+          </li>
+          
+      
+        
+          <li>
+            <a href="/archives.html" id="Archives"
+              ><em class="fas fa-archive fa-lg"></em
+            ></a>
+          </li>
+          
+      
+    </ul>
+  </div>
+</nav>
+
+    <div class="intro-header">
+      <div class="container">
+        <div class="post-heading">
+          
+            <h1>
+              APIの作成に特化したRuby製フレームワーク grape を試してみた
+            </h1>
+          
+          
+            <span class="meta-post">
+  <em class="fa fa-calendar-alt"></em
+  >&nbsp;May 27, 2011
+  
+</span>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+    
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      
+  <p>RESTful API の作成に特化したマイクロフレームワーク <a href="https://github.com/intridea/grape/wiki">grape</a> の存在を知ったので調査してみる事にしました。API の実装 に Rails の ActionController は重厚すぎる、Sinatra は軽いけど手間がかかる。。。という中で作られたこのフレームワーク、はたしてその実力は…</p>
+<h2 id="grape-の特徴">grape の特徴</h2>
+<p>grape の特徴は概ね以下の通りです。grape 自体が Rack アプリケーションなので Rails3 に組み込むことが出来ます。というよりは組み込んで使うのが前提のようです（勿論単体でも動きます）。</p>
+<ul>
+<li>Rack アプリケーション</li>
+<li>Sinatra ライクな DSL</li>
+<li>自動で JSON にシリアライズ（#serializable_hash または #to_json が存在すればOKみたい）</li>
+</ul>
+<h2 id="grape-を使ってみる">grape を使ってみる</h2>
+<p>特徴を掴んだところで、実際にインストールして使ってみます。Rails3 の一部として使う場合は Gemfile に下記1行を追加して、おなじみ bundle install を実行します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">gem <span style="color:#e6db74">&#34;grape&#34;</span>
+</code></pre></div><p>今回は lib/api.rb に実装していきます。実装したコードは下記をご覧下さい。prefix を指定すると /api/articles/1 という感じのURLになります。コメントアウトしてますが、version を指定すると /1/articles/1 のようにアクセス出来るようになるみたいです（これに何のメリットがあるのかはちょっと分かりませんでした）。</p>
+<p>用意されている DSL の詳細は、<a href="https://github.com/intridea/grape">intridea/grape – GitHub</a> や <a href="http://intridea.github.com/grape/">YARD documentation for the Grape API</a> などを見て下さい。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># lib/api.rb</span>
+ 
+<span style="color:#66d9ef">module</span> TestApp
+  <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">API</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Grape</span><span style="color:#f92672">::</span><span style="color:#66d9ef">API</span>
+    <span style="color:#75715e"># version 1</span>
+    prefix <span style="color:#e6db74">&#34;api&#34;</span>
+ 
+    resource <span style="color:#e6db74">&#34;articles&#34;</span> <span style="color:#66d9ef">do</span>
+      get <span style="color:#e6db74">&#34;:id&#34;</span> <span style="color:#66d9ef">do</span>
+        <span style="color:#66d9ef">Article</span><span style="color:#f92672">.</span>find(params<span style="color:#f92672">[</span><span style="color:#e6db74">:id</span><span style="color:#f92672">]</span>)
+      <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>APIの実装が終わったら次はRailsへの組み込みです。Rails3 から lib の中は自動で読み込まれないので initializers で呼び出すようにします。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/initializers/api.rb</span>
+ 
+require <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span><span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>root<span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>api<span style="color:#e6db74">&#34;
+</span></code></pre></div><p>最後に TestApp::API を routes.rb でマウントして完成です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># config/routes.rb</span>
+ 
+<span style="color:#66d9ef">TestApp</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Application</span><span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>draw <span style="color:#66d9ef">do</span>
+  mount <span style="color:#66d9ef">TestApp</span><span style="color:#f92672">::</span><span style="color:#66d9ef">API</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;/&#34;</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>ここまで出来たら rails s で WEBRick を起動し、http://localhost:3000/api/articles/1 にアクセスしてみましょう。Article.find(1) の実行結果が JSON で返ってくるはずです。</p>
+<h2 id="軽くベンチマークしてみた">軽くベンチマークしてみた</h2>
+<p>試しに ActionController と grape どちらがパフォーマンス良いのかをベンチマークしてみました。</p>
+<p>コントローラの実装は次のようにしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/controllers/articles_controller.rb</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ArticlesController</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ApplicationController</span>
+  respond_to <span style="color:#e6db74">:json</span>
+ 
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">show</span>
+    respond_with <span style="color:#66d9ef">Article</span><span style="color:#f92672">.</span>find(params<span style="color:#f92672">[</span><span style="color:#e6db74">:id</span><span style="color:#f92672">]</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+ 
+<span style="color:#75715e"># config/routes.rb</span>
+<span style="color:#66d9ef">TestApp</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Application</span><span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>draw <span style="color:#66d9ef">do</span>
+  resources <span style="color:#e6db74">:articles</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Apache Bench で測定してみます。測定環境ですが、ローカルは自宅のiMac、リモートはさくらのVPS 4G（unicorn 使用）で行いました。ですのでベンチマーク結果はあくまで参考程度に考えてください。</p>
+<p>grape</p>
+<pre><code>Concurrency Level:      10
+Time taken for tests:   5.039 seconds
+Complete requests:      1000
+Failed requests:        0
+Write errors:           0
+Total transferred:      545000 bytes
+HTML transferred:       345000 bytes
+Requests per second:    198.47 [#/sec] (mean)
+Time per request:       50.385 [ms] (mean)
+Time per request:       5.039 [ms] (mean, across all concurrent requests)
+Transfer rate:          105.63 [Kbytes/sec] received
+</code></pre><p>ActionController</p>
+<pre><code>Concurrency Level:      10
+Time taken for tests:   7.573 seconds
+Complete requests:      1000
+Failed requests:        0
+Write errors:           0
+Total transferred:      643000 bytes
+HTML transferred:       355000 bytes
+Requests per second:    132.05 [#/sec] (mean)
+Time per request:       75.731 [ms] (mean)
+Time per request:       7.573 [ms] (mean, across all concurrent requests)
+Transfer rate:          82.92 [Kbytes/sec] received
+</code></pre><p>grape のほうが少し速い結果となりました。何回かやってみたのですが、多少誤差はあるものの grape のほうが速そうです。</p>
+<h2 id="総評">総評</h2>
+<p>Sinatra ライクな DSL なおかげでかなりシンプルに書けることが分かりました。ただ、Rails3 からは respond_with が使えるようになったので、コード量ではあまり差は無くなってしまいますね。通常のHTMLページとAPIを分離したい場合やパフォーマンスアップを狙いたい場合には良いかもしれません。</p>
+<p><a href="https://github.com/intridea/grape/wiki/Roadmap">ロードマップ</a>を見ると、OAuth認証やXMLでの出力、Streaming APIの対応も予定されているようです。</p>
+<h2 id="関連リンク">関連リンク</h2>
+<ul>
+<li><a href="http://confreaks.net/videos/475-rubyconf2010-the-grapes-of-rapid">The Grapes of Rapid</a> / <a href="http://cloud.github.com/downloads/intridea/grape/The%20Grapes%20of%20Rapid.pdf">Slide</a></li>
+</ul>
+
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://blog.dakatsuka.jp/tags/ruby.html">Ruby</a
+            >&nbsp;
+          
+            <a href="https://blog.dakatsuka.jp/tags/rails.html">Rails</a
+            >&nbsp;
+          
+        </div>
+      
+    </article>
+    
+    
+      
+
+    
+  </div>
+
+    <footer>
+  
+  <div>
+    
+      <a href="https://twitter.com/d_akatsuka" name="twitter"
+        ><em class="fab fa-twitter"></em
+      ></a>
+    
+      <a href="https://github.com/dakatsuka" name="github"
+        ><em class="fab fa-github"></em
+      ></a>
+    
+  </div>
+
+
+  <div class="container">
+    <p class="credits copyright">
+      <a href="https://blog.dakatsuka.jpabout">Dai Akatsuka</a>
+      &nbsp;&copy;
+      2017
+      
+        &nbsp;/&nbsp;
+        <a href="https://blog.dakatsuka.jp">dakatsuka&#39;s blog</a>
+      
+      &nbsp;&ndash;&nbsp;
+      <em class="fas fa-moon" id="dark-mode-toggle"></em>
+    </p>
+
+    <p class="credits theme-by">
+       <a href="https://gohugo.io">Hugo</a>&nbsp;
+      
+      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
+    </p>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -9,6 +9,8 @@ enableInlineShortcodes = true
 footnoteReturnLinkContents = "^"
 uglyurls = true
 
+publishDir = "docs"
+
 # Optional
 # If you use googleAnalytics, you set top-level options in config.toml to the beginning of the config file like other top-level options.
 googleAnalytics = "UA-45923728-1"
