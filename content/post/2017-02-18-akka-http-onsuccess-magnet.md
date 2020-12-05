@@ -3,6 +3,7 @@ title: The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増や�
 slug: akka-http-onsuccess-magnet
 date: 2017-02-18
 tags: ["Scala", "Akka"]
+categories: ["Programming"]
 ---
 
 `onSuccess`は[The Magnet Pattern](http://spray.io/blog/2012-12-13-the-magnet-pattern/)で実装されているので`OnSuccessMagnet`型クラスのインスタンスさえ定義してしまえば割りと何でも受け取ることができる。型が`M[Future[A]]`になっているオブジェクトをそのまま`onSuccess`に渡したくなった時のために覚えておくと良いかもしれない。

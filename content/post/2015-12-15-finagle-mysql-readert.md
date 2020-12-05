@@ -3,6 +3,7 @@ title: finagle-mysqlのClient (IO Context) をReaderTで受け取る
 slug: finagle-mysql-readert
 date: 2015-12-15
 tags: [Scala, Scalaz, Finch, Finagle]
+categories: ["Programming"]
 ---
 
 下準備としてパッケージオブジェクトあたりに以下のおまじないを書いておく[^1] この時点ですでに面倒だ！

@@ -3,6 +3,7 @@ title: OCamlでLuhnアルゴリズムを書いてみる
 slug: ocaml-luhn
 date: 2016-02-22
 tags: [OCaml]
+categories: ["Programming"]
 ---
 
 OCamlに慣れるために何か書こうと思ったけど、あまりいいネタが思い浮かばなかったのでLuhnアルゴリズムを書いてみた。クレジットカードの番号などを検証することができる。

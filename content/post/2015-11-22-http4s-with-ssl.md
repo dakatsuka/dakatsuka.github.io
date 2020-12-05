@@ -3,6 +3,7 @@ title: http4sでHTTPSを有効にする
 slug: http4s-with-ssl
 date: 2015-11-22
 tags: [Scala, http4s]
+categories: ["Programming"]
 ---
 
 SSLSupportパッケージをインポートしてBlazeBuilderの`.withSSL`にKeyStoreの情報を渡せばHTTPSが有効になる。代わりにHTTPは無効になってしまうので注意。

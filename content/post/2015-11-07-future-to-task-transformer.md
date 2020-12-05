@@ -3,6 +3,7 @@ title: scala.concurrent.Futureをscalaz.concurrent.Taskに変換する方法
 slug: future-to-task-transformer
 date: 2015-11-07
 tags: [Scala]
+categories: ["Programming"]
 ---
 
 あまり良い方法では無さそうだけど他に思いつかなかった

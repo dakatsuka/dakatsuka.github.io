@@ -3,6 +3,7 @@ title: activerecord-importとelasticsearch-railsでメソッドが被る問題
 slug: activerecord-import
 date: 2015-11-18
 tags: [Ruby, Rails]
+categories: ["Programming"]
 ---
 
 どちらのgemもActiveRecordモデルに`import`メソッドを生やそうとする。

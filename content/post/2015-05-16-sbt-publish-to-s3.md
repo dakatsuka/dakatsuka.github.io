@@ -3,6 +3,7 @@ title: sbtでAmazon S3をMavenリポジトリとして扱う方法
 slug: sbt-publish-to-s3
 date: 2015-05-16
 tags: [Scala, sbt, AWS]
+categories: ["DevOps"]
 ---
 
 [fm-sbt-s3-resolver](https://github.com/frugalmechanic/fm-sbt-s3-resolver)というプラグインを入れることでS3をMaven Repositoryとして扱えるようになります。社内のサーバにリポジトリを構築するよりお手軽です。

@@ -3,6 +3,7 @@ title: FinchのEndpointのテスト方法を調べた
 slug: finch-endpoint-test
 date: 2015-12-13
 tags: [Scala, Finch, Finagle]
+categories: ["Programming"]
 ---
 
 Finchはエンドポイントを作るときに戻り値を型で縛れるので、正常系のレスポンスに関してはコンパイラを信用して大丈夫だろう。ただし、ステータスコードまでは検証出来ないので、リクエストパラメータによってステータスコードが変わる場合などはしっかりとテストを書いておきたい。

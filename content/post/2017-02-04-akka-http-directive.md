@@ -4,6 +4,7 @@ author: Dai Akatsuka
 slug: akka-http-directive
 date: 2017-02-04
 tags: ["Scala", "Akka"]
+categories: ["Programming"]
 ---
 
 まず`Directive0`と`Directive1`の型定義を見て欲しい。

@@ -3,6 +3,7 @@ title: CircleCIでElasticsearchを使うならDockerがよさそう
 slug: elasticsearch-on-circleci
 date: 2015-08-22
 tags: [CI, Elasticsearch]
+categories: ["Programming"]
 ---
 
 CircleCIでElasticsearchの最新版とKuromojiを使うならDockerが便利だった。circle.ymlでwgetして頑張るよりは[^1]こちらのほうがスマートだし、ここで用意したDockerfileはCI以外でも使える。

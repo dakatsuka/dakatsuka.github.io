@@ -3,6 +3,7 @@ title: OCamlの開発環境を整えた
 slug: setup-ocaml
 date: 2016-01-31
 tags: [OCaml]
+categories: ["Programming"]
 ---
 
 本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で開発環境を整えてみた。

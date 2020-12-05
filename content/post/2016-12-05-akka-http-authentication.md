@@ -3,6 +3,7 @@ title: Akka HTTPで認証機能を手軽に実装する方法
 slug: akka-http-authentication
 date: 2016-12-05
 tags: [Scala,Akka]
+categories: ["Programming"]
 ---
 
 これは[Scala Advent Calendar 2016](http://www.adventar.org/calendars/1492)の5日目です。埋まっていなかったので1日遅れでしれっと書くよ。

@@ -3,6 +3,7 @@ title: Play Framework 2.x でマルチプロジェクト構成にするには
 slug: play-multiple-project
 date: 2015-06-11
 tags: [Scala, sbt, Play]
+categories: ["Programming"]
 ---
 
 ドメイン層（普通のScalaプロジェクト）とアプリケーション層（Play）でsbtプロジェクトを分けたい場合は、sbtのマルチプロジェクトを使うと良い。

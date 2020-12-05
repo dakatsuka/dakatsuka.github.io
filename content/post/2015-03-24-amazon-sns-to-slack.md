@@ -3,6 +3,7 @@ title: CloudWatchやAuto ScalingのアラームをSlackに通知するように�
 slug: amazon-sns-to-slack
 date: 2015-03-24
 tags: [AWS, Slack, Ruby]
+categories: ["DevOps"]
 ---
 
 CloudWatchやAuto Scalingのアラームは、Amazon SNSのTopicにPublishする仕組みになっていて、通常はこのTopicに通知先のメールアドレスを設定することが多いと思う。
