@@ -1,7 +1,7 @@
 theme = "harbor"
 baseurl = "https://blog.dakatsuka.jp"
 title = "dakatsuka's blog"
-paginate = 3
+paginate = 5
 languageCode = "ja"
 DefaultContentLanguage = "ja"
 hasCJKLanguage=true
