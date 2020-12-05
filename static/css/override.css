@@ -1,0 +1,26 @@
+.post-heading h1 {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.article figure {
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+    text-align: center;
+}
+
+.article figure img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: auto;
+}
+
+.article figure figcaption {
+    font-size: .8em;
+    font-style: italic;
+    font-weight: normal;
+    opacity: .7;
+}
