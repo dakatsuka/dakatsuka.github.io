@@ -68,7 +68,7 @@ googleAnalytics = "UA-45923728-1"
   icon="fab fa-github"
 
 [params]
-  uglyURLs = true
+  uglyurls = true
   mainSections = ["post"]
   favicon = "favicon.ico"
   customCSS = ["/css/override.css"]
