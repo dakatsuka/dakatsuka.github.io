@@ -72,7 +72,7 @@ googleAnalytics = "UA-45923728-1"
   mainSections = ["post"]
   favicon = "favicon.ico"
   customCSS = ["/css/override.css"]
-  images = ["images/logo.png"]
+  images = ["images/card.png"]
 
   [params.logo]
     url = "logo.png"
