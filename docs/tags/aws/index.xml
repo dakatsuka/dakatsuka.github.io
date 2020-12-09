@@ -14,6 +14,14 @@
 		<atom:link href="/tags/aws.html" rel="self" type="application/rss+xml" />
 		
 		<item>
+			<title>Migrate to Hugo</title>
+			<link>https://blog.dakatsuka.jp/2020/12/10/hugo.html</link>
+			<pubDate>Thu, 10 Dec 2020 00:00:00 +0900</pubDate>
+			<guid>https://blog.dakatsuka.jp/2020/12/10/hugo.html</guid>
+			<description>このブログで使っている静的サイトジェネレーターをMiddlemanからHugoに移行しました。また、良い機会だったのでホスティングサービスも</description>
+		</item>
+      	
+		<item>
 			<title>The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす</title>
 			<link>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</link>
 			<pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
@@ -83,14 +91,6 @@
 			<pubDate>Sun, 27 Dec 2015 00:00:00 +0000</pubDate>
 			<guid>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</guid>
 			<description>すごいHaskell本の序盤に次のような関数が出てくる。この関数はxが整数でも浮動小数点数でも動く。 doubleMe x = x + x ScalaでもNumeric</description>
-		</item>
-      	
-		<item>
-			<title>finagle-mysqlのClient (IO Context) をReaderTで受け取る</title>
-			<link>https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html</link>
-			<pubDate>Tue, 15 Dec 2015 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html</guid>
-			<description>下準備としてパッケージオブジェクトあたりに以下のおまじないを書いておく1 この時点ですでに面倒だ！ import com.twitter.util.Future import scalaz._ import Scalaz._ implicit def FutureFunctor: Functor[Future] = new Functor[Future] { def map[A, B](f: Future[A])(map: A =&amp;gt; B): Future[B]</description>
 		</item>
       	
 	</channel>

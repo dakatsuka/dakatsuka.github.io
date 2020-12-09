@@ -2,6 +2,16 @@
     
         
             {
+                "ref": "https://blog.dakatsuka.jp/2020/12/10/hugo.html",
+                "title": "Migrate to Hugo",
+                "section": "post",
+                "date" : "2020.12.10",
+                "body": "このブログで使っている静的サイトジェネレーターをMiddlemanからHugoに移行しました。また、良い機会だったのでホスティングサービスもGitHub Pagesに引っ越しをしました。\nMiddlemanからHugoへの移行作業について特にあれこれと語ることはないのですが、強いて言うなら、各記事のパーマリンクを変えたくなかったのでUglyURLsオプションを有効にしたところ、これに対応してるテーマが全然なくて地味に苦戦を強いられたくらいですかね。\nこのブログで使うことにしたHarborというテーマもうまく動かなかったのですが、ちょっとの手直しで対応できることが分かったのでPRを出しました。無事マージもされたので、もし既存のブログのURLが*.html終わりになっていてそのまま移行したい人がいたら参考になると思います。\nそれにしても3年間もブログを放置してしまいました。また少しずつ更新を再開していくつもりですが、全然ネタがないので果たしてどうなるやら。\n"
+            }
+        
+    ,
+        
+            {
                 "ref": "https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html",
                 "title": "The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす",
                 "section": "post",

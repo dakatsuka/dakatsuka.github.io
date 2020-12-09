@@ -50,7 +50,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://blog.dakatsuka.jp/" />
 <meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-<meta property="og:updated_time" content="2017-02-18T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-12-10T00:00:00+09:00" />
 
 
 <meta name="twitter:card" content="summary_large_image"/>
@@ -169,6 +169,36 @@
 
       
         <article class="post-preview">
+  <a href="https://blog.dakatsuka.jp/2015/11/07/future-to-task-transformer.html">
+    <h2 class="post-title">scala.concurrent.Futureをscalaz.concurrent.Taskに変換する方法</h2>
+  </a>
+  <div class="post-entry">
+    
+      <p>あまり良い方法では無さそうだけど他に思いつかなかった import scala.concurrent.Future import scala.concurrent.ExecutionContext.Implicits.global import scala.util.{Success, Failure} import scalaz.concurrent.Task import scalaz.syntax.either._ implicit class FutureToTaskTransformer[+A](future: Future[A]) { def toTask: Task[A] = { Task.async { register =&gt; future.onComplete { case Success(v) =&gt; register(v.right) case Failure(e) =&gt; register(e.left) } } } } Futur</p>
+      <a href="https://blog.dakatsuka.jp/2015/11/07/future-to-task-transformer.html" class="post-read-more"
+        ></a
+      >
+    
+  </div>
+
+  <div class="postmeta">
+    <span class="meta-post">
+  <em class="fa fa-calendar-alt"></em
+  >&nbsp;Nov 7, 2015
+  
+    &nbsp;&nbsp;&nbsp;<em class="fa fa-folder-open"></em>&nbsp;
+    
+      <a href="https://blog.dakatsuka.jp/categories/programming.html">Programming</a
+      >&nbsp;
+    
+  
+</span>
+
+  </div>
+</article>
+
+      
+        <article class="post-preview">
   <a href="https://blog.dakatsuka.jp/2015/08/22/elasticsearch-on-circleci.html">
     <h2 class="post-title">CircleCIでElasticsearchを使うならDockerがよさそう</h2>
   </a>
@@ -282,36 +312,6 @@
 </article>
 
       
-        <article class="post-preview">
-  <a href="https://blog.dakatsuka.jp/2015/03/24/amazon-sns-to-slack.html">
-    <h2 class="post-title">CloudWatchやAuto ScalingのアラームをSlackに通知するようにした</h2>
-  </a>
-  <div class="post-entry">
-    
-      <p>CloudWatchやAuto Scalingのアラームは、Amazon SNSのTopicにPublishする仕組みになっていて、通常はこのT</p>
-      <a href="https://blog.dakatsuka.jp/2015/03/24/amazon-sns-to-slack.html" class="post-read-more"
-        ></a
-      >
-    
-  </div>
-
-  <div class="postmeta">
-    <span class="meta-post">
-  <em class="fa fa-calendar-alt"></em
-  >&nbsp;Mar 24, 2015
-  
-    &nbsp;&nbsp;&nbsp;<em class="fa fa-folder-open"></em>&nbsp;
-    
-      <a href="https://blog.dakatsuka.jp/categories/devops.html">DevOps</a
-      >&nbsp;
-    
-  
-</span>
-
-  </div>
-</article>
-
-      
     </div>
     
       <ul class="pager">
@@ -356,7 +356,7 @@
     <p class="credits copyright">
       <a href="https://blog.dakatsuka.jp/about">Dai Akatsuka</a>
       &nbsp;&copy;
-      2017
+      2020
       
         &nbsp;/&nbsp;
         <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a>

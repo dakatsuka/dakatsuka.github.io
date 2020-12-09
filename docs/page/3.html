@@ -50,7 +50,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://blog.dakatsuka.jp/" />
 <meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-<meta property="og:updated_time" content="2017-02-18T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-12-10T00:00:00+09:00" />
 
 
 <meta name="twitter:card" content="summary_large_image"/>
@@ -166,6 +166,36 @@
       
         
         
+
+      
+        <article class="post-preview">
+  <a href="https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html">
+    <h2 class="post-title">finagle-mysqlのClient (IO Context) をReaderTで受け取る</h2>
+  </a>
+  <div class="post-entry">
+    
+      <p>下準備としてパッケージオブジェクトあたりに以下のおまじないを書いておく1 この時点ですでに面倒だ！ import com.twitter.util.Future import scalaz._ import Scalaz._ implicit def FutureFunctor: Functor[Future] = new Functor[Future] { def map[A, B](f: Future[A])(map: A =&gt; B): Future[B]</p>
+      <a href="https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html" class="post-read-more"
+        ></a
+      >
+    
+  </div>
+
+  <div class="postmeta">
+    <span class="meta-post">
+  <em class="fa fa-calendar-alt"></em
+  >&nbsp;Dec 15, 2015
+  
+    &nbsp;&nbsp;&nbsp;<em class="fa fa-folder-open"></em>&nbsp;
+    
+      <a href="https://blog.dakatsuka.jp/categories/programming.html">Programming</a
+      >&nbsp;
+    
+  
+</span>
+
+  </div>
+</article>
 
       
         <article class="post-preview">
@@ -288,36 +318,6 @@
 </article>
 
       
-        <article class="post-preview">
-  <a href="https://blog.dakatsuka.jp/2015/11/22/http4s-with-ssl.html">
-    <h2 class="post-title">http4sでHTTPSを有効にする</h2>
-  </a>
-  <div class="post-entry">
-    
-      <p>SSLSupportパッケージをインポートしてBlazeBuilderの.withSSLにKeyStoreの情報を渡せばHTTPSが有効にな</p>
-      <a href="https://blog.dakatsuka.jp/2015/11/22/http4s-with-ssl.html" class="post-read-more"
-        ></a
-      >
-    
-  </div>
-
-  <div class="postmeta">
-    <span class="meta-post">
-  <em class="fa fa-calendar-alt"></em
-  >&nbsp;Nov 22, 2015
-  
-    &nbsp;&nbsp;&nbsp;<em class="fa fa-folder-open"></em>&nbsp;
-    
-      <a href="https://blog.dakatsuka.jp/categories/programming.html">Programming</a
-      >&nbsp;
-    
-  
-</span>
-
-  </div>
-</article>
-
-      
     </div>
     
       <ul class="pager">
@@ -362,7 +362,7 @@
     <p class="credits copyright">
       <a href="https://blog.dakatsuka.jp/about">Dai Akatsuka</a>
       &nbsp;&copy;
-      2017
+      2020
       
         &nbsp;/&nbsp;
         <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a>
