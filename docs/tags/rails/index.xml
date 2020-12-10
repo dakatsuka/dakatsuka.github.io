@@ -1,97 +1,234 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Rails on dakatsuka&#39;s blog</title>
-		<link>https://blog.dakatsuka.jp/tags/rails.html</link>
-		<description>Recent content in Rails </description>
-		<generator>Hugo -- gohugo.io</generator>
-		
-  		<language>ja</language>
-		
-		<managingEditor>Page(/tags/rails) (Dai Akatsuka)</managingEditor>
-    	
-  		<lastBuildDate>Wed, 18 Nov 2015 00:00:00 +0000</lastBuildDate>
-		
-		<atom:link href="/tags/rails.html" rel="self" type="application/rss+xml" />
-		
-		<item>
-			<title>Migrate to Hugo</title>
-			<link>https://blog.dakatsuka.jp/2020/12/10/hugo.html</link>
-			<pubDate>Thu, 10 Dec 2020 00:00:00 +0900</pubDate>
-			<guid>https://blog.dakatsuka.jp/2020/12/10/hugo.html</guid>
-			<description>このブログで使っている静的サイトジェネレーターをMiddlemanからHugoに移行しました。また、良い機会だったのでホスティングサービスも</description>
-		</item>
-      	
-		<item>
-			<title>The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす</title>
-			<link>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</link>
-			<pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</guid>
-			<description>onSuccessはThe Magnet Patternで実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと</description>
-		</item>
-      	
-		<item>
-			<title>Akka HTTPのDirective0の使い勝手が良くないのでどうにかする話</title>
-			<link>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</link>
-			<pubDate>Sat, 04 Feb 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</guid>
-			<description>まずDirective0とDirective1の型定義を見て欲しい。 type Directive0 = Directive[Unit] type Directive1[T] = Directive[Tuple1[T]] Directive0がDirective1[Unit]で</description>
-		</item>
-      	
-		<item>
-			<title>2016年12月末の資産分配</title>
-			<link>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</link>
-			<pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</guid>
-			<description>実は数年前から細々とインデックス投資を実践している。その前は個別銘柄（日本株式の現物）を買い漁ってスイングトレードをして、まぁ程々に利益は出</description>
-		</item>
-      	
-		<item>
-			<title>2016年に買ってよかったもの</title>
-			<link>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</link>
-			<pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</guid>
-			<description>あけましておめでとうございます。去年のうちに書くのをすっかり忘れていましたが、流行り？に乗って買ってよかったものをまとめておきます。あまり人</description>
-		</item>
-      	
-		<item>
-			<title>Akka HTTPで認証機能を手軽に実装する方法</title>
-			<link>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</link>
-			<pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</guid>
-			<description>これはScala Advent Calendar 2016の5日目です。埋まっていなかったので1日遅れでしれっと書くよ。 Akka HTTPには AuthenticationDirective という認証のためのディレクティブが</description>
-		</item>
-      	
-		<item>
-			<title>OCamlでLuhnアルゴリズムを書いてみる</title>
-			<link>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</link>
-			<pubDate>Mon, 22 Feb 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</guid>
-			<description>OCamlに慣れるために何か書こうと思ったけど、あまりいいネタが思い浮かばなかったのでLuhnアルゴリズムを書いてみた。クレジットカードの番</description>
-		</item>
-      	
-		<item>
-			<title>OCamlの開発環境を整えた</title>
-			<link>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</link>
-			<pubDate>Sun, 31 Jan 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</guid>
-			<description>本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で</description>
-		</item>
-      	
-		<item>
-			<title>2015年振り返り</title>
-			<link>https://blog.dakatsuka.jp/2015/12/30/lookback.html</link>
-			<pubDate>Wed, 30 Dec 2015 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2015/12/30/lookback.html</guid>
-			<description>仕事全般 2013年にA社を退職したあと、しばらくフリーランスをやっていたのだけど、紆余曲折あって2014年の途中から古巣に戻って、現場でコー</description>
-		</item>
-      	
-		<item>
-			<title>ScalaでNumeric型クラスをつかう</title>
-			<link>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</link>
-			<pubDate>Sun, 27 Dec 2015 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</guid>
-			<description>すごいHaskell本の序盤に次のような関数が出てくる。この関数はxが整数でも浮動小数点数でも動く。 doubleMe x = x + x ScalaでもNumeric</description>
-		</item>
-      	
-	</channel>
+  <channel>
+    <title>Rails on dakatsuka&#39;s blog</title>
+    <link>https://blog.dakatsuka.jp/tags/rails.html</link>
+    <description>Recent content in Rails on dakatsuka&#39;s blog</description>
+    
+    <image>
+      <url>https://blog.dakatsuka.jp/images/card.png</url>
+      <title>dakatsuka&#39;s blog</title>
+      <link>https://blog.dakatsuka.jp/</link>
+    </image>
+    
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Wed, 18 Nov 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/rails/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>activerecord-importとelasticsearch-railsでメソッドが被る問題</title>
+      <link>https://blog.dakatsuka.jp/2015/11/18/activerecord-import.html</link>
+      <pubDate>Wed, 18 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/11/18/activerecord-import.html</guid>
+      <description>どちらのgemもActiveRecordモデルにimportメソッドを生やそうとする。 いい感じに共存させる方法をググっていたら同じことをIs</description>
+    </item>
+    
+    <item>
+      <title>Rails &#43; Jasmineでテスト実行時のタイムゾーンを変更する</title>
+      <link>https://blog.dakatsuka.jp/2014/03/03/rails-jasmine-timezone.html</link>
+      <pubDate>Mon, 03 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2014/03/03/rails-jasmine-timezone.html</guid>
+      <description>あまりタイムゾーンに依存するテストって宜しくないと思いますが。。。とはいえ特定のタイムゾーンで固定しておきたい事もあるので調べてみた。 Pha</description>
+    </item>
+    
+    <item>
+      <title>MongoMapperでER図っぽいものを生成するgemを作った</title>
+      <link>https://blog.dakatsuka.jp/2014/02/13/mongo-mapper-diagram.html</link>
+      <pubDate>Thu, 13 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2014/02/13/mongo-mapper-diagram.html</guid>
+      <description>モデルの数がそれなりにあるプロジェクトに途中から参加すると、モデル同士の関連を把握するのに結構苦労するので、ER図の存在が重要になってくる。</description>
+    </item>
+    
+    <item>
+      <title>Rails4 &#43; RSpec &#43; Guard &#43; SpringでDEPRECATION WARNINGが出たので対処した</title>
+      <link>https://blog.dakatsuka.jp/2013/11/27/rails4-rspec-guard-spring.html</link>
+      <pubDate>Wed, 27 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/11/27/rails4-rspec-guard-spring.html</guid>
+      <description>ちょっと前までのRailsのテスト環境といえば、RSpec + Guardという構成が定番だったように思う。最近はこれにSpringを加えるのが</description>
+    </item>
+    
+    <item>
+      <title>Rails3にBackbone.jsを導入する</title>
+      <link>https://blog.dakatsuka.jp/2012/09/13/rails-backbone-intro.html</link>
+      <pubDate>Thu, 13 Sep 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2012/09/13/rails-backbone-intro.html</guid>
+      <description>最近Backbone.jsを触っています。Backbone.jsをRailsで使いたいならパッケージで導入してしまうのが一番簡単でしょう。 G</description>
+    </item>
+    
+    <item>
+      <title>Rails3 &#43; unicornからRabbitMQに接続するには</title>
+      <link>https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html</link>
+      <pubDate>Mon, 14 May 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html</guid>
+      <description>ruby-amqpはEventMachineに依存しているので、unicorn上のRailsアプリからRabbitMQに接続する場合は少し手</description>
+    </item>
+    
+    <item>
+      <title>Ruby 1.9.2 &#43; Rails3でテストカバレッジを取るにはSimpleCovが良さそう</title>
+      <link>https://blog.dakatsuka.jp/2011/10/20/simplecov.html</link>
+      <pubDate>Thu, 20 Oct 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/10/20/simplecov.html</guid>
+      <description>Ruby (Rails) でテストカバレッジといえば Rcov ですね。 しかし Rcov は Ruby 1.9.x に非対応なので Ruby 1.9.2 + Rails3 な環境で開発をしている方は SimpleCov を使うと幸せになれます。名前にSim</description>
+    </item>
+    
+    <item>
+      <title>has_one関連でaccepts_nested_attributes_for / fields_forを使う</title>
+      <link>https://blog.dakatsuka.jp/2011/09/30/nested-has-one.html</link>
+      <pubDate>Fri, 30 Sep 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/09/30/nested-has-one.html</guid>
+      <description>先日、has_one関連でaccepts_nested_attributesを使ってフォームを作ろうとしたら、ネスト先のフィールドが画面に出</description>
+    </item>
+    
+    <item>
+      <title>Rails v3.0.xからv3.1.0にアップグレードした時のメモ</title>
+      <link>https://blog.dakatsuka.jp/2011/09/01/upgrade-rails31.html</link>
+      <pubDate>Thu, 01 Sep 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/09/01/upgrade-rails31.html</guid>
+      <description>Rails v3.1.0が出たのでv3.0.10で開発しているプロジェクトの対応を行いました。その時のメモを残しておきます。 といっても、このRails</description>
+    </item>
+    
+    <item>
+      <title>Rails3 &#43; OmniAuth で mixi OpenID を使うための設定</title>
+      <link>https://blog.dakatsuka.jp/2011/06/01/omniauth-mixi.html</link>
+      <pubDate>Wed, 01 Jun 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/06/01/omniauth-mixi.html</guid>
+      <description>OmniAuthを使ってTwitterやFacebookと連携・認証をする方法はググればたくさん出てくるのですが、mixi OpenIDを使っ</description>
+    </item>
+    
+    <item>
+      <title>APIの作成に特化したRuby製フレームワーク grape を試してみた</title>
+      <link>https://blog.dakatsuka.jp/2011/05/27/grape.html</link>
+      <pubDate>Fri, 27 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/05/27/grape.html</guid>
+      <description>RESTful API の作成に特化したマイクロフレームワーク grape の存在を知ったので調査してみる事にしました。API の実装 に Rails の ActionController は重厚すぎる、Sinatra は軽</description>
+    </item>
+    
+    <item>
+      <title>複数のRailsアプリが同居しているGitリポジトリをデプロイする方法</title>
+      <link>https://blog.dakatsuka.jp/2011/05/25/cap-subdirectory.html</link>
+      <pubDate>Wed, 25 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/05/25/cap-subdirectory.html</guid>
+      <description>複数のRailsアプリが１つのリポジトリに同居しているような状態で Capistrano を使ってデプロイしたい場合、そのままでは動作しないので少々手を加える必要</description>
+    </item>
+    
+    <item>
+      <title>hirb を導入して rails console を快適に利用する</title>
+      <link>https://blog.dakatsuka.jp/2011/05/14/hirb-rails-console.html</link>
+      <pubDate>Sat, 14 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/05/14/hirb-rails-console.html</guid>
+      <description>Rails 3: Fully Loaded | Intridea Blog で hirb という gem が紹介されていたので試してみることにしました。hirb は Rails Console 上で ActiveRecord の結果を見やすく整形してくれるツールのようです。</description>
+    </item>
+    
+    <item>
+      <title>Rails 3.1 を試してみる（導入編）</title>
+      <link>https://blog.dakatsuka.jp/2011/04/19/rails3-1-1.html</link>
+      <pubDate>Tue, 19 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/04/19/rails3-1-1.html</guid>
+      <description>Rails3.1の機能を試せると聞いたので、早速下記サイトを参考にローカル環境に入れてみました。噂のCoffeeScriptやSCSSが使え</description>
+    </item>
+    
+    <item>
+      <title>RFCに違反している（ドットが連続する）メールアドレスをRails3で扱うには</title>
+      <link>https://blog.dakatsuka.jp/2011/04/04/patch-rails3-mail.html</link>
+      <pubDate>Mon, 04 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/04/04/patch-rails3-mail.html</guid>
+      <description>Rails3のActionMailer（Mail）で、DoCoMoやauに存在するRFC違反のメールアドレス（@の前にドットが連続するやつ）</description>
+    </item>
+    
+    <item>
+      <title>Rails3でビュー以外からヘルパーを呼び出す方法</title>
+      <link>https://blog.dakatsuka.jp/2011/02/22/rails3-helpers.html</link>
+      <pubDate>Tue, 22 Feb 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/02/22/rails3-helpers.html</guid>
+      <description>例えばコントローラやモデル、もしくはバッチ処理でヘルパーを使いたい時がたまにあるんですよね。いつも忘れてしまうのでブログに残しておきます。 ApplicationController.helpers.image_tag(</description>
+    </item>
+    
+    <item>
+      <title>Ruby1.9 &#43; Rails3 &#43; jpmobileで構築したサイトをcucumberでテストするためのTips</title>
+      <link>https://blog.dakatsuka.jp/2011/01/24/rails3-jpmobile-cucumber.html</link>
+      <pubDate>Mon, 24 Jan 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/01/24/rails3-jpmobile-cucumber.html</guid>
+      <description>地味に苦戦したのでメモしておきます。これだから携帯向けサイトは大変・・・ 開発環境 Ruby 1.9.2-p136 Ruby on Rails 3.0.3 jpmobile 0.1.4 cucumber 0.10.0 ( capybara 0.4.0 ) インストール cucumberを動</description>
+    </item>
+    
+    <item>
+      <title>Rails3 &#43; cover_me でテストカバレッジ</title>
+      <link>https://blog.dakatsuka.jp/2010/12/23/rails3-cover-me.html</link>
+      <pubDate>Thu, 23 Dec 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2010/12/23/rails3-cover-me.html</guid>
+      <description>Ruby 1.9 + Rails3 で rcov がうまく動かなかったので cover_me というカバレッジツールを使ってみる事にしました。 Gemfileに下記行を追加して、 gem &amp;#34;cover_me&amp;#34; 下記コマンドでイ</description>
+    </item>
+    
+    <item>
+      <title>ActiveRecordオブジェクトの属性変更を確認・取得する</title>
+      <link>https://blog.dakatsuka.jp/2010/11/29/activerecord-dirty.html</link>
+      <pubDate>Mon, 29 Nov 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2010/11/29/activerecord-dirty.html</guid>
+      <description>ActiveRecord（Rails3だとActiveModel）は、自分自身（オブジェクト）のプロパティが変更されたかどうか、またどのプロ</description>
+    </item>
+    
+    <item>
+      <title>Rails2とRails3でセッションを共有する</title>
+      <link>https://blog.dakatsuka.jp/2010/11/22/sharing-sessions-rails2-rails3.html</link>
+      <pubDate>Mon, 22 Nov 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2010/11/22/sharing-sessions-rails2-rails3.html</guid>
+      <description>サブドメインが異なるRails2アプリとRails3アプリでセッションを共有したい場合、Cookie Session Storeに互換性が無いみたいでそのま</description>
+    </item>
+    
+    <item>
+      <title>RVMのgemsetを使ってみる</title>
+      <link>https://blog.dakatsuka.jp/2010/11/14/rvm-gemset.html</link>
+      <pubDate>Sun, 14 Nov 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2010/11/14/rvm-gemset.html</guid>
+      <description>Rubyの開発環境にRVMを使っている場合は、bundle install –pathを使うよりもgemsetという機能を使ったほうがお手軽に管理出来るみた</description>
+    </item>
+    
+    <item>
+      <title>bundle installするときはpathを指定しよう</title>
+      <link>https://blog.dakatsuka.jp/2010/11/09/bundle-install.html</link>
+      <pubDate>Tue, 09 Nov 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2010/11/09/bundle-install.html</guid>
+      <description>Rails3からBundlerが導入されgemの管理がしやすくなりましたが、色々なRailsアプリでほいほいbundle installを実行</description>
+    </item>
+    
+    <item>
+      <title>cucumberで携帯サイトをテストするには</title>
+      <link>https://blog.dakatsuka.jp/2010/11/01/mobile-site-in-cucumber.html</link>
+      <pubDate>Mon, 01 Nov 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2010/11/01/mobile-site-in-cucumber.html</guid>
+      <description>達人出版会から出版された「はじめる！Cucumber」という本を本日購入しました。日本語で丁寧に書かれている良書で、cucumberをこれか</description>
+    </item>
+    
+    <item>
+      <title>Ruby on Railsを導入する</title>
+      <link>https://blog.dakatsuka.jp/2007/09/03/install-railsl.html</link>
+      <pubDate>Mon, 03 Sep 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/09/03/install-railsl.html</guid>
+      <description>Railsで動くツールをいくつか試してみたくなったので、Ubuntuで環境を構築してみました。しょうもないですが手順をメモっておきます。 Ru</description>
+    </item>
+    
+  </channel>
 </rss>

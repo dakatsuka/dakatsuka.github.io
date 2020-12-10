@@ -1,97 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Fedora on dakatsuka&#39;s blog</title>
-		<link>https://blog.dakatsuka.jp/tags/fedora.html</link>
-		<description>Recent content in Fedora </description>
-		<generator>Hugo -- gohugo.io</generator>
-		
-  		<language>ja</language>
-		
-		<managingEditor>Page(/tags/fedora) (Dai Akatsuka)</managingEditor>
-    	
-  		<lastBuildDate>Wed, 05 Sep 2007 00:00:00 +0000</lastBuildDate>
-		
-		<atom:link href="/tags/fedora.html" rel="self" type="application/rss+xml" />
-		
-		<item>
-			<title>Migrate to Hugo</title>
-			<link>https://blog.dakatsuka.jp/2020/12/10/hugo.html</link>
-			<pubDate>Thu, 10 Dec 2020 00:00:00 +0900</pubDate>
-			<guid>https://blog.dakatsuka.jp/2020/12/10/hugo.html</guid>
-			<description>このブログで使っている静的サイトジェネレーターをMiddlemanからHugoに移行しました。また、良い機会だったのでホスティングサービスも</description>
-		</item>
-      	
-		<item>
-			<title>The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす</title>
-			<link>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</link>
-			<pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</guid>
-			<description>onSuccessはThe Magnet Patternで実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと</description>
-		</item>
-      	
-		<item>
-			<title>Akka HTTPのDirective0の使い勝手が良くないのでどうにかする話</title>
-			<link>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</link>
-			<pubDate>Sat, 04 Feb 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</guid>
-			<description>まずDirective0とDirective1の型定義を見て欲しい。 type Directive0 = Directive[Unit] type Directive1[T] = Directive[Tuple1[T]] Directive0がDirective1[Unit]で</description>
-		</item>
-      	
-		<item>
-			<title>2016年12月末の資産分配</title>
-			<link>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</link>
-			<pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</guid>
-			<description>実は数年前から細々とインデックス投資を実践している。その前は個別銘柄（日本株式の現物）を買い漁ってスイングトレードをして、まぁ程々に利益は出</description>
-		</item>
-      	
-		<item>
-			<title>2016年に買ってよかったもの</title>
-			<link>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</link>
-			<pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</guid>
-			<description>あけましておめでとうございます。去年のうちに書くのをすっかり忘れていましたが、流行り？に乗って買ってよかったものをまとめておきます。あまり人</description>
-		</item>
-      	
-		<item>
-			<title>Akka HTTPで認証機能を手軽に実装する方法</title>
-			<link>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</link>
-			<pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</guid>
-			<description>これはScala Advent Calendar 2016の5日目です。埋まっていなかったので1日遅れでしれっと書くよ。 Akka HTTPには AuthenticationDirective という認証のためのディレクティブが</description>
-		</item>
-      	
-		<item>
-			<title>OCamlでLuhnアルゴリズムを書いてみる</title>
-			<link>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</link>
-			<pubDate>Mon, 22 Feb 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</guid>
-			<description>OCamlに慣れるために何か書こうと思ったけど、あまりいいネタが思い浮かばなかったのでLuhnアルゴリズムを書いてみた。クレジットカードの番</description>
-		</item>
-      	
-		<item>
-			<title>OCamlの開発環境を整えた</title>
-			<link>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</link>
-			<pubDate>Sun, 31 Jan 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</guid>
-			<description>本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で</description>
-		</item>
-      	
-		<item>
-			<title>2015年振り返り</title>
-			<link>https://blog.dakatsuka.jp/2015/12/30/lookback.html</link>
-			<pubDate>Wed, 30 Dec 2015 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2015/12/30/lookback.html</guid>
-			<description>仕事全般 2013年にA社を退職したあと、しばらくフリーランスをやっていたのだけど、紆余曲折あって2014年の途中から古巣に戻って、現場でコー</description>
-		</item>
-      	
-		<item>
-			<title>ScalaでNumeric型クラスをつかう</title>
-			<link>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</link>
-			<pubDate>Sun, 27 Dec 2015 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</guid>
-			<description>すごいHaskell本の序盤に次のような関数が出てくる。この関数はxが整数でも浮動小数点数でも動く。 doubleMe x = x + x ScalaでもNumeric</description>
-		</item>
-      	
-	</channel>
+  <channel>
+    <title>Fedora on dakatsuka&#39;s blog</title>
+    <link>https://blog.dakatsuka.jp/tags/fedora.html</link>
+    <description>Recent content in Fedora on dakatsuka&#39;s blog</description>
+    
+    <image>
+      <url>https://blog.dakatsuka.jp/images/card.png</url>
+      <title>dakatsuka&#39;s blog</title>
+      <link>https://blog.dakatsuka.jp/</link>
+    </image>
+    
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Wed, 05 Sep 2007 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/fedora/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Intel G33チップ搭載のPCにFedora8をインストールするには</title>
+      <link>https://blog.dakatsuka.jp/2007/09/05/fedora8.html</link>
+      <pubDate>Wed, 05 Sep 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/09/05/fedora8.html</guid>
+      <description>そのままDVDを突っ込んでもACPIのチェックでコケてインストーラが起動しないので、起動オプションでACPIを無効にします。 最初の「Welc</description>
+    </item>
+    
+  </channel>
 </rss>

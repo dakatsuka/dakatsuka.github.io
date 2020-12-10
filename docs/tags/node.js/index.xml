@@ -1,97 +1,171 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Node.js on dakatsuka&#39;s blog</title>
-		<link>https://blog.dakatsuka.jp/tags/node.js.html</link>
-		<description>Recent content in Node.js </description>
-		<generator>Hugo -- gohugo.io</generator>
-		
-  		<language>ja</language>
-		
-		<managingEditor>Page(/tags/node.js) (Dai Akatsuka)</managingEditor>
-    	
-  		<lastBuildDate>Tue, 17 Jul 2012 00:00:00 +0000</lastBuildDate>
-		
-		<atom:link href="/tags/node.js.html" rel="self" type="application/rss+xml" />
-		
-		<item>
-			<title>Migrate to Hugo</title>
-			<link>https://blog.dakatsuka.jp/2020/12/10/hugo.html</link>
-			<pubDate>Thu, 10 Dec 2020 00:00:00 +0900</pubDate>
-			<guid>https://blog.dakatsuka.jp/2020/12/10/hugo.html</guid>
-			<description>このブログで使っている静的サイトジェネレーターをMiddlemanからHugoに移行しました。また、良い機会だったのでホスティングサービスも</description>
-		</item>
-      	
-		<item>
-			<title>The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす</title>
-			<link>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</link>
-			<pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</guid>
-			<description>onSuccessはThe Magnet Patternで実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと</description>
-		</item>
-      	
-		<item>
-			<title>Akka HTTPのDirective0の使い勝手が良くないのでどうにかする話</title>
-			<link>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</link>
-			<pubDate>Sat, 04 Feb 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</guid>
-			<description>まずDirective0とDirective1の型定義を見て欲しい。 type Directive0 = Directive[Unit] type Directive1[T] = Directive[Tuple1[T]] Directive0がDirective1[Unit]で</description>
-		</item>
-      	
-		<item>
-			<title>2016年12月末の資産分配</title>
-			<link>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</link>
-			<pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</guid>
-			<description>実は数年前から細々とインデックス投資を実践している。その前は個別銘柄（日本株式の現物）を買い漁ってスイングトレードをして、まぁ程々に利益は出</description>
-		</item>
-      	
-		<item>
-			<title>2016年に買ってよかったもの</title>
-			<link>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</link>
-			<pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</guid>
-			<description>あけましておめでとうございます。去年のうちに書くのをすっかり忘れていましたが、流行り？に乗って買ってよかったものをまとめておきます。あまり人</description>
-		</item>
-      	
-		<item>
-			<title>Akka HTTPで認証機能を手軽に実装する方法</title>
-			<link>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</link>
-			<pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</guid>
-			<description>これはScala Advent Calendar 2016の5日目です。埋まっていなかったので1日遅れでしれっと書くよ。 Akka HTTPには AuthenticationDirective という認証のためのディレクティブが</description>
-		</item>
-      	
-		<item>
-			<title>OCamlでLuhnアルゴリズムを書いてみる</title>
-			<link>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</link>
-			<pubDate>Mon, 22 Feb 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</guid>
-			<description>OCamlに慣れるために何か書こうと思ったけど、あまりいいネタが思い浮かばなかったのでLuhnアルゴリズムを書いてみた。クレジットカードの番</description>
-		</item>
-      	
-		<item>
-			<title>OCamlの開発環境を整えた</title>
-			<link>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</link>
-			<pubDate>Sun, 31 Jan 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</guid>
-			<description>本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で</description>
-		</item>
-      	
-		<item>
-			<title>2015年振り返り</title>
-			<link>https://blog.dakatsuka.jp/2015/12/30/lookback.html</link>
-			<pubDate>Wed, 30 Dec 2015 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2015/12/30/lookback.html</guid>
-			<description>仕事全般 2013年にA社を退職したあと、しばらくフリーランスをやっていたのだけど、紆余曲折あって2014年の途中から古巣に戻って、現場でコー</description>
-		</item>
-      	
-		<item>
-			<title>ScalaでNumeric型クラスをつかう</title>
-			<link>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</link>
-			<pubDate>Sun, 27 Dec 2015 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</guid>
-			<description>すごいHaskell本の序盤に次のような関数が出てくる。この関数はxが整数でも浮動小数点数でも動く。 doubleMe x = x + x ScalaでもNumeric</description>
-		</item>
-      	
-	</channel>
+  <channel>
+    <title>Node.js on dakatsuka&#39;s blog</title>
+    <link>https://blog.dakatsuka.jp/tags/node.js.html</link>
+    <description>Recent content in Node.js on dakatsuka&#39;s blog</description>
+    
+    <image>
+      <url>https://blog.dakatsuka.jp/images/card.png</url>
+      <title>dakatsuka&#39;s blog</title>
+      <link>https://blog.dakatsuka.jp/</link>
+    </image>
+    
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Tue, 17 Jul 2012 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/node.js/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenIndiana (Solaris) のDTraceでNode.jsをプロファイリングする</title>
+      <link>https://blog.dakatsuka.jp/2012/07/17/dtrace-nodejs.html</link>
+      <pubDate>Tue, 17 Jul 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2012/07/17/dtrace-nodejs.html</guid>
+      <description>昨年辺りから開発を進めているNodeアプリが大変残念なパフォーマンスだったので、DTraceでプロファイリングしてボトルネックを探してみる作</description>
+    </item>
+    
+    <item>
+      <title>シャーディング環境で Mongoose を使う</title>
+      <link>https://blog.dakatsuka.jp/2012/03/07/sharding-mongoose.html</link>
+      <pubDate>Wed, 07 Mar 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2012/03/07/sharding-mongoose.html</guid>
+      <description>MongooseでSchemaを定義する時に、Shard keyの情報を渡してあげる事で insert, update, remove等の処理がTargetedオペレーショ</description>
+    </item>
+    
+    <item>
+      <title>Node.jsでUUIDを生成するには</title>
+      <link>https://blog.dakatsuka.jp/2012/01/10/node-uuid.html</link>
+      <pubDate>Tue, 10 Jan 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2012/01/10/node-uuid.html</guid>
+      <description>node-uuid というモジュールを使うことで手軽に生成出来ます。Node.js で分散ネットワークを構築したい時に活躍しそうです。 使い方 npm でインストールでき</description>
+    </item>
+    
+    <item>
+      <title>Express &#43; jQueryでpjaxを使う</title>
+      <link>https://blog.dakatsuka.jp/2011/11/25/express-pjax.html</link>
+      <pubDate>Fri, 25 Nov 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/11/25/express-pjax.html</guid>
+      <description>先日、暇つぶしに Express で噂の pjax を使って遊んでみました。pjax 自体は jquery-pjax を使う事で手間をかけずに実現出来ますね。サーバ側もHTTPリクエストヘッダ</description>
+    </item>
+    
+    <item>
+      <title>Node.js アプリをデプロイして Upstart で起動させる Capistrano レシピを書いた</title>
+      <link>https://blog.dakatsuka.jp/2011/10/13/node-cap-upstart.html</link>
+      <pubDate>Thu, 13 Oct 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/10/13/node-cap-upstart.html</guid>
+      <description>Node.js アプリをデプロイする場合、Heroku などの PaaS を使っているとすごく簡単なのですが、デプロイ先が VPS や専用サーバの場合、何かしらのツールを使っ</description>
+    </item>
+    
+    <item>
+      <title>Node.jsで使えるHTTP偽装モジュール node-fakeweb</title>
+      <link>https://blog.dakatsuka.jp/2011/10/06/node-fakeweb.html</link>
+      <pubDate>Thu, 06 Oct 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/10/06/node-fakeweb.html</guid>
+      <description>主に外部のAPIが絡んでくるアプリのテストに使えるモジュールです。Node.jsの標準モジュールであるhttpではなく、requestという</description>
+    </item>
+    
+    <item>
+      <title>Vowsで前処理・後処理を行うには</title>
+      <link>https://blog.dakatsuka.jp/2011/09/26/vows-setup-teardown.html</link>
+      <pubDate>Mon, 26 Sep 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/09/26/vows-setup-teardown.html</guid>
+      <description>Vowsの場合、前処理はtopic内で行い、後処理はteardownを使用します。RSpecの after(:all) の動作に近い感じです。 vows .describe(&amp;#34;Hoge&amp;#34;) .addBatch &amp;#39;a instance&amp;#39;: # 前処理 topic: -&amp;gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js &#43; Vowsではじめるテスト駆動開発</title>
+      <link>https://blog.dakatsuka.jp/2011/09/21/nodejs-tdd.html</link>
+      <pubDate>Wed, 21 Sep 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/09/21/nodejs-tdd.html</guid>
+      <description>Node.jsで使えるTDD, BDDフレームワークはいくつかあるのですが（nodeunit, Jasmine, etc）コールバック・イベント周りのテストのし</description>
+    </item>
+    
+    <item>
+      <title>Consistent HashingをNode.jsで実装してみた</title>
+      <link>https://blog.dakatsuka.jp/2011/08/14/consistent-hashing-nodejs.html</link>
+      <pubDate>Sun, 14 Aug 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/08/14/consistent-hashing-nodejs.html</guid>
+      <description>Node.js から Key Value Store などを利用する際に、キーを複数のノードに分散させる汎用的なライブラリがあったら便利なのではと思い実装してみました。 ソースコードは</description>
+    </item>
+    
+    <item>
+      <title>Firefox Nightly, Aurora で WebSocket を使うには</title>
+      <link>https://blog.dakatsuka.jp/2011/08/01/firefox-websocket.html</link>
+      <pubDate>Mon, 01 Aug 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/08/01/firefox-websocket.html</guid>
+      <description>Google Chromeのノリで new WebSocket() としても全く動く気配が無く、ググってもあまり情報が出てこなかったので、地味に手こずりました。 FirefoxのNig</description>
+    </item>
+    
+    <item>
+      <title>connect middlewareでexpressを拡張しよう</title>
+      <link>https://blog.dakatsuka.jp/2011/07/18/connect-middleware.html</link>
+      <pubDate>Mon, 18 Jul 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/07/18/connect-middleware.html</guid>
+      <description>connect (express) は Ruby の Rack と同じようにミドルウェアを使うことで簡単に拡張する事が出来ます。このミドルウェアの使い方・作り方を知っているだけで express での開発が相</description>
+    </item>
+    
+    <item>
+      <title>Redis の Pub/Sub を使って Node.js &#43; WebSocket のスケールアウトを実現する方法</title>
+      <link>https://blog.dakatsuka.jp/2011/06/19/nodejs-redis-pubsub.html</link>
+      <pubDate>Sun, 19 Jun 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/06/19/nodejs-redis-pubsub.html</guid>
+      <description>Node におけるスケールアーキテクチャ考察(Scale 編)というエントリーを読んで、RedisはPub/Sub型通信をサポートしているという事を知</description>
+    </item>
+    
+    <item>
+      <title>node.js で コマンドライン引数を取るには</title>
+      <link>https://blog.dakatsuka.jp/2011/06/18/nodejs-opts.html</link>
+      <pubDate>Sat, 18 Jun 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/06/18/nodejs-opts.html</guid>
+      <description>node.js でコマンドライン引数を取りたい場合は opts というモジュールを使うことで簡単に実現出来ます。 optsモジュールは npm でインストールします。 npm install opts 試</description>
+    </item>
+    
+    <item>
+      <title>npm と package.json でパッケージ管理</title>
+      <link>https://blog.dakatsuka.jp/2011/06/14/npm-package-json.html</link>
+      <pubDate>Tue, 14 Jun 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/06/14/npm-package-json.html</guid>
+      <description>node.js で Ruby の Bundler(Gemfile) のようにパッケージとバージョンを管理するには、package.json というファイルを作成すれば良いようです。 package.json のdependen</description>
+    </item>
+    
+    <item>
+      <title>node.js &#43; express でセッションストアを Redis に変更する方法</title>
+      <link>https://blog.dakatsuka.jp/2011/06/09/express-redis.html</link>
+      <pubDate>Thu, 09 Jun 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/06/09/express-redis.html</guid>
+      <description>express のセッションは標準だとメモリストアなので、再起動するたびにセッションが消えてしまいます。そこでセッションストアを Redis にしてセッションを永続化</description>
+    </item>
+    
+    <item>
+      <title>node.js &#43; expressでTwitter認証</title>
+      <link>https://blog.dakatsuka.jp/2011/06/08/node-express-twitter.html</link>
+      <pubDate>Wed, 08 Jun 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/06/08/node-express-twitter.html</guid>
+      <description>node.js + express でTwitter認証をしてみました。今回は取得した情報をセッションに格納していますが、これを MySQL や MongoDB に保存すれば「Twitterでログイ</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu 11.04 &#43; nave &#43; npm で Node.js 環境を構築する</title>
+      <link>https://blog.dakatsuka.jp/2011/06/06/nave-npm-node.html</link>
+      <pubDate>Mon, 06 Jun 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/06/06/nave-npm-node.html</guid>
+      <description>近々 Node.js を使う機会がありそうなので Node.js を Ubuntu にインストールしてみました。 nave か nvm にするか迷ったのですが、nvm は zsh と相性が悪くて nvm 本体に手を入れない</description>
+    </item>
+    
+  </channel>
 </rss>

@@ -1,97 +1,1026 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>dakatsuka&#39;s blog on dakatsuka&#39;s blog</title>
-		<link>https://blog.dakatsuka.jp/</link>
-		<description>Recent content in dakatsuka&#39;s blog </description>
-		<generator>Hugo -- gohugo.io</generator>
-		
-  		<language>ja</language>
-		
-		<managingEditor>Page(&#34;dakatsuka&#39;s blog&#34;) (Dai Akatsuka)</managingEditor>
-    	
-  		<lastBuildDate>Thu, 10 Dec 2020 00:00:00 +0900</lastBuildDate>
-		
-		<atom:link href="/" rel="self" type="application/rss+xml" />
-		
-		<item>
-			<title>Migrate to Hugo</title>
-			<link>https://blog.dakatsuka.jp/2020/12/10/hugo.html</link>
-			<pubDate>Thu, 10 Dec 2020 00:00:00 +0900</pubDate>
-			<guid>https://blog.dakatsuka.jp/2020/12/10/hugo.html</guid>
-			<description>このブログで使っている静的サイトジェネレーターをMiddlemanからHugoに移行しました。また、良い機会だったのでホスティングサービスも</description>
-		</item>
-      	
-		<item>
-			<title>The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす</title>
-			<link>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</link>
-			<pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</guid>
-			<description>onSuccessはThe Magnet Patternで実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと</description>
-		</item>
-      	
-		<item>
-			<title>Akka HTTPのDirective0の使い勝手が良くないのでどうにかする話</title>
-			<link>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</link>
-			<pubDate>Sat, 04 Feb 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</guid>
-			<description>まずDirective0とDirective1の型定義を見て欲しい。 type Directive0 = Directive[Unit] type Directive1[T] = Directive[Tuple1[T]] Directive0がDirective1[Unit]で</description>
-		</item>
-      	
-		<item>
-			<title>2016年12月末の資産分配</title>
-			<link>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</link>
-			<pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</guid>
-			<description>実は数年前から細々とインデックス投資を実践している。その前は個別銘柄（日本株式の現物）を買い漁ってスイングトレードをして、まぁ程々に利益は出</description>
-		</item>
-      	
-		<item>
-			<title>2016年に買ってよかったもの</title>
-			<link>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</link>
-			<pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</guid>
-			<description>あけましておめでとうございます。去年のうちに書くのをすっかり忘れていましたが、流行り？に乗って買ってよかったものをまとめておきます。あまり人</description>
-		</item>
-      	
-		<item>
-			<title>Akka HTTPで認証機能を手軽に実装する方法</title>
-			<link>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</link>
-			<pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</guid>
-			<description>これはScala Advent Calendar 2016の5日目です。埋まっていなかったので1日遅れでしれっと書くよ。 Akka HTTPには AuthenticationDirective という認証のためのディレクティブが</description>
-		</item>
-      	
-		<item>
-			<title>OCamlでLuhnアルゴリズムを書いてみる</title>
-			<link>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</link>
-			<pubDate>Mon, 22 Feb 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</guid>
-			<description>OCamlに慣れるために何か書こうと思ったけど、あまりいいネタが思い浮かばなかったのでLuhnアルゴリズムを書いてみた。クレジットカードの番</description>
-		</item>
-      	
-		<item>
-			<title>OCamlの開発環境を整えた</title>
-			<link>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</link>
-			<pubDate>Sun, 31 Jan 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</guid>
-			<description>本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で</description>
-		</item>
-      	
-		<item>
-			<title>2015年振り返り</title>
-			<link>https://blog.dakatsuka.jp/2015/12/30/lookback.html</link>
-			<pubDate>Wed, 30 Dec 2015 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2015/12/30/lookback.html</guid>
-			<description>仕事全般 2013年にA社を退職したあと、しばらくフリーランスをやっていたのだけど、紆余曲折あって2014年の途中から古巣に戻って、現場でコー</description>
-		</item>
-      	
-		<item>
-			<title>ScalaでNumeric型クラスをつかう</title>
-			<link>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</link>
-			<pubDate>Sun, 27 Dec 2015 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</guid>
-			<description>すごいHaskell本の序盤に次のような関数が出てくる。この関数はxが整数でも浮動小数点数でも動く。 doubleMe x = x + x ScalaでもNumeric</description>
-		</item>
-      	
-	</channel>
+  <channel>
+    <title>dakatsuka&#39;s blog</title>
+    <link>https://blog.dakatsuka.jp/</link>
+    <description>Recent content on dakatsuka&#39;s blog</description>
+    
+    <image>
+      <url>https://blog.dakatsuka.jp/images/card.png</url>
+      <title>dakatsuka&#39;s blog</title>
+      <link>https://blog.dakatsuka.jp/</link>
+    </image>
+    
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Thu, 10 Dec 2020 00:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Migrate to Hugo</title>
+      <link>https://blog.dakatsuka.jp/2020/12/10/hugo.html</link>
+      <pubDate>Thu, 10 Dec 2020 00:00:00 +0900</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2020/12/10/hugo.html</guid>
+      <description>このブログで使っている静的サイトジェネレーターをMiddlemanからHugoに移行しました。また、良い機会だったのでホスティングサービスも</description>
+    </item>
+    
+    <item>
+      <title>The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす</title>
+      <link>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</link>
+      <pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</guid>
+      <description>onSuccessはThe Magnet Patternで実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと</description>
+    </item>
+    
+    <item>
+      <title>Akka HTTPのDirective0の使い勝手が良くないのでどうにかする話</title>
+      <link>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</link>
+      <pubDate>Sat, 04 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</guid>
+      <description>まずDirective0とDirective1の型定義を見て欲しい。 type Directive0 = Directive[Unit] type Directive1[T] = Directive[Tuple1[T]] Directive0がDirective1[Unit]で</description>
+    </item>
+    
+    <item>
+      <title>2016年12月末の資産分配</title>
+      <link>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</link>
+      <pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</guid>
+      <description>実は数年前から細々とインデックス投資を実践している。その前は個別銘柄（日本株式の現物）を買い漁ってスイングトレードをして、まぁ程々に利益は出</description>
+    </item>
+    
+    <item>
+      <title>2016年に買ってよかったもの</title>
+      <link>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</guid>
+      <description>あけましておめでとうございます。去年のうちに書くのをすっかり忘れていましたが、流行り？に乗って買ってよかったものをまとめておきます。あまり人</description>
+    </item>
+    
+    <item>
+      <title>Akka HTTPで認証機能を手軽に実装する方法</title>
+      <link>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</link>
+      <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</guid>
+      <description>これはScala Advent Calendar 2016の5日目です。埋まっていなかったので1日遅れでしれっと書くよ。 Akka HTTPには AuthenticationDirective という認証のためのディレクティブが</description>
+    </item>
+    
+    <item>
+      <title>OCamlでLuhnアルゴリズムを書いてみる</title>
+      <link>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</link>
+      <pubDate>Mon, 22 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</guid>
+      <description>OCamlに慣れるために何か書こうと思ったけど、あまりいいネタが思い浮かばなかったのでLuhnアルゴリズムを書いてみた。クレジットカードの番</description>
+    </item>
+    
+    <item>
+      <title>OCamlの開発環境を整えた</title>
+      <link>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</link>
+      <pubDate>Sun, 31 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</guid>
+      <description>本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で</description>
+    </item>
+    
+    <item>
+      <title>2015年振り返り</title>
+      <link>https://blog.dakatsuka.jp/2015/12/30/lookback.html</link>
+      <pubDate>Wed, 30 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/12/30/lookback.html</guid>
+      <description>仕事全般 2013年にA社を退職したあと、しばらくフリーランスをやっていたのだけど、紆余曲折あって2014年の途中から古巣に戻って、現場でコー</description>
+    </item>
+    
+    <item>
+      <title>ScalaでNumeric型クラスをつかう</title>
+      <link>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</link>
+      <pubDate>Sun, 27 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</guid>
+      <description>すごいHaskell本の序盤に次のような関数が出てくる。この関数はxが整数でも浮動小数点数でも動く。 doubleMe x = x + x ScalaでもNumeric</description>
+    </item>
+    
+    <item>
+      <title>finagle-mysqlのClient (IO Context) をReaderTで受け取る</title>
+      <link>https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html</link>
+      <pubDate>Tue, 15 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html</guid>
+      <description>下準備としてパッケージオブジェクトあたりに以下のおまじないを書いておく1 この時点ですでに面倒だ！ import com.twitter.util.Future import scalaz._ import Scalaz._ implicit def FutureFunctor: Functor[Future] = new Functor[Future] { def map[A, B](f: Future[A])(map: A =&amp;gt; B): Future[B]</description>
+    </item>
+    
+    <item>
+      <title>FinchのEndpointのテスト方法を調べた</title>
+      <link>https://blog.dakatsuka.jp/2015/12/13/finch-endpoint-test.html</link>
+      <pubDate>Sun, 13 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/12/13/finch-endpoint-test.html</guid>
+      <description>Finchはエンドポイントを作るときに戻り値を型で縛れるので、正常系のレスポンスに関してはコンパイラを信用して大丈夫だろう。ただし、ステータ</description>
+    </item>
+    
+    <item>
+      <title>ScalaでLuaスクリプトを動かして遊ぶ</title>
+      <link>https://blog.dakatsuka.jp/2015/12/10/luaj.html</link>
+      <pubDate>Thu, 10 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/12/10/luaj.html</guid>
+      <description>これはScala Advent Calendar 2015（Adventar版）10日目です。9日目はShinpeimさんの既存のクラスをScalazで定義されている型ク</description>
+    </item>
+    
+    <item>
+      <title>Finch &#43; MySQLでREST APIサーバを構築する</title>
+      <link>https://blog.dakatsuka.jp/2015/12/07/finch.html</link>
+      <pubDate>Mon, 07 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/12/07/finch.html</guid>
+      <description>これはScala Advent Calendar 2015（Adventar版）7日目です。6日目はHiroyuki-NagataさんのScalatraとnon-bloc</description>
+    </item>
+    
+    <item>
+      <title>HTTPSに移行した</title>
+      <link>https://blog.dakatsuka.jp/2015/12/01/https.html</link>
+      <pubDate>Tue, 01 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/12/01/https.html</guid>
+      <description>さくらのSSL1でRapidSSLが1年分無料になるキャンペーンをやっていたので、このブログを思い切ってHTTPSに移行した。最初はClou</description>
+    </item>
+    
+    <item>
+      <title>http4sでHTTPSを有効にする</title>
+      <link>https://blog.dakatsuka.jp/2015/11/22/http4s-with-ssl.html</link>
+      <pubDate>Sun, 22 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/11/22/http4s-with-ssl.html</guid>
+      <description>SSLSupportパッケージをインポートしてBlazeBuilderの.withSSLにKeyStoreの情報を渡せばHTTPSが有効にな</description>
+    </item>
+    
+    <item>
+      <title>2007年頃に書いていた技術ブログのエントリをリカバリーした</title>
+      <link>https://blog.dakatsuka.jp/2015/11/21/2007.html</link>
+      <pubDate>Sat, 21 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/11/21/2007.html</guid>
+      <description>その昔 http://d.hatena.ne.jp/CLA という技術ブログを書いていた。なぜ消したのか最早記憶にはないが、特に隠す内容のものでも無さそうだったので、このブログにインポートする</description>
+    </item>
+    
+    <item>
+      <title>activerecord-importとelasticsearch-railsでメソッドが被る問題</title>
+      <link>https://blog.dakatsuka.jp/2015/11/18/activerecord-import.html</link>
+      <pubDate>Wed, 18 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/11/18/activerecord-import.html</guid>
+      <description>どちらのgemもActiveRecordモデルにimportメソッドを生やそうとする。 いい感じに共存させる方法をググっていたら同じことをIs</description>
+    </item>
+    
+    <item>
+      <title>退社後の軽い運動</title>
+      <link>https://blog.dakatsuka.jp/2015/11/15/diary.html</link>
+      <pubDate>Sun, 15 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/11/15/diary.html</guid>
+      <description>この2年間で6キロくらい太った。食べる量は変わっていないので単純に運動不足だと思う。まぁストレスも多少影響しているかも。 最近は退社後に、西新</description>
+    </item>
+    
+    <item>
+      <title>ScalaのHTTPインターフェース http4s 超入門</title>
+      <link>https://blog.dakatsuka.jp/2015/11/14/http4s.html</link>
+      <pubDate>Sat, 14 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/11/14/http4s.html</guid>
+      <description>What&amp;rsquo;s http4s RackやWSGIのScala版といったところ。公式サイトの説明も次のように書いてある。 http4s is a minimal, idiomatic Scala interface for HTTP. http4s is Scala&amp;rsquo;s answer to Ruby&amp;rsquo;s Rack, Python&amp;rsquo;s WSGI, Haskell&amp;rsquo;s WAI, and Java&amp;rsquo;s Servlets. ま</description>
+    </item>
+    
+    <item>
+      <title>scala.concurrent.Futureをscalaz.concurrent.Taskに変換する方法</title>
+      <link>https://blog.dakatsuka.jp/2015/11/07/future-to-task-transformer.html</link>
+      <pubDate>Sat, 07 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/11/07/future-to-task-transformer.html</guid>
+      <description>あまり良い方法では無さそうだけど他に思いつかなかった import scala.concurrent.Future import scala.concurrent.ExecutionContext.Implicits.global import scala.util.{Success, Failure} import scalaz.concurrent.Task import scalaz.syntax.either._ implicit class FutureToTaskTransformer[+A](future: Future[A]) { def toTask: Task[A] = { Task.async { register =&amp;gt; future.onComplete { case Success(v) =&amp;gt; register(v.right) case Failure(e) =&amp;gt; register(e.left) } } } } Futur</description>
+    </item>
+    
+    <item>
+      <title>CircleCIでElasticsearchを使うならDockerがよさそう</title>
+      <link>https://blog.dakatsuka.jp/2015/08/22/elasticsearch-on-circleci.html</link>
+      <pubDate>Sat, 22 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/08/22/elasticsearch-on-circleci.html</guid>
+      <description>CircleCIでElasticsearchの最新版とKuromojiを使うならDockerが便利だった。circle.ymlでwgetして</description>
+    </item>
+    
+    <item>
+      <title>Play Framework 2.x でマルチプロジェクト構成にするには</title>
+      <link>https://blog.dakatsuka.jp/2015/06/11/play-multiple-project.html</link>
+      <pubDate>Thu, 11 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/06/11/play-multiple-project.html</guid>
+      <description>ドメイン層（普通のScalaプロジェクト）とアプリケーション層（Play）でsbtプロジェクトを分けたい場合は、sbtのマルチプロジェクトを</description>
+    </item>
+    
+    <item>
+      <title>今年に入って生み出した糞コード</title>
+      <link>https://blog.dakatsuka.jp/2015/06/10/horrible-code.html</link>
+      <pubDate>Wed, 10 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/06/10/horrible-code.html</guid>
+      <description>PackerのログからAMI IDを取得するコードがInvokeのタスクに書かれていた。全然書いた記憶がないのだけど（すごい忙しかったという記</description>
+    </item>
+    
+    <item>
+      <title>sbtでAmazon S3をMavenリポジトリとして扱う方法</title>
+      <link>https://blog.dakatsuka.jp/2015/05/16/sbt-publish-to-s3.html</link>
+      <pubDate>Sat, 16 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/05/16/sbt-publish-to-s3.html</guid>
+      <description>fm-sbt-s3-resolverというプラグインを入れることでS3をMaven Repositoryとして扱えるようになります。社内のサー</description>
+    </item>
+    
+    <item>
+      <title>CloudWatchやAuto ScalingのアラームをSlackに通知するようにした</title>
+      <link>https://blog.dakatsuka.jp/2015/03/24/amazon-sns-to-slack.html</link>
+      <pubDate>Tue, 24 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/03/24/amazon-sns-to-slack.html</guid>
+      <description>CloudWatchやAuto Scalingのアラームは、Amazon SNSのTopicにPublishする仕組みになっていて、通常はこのT</description>
+    </item>
+    
+    <item>
+      <title>rbenv-sudoが便利</title>
+      <link>https://blog.dakatsuka.jp/2015/02/19/rbenv-sudo.html</link>
+      <pubDate>Thu, 19 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/02/19/rbenv-sudo.html</guid>
+      <description>理想 $ sudo bundle exec rake 現実 $ sudo bundle exec rake sudo: bundle: command not found sudoで実行すると環境変数が初期化されているので当然の挙動ですが、システムワイドに入れていないrbe</description>
+    </item>
+    
+    <item>
+      <title>CircleCIでPackerを使う</title>
+      <link>https://blog.dakatsuka.jp/2015/01/28/use-packer-on-circleci.html</link>
+      <pubDate>Wed, 28 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/01/28/use-packer-on-circleci.html</guid>
+      <description>コンテナ起動後にLinux版Packerをダウンロードして、パスの通っている場所に配置すれば動く。毎回Packerをダウンロードするのは無駄</description>
+    </item>
+    
+    <item>
+      <title>Symfony2でサブドメインに対応したサイトを作る</title>
+      <link>https://blog.dakatsuka.jp/2014/08/28/symfony2-subdomain.html</link>
+      <pubDate>Thu, 28 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2014/08/28/symfony2-subdomain.html</guid>
+      <description>Symfony2では特定のBundleをサブドメインに切り出すことができる。正しくはBundle毎に任意のドメインを割り当てることができる。</description>
+    </item>
+    
+    <item>
+      <title>Play framework を CircleCI でテストする</title>
+      <link>https://blog.dakatsuka.jp/2014/08/24/play2-on-circleci.html</link>
+      <pubDate>Sun, 24 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2014/08/24/play2-on-circleci.html</guid>
+      <description>Play framework 2.3 (Scala版）で開発しているアプリをTravis ProでCIしていたのだけど、ビルド時間がネックになってきたのでインスタンス性能が高</description>
+    </item>
+    
+    <item>
+      <title>Play framework 2.3.x と Scaldi で Dependency Injection</title>
+      <link>https://blog.dakatsuka.jp/2014/08/01/play2-scaldi.html</link>
+      <pubDate>Fri, 01 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2014/08/01/play2-scaldi.html</guid>
+      <description>Play2でDIをどうしようか悩んでいたところscaldiというライブラリが目に止まった。Playに組み込むためのライブラリをあるし、公式サ</description>
+    </item>
+    
+    <item>
+      <title>Vagrant VMのディスクサイズを後から拡張する方法</title>
+      <link>https://blog.dakatsuka.jp/2014/04/24/vagrant-hdd-resize.html</link>
+      <pubDate>Thu, 24 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2014/04/24/vagrant-hdd-resize.html</guid>
+      <description>前提条件 Vagrant BoxがファイルシステムにLVM + ext3/4を使っていること。今回はVagrantbox.esで配布されているDebian Whe</description>
+    </item>
+    
+    <item>
+      <title>Symfony2アプリをTravisでCIする</title>
+      <link>https://blog.dakatsuka.jp/2014/04/03/symfony2-travis-ci.html</link>
+      <pubDate>Thu, 03 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2014/04/03/symfony2-travis-ci.html</guid>
+      <description>.travis.ymlを下記のようにした。TravisはComposerもPHPUnitもパスが通った状態になっているため、ダウンロードする</description>
+    </item>
+    
+    <item>
+      <title>Rails &#43; Jasmineでテスト実行時のタイムゾーンを変更する</title>
+      <link>https://blog.dakatsuka.jp/2014/03/03/rails-jasmine-timezone.html</link>
+      <pubDate>Mon, 03 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2014/03/03/rails-jasmine-timezone.html</guid>
+      <description>あまりタイムゾーンに依存するテストって宜しくないと思いますが。。。とはいえ特定のタイムゾーンで固定しておきたい事もあるので調べてみた。 Pha</description>
+    </item>
+    
+    <item>
+      <title>MongoMapperでER図っぽいものを生成するgemを作った</title>
+      <link>https://blog.dakatsuka.jp/2014/02/13/mongo-mapper-diagram.html</link>
+      <pubDate>Thu, 13 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2014/02/13/mongo-mapper-diagram.html</guid>
+      <description>モデルの数がそれなりにあるプロジェクトに途中から参加すると、モデル同士の関連を把握するのに結構苦労するので、ER図の存在が重要になってくる。</description>
+    </item>
+    
+    <item>
+      <title>テキストフィールドへの入力を検出して数秒おきにサーバに送信する</title>
+      <link>https://blog.dakatsuka.jp/2013/12/24/autocheck-js.html</link>
+      <pubDate>Tue, 24 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/12/24/autocheck-js.html</guid>
+      <description>サインアップフォームなどでユーザー名が取得可能かどうかAjaxで問い合わせるアレです。 愚直に実装するとkeyupイベントをキャッチして$.a</description>
+    </item>
+    
+    <item>
+      <title>Symfony2ではRelationshipsにAbstract classやInterfaceが指定できる</title>
+      <link>https://blog.dakatsuka.jp/2013/12/19/resolve-target-entity.html</link>
+      <pubDate>Thu, 19 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/12/19/resolve-target-entity.html</guid>
+      <description>Doctrine2のOneToManyやManyToManyのtargetEntityにはAbstract classやInterfaceを指</description>
+    </item>
+    
+    <item>
+      <title>個人事業主になりました</title>
+      <link>https://blog.dakatsuka.jp/2013/12/16/freelance.html</link>
+      <pubDate>Mon, 16 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/12/16/freelance.html</guid>
+      <description>無職から個人事業主にジョブチェンジしました。 自分でサービスの開発もしていきたいですが、当面は傭兵としてサーバサイドプログラミングやインフラ構</description>
+    </item>
+    
+    <item>
+      <title>HomebrewでPHP5.5を入れようと思ったら手間取った話</title>
+      <link>https://blog.dakatsuka.jp/2013/12/07/install-php55-on-mavericks.html</link>
+      <pubDate>Sat, 07 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/12/07/install-php55-on-mavericks.html</guid>
+      <description>MavericksにHomebrewを使ってPHP 5.5をインストールしようと思ったら次のようなエラーが出てきた。 configure: error: freetype.h not found. 対処法はHome</description>
+    </item>
+    
+    <item>
+      <title>Symfony2でFunctional Testを快適に行うには</title>
+      <link>https://blog.dakatsuka.jp/2013/12/05/symfony2-functional-test.html</link>
+      <pubDate>Thu, 05 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/12/05/symfony2-functional-test.html</guid>
+      <description>前置き Symfony2を構成するサービスはほぼDIコンテナの上に乗っているので、ドメインとデータベース、フレームワークがそれぞれ疎結合になっ</description>
+    </item>
+    
+    <item>
+      <title>ブログのHTMLを全面的に書き直した</title>
+      <link>https://blog.dakatsuka.jp/2013/12/01/rewrite-html-for-blog.html</link>
+      <pubDate>Sun, 01 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/12/01/rewrite-html-for-blog.html</guid>
+      <description>ヘッダーとフッターを除いたコンテンツをmainタグで括ってみたり、RSSで配信される内容はarticleタグにしたり、投稿日をtimeタグに</description>
+    </item>
+    
+    <item>
+      <title>Rails4 &#43; RSpec &#43; Guard &#43; SpringでDEPRECATION WARNINGが出たので対処した</title>
+      <link>https://blog.dakatsuka.jp/2013/11/27/rails4-rspec-guard-spring.html</link>
+      <pubDate>Wed, 27 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/11/27/rails4-rspec-guard-spring.html</guid>
+      <description>ちょっと前までのRailsのテスト環境といえば、RSpec + Guardという構成が定番だったように思う。最近はこれにSpringを加えるのが</description>
+    </item>
+    
+    <item>
+      <title>株式会社オルトプラスを退職しました</title>
+      <link>https://blog.dakatsuka.jp/2013/11/26/resignation.html</link>
+      <pubDate>Tue, 26 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/11/26/resignation.html</guid>
+      <description>Facebookのほうでは2週間程前に告知していたのですが、2013年11月22日付けで株式会社オルトプラスを退職することとなりました。先週</description>
+    </item>
+    
+    <item>
+      <title>Middlemanでビルド時にだけ特定の要素を出力したい場合</title>
+      <link>https://blog.dakatsuka.jp/2013/11/24/middleman-build-helper.html</link>
+      <pubDate>Sun, 24 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/11/24/middleman-build-helper.html</guid>
+      <description>Livereload環境では特に出力しなくても良いもの、または出力されるとマズいものがあったりする。例えばソーシャルサービス系のシェアボタン</description>
+    </item>
+    
+    <item>
+      <title>WordPressからMiddlemanに移行してGitHub Pagesで運用することにした</title>
+      <link>https://blog.dakatsuka.jp/2013/11/22/change-from-wordpress-to-middleman.html</link>
+      <pubDate>Fri, 22 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/11/22/change-from-wordpress-to-middleman.html</guid>
+      <description>今まで惰性でWordPressを使い続けてきたが、ふと思い立ってMiddlemanで全面的に作り直すことにした。折角作り直すのだからブログの</description>
+    </item>
+    
+    <item>
+      <title>Monologのログ出力先をFluentdに変更してみた</title>
+      <link>https://blog.dakatsuka.jp/2013/10/18/monolog-fluentd.html</link>
+      <pubDate>Fri, 18 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/10/18/monolog-fluentd.html</guid>
+      <description>Symfony2にも採用されているMonologは、HandlerやFormatterを差し替えることでログの出力先やフォーマットを自由に変</description>
+    </item>
+    
+    <item>
+      <title>ついカッとなってPHPでMaybeモナドを実装した</title>
+      <link>https://blog.dakatsuka.jp/2013/09/03/php-maybe-monad.html</link>
+      <pubDate>Tue, 03 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/09/03/php-maybe-monad.html</guid>
+      <description>PHPを仕事で使っているとis_nullとかissetとかemptyとか===とかの存在にイライラしてくる訳ですよ。そこでなんちゃってMay</description>
+    </item>
+    
+    <item>
+      <title>PHPで無限リストを作る</title>
+      <link>https://blog.dakatsuka.jp/2013/09/02/php-infinite-list.html</link>
+      <pubDate>Mon, 02 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/09/02/php-infinite-list.html</guid>
+      <description>PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。 &amp;lt;?php class Stream implements \Iterator { private $position; private $offset; private $limit; public function __construct($offset, $limit = null) { $this-&amp;gt;position = $offset;</description>
+    </item>
+    
+    <item>
+      <title>Symfony2(Doctrine2)でENUMを使うならDoctrineEnumBundleが便利</title>
+      <link>https://blog.dakatsuka.jp/2013/08/13/doctrine-enum-bundle.html</link>
+      <pubDate>Tue, 13 Aug 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/08/13/doctrine-enum-bundle.html</guid>
+      <description>DoctrineEnumBundleというBundleを導入することによって、Doctrine2でMySQLのENUM型を扱うことができます</description>
+    </item>
+    
+    <item>
+      <title>PHPのmcrypt関数が遅すぎて辛い</title>
+      <link>https://blog.dakatsuka.jp/2013/08/12/php-mcrypt-is-too-slow.html</link>
+      <pubDate>Mon, 12 Aug 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/08/12/php-mcrypt-is-too-slow.html</guid>
+      <description>DES-ECBの暗号・復号を10万回繰り返すベンチマークを取ってみたらmcrypt関数が遅すぎて涙が出てきました。PHPのことなのでもっと速</description>
+    </item>
+    
+    <item>
+      <title>PHP 5.4のトレイトで読み取り専用配列を実装してみる</title>
+      <link>https://blog.dakatsuka.jp/2013/03/10/php54-trait-readonly-array.html</link>
+      <pubDate>Sun, 10 Mar 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2013/03/10/php54-trait-readonly-array.html</guid>
+      <description>traitを使って何か作ってみようと思い立ち、読み取り専用の配列を実装してみました。配列として扱いたい（例えばforeachで回したいとか）</description>
+    </item>
+    
+    <item>
+      <title>Rails3にBackbone.jsを導入する</title>
+      <link>https://blog.dakatsuka.jp/2012/09/13/rails-backbone-intro.html</link>
+      <pubDate>Thu, 13 Sep 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2012/09/13/rails-backbone-intro.html</guid>
+      <description>最近Backbone.jsを触っています。Backbone.jsをRailsで使いたいならパッケージで導入してしまうのが一番簡単でしょう。 G</description>
+    </item>
+    
+    <item>
+      <title>OpenIndiana (Solaris) のDTraceでNode.jsをプロファイリングする</title>
+      <link>https://blog.dakatsuka.jp/2012/07/17/dtrace-nodejs.html</link>
+      <pubDate>Tue, 17 Jul 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2012/07/17/dtrace-nodejs.html</guid>
+      <description>昨年辺りから開発を進めているNodeアプリが大変残念なパフォーマンスだったので、DTraceでプロファイリングしてボトルネックを探してみる作</description>
+    </item>
+    
+    <item>
+      <title>Rails3 &#43; unicornからRabbitMQに接続するには</title>
+      <link>https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html</link>
+      <pubDate>Mon, 14 May 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html</guid>
+      <description>ruby-amqpはEventMachineに依存しているので、unicorn上のRailsアプリからRabbitMQに接続する場合は少し手</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu on EC2でRabbitMQクラスタを構築する手順</title>
+      <link>https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html</link>
+      <pubDate>Wed, 18 Apr 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html</guid>
+      <description>EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。 RabbitMQ</description>
+    </item>
+    
+    <item>
+      <title>シャーディング環境で Mongoose を使う</title>
+      <link>https://blog.dakatsuka.jp/2012/03/07/sharding-mongoose.html</link>
+      <pubDate>Wed, 07 Mar 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2012/03/07/sharding-mongoose.html</guid>
+      <description>MongooseでSchemaを定義する時に、Shard keyの情報を渡してあげる事で insert, update, remove等の処理がTargetedオペレーショ</description>
+    </item>
+    
+    <item>
+      <title>Node.jsでUUIDを生成するには</title>
+      <link>https://blog.dakatsuka.jp/2012/01/10/node-uuid.html</link>
+      <pubDate>Tue, 10 Jan 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2012/01/10/node-uuid.html</guid>
+      <description>node-uuid というモジュールを使うことで手軽に生成出来ます。Node.js で分散ネットワークを構築したい時に活躍しそうです。 使い方 npm でインストールでき</description>
+    </item>
+    
+    <item>
+      <title>Chefで始めるシステム構成管理入門 その2 – インストールと初期設定</title>
+      <link>https://blog.dakatsuka.jp/2011/12/08/chef-install.html</link>
+      <pubDate>Thu, 08 Dec 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/12/08/chef-install.html</guid>
+      <description>前回に引き続き Chef に関するエントリです。このエントリではChef Serverのインストールと初期設定、更にNodeの接続までを書いていこうと思</description>
+    </item>
+    
+    <item>
+      <title>Chefで始めるシステム構成管理入門 その1</title>
+      <link>https://blog.dakatsuka.jp/2011/12/05/chef-introduction.html</link>
+      <pubDate>Mon, 05 Dec 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/12/05/chef-introduction.html</guid>
+      <description>最近 Chef というシステムの構成を自動で管理するツールを使い始めました。同様のツールとして Puppet が有名ですが、レシピを内部DSLで記述出来るほうが自分</description>
+    </item>
+    
+    <item>
+      <title>Express &#43; jQueryでpjaxを使う</title>
+      <link>https://blog.dakatsuka.jp/2011/11/25/express-pjax.html</link>
+      <pubDate>Fri, 25 Nov 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/11/25/express-pjax.html</guid>
+      <description>先日、暇つぶしに Express で噂の pjax を使って遊んでみました。pjax 自体は jquery-pjax を使う事で手間をかけずに実現出来ますね。サーバ側もHTTPリクエストヘッダ</description>
+    </item>
+    
+    <item>
+      <title>Ruby 1.9.2 &#43; Rails3でテストカバレッジを取るにはSimpleCovが良さそう</title>
+      <link>https://blog.dakatsuka.jp/2011/10/20/simplecov.html</link>
+      <pubDate>Thu, 20 Oct 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/10/20/simplecov.html</guid>
+      <description>Ruby (Rails) でテストカバレッジといえば Rcov ですね。 しかし Rcov は Ruby 1.9.x に非対応なので Ruby 1.9.2 + Rails3 な環境で開発をしている方は SimpleCov を使うと幸せになれます。名前にSim</description>
+    </item>
+    
+    <item>
+      <title>Node.js アプリをデプロイして Upstart で起動させる Capistrano レシピを書いた</title>
+      <link>https://blog.dakatsuka.jp/2011/10/13/node-cap-upstart.html</link>
+      <pubDate>Thu, 13 Oct 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/10/13/node-cap-upstart.html</guid>
+      <description>Node.js アプリをデプロイする場合、Heroku などの PaaS を使っているとすごく簡単なのですが、デプロイ先が VPS や専用サーバの場合、何かしらのツールを使っ</description>
+    </item>
+    
+    <item>
+      <title>Node.jsで使えるHTTP偽装モジュール node-fakeweb</title>
+      <link>https://blog.dakatsuka.jp/2011/10/06/node-fakeweb.html</link>
+      <pubDate>Thu, 06 Oct 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/10/06/node-fakeweb.html</guid>
+      <description>主に外部のAPIが絡んでくるアプリのテストに使えるモジュールです。Node.jsの標準モジュールであるhttpではなく、requestという</description>
+    </item>
+    
+    <item>
+      <title>has_one関連でaccepts_nested_attributes_for / fields_forを使う</title>
+      <link>https://blog.dakatsuka.jp/2011/09/30/nested-has-one.html</link>
+      <pubDate>Fri, 30 Sep 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/09/30/nested-has-one.html</guid>
+      <description>先日、has_one関連でaccepts_nested_attributesを使ってフォームを作ろうとしたら、ネスト先のフィールドが画面に出</description>
+    </item>
+    
+    <item>
+      <title>Vowsで前処理・後処理を行うには</title>
+      <link>https://blog.dakatsuka.jp/2011/09/26/vows-setup-teardown.html</link>
+      <pubDate>Mon, 26 Sep 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/09/26/vows-setup-teardown.html</guid>
+      <description>Vowsの場合、前処理はtopic内で行い、後処理はteardownを使用します。RSpecの after(:all) の動作に近い感じです。 vows .describe(&amp;#34;Hoge&amp;#34;) .addBatch &amp;#39;a instance&amp;#39;: # 前処理 topic: -&amp;gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js &#43; Vowsではじめるテスト駆動開発</title>
+      <link>https://blog.dakatsuka.jp/2011/09/21/nodejs-tdd.html</link>
+      <pubDate>Wed, 21 Sep 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/09/21/nodejs-tdd.html</guid>
+      <description>Node.jsで使えるTDD, BDDフレームワークはいくつかあるのですが（nodeunit, Jasmine, etc）コールバック・イベント周りのテストのし</description>
+    </item>
+    
+    <item>
+      <title>Rails v3.0.xからv3.1.0にアップグレードした時のメモ</title>
+      <link>https://blog.dakatsuka.jp/2011/09/01/upgrade-rails31.html</link>
+      <pubDate>Thu, 01 Sep 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/09/01/upgrade-rails31.html</guid>
+      <description>Rails v3.1.0が出たのでv3.0.10で開発しているプロジェクトの対応を行いました。その時のメモを残しておきます。 といっても、このRails</description>
+    </item>
+    
+    <item>
+      <title>Consistent HashingをNode.jsで実装してみた</title>
+      <link>https://blog.dakatsuka.jp/2011/08/14/consistent-hashing-nodejs.html</link>
+      <pubDate>Sun, 14 Aug 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/08/14/consistent-hashing-nodejs.html</guid>
+      <description>Node.js から Key Value Store などを利用する際に、キーを複数のノードに分散させる汎用的なライブラリがあったら便利なのではと思い実装してみました。 ソースコードは</description>
+    </item>
+    
+    <item>
+      <title>Firefox Nightly, Aurora で WebSocket を使うには</title>
+      <link>https://blog.dakatsuka.jp/2011/08/01/firefox-websocket.html</link>
+      <pubDate>Mon, 01 Aug 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/08/01/firefox-websocket.html</guid>
+      <description>Google Chromeのノリで new WebSocket() としても全く動く気配が無く、ググってもあまり情報が出てこなかったので、地味に手こずりました。 FirefoxのNig</description>
+    </item>
+    
+    <item>
+      <title>connect middlewareでexpressを拡張しよう</title>
+      <link>https://blog.dakatsuka.jp/2011/07/18/connect-middleware.html</link>
+      <pubDate>Mon, 18 Jul 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/07/18/connect-middleware.html</guid>
+      <description>connect (express) は Ruby の Rack と同じようにミドルウェアを使うことで簡単に拡張する事が出来ます。このミドルウェアの使い方・作り方を知っているだけで express での開発が相</description>
+    </item>
+    
+    <item>
+      <title>さくらのVPS（Ubuntu 10.04）にRed5を入れたときのメモ</title>
+      <link>https://blog.dakatsuka.jp/2011/07/14/red5.html</link>
+      <pubDate>Thu, 14 Jul 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/07/14/red5.html</guid>
+      <description>とある事情でさくらのVPSにRed5（ストリーミングサーバ）を入れたので、その時のメモをブログに残しておきます。なお、さくらのVPSで動かし</description>
+    </item>
+    
+    <item>
+      <title>Redis の Pub/Sub を使って Node.js &#43; WebSocket のスケールアウトを実現する方法</title>
+      <link>https://blog.dakatsuka.jp/2011/06/19/nodejs-redis-pubsub.html</link>
+      <pubDate>Sun, 19 Jun 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/06/19/nodejs-redis-pubsub.html</guid>
+      <description>Node におけるスケールアーキテクチャ考察(Scale 編)というエントリーを読んで、RedisはPub/Sub型通信をサポートしているという事を知</description>
+    </item>
+    
+    <item>
+      <title>node.js で コマンドライン引数を取るには</title>
+      <link>https://blog.dakatsuka.jp/2011/06/18/nodejs-opts.html</link>
+      <pubDate>Sat, 18 Jun 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/06/18/nodejs-opts.html</guid>
+      <description>node.js でコマンドライン引数を取りたい場合は opts というモジュールを使うことで簡単に実現出来ます。 optsモジュールは npm でインストールします。 npm install opts 試</description>
+    </item>
+    
+    <item>
+      <title>npm と package.json でパッケージ管理</title>
+      <link>https://blog.dakatsuka.jp/2011/06/14/npm-package-json.html</link>
+      <pubDate>Tue, 14 Jun 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/06/14/npm-package-json.html</guid>
+      <description>node.js で Ruby の Bundler(Gemfile) のようにパッケージとバージョンを管理するには、package.json というファイルを作成すれば良いようです。 package.json のdependen</description>
+    </item>
+    
+    <item>
+      <title>node.js &#43; express でセッションストアを Redis に変更する方法</title>
+      <link>https://blog.dakatsuka.jp/2011/06/09/express-redis.html</link>
+      <pubDate>Thu, 09 Jun 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/06/09/express-redis.html</guid>
+      <description>express のセッションは標準だとメモリストアなので、再起動するたびにセッションが消えてしまいます。そこでセッションストアを Redis にしてセッションを永続化</description>
+    </item>
+    
+    <item>
+      <title>node.js &#43; expressでTwitter認証</title>
+      <link>https://blog.dakatsuka.jp/2011/06/08/node-express-twitter.html</link>
+      <pubDate>Wed, 08 Jun 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/06/08/node-express-twitter.html</guid>
+      <description>node.js + express でTwitter認証をしてみました。今回は取得した情報をセッションに格納していますが、これを MySQL や MongoDB に保存すれば「Twitterでログイ</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu 11.04 &#43; nave &#43; npm で Node.js 環境を構築する</title>
+      <link>https://blog.dakatsuka.jp/2011/06/06/nave-npm-node.html</link>
+      <pubDate>Mon, 06 Jun 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/06/06/nave-npm-node.html</guid>
+      <description>近々 Node.js を使う機会がありそうなので Node.js を Ubuntu にインストールしてみました。 nave か nvm にするか迷ったのですが、nvm は zsh と相性が悪くて nvm 本体に手を入れない</description>
+    </item>
+    
+    <item>
+      <title>Rails3 &#43; OmniAuth で mixi OpenID を使うための設定</title>
+      <link>https://blog.dakatsuka.jp/2011/06/01/omniauth-mixi.html</link>
+      <pubDate>Wed, 01 Jun 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/06/01/omniauth-mixi.html</guid>
+      <description>OmniAuthを使ってTwitterやFacebookと連携・認証をする方法はググればたくさん出てくるのですが、mixi OpenIDを使っ</description>
+    </item>
+    
+    <item>
+      <title>APIの作成に特化したRuby製フレームワーク grape を試してみた</title>
+      <link>https://blog.dakatsuka.jp/2011/05/27/grape.html</link>
+      <pubDate>Fri, 27 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/05/27/grape.html</guid>
+      <description>RESTful API の作成に特化したマイクロフレームワーク grape の存在を知ったので調査してみる事にしました。API の実装 に Rails の ActionController は重厚すぎる、Sinatra は軽</description>
+    </item>
+    
+    <item>
+      <title>複数のRailsアプリが同居しているGitリポジトリをデプロイする方法</title>
+      <link>https://blog.dakatsuka.jp/2011/05/25/cap-subdirectory.html</link>
+      <pubDate>Wed, 25 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/05/25/cap-subdirectory.html</guid>
+      <description>複数のRailsアプリが１つのリポジトリに同居しているような状態で Capistrano を使ってデプロイしたい場合、そのままでは動作しないので少々手を加える必要</description>
+    </item>
+    
+    <item>
+      <title>Gitを使った開発・運用フローの紹介</title>
+      <link>https://blog.dakatsuka.jp/2011/05/24/git-flow.html</link>
+      <pubDate>Tue, 24 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/05/24/git-flow.html</guid>
+      <description>私の所属している会社では、2年程前にバージョン管理システムをSubversionからGitに移行し、現在まで開発フローを試行錯誤してきました</description>
+    </item>
+    
+    <item>
+      <title>hirb を導入して rails console を快適に利用する</title>
+      <link>https://blog.dakatsuka.jp/2011/05/14/hirb-rails-console.html</link>
+      <pubDate>Sat, 14 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/05/14/hirb-rails-console.html</guid>
+      <description>Rails 3: Fully Loaded | Intridea Blog で hirb という gem が紹介されていたので試してみることにしました。hirb は Rails Console 上で ActiveRecord の結果を見やすく整形してくれるツールのようです。</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu Server 10.04に分散ファイルシステム MogileFSを入れてみた</title>
+      <link>https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html</link>
+      <pubDate>Sun, 24 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html</guid>
+      <description>Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。 MogileFS には次のような特徴があります</description>
+    </item>
+    
+    <item>
+      <title>Rails 3.1 を試してみる（導入編）</title>
+      <link>https://blog.dakatsuka.jp/2011/04/19/rails3-1-1.html</link>
+      <pubDate>Tue, 19 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/04/19/rails3-1-1.html</guid>
+      <description>Rails3.1の機能を試せると聞いたので、早速下記サイトを参考にローカル環境に入れてみました。噂のCoffeeScriptやSCSSが使え</description>
+    </item>
+    
+    <item>
+      <title>RFCに違反している（ドットが連続する）メールアドレスをRails3で扱うには</title>
+      <link>https://blog.dakatsuka.jp/2011/04/04/patch-rails3-mail.html</link>
+      <pubDate>Mon, 04 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/04/04/patch-rails3-mail.html</guid>
+      <description>Rails3のActionMailer（Mail）で、DoCoMoやauに存在するRFC違反のメールアドレス（@の前にドットが連続するやつ）</description>
+    </item>
+    
+    <item>
+      <title>Rails3でビュー以外からヘルパーを呼び出す方法</title>
+      <link>https://blog.dakatsuka.jp/2011/02/22/rails3-helpers.html</link>
+      <pubDate>Tue, 22 Feb 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/02/22/rails3-helpers.html</guid>
+      <description>例えばコントローラやモデル、もしくはバッチ処理でヘルパーを使いたい時がたまにあるんですよね。いつも忘れてしまうのでブログに残しておきます。 ApplicationController.helpers.image_tag(</description>
+    </item>
+    
+    <item>
+      <title>Rubyでデコメールをパースするライブラリを作ってみた</title>
+      <link>https://blog.dakatsuka.jp/2011/02/09/ruby-decoration-mail.html</link>
+      <pubDate>Wed, 09 Feb 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/02/09/ruby-decoration-mail.html</guid>
+      <description>モバイルサイトを開発・運営していると割と早い段階で上がってくる要望があります。 それは「デコメールに対応したい」 悪名高い「かんたんログイン」の</description>
+    </item>
+    
+    <item>
+      <title>Ruby1.9 &#43; Rails3 &#43; jpmobileで構築したサイトをcucumberでテストするためのTips</title>
+      <link>https://blog.dakatsuka.jp/2011/01/24/rails3-jpmobile-cucumber.html</link>
+      <pubDate>Mon, 24 Jan 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/01/24/rails3-jpmobile-cucumber.html</guid>
+      <description>地味に苦戦したのでメモしておきます。これだから携帯向けサイトは大変・・・ 開発環境 Ruby 1.9.2-p136 Ruby on Rails 3.0.3 jpmobile 0.1.4 cucumber 0.10.0 ( capybara 0.4.0 ) インストール cucumberを動</description>
+    </item>
+    
+    <item>
+      <title>Rails3 &#43; cover_me でテストカバレッジ</title>
+      <link>https://blog.dakatsuka.jp/2010/12/23/rails3-cover-me.html</link>
+      <pubDate>Thu, 23 Dec 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2010/12/23/rails3-cover-me.html</guid>
+      <description>Ruby 1.9 + Rails3 で rcov がうまく動かなかったので cover_me というカバレッジツールを使ってみる事にしました。 Gemfileに下記行を追加して、 gem &amp;#34;cover_me&amp;#34; 下記コマンドでイ</description>
+    </item>
+    
+    <item>
+      <title>ActiveRecordオブジェクトの属性変更を確認・取得する</title>
+      <link>https://blog.dakatsuka.jp/2010/11/29/activerecord-dirty.html</link>
+      <pubDate>Mon, 29 Nov 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2010/11/29/activerecord-dirty.html</guid>
+      <description>ActiveRecord（Rails3だとActiveModel）は、自分自身（オブジェクト）のプロパティが変更されたかどうか、またどのプロ</description>
+    </item>
+    
+    <item>
+      <title>Rails2とRails3でセッションを共有する</title>
+      <link>https://blog.dakatsuka.jp/2010/11/22/sharing-sessions-rails2-rails3.html</link>
+      <pubDate>Mon, 22 Nov 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2010/11/22/sharing-sessions-rails2-rails3.html</guid>
+      <description>サブドメインが異なるRails2アプリとRails3アプリでセッションを共有したい場合、Cookie Session Storeに互換性が無いみたいでそのま</description>
+    </item>
+    
+    <item>
+      <title>RVMのgemsetを使ってみる</title>
+      <link>https://blog.dakatsuka.jp/2010/11/14/rvm-gemset.html</link>
+      <pubDate>Sun, 14 Nov 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2010/11/14/rvm-gemset.html</guid>
+      <description>Rubyの開発環境にRVMを使っている場合は、bundle install –pathを使うよりもgemsetという機能を使ったほうがお手軽に管理出来るみた</description>
+    </item>
+    
+    <item>
+      <title>bundle installするときはpathを指定しよう</title>
+      <link>https://blog.dakatsuka.jp/2010/11/09/bundle-install.html</link>
+      <pubDate>Tue, 09 Nov 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2010/11/09/bundle-install.html</guid>
+      <description>Rails3からBundlerが導入されgemの管理がしやすくなりましたが、色々なRailsアプリでほいほいbundle installを実行</description>
+    </item>
+    
+    <item>
+      <title>cucumberで携帯サイトをテストするには</title>
+      <link>https://blog.dakatsuka.jp/2010/11/01/mobile-site-in-cucumber.html</link>
+      <pubDate>Mon, 01 Nov 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2010/11/01/mobile-site-in-cucumber.html</guid>
+      <description>達人出版会から出版された「はじめる！Cucumber」という本を本日購入しました。日本語で丁寧に書かれている良書で、cucumberをこれか</description>
+    </item>
+    
+    <item>
+      <title>Twitter Streaming APIをMongoDBに保存して遊んでみる</title>
+      <link>https://blog.dakatsuka.jp/2010/10/31/streaming-api-to-mongodb.html</link>
+      <pubDate>Sun, 31 Oct 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2010/10/31/streaming-api-to-mongodb.html</guid>
+      <description>TwitterのストリーミングAPIを利用する場合、かなりのデータ量が流れてくるので、リアルタイムに解析・集計などを行うと処理が追いつかない</description>
+    </item>
+    
+    <item>
+      <title>Vim7でCSSをオムニ補完</title>
+      <link>https://blog.dakatsuka.jp/2007/09/07/vim-css.html</link>
+      <pubDate>Fri, 07 Sep 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/09/07/vim-css.html</guid>
+      <description>CSSも標準で対応してるみたい。以下の行を.vimrcに貼り付けるだけ。 autocmd FileType css set omnifunc=csscomplete#CompleteCSSC-x C-oで動作しますが、場合によっては普通に入力したほうが早</description>
+    </item>
+    
+    <item>
+      <title>Intel G33チップ搭載のPCにFedora8をインストールするには</title>
+      <link>https://blog.dakatsuka.jp/2007/09/05/fedora8.html</link>
+      <pubDate>Wed, 05 Sep 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/09/05/fedora8.html</guid>
+      <description>そのままDVDを突っ込んでもACPIのチェックでコケてインストーラが起動しないので、起動オプションでACPIを無効にします。 最初の「Welc</description>
+    </item>
+    
+    <item>
+      <title>Ruby on Railsを導入する</title>
+      <link>https://blog.dakatsuka.jp/2007/09/03/install-railsl.html</link>
+      <pubDate>Mon, 03 Sep 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/09/03/install-railsl.html</guid>
+      <description>Railsで動くツールをいくつか試してみたくなったので、Ubuntuで環境を構築してみました。しょうもないですが手順をメモっておきます。 Ru</description>
+    </item>
+    
+    <item>
+      <title>秋葉原に行ってきました</title>
+      <link>https://blog.dakatsuka.jp/2007/08/27/akihabara.html</link>
+      <pubDate>Mon, 27 Aug 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/08/27/akihabara.html</guid>
+      <description>以下購入したものリスト。今週末あたりにDebian突っ込んでファイルサーバにする予定です。 Intel Core2Quad Q6600 Intel DG33FBC crucial 1GB PC2-6400 UnBuffered x2 3ware 9500S-4LP ST3750640AS(750G SATA300 7200) x4 Owltech M12 SS-600HM Antec P182</description>
+    </item>
+    
+    <item>
+      <title>NVIDIA &#43; Berylでウインドウの中身が真っ黒になる</title>
+      <link>https://blog.dakatsuka.jp/2007/06/13/nvidia-beryl.html</link>
+      <pubDate>Wed, 13 Jun 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/06/13/nvidia-beryl.html</guid>
+      <description>たくさんウインドウを表示したり、既存のウインドウをリサイズしたりするとこの現象が起こるようです。 この現象を回避するには、Berylマネージャ</description>
+    </item>
+    
+    <item>
+      <title>QRコードを生成するPHP拡張モジュールをインストール</title>
+      <link>https://blog.dakatsuka.jp/2007/05/24/qr.html</link>
+      <pubDate>Thu, 24 May 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/05/24/qr.html</guid>
+      <description>必要なパッケージやインストールの仕方をメモしておきます。モジュールの使用方法やDebian以外の環境の人は、こちらの記事（讃容日記）を見たほ</description>
+    </item>
+    
+    <item>
+      <title>ICH6 AC97で音を出す</title>
+      <link>https://blog.dakatsuka.jp/2007/04/29/ich-ac97.html</link>
+      <pubDate>Sun, 29 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/29/ich-ac97.html</guid>
+      <description>私の使っているノートPC（LaVie G Type J）は、デフォルトのままだと音が出てくれませんorz。どうやら915GM ExpressのICH6でこ</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu FeistyにWineとIEを無理矢理インストール</title>
+      <link>https://blog.dakatsuka.jp/2007/04/22/install-wine-with-ie-on-ubuntu-feisty.html</link>
+      <pubDate>Sun, 22 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/22/install-wine-with-ie-on-ubuntu-feisty.html</guid>
+      <description>64bit環境だと apt-get install wine で導入出来なかったので &amp;ndash;force-architecture オプションで無理矢理入れる方法。 Wineをインストール i386用のdebパッケージを落として</description>
+    </item>
+    
+    <item>
+      <title>64bit環境のUbuntu FeistyでJDをビルド</title>
+      <link>https://blog.dakatsuka.jp/2007/04/21/build-jd-on-ubuntu-feisty.html</link>
+      <pubDate>Sat, 21 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/21/build-jd-on-ubuntu-feisty.html</guid>
+      <description>Feistyの日本語ローカライズ版が出ました。しかしAMD64への対応はもうちょっとかかるみたいなので、気が短い私はリリースまでの間JD（2</description>
+    </item>
+    
+    <item>
+      <title>2連休</title>
+      <link>https://blog.dakatsuka.jp/2007/04/20/holidays.html</link>
+      <pubDate>Fri, 20 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/20/holidays.html</guid>
+      <description>Ubuntu 7.04とCentOS5をKVMで動かして色々と遊んでみようと思います。</description>
+    </item>
+    
+    <item>
+      <title>FeistyでIPAモナーフォントを使う</title>
+      <link>https://blog.dakatsuka.jp/2007/04/08/feisty-ipamona.html</link>
+      <pubDate>Sun, 08 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/08/feisty-ipamona.html</guid>
+      <description>日本語ローカライズ版が出るまでの繋ぎとして。 $ cd /tmp $ wget http://www.geocities.jp/ipa_mona/opfc-ModuleHP-1.1.1_withIPAMonaFonts-1.0.5.tar.gz $ tar zxvf opfc-ModuleHP-1.1.1_withIPAMonaFonts-1.0.5.tar.gz $ cd opfc-*/fonts $ sudo mkdir /usr/share/fonts/truetype/ttf-ipamona $ sudo cp *.ttf /usr/share/fonts/truetype/ttf-ipamona これで次回ログイン時からデフォルトのフォントがIPA</description>
+    </item>
+    
+    <item>
+      <title>Firefox上でのAnthyの挙動がおかしすぎる件</title>
+      <link>https://blog.dakatsuka.jp/2007/04/07/anthy.html</link>
+      <pubDate>Sat, 07 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/07/anthy.html</guid>
+      <description>変換キーを押すと漢字に変換されず空白が挿入されてしまう謎現象が頻繁に起きています。調べてみるとscim-bridge-client-gtkを</description>
+    </item>
+    
+    <item>
+      <title>Nautilusの右クリックメニューをカスタマイズ</title>
+      <link>https://blog.dakatsuka.jp/2007/04/06/nautilus.html</link>
+      <pubDate>Fri, 06 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/06/nautilus.html</guid>
+      <description>Xfce4.4のファイルマネージャであるThunarやKDEのKonquerorには「ターミナルで開く」みたいなメニューがあるんですが、何故</description>
+    </item>
+    
+    <item>
+      <title>SubversionとGUI差分ツール（Meld）を組み合わせてみる</title>
+      <link>https://blog.dakatsuka.jp/2007/04/05/meld.html</link>
+      <pubDate>Thu, 05 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/05/meld.html</guid>
+      <description>MeldとはGUIで差分表示が出来るツールです。Shift_JIS、EUC-JP、UTF-8等の文字コードに対応し、インターフェースも日本語</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu Feistyのインストール</title>
+      <link>https://blog.dakatsuka.jp/2007/04/04/ubuntu-feisty.html</link>
+      <pubDate>Wed, 04 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/04/ubuntu-feisty.html</guid>
+      <description>サブで使用しているノートPC（NEC LaVie G Type J）にUbuntu 7.04βを入れたのでそのメモ。 マシンスペックはこんな感じです。二世代ほど前のB</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://blog.dakatsuka.jp/about.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/about.html</guid>
+      <description>Webシステムの開発やプログラミング周りの話を中心にブログを書いています。更新ペースはあまり安定していませんが、2007年から細々続けていま</description>
+    </item>
+    
+    <item>
+      <title>Archives</title>
+      <link>https://blog.dakatsuka.jp/archives.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/archives.html</guid>
+      <description></description>
+    </item>
+    
+  </channel>
 </rss>

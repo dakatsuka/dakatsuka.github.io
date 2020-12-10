@@ -1,97 +1,441 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Tags on dakatsuka&#39;s blog</title>
-		<link>https://blog.dakatsuka.jp/tags.html</link>
-		<description>Recent content in Tags </description>
-		<generator>Hugo -- gohugo.io</generator>
-		
-  		<language>ja</language>
-		
-		<managingEditor>Page(/tags) (Dai Akatsuka)</managingEditor>
-    	
-  		<lastBuildDate>Thu, 10 Dec 2020 00:00:00 +0900</lastBuildDate>
-		
-		<atom:link href="/tags.html" rel="self" type="application/rss+xml" />
-		
-		<item>
-			<title>Migrate to Hugo</title>
-			<link>https://blog.dakatsuka.jp/2020/12/10/hugo.html</link>
-			<pubDate>Thu, 10 Dec 2020 00:00:00 +0900</pubDate>
-			<guid>https://blog.dakatsuka.jp/2020/12/10/hugo.html</guid>
-			<description>このブログで使っている静的サイトジェネレーターをMiddlemanからHugoに移行しました。また、良い機会だったのでホスティングサービスも</description>
-		</item>
-      	
-		<item>
-			<title>The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす</title>
-			<link>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</link>
-			<pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</guid>
-			<description>onSuccessはThe Magnet Patternで実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと</description>
-		</item>
-      	
-		<item>
-			<title>Akka HTTPのDirective0の使い勝手が良くないのでどうにかする話</title>
-			<link>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</link>
-			<pubDate>Sat, 04 Feb 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</guid>
-			<description>まずDirective0とDirective1の型定義を見て欲しい。 type Directive0 = Directive[Unit] type Directive1[T] = Directive[Tuple1[T]] Directive0がDirective1[Unit]で</description>
-		</item>
-      	
-		<item>
-			<title>2016年12月末の資産分配</title>
-			<link>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</link>
-			<pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</guid>
-			<description>実は数年前から細々とインデックス投資を実践している。その前は個別銘柄（日本株式の現物）を買い漁ってスイングトレードをして、まぁ程々に利益は出</description>
-		</item>
-      	
-		<item>
-			<title>2016年に買ってよかったもの</title>
-			<link>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</link>
-			<pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</guid>
-			<description>あけましておめでとうございます。去年のうちに書くのをすっかり忘れていましたが、流行り？に乗って買ってよかったものをまとめておきます。あまり人</description>
-		</item>
-      	
-		<item>
-			<title>Akka HTTPで認証機能を手軽に実装する方法</title>
-			<link>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</link>
-			<pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</guid>
-			<description>これはScala Advent Calendar 2016の5日目です。埋まっていなかったので1日遅れでしれっと書くよ。 Akka HTTPには AuthenticationDirective という認証のためのディレクティブが</description>
-		</item>
-      	
-		<item>
-			<title>OCamlでLuhnアルゴリズムを書いてみる</title>
-			<link>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</link>
-			<pubDate>Mon, 22 Feb 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</guid>
-			<description>OCamlに慣れるために何か書こうと思ったけど、あまりいいネタが思い浮かばなかったのでLuhnアルゴリズムを書いてみた。クレジットカードの番</description>
-		</item>
-      	
-		<item>
-			<title>OCamlの開発環境を整えた</title>
-			<link>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</link>
-			<pubDate>Sun, 31 Jan 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</guid>
-			<description>本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で</description>
-		</item>
-      	
-		<item>
-			<title>2015年振り返り</title>
-			<link>https://blog.dakatsuka.jp/2015/12/30/lookback.html</link>
-			<pubDate>Wed, 30 Dec 2015 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2015/12/30/lookback.html</guid>
-			<description>仕事全般 2013年にA社を退職したあと、しばらくフリーランスをやっていたのだけど、紆余曲折あって2014年の途中から古巣に戻って、現場でコー</description>
-		</item>
-      	
-		<item>
-			<title>ScalaでNumeric型クラスをつかう</title>
-			<link>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</link>
-			<pubDate>Sun, 27 Dec 2015 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</guid>
-			<description>すごいHaskell本の序盤に次のような関数が出てくる。この関数はxが整数でも浮動小数点数でも動く。 doubleMe x = x + x ScalaでもNumeric</description>
-		</item>
-      	
-	</channel>
+  <channel>
+    <title>Tags on dakatsuka&#39;s blog</title>
+    <link>https://blog.dakatsuka.jp/tags.html</link>
+    <description>Recent content in Tags on dakatsuka&#39;s blog</description>
+    
+    <image>
+      <url>https://blog.dakatsuka.jp/images/card.png</url>
+      <title>dakatsuka&#39;s blog</title>
+      <link>https://blog.dakatsuka.jp/</link>
+    </image>
+    
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Thu, 10 Dec 2020 00:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo</title>
+      <link>https://blog.dakatsuka.jp/tags/hugo.html</link>
+      <pubDate>Thu, 10 Dec 2020 00:00:00 +0900</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/hugo.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Akka</title>
+      <link>https://blog.dakatsuka.jp/tags/akka.html</link>
+      <pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/akka.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scala</title>
+      <link>https://blog.dakatsuka.jp/tags/scala.html</link>
+      <pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/scala.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Asset</title>
+      <link>https://blog.dakatsuka.jp/tags/asset.html</link>
+      <pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/asset.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Diary</title>
+      <link>https://blog.dakatsuka.jp/tags/diary.html</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/diary.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OCaml</title>
+      <link>https://blog.dakatsuka.jp/tags/ocaml.html</link>
+      <pubDate>Mon, 22 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/ocaml.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Finagle</title>
+      <link>https://blog.dakatsuka.jp/tags/finagle.html</link>
+      <pubDate>Tue, 15 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/finagle.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Finch</title>
+      <link>https://blog.dakatsuka.jp/tags/finch.html</link>
+      <pubDate>Tue, 15 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/finch.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scalaz</title>
+      <link>https://blog.dakatsuka.jp/tags/scalaz.html</link>
+      <pubDate>Tue, 15 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/scalaz.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lua</title>
+      <link>https://blog.dakatsuka.jp/tags/lua.html</link>
+      <pubDate>Thu, 10 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/lua.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>HTTPS</title>
+      <link>https://blog.dakatsuka.jp/tags/https.html</link>
+      <pubDate>Tue, 01 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/https.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>http4s</title>
+      <link>https://blog.dakatsuka.jp/tags/http4s.html</link>
+      <pubDate>Sun, 22 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/http4s.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rails</title>
+      <link>https://blog.dakatsuka.jp/tags/rails.html</link>
+      <pubDate>Wed, 18 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/rails.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ruby</title>
+      <link>https://blog.dakatsuka.jp/tags/ruby.html</link>
+      <pubDate>Wed, 18 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/ruby.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CI</title>
+      <link>https://blog.dakatsuka.jp/tags/ci.html</link>
+      <pubDate>Sat, 22 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/ci.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch</title>
+      <link>https://blog.dakatsuka.jp/tags/elasticsearch.html</link>
+      <pubDate>Sat, 22 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/elasticsearch.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Play</title>
+      <link>https://blog.dakatsuka.jp/tags/play.html</link>
+      <pubDate>Thu, 11 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/play.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sbt</title>
+      <link>https://blog.dakatsuka.jp/tags/sbt.html</link>
+      <pubDate>Thu, 11 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/sbt.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://blog.dakatsuka.jp/tags/python.html</link>
+      <pubDate>Wed, 10 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/python.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AWS</title>
+      <link>https://blog.dakatsuka.jp/tags/aws.html</link>
+      <pubDate>Sat, 16 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/aws.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Slack</title>
+      <link>https://blog.dakatsuka.jp/tags/slack.html</link>
+      <pubDate>Tue, 24 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/slack.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PHP</title>
+      <link>https://blog.dakatsuka.jp/tags/php.html</link>
+      <pubDate>Thu, 28 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/php.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Symfony2</title>
+      <link>https://blog.dakatsuka.jp/tags/symfony2.html</link>
+      <pubDate>Thu, 28 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/symfony2.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>DI</title>
+      <link>https://blog.dakatsuka.jp/tags/di.html</link>
+      <pubDate>Fri, 01 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/di.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vagrant</title>
+      <link>https://blog.dakatsuka.jp/tags/vagrant.html</link>
+      <pubDate>Thu, 24 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/vagrant.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>JavaScript</title>
+      <link>https://blog.dakatsuka.jp/tags/javascript.html</link>
+      <pubDate>Mon, 03 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/javascript.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Work</title>
+      <link>https://blog.dakatsuka.jp/tags/work.html</link>
+      <pubDate>Mon, 16 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/work.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Blog</title>
+      <link>https://blog.dakatsuka.jp/tags/blog.html</link>
+      <pubDate>Sun, 01 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/blog.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>BDD</title>
+      <link>https://blog.dakatsuka.jp/tags/bdd.html</link>
+      <pubDate>Wed, 27 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/bdd.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Middleman</title>
+      <link>https://blog.dakatsuka.jp/tags/middleman.html</link>
+      <pubDate>Sun, 24 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/middleman.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Monolog</title>
+      <link>https://blog.dakatsuka.jp/tags/monolog.html</link>
+      <pubDate>Fri, 18 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/monolog.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Backbone.js</title>
+      <link>https://blog.dakatsuka.jp/tags/backbone.js.html</link>
+      <pubDate>Thu, 13 Sep 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/backbone.js.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Node.js</title>
+      <link>https://blog.dakatsuka.jp/tags/node.js.html</link>
+      <pubDate>Tue, 17 Jul 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/node.js.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ</title>
+      <link>https://blog.dakatsuka.jp/tags/rabbitmq.html</link>
+      <pubDate>Mon, 14 May 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/rabbitmq.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ubuntu</title>
+      <link>https://blog.dakatsuka.jp/tags/ubuntu.html</link>
+      <pubDate>Wed, 18 Apr 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/ubuntu.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MongoDB</title>
+      <link>https://blog.dakatsuka.jp/tags/mongodb.html</link>
+      <pubDate>Wed, 07 Mar 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/mongodb.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Chef</title>
+      <link>https://blog.dakatsuka.jp/tags/chef.html</link>
+      <pubDate>Thu, 08 Dec 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/chef.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Capistrano</title>
+      <link>https://blog.dakatsuka.jp/tags/capistrano.html</link>
+      <pubDate>Thu, 13 Oct 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/capistrano.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>TDD</title>
+      <link>https://blog.dakatsuka.jp/tags/tdd.html</link>
+      <pubDate>Mon, 26 Sep 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/tdd.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ActionScript</title>
+      <link>https://blog.dakatsuka.jp/tags/actionscript.html</link>
+      <pubDate>Thu, 14 Jul 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/actionscript.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Git</title>
+      <link>https://blog.dakatsuka.jp/tags/git.html</link>
+      <pubDate>Wed, 25 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/git.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MogileFS</title>
+      <link>https://blog.dakatsuka.jp/tags/mogilefs.html</link>
+      <pubDate>Sun, 24 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/mogilefs.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vim</title>
+      <link>https://blog.dakatsuka.jp/tags/vim.html</link>
+      <pubDate>Fri, 07 Sep 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/vim.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Fedora</title>
+      <link>https://blog.dakatsuka.jp/tags/fedora.html</link>
+      <pubDate>Wed, 05 Sep 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/fedora.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://blog.dakatsuka.jp/tags/linux.html</link>
+      <pubDate>Wed, 05 Sep 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/linux.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Subversion</title>
+      <link>https://blog.dakatsuka.jp/tags/subversion.html</link>
+      <pubDate>Thu, 05 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/subversion.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>HTTP/2</title>
+      <link>https://blog.dakatsuka.jp/tags/http/2.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/http/2.html</guid>
+      <description></description>
+    </item>
+    
+  </channel>
 </rss>

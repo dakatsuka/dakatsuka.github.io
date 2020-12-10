@@ -1,97 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Ubuntu on dakatsuka&#39;s blog</title>
-		<link>https://blog.dakatsuka.jp/tags/ubuntu.html</link>
-		<description>Recent content in Ubuntu </description>
-		<generator>Hugo -- gohugo.io</generator>
-		
-  		<language>ja</language>
-		
-		<managingEditor>Page(/tags/ubuntu) (Dai Akatsuka)</managingEditor>
-    	
-  		<lastBuildDate>Wed, 18 Apr 2012 00:00:00 +0000</lastBuildDate>
-		
-		<atom:link href="/tags/ubuntu.html" rel="self" type="application/rss+xml" />
-		
-		<item>
-			<title>Migrate to Hugo</title>
-			<link>https://blog.dakatsuka.jp/2020/12/10/hugo.html</link>
-			<pubDate>Thu, 10 Dec 2020 00:00:00 +0900</pubDate>
-			<guid>https://blog.dakatsuka.jp/2020/12/10/hugo.html</guid>
-			<description>このブログで使っている静的サイトジェネレーターをMiddlemanからHugoに移行しました。また、良い機会だったのでホスティングサービスも</description>
-		</item>
-      	
-		<item>
-			<title>The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす</title>
-			<link>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</link>
-			<pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</guid>
-			<description>onSuccessはThe Magnet Patternで実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと</description>
-		</item>
-      	
-		<item>
-			<title>Akka HTTPのDirective0の使い勝手が良くないのでどうにかする話</title>
-			<link>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</link>
-			<pubDate>Sat, 04 Feb 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</guid>
-			<description>まずDirective0とDirective1の型定義を見て欲しい。 type Directive0 = Directive[Unit] type Directive1[T] = Directive[Tuple1[T]] Directive0がDirective1[Unit]で</description>
-		</item>
-      	
-		<item>
-			<title>2016年12月末の資産分配</title>
-			<link>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</link>
-			<pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</guid>
-			<description>実は数年前から細々とインデックス投資を実践している。その前は個別銘柄（日本株式の現物）を買い漁ってスイングトレードをして、まぁ程々に利益は出</description>
-		</item>
-      	
-		<item>
-			<title>2016年に買ってよかったもの</title>
-			<link>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</link>
-			<pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</guid>
-			<description>あけましておめでとうございます。去年のうちに書くのをすっかり忘れていましたが、流行り？に乗って買ってよかったものをまとめておきます。あまり人</description>
-		</item>
-      	
-		<item>
-			<title>Akka HTTPで認証機能を手軽に実装する方法</title>
-			<link>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</link>
-			<pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</guid>
-			<description>これはScala Advent Calendar 2016の5日目です。埋まっていなかったので1日遅れでしれっと書くよ。 Akka HTTPには AuthenticationDirective という認証のためのディレクティブが</description>
-		</item>
-      	
-		<item>
-			<title>OCamlでLuhnアルゴリズムを書いてみる</title>
-			<link>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</link>
-			<pubDate>Mon, 22 Feb 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</guid>
-			<description>OCamlに慣れるために何か書こうと思ったけど、あまりいいネタが思い浮かばなかったのでLuhnアルゴリズムを書いてみた。クレジットカードの番</description>
-		</item>
-      	
-		<item>
-			<title>OCamlの開発環境を整えた</title>
-			<link>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</link>
-			<pubDate>Sun, 31 Jan 2016 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</guid>
-			<description>本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で</description>
-		</item>
-      	
-		<item>
-			<title>2015年振り返り</title>
-			<link>https://blog.dakatsuka.jp/2015/12/30/lookback.html</link>
-			<pubDate>Wed, 30 Dec 2015 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2015/12/30/lookback.html</guid>
-			<description>仕事全般 2013年にA社を退職したあと、しばらくフリーランスをやっていたのだけど、紆余曲折あって2014年の途中から古巣に戻って、現場でコー</description>
-		</item>
-      	
-		<item>
-			<title>ScalaでNumeric型クラスをつかう</title>
-			<link>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</link>
-			<pubDate>Sun, 27 Dec 2015 00:00:00 +0000</pubDate>
-			<guid>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</guid>
-			<description>すごいHaskell本の序盤に次のような関数が出てくる。この関数はxが整数でも浮動小数点数でも動く。 doubleMe x = x + x ScalaでもNumeric</description>
-		</item>
-      	
-	</channel>
+  <channel>
+    <title>Ubuntu on dakatsuka&#39;s blog</title>
+    <link>https://blog.dakatsuka.jp/tags/ubuntu.html</link>
+    <description>Recent content in Ubuntu on dakatsuka&#39;s blog</description>
+    
+    <image>
+      <url>https://blog.dakatsuka.jp/images/card.png</url>
+      <title>dakatsuka&#39;s blog</title>
+      <link>https://blog.dakatsuka.jp/</link>
+    </image>
+    
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Wed, 18 Apr 2012 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ubuntu on EC2でRabbitMQクラスタを構築する手順</title>
+      <link>https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html</link>
+      <pubDate>Wed, 18 Apr 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html</guid>
+      <description>EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。 RabbitMQ</description>
+    </item>
+    
+    <item>
+      <title>さくらのVPS（Ubuntu 10.04）にRed5を入れたときのメモ</title>
+      <link>https://blog.dakatsuka.jp/2011/07/14/red5.html</link>
+      <pubDate>Thu, 14 Jul 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/07/14/red5.html</guid>
+      <description>とある事情でさくらのVPSにRed5（ストリーミングサーバ）を入れたので、その時のメモをブログに残しておきます。なお、さくらのVPSで動かし</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu Server 10.04に分散ファイルシステム MogileFSを入れてみた</title>
+      <link>https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html</link>
+      <pubDate>Sun, 24 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html</guid>
+      <description>Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。 MogileFS には次のような特徴があります</description>
+    </item>
+    
+    <item>
+      <title>NVIDIA &#43; Berylでウインドウの中身が真っ黒になる</title>
+      <link>https://blog.dakatsuka.jp/2007/06/13/nvidia-beryl.html</link>
+      <pubDate>Wed, 13 Jun 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/06/13/nvidia-beryl.html</guid>
+      <description>たくさんウインドウを表示したり、既存のウインドウをリサイズしたりするとこの現象が起こるようです。 この現象を回避するには、Berylマネージャ</description>
+    </item>
+    
+    <item>
+      <title>ICH6 AC97で音を出す</title>
+      <link>https://blog.dakatsuka.jp/2007/04/29/ich-ac97.html</link>
+      <pubDate>Sun, 29 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/29/ich-ac97.html</guid>
+      <description>私の使っているノートPC（LaVie G Type J）は、デフォルトのままだと音が出てくれませんorz。どうやら915GM ExpressのICH6でこ</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu FeistyにWineとIEを無理矢理インストール</title>
+      <link>https://blog.dakatsuka.jp/2007/04/22/install-wine-with-ie-on-ubuntu-feisty.html</link>
+      <pubDate>Sun, 22 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/22/install-wine-with-ie-on-ubuntu-feisty.html</guid>
+      <description>64bit環境だと apt-get install wine で導入出来なかったので &amp;ndash;force-architecture オプションで無理矢理入れる方法。 Wineをインストール i386用のdebパッケージを落として</description>
+    </item>
+    
+    <item>
+      <title>64bit環境のUbuntu FeistyでJDをビルド</title>
+      <link>https://blog.dakatsuka.jp/2007/04/21/build-jd-on-ubuntu-feisty.html</link>
+      <pubDate>Sat, 21 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/21/build-jd-on-ubuntu-feisty.html</guid>
+      <description>Feistyの日本語ローカライズ版が出ました。しかしAMD64への対応はもうちょっとかかるみたいなので、気が短い私はリリースまでの間JD（2</description>
+    </item>
+    
+    <item>
+      <title>FeistyでIPAモナーフォントを使う</title>
+      <link>https://blog.dakatsuka.jp/2007/04/08/feisty-ipamona.html</link>
+      <pubDate>Sun, 08 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/08/feisty-ipamona.html</guid>
+      <description>日本語ローカライズ版が出るまでの繋ぎとして。 $ cd /tmp $ wget http://www.geocities.jp/ipa_mona/opfc-ModuleHP-1.1.1_withIPAMonaFonts-1.0.5.tar.gz $ tar zxvf opfc-ModuleHP-1.1.1_withIPAMonaFonts-1.0.5.tar.gz $ cd opfc-*/fonts $ sudo mkdir /usr/share/fonts/truetype/ttf-ipamona $ sudo cp *.ttf /usr/share/fonts/truetype/ttf-ipamona これで次回ログイン時からデフォルトのフォントがIPA</description>
+    </item>
+    
+    <item>
+      <title>Firefox上でのAnthyの挙動がおかしすぎる件</title>
+      <link>https://blog.dakatsuka.jp/2007/04/07/anthy.html</link>
+      <pubDate>Sat, 07 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/07/anthy.html</guid>
+      <description>変換キーを押すと漢字に変換されず空白が挿入されてしまう謎現象が頻繁に起きています。調べてみるとscim-bridge-client-gtkを</description>
+    </item>
+    
+    <item>
+      <title>Nautilusの右クリックメニューをカスタマイズ</title>
+      <link>https://blog.dakatsuka.jp/2007/04/06/nautilus.html</link>
+      <pubDate>Fri, 06 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/06/nautilus.html</guid>
+      <description>Xfce4.4のファイルマネージャであるThunarやKDEのKonquerorには「ターミナルで開く」みたいなメニューがあるんですが、何故</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu Feistyのインストール</title>
+      <link>https://blog.dakatsuka.jp/2007/04/04/ubuntu-feisty.html</link>
+      <pubDate>Wed, 04 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/04/ubuntu-feisty.html</guid>
+      <description>サブで使用しているノートPC（NEC LaVie G Type J）にUbuntu 7.04βを入れたのでそのメモ。 マシンスペックはこんな感じです。二世代ほど前のB</description>
+    </item>
+    
+  </channel>
 </rss>
