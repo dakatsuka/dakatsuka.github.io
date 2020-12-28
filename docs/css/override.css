@@ -4,6 +4,10 @@
     margin-right: auto;
 }
 
+.article {
+  text-align: start;
+}
+
 .article figure {
     max-width: 100%;
     height: auto;
@@ -23,4 +27,9 @@
     font-style: italic;
     font-weight: normal;
     opacity: .7;
+}
+
+pre {
+  background-color:#272822;
+  color:#f8f8f2;
 }
