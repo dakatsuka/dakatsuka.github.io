@@ -1,5 +1,5 @@
 .post-heading h1 {
-    max-width: 1000px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -32,4 +32,15 @@
 pre {
   background-color:#272822;
   color:#f8f8f2;
+}
+
+.intro-header [class$="-heading"] h1 {
+  line-height: 1.4;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .intro-header [class$="-heading"] h1 {
+    font-size: 30px;
+  }
 }
