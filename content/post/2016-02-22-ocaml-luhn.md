@@ -55,5 +55,4 @@ let _ =
 
 有益な情報をいただきました。演算子気をつけよう
 
-<blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/d_akatsuka">@d_akatsuka</a> == じゃなくて = を使ったほうが良いです。そのコードでは問題ないんですけども、ポインタ比較を間違って使ってハマる人多いので</p>&mdash; らくだの卯之助 (@camloeba) <a href="https://twitter.com/camloeba/status/701638766235025409">2016, 2月 22</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+{{<tweet 701638766235025409>}}
