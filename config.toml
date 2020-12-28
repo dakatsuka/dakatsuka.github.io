@@ -73,6 +73,7 @@ googleAnalytics = "UA-45923728-1"
   favicon = "favicon.ico"
   customCSS = ["/css/override.css"]
   images = ["images/card.png"]
+  twitterId = "@d_akatsuka"
 
   [params.logo]
     url = "logo.png"

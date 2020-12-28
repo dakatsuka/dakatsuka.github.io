@@ -54,12 +54,8 @@
 <meta property="article:modified_time" content="2015-11-07T00:00:00+00:00" />
 
 
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
-<meta name="twitter:title" content="scala.concurrent.Futureをscalaz.concurrent.Taskに変換する方法"/>
-<meta name="twitter:description" content="あまり良い方法では無さそうだけど他に思いつかなかった import scala.concurrent.Future import scala.concurrent.ExecutionContext.Implicits.global import scala.util.{Success, Failure} import scalaz.concurrent.Task import scalaz.syntax.either._ implicit class FutureToTaskTransformer[&#43;A](future: Future[A]) { def toTask: Task[A] = { Task.async { register =&gt; future.onComplete { case Success(v) =&gt; register(v.right) case Failure(e) =&gt; register(e.left) } } } } Futur"/>
-
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:site" content="@d_akatsuka"/>
 
 <link rel="stylesheet" href="https://blog.dakatsuka.jp/fontawesome/css/all.min.css" />
 <link
