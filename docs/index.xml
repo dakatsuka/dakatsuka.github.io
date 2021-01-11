@@ -13,13 +13,13 @@
     
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sun, 10 Jan 2021 00:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Jan 2021 19:20:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OCaml 4.08.0から使えるBinding operatorsが便利だった</title>
-      <link>https://blog.dakatsuka.jp/2021/01/10/ocaml-binding-operators.html</link>
-      <pubDate>Sun, 10 Jan 2021 00:00:00 +0900</pubDate>
+      <link>https://blog.dakatsuka.jp/2021/01/11/ocaml-binding-operators.html</link>
+      <pubDate>Mon, 11 Jan 2021 19:20:00 +0900</pubDate>
       
-      <guid>https://blog.dakatsuka.jp/2021/01/10/ocaml-binding-operators.html</guid>
+      <guid>https://blog.dakatsuka.jp/2021/01/11/ocaml-binding-operators.html</guid>
       <description>OCaml 4.08.0 で Binding operators 1 という機能が導入されていました。これでOCamlでもHaskellのdo記法やScalaのfor式に近いかたちでモナディックな計</description>
     </item>
     

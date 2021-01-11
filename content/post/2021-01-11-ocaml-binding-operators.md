@@ -1,7 +1,7 @@
 ---
 title: OCaml 4.08.0から使えるBinding operatorsが便利だった
 slug: ocaml-binding-operators
-date: 2021-01-10T00:00:00+09:00
+date: 2021-01-11T19:20:00+09:00
 tags: [OCaml]
 categories: [Programming]
 ---
