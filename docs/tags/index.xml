@@ -13,7 +13,16 @@
     
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 10 Dec 2020 00:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 10 Jan 2021 00:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OCaml</title>
+      <link>https://blog.dakatsuka.jp/tags/ocaml.html</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +0900</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/ocaml.html</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Hugo</title>
       <link>https://blog.dakatsuka.jp/tags/hugo.html</link>
@@ -56,15 +65,6 @@
       <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blog.dakatsuka.jp/tags/diary.html</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>OCaml</title>
-      <link>https://blog.dakatsuka.jp/tags/ocaml.html</link>
-      <pubDate>Mon, 22 Feb 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://blog.dakatsuka.jp/tags/ocaml.html</guid>
       <description></description>
     </item>
     
