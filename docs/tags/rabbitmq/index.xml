@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>RabbitMQ on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/rabbitmq.html</link>
@@ -21,6 +21,60 @@
       
       <guid>https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html</guid>
       <description>ruby-amqpはEventMachineに依存しているので、unicorn上のRailsアプリからRabbitMQに接続する場合は少し手</description>
+      <content:encoded>&lt;p&gt;&lt;a href=&#34;https://github.com/ruby-amqp/amqp&#34;&gt;ruby-amqp&lt;/a&gt;はEventMachineに依存しているので、unicorn上のRailsアプリからRabbitMQに接続する場合は少し手間がかかります。EventMachineで実装されているThinなどはそのまま動くようですが。。。&lt;/p&gt;
+&lt;p&gt;下記コードをconfig/unicorn.rbに追記します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;ENV&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;UNICORN&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;true&amp;#34;&lt;/span&gt;
+ 
+after_fork &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;server, worker&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQPManager&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;start
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;config/amqp.ymlを用意します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;development&lt;/span&gt;:
+  &lt;span style=&#34;color:#f92672&#34;&gt;uri&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;amqp://localhost&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;開発環境（WebRickなど）からもRabbitMQに接続出来るようにします。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# config/initializers/amqp.rb&lt;/span&gt;
+require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;amqp/utilities/event_loop_helper&amp;#39;&lt;/span&gt;
+require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;amqp/integration/rails&amp;#39;&lt;/span&gt;
+ 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; AMQPManager
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;start&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Utilities&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;EventLoopHelper&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;run
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Integration&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;start &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;connection&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+      connection&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;on_error &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;ch, connection_close&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;raise&lt;/span&gt; connection_close&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reply_text
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+ 
+      connection&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;on_tcp_connection_loss &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;conn, settings&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+        conn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reconnect(&lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+ 
+      connection&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;on_tcp_connection_failure &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;conn, settings&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+        conn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reconnect(&lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+ 
+      channel &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Channel&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new(connection, &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Channel&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;next_channel_id, &lt;span style=&#34;color:#e6db74&#34;&gt;:auto_recovery&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;)
+      channel&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;on_error &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;ch, channel_close&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;raise&lt;/span&gt; channel_close&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reply_text
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+ 
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;channel &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; channel
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+ 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;AMQPManager&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;start &lt;span style=&#34;color:#66d9ef&#34;&gt;unless&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ENV&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;UNICORN&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;コントローラからパブリッシュする場合は下記のようにします。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# coding: utf-8&lt;/span&gt;
+ 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AmqpController&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ApplicationController&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;publish&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Utilities&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;EventLoopHelper&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;run &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;channel&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;default_exchange&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;publish(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello World!!!!!&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;routing_key&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;queue.name&amp;#34;&lt;/span&gt;)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    head &lt;span style=&#34;color:#e6db74&#34;&gt;:created&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -30,6 +84,77 @@
       
       <guid>https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html</guid>
       <description>EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。 RabbitMQ</description>
+      <content:encoded>&lt;p&gt;EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。&lt;/p&gt;
+&lt;h2 id=&#34;rabbitmqをインストール&#34;&gt;RabbitMQをインストール&lt;/h2&gt;
+&lt;p&gt;オフィシャルで配布されているパッケージを使うのがお手軽です。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd /tmp
+wget wget http://www.rabbitmq.com/releases/rabbitmq-server/v2.8.1/rabbitmq-server_2.8.1-1_all.deb
+sudo apt-get install erlang-nox
+sudo dpkg -i rabbitmq-server_2.8.1-1_all.deb
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;下記コマンドでエラーが出なければ、正常にRabbitMQが起動しています。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo rabbitmqctl status
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;rabbitmqの初期設定&#34;&gt;RabbitMQの初期設定&lt;/h2&gt;
+&lt;p&gt;RabbitMQはデフォルトでノード名がインストールしたサーバのhostname -sになっています。このノード名を変更するには /etc/rabbitmq/rabbitmq-env.conf でNODENAMEを指定すれば良いのですが、何故かNODENAMEにはFQDNが使えません。&lt;/p&gt;
+&lt;p&gt;このままだと、別のRabbitMQサーバをクラスタに追加する時にノード名の不一致が起き、正常に追加出来ないという罠が待っています。まぁ、/etc/hosts に全サーバのホスト名を書いていけば問題無いのですが、EC2だとインスタンスの再起動でIPとホスト名が変わったりするので、あまり現実的ではありませんね。極力ドメイン名で処理したいところです。&lt;/p&gt;
+&lt;p&gt;そこで /etc/rabbitmq/rabbitmq-env.conf でFQDNが使えるようにRabbitMQ本体に若干手を加えます。といってもオプションを書き換えるだけです。&lt;/p&gt;
+&lt;p&gt;書き換える前にサーバを停止しておきます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo /etc/init.d/rabbitmq-server stop
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;/usr/lib/rabbitmq/lib/rabbitmq_server-2.8.1/sbin/rabbitmq-server&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;--- rabbitmq-Server2012-04-18 16:17:39.168100001 +0900
+&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+++ rabbitmq-Server2012-04-18 16:17:13.304100001 +0900
+&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;@@ -102,7 +102,7 @@
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt; exec erl \
+     ${RABBITMQ_EBIN_PATH} \
+     ${RABBITMQ_START_RABBIT} \
+&lt;span style=&#34;color:#f92672&#34;&gt;-    -sname ${RABBITMQ_NODENAME} \
+&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+    -name ${RABBITMQ_NODENAME} \
+&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;&lt;/span&gt;     -boot ${RABBITMQ_BOOT_FILE} \
+     ${RABBITMQ_CONFIG_ARG} \
+     +W w \
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;/usr/lib/rabbitmq/lib/rabbitmq_server-2.8.1/sbin/rabbitmqctl&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;--- rabbitmqctl2012-04-18 16:12:54.016100001 +0900
+&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+++ rabbitmqctl2012-04-18 16:12:32.828100000 +0900
+&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;@@ -31,7 +31,7 @@
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;     -noinput \
+     -hidden \
+     ${RABBITMQ_CTL_ERL_ARGS} \
+&lt;span style=&#34;color:#f92672&#34;&gt;-    -sname rabbitmqctl$$ \
+&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+    -name rabbitmqctl$$ \
+&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;&lt;/span&gt;     -s rabbit_control \
+     -nodename $RABBITMQ_NODENAME \
+     -extra &amp;#34;$@&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;/etc/rabbitmq/rabbitmq-env.conf は下記のようにします。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;NODENAME=rabbit@rabbit1.foo.bar.internal
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;これでRabbitMQを再度起動させてエラーが出なければ設定完了です。&lt;/p&gt;
+&lt;h2 id=&#34;クラスタ化する&#34;&gt;クラスタ化する&lt;/h2&gt;
+&lt;p&gt;rabbit1.foo.bar.internal と rabbit2.foobar.internal に対して、上記手順に則ってRabbitMQをインストールしたと仮定します。&lt;/p&gt;
+&lt;p&gt;rabbit1を初期化する&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rabbit1% sudo rabbitmqctl stop_app
+rabbit1% sudo rabbitmqctl reset
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;rabbit1上でrabbit2をクラスタに参加させる&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rabbit1% sudo rabbitmqctl cluster rabbit2.foo.bar.internal
+rabbit1% sudo rabbitmqctl start_app
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;クラスタに追加されているか確認する&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rabbit1% sudo rabbitmqctl cluster_status
+ 
+Cluster status of node &#39;rabbit@rabbit1.foo.bar.internal&#39; ...
+[{nodes,[{disc,[&#39;rabbit@rabbit2.foo.bar.internal&#39;]},
+         {ram,[&#39;rabbit@rabbit1.foo.bar.internal&#39;]}]},
+ {running_nodes,[&#39;rabbit@rabbit2.foo.bar.internal&#39;,
+                 &#39;rabbit@rabbit1.foo.bar.internal&#39;]}]
+...done.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;追加されてますね。rabbit2からも確認してみます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rabbit2% sudo rabbitmqctl cluster_status
+ 
+Cluster status of node &#39;rabbit@rabbit2.foo.bar.internal&#39; ...
+[{nodes,[{disc,[&#39;rabbit@rabbit2.foo.bar.internal&#39;]},
+         {ram,[&#39;rabbit@rabbit1.foo.bar.internal&#39;]}]},
+ {running_nodes,[&#39;rabbit@rabbit1.foo.bar.internal&#39;,
+                 &#39;rabbit@rabbit2.foo.bar.internal&#39;]}]
+...done.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;これでrabbit1, rabbit2どちらに接続してもキューをpublish, subscribeすることが出来ます。クラスタ化自体はそこまで難しくないと思います。&lt;/p&gt;
+&lt;p&gt;詳しくは&lt;a href=&#34;http://www.rabbitmq.com/clustering.html&#34;&gt;オフィシャルドキュメント&lt;/a&gt;に全部書いてあるので、そちらを参照してください。&lt;/p&gt;
+</content:encoded>
     </item>
     
   </channel>

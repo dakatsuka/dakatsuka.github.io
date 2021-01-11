@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Elasticsearch on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/elasticsearch.html</link>
@@ -21,6 +21,31 @@
       
       <guid>https://blog.dakatsuka.jp/2015/08/22/elasticsearch-on-circleci.html</guid>
       <description>CircleCIでElasticsearchの最新版とKuromojiを使うならDockerが便利だった。circle.ymlでwgetして</description>
+      <content:encoded>&lt;p&gt;CircleCIでElasticsearchの最新版とKuromojiを使うならDockerが便利だった。circle.ymlでwgetして頑張るよりは&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;こちらのほうがスマートだし、ここで用意したDockerfileはCI以外でも使える。&lt;/p&gt;
+&lt;p&gt;下記コードをcontainers/elasticsearch/Dockerfileに保存する。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Dockerfile&#34; data-lang=&#34;Dockerfile&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; elasticsearch:1.7.1&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;RUN&lt;/span&gt; plugin install mobz/elasticsearch-head&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;RUN&lt;/span&gt; plugin install elasticsearch/elasticsearch-analysis-kuromoji/2.7.0&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;circle.ymlでDockerを有効化して、dependenciesでコンテナを起動するだけ。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;machine&lt;/span&gt;:
+  &lt;span style=&#34;color:#f92672&#34;&gt;services&lt;/span&gt;:
+    - &lt;span style=&#34;color:#ae81ff&#34;&gt;docker&lt;/span&gt;
+
+&lt;span style=&#34;color:#f92672&#34;&gt;dependencies&lt;/span&gt;:
+  &lt;span style=&#34;color:#f92672&#34;&gt;override&lt;/span&gt;:
+    - &lt;span style=&#34;color:#ae81ff&#34;&gt;docker build -t foobar/elasticsearch:1.7.1 ./containers/elasticsearch&lt;/span&gt;
+    - &lt;span style=&#34;color:#ae81ff&#34;&gt;docker run -d -p 9200:9200 -p 9300:9300 foobar/elasticsearch:1.7.1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;で、このエントリを書いている最中に &lt;a href=&#34;https://github.com/circleci/docker-elasticsearch&#34;&gt;https://github.com/circleci/docker-elasticsearch&lt;/a&gt; そのものズバリのリポジトリを発見した。こちらのほうがイメージのキャッシュまでしているので参考になると思う。&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://circleci.com/docs/installing-elasticsearch&#34;&gt;Install a custom version of Elasticsearch&lt;/a&gt; &lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</content:encoded>
     </item>
     
   </channel>

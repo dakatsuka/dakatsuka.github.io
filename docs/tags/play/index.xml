@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Play on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/play.html</link>
@@ -21,6 +21,64 @@
       
       <guid>https://blog.dakatsuka.jp/2015/06/11/play-multiple-project.html</guid>
       <description>ドメイン層（普通のScalaプロジェクト）とアプリケーション層（Play）でsbtプロジェクトを分けたい場合は、sbtのマルチプロジェクトを</description>
+      <content:encoded>&lt;p&gt;ドメイン層（普通のScalaプロジェクト）とアプリケーション層（Play）でsbtプロジェクトを分けたい場合は、sbtのマルチプロジェクトを使うと良い。&lt;/p&gt;
+&lt;p&gt;完全にリポジトリごとに分けても良いのだけど、IDEのリファクタリング機能などの便利機能の恩恵を受けたいとか、開発初期でドメインの更新が頻繁にあるなら、同一リポジトリでマルチプロジェクト構成のほうがおすすめ。&lt;/p&gt;
+&lt;p&gt;ディレクトリ構成は下記のようにする。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;sbtはサブプロジェクト内のprojectディレクトリを無視するので、Playのsbt-pluginなどはメインプロジェクトで読み込む。&lt;/p&gt;
+&lt;p&gt;project/pugin.sbt&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;resolvers &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Typesafe repository&amp;#34;&lt;/span&gt; at &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://repo.typesafe.com/typesafe/releases/&amp;#34;&lt;/span&gt;
+
+addSbtPlugin&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;com.typesafe.play&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;sbt-plugin&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.4.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;またライブラリの依存関係はサブプロジェクトのbuild.sbtでは行わず、全てメインプロジェクトのbuild.sbtに記述していく。&lt;code&gt;commonSettings&lt;/code&gt;で共通の設定や依存ライブラリを定義しておくと便利。&lt;/p&gt;
+&lt;p&gt;build.sbt&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;name &lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;myapplication&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;lazy&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; commonSettings &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; scalariformSettings &lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+  organization &lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.example&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+  scalaVersion &lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.11.6&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+  resolvers &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;scalaz-bintray&amp;#34;&lt;/span&gt; at &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://dl.bintray.com/scalaz/releases&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+  libraryDependencies &lt;span style=&#34;color:#f92672&#34;&gt;++=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.specs2&amp;#34;&lt;/span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;specs2-core&amp;#34;&lt;/span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;3.6.1&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.specs2&amp;#34;&lt;/span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;specs2-mock&amp;#34;&lt;/span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;3.6.1&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.specs2&amp;#34;&lt;/span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;specs2-junit&amp;#34;&lt;/span&gt;           &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;3.6.1&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ch.qos.logback&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;logback-classic&amp;#34;&lt;/span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1.1.+&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;lazy&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; domain &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; project&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;in&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;domain&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;settings&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;commonSettings&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;_&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;settings&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+    libraryDependencies &lt;span style=&#34;color:#f92672&#34;&gt;++=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;mysql&amp;#34;&lt;/span&gt;           &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;mysql-connector-java&amp;#34;&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;5.1.31&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.scalikejdbc&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;scalikejdbc&amp;#34;&lt;/span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.2.+&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.scalikejdbc&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;scalikejdbc-config&amp;#34;&lt;/span&gt;     &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.2.+&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.scalikejdbc&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;scalikejdbc-test&amp;#34;&lt;/span&gt;       &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.2.+&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;lazy&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; api &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;project&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;in&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;api&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)))&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;enablePlugins&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;PlayScala&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;settings&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;commonSettings&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;_&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;settings&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+    libraryDependencies &lt;span style=&#34;color:#f92672&#34;&gt;++=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+      jdbc&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      cache&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      ws&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;com.typesafe.play&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;play-specs2&amp;#34;&lt;/span&gt;                  &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.4.0&amp;#34;&lt;/span&gt;       &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.scalikejdbc&amp;#34;&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;scalikejdbc-play-initializer&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.4.0.RC1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.scalikejdbc&amp;#34;&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;scalikejdbc-play-fixture&amp;#34;&lt;/span&gt;     &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.4.0.RC1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dependsOn&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domain&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;サブプロジェクトのbuild.sbtには&lt;code&gt;name&lt;/code&gt; &lt;code&gt;version&lt;/code&gt; &lt;code&gt;javaOptions&lt;/code&gt;などを個別に定義していく。&lt;/p&gt;
+&lt;p&gt;Playでサーバを起動する場合は下記コマンドを使う。テストをサブプロジェクト単位で実行する場合も同様。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sbt &amp;quot;project api&amp;quot; run
+$ sbt &amp;quot;project api&amp;quot; test
+$ sbt &amp;quot;project domain&amp;quot; test
+$ sbt test // all test
+&lt;/code&gt;&lt;/pre&gt;</content:encoded>
     </item>
     
     <item>
@@ -30,6 +88,34 @@
       
       <guid>https://blog.dakatsuka.jp/2014/08/24/play2-on-circleci.html</guid>
       <description>Play framework 2.3 (Scala版）で開発しているアプリをTravis ProでCIしていたのだけど、ビルド時間がネックになってきたのでインスタンス性能が高</description>
+      <content:encoded>&lt;p&gt;Play framework 2.3 (Scala版）で開発しているアプリをTravis ProでCIしていたのだけど、ビルド時間がネックになってきたのでインスタンス性能が高いと噂のCircleCIに移行することにした。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://circleci.com/docs/languages&#34;&gt;CircleCIの対応言語&lt;/a&gt;の中にScalaは入っていないが、Javaが使えるので特に問題はない（何故かちょっと古いsbtが入っていたのでexperimental扱いなのかな？）&lt;/p&gt;
+&lt;p&gt;circle.ymlは下記のようにしてる。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;dependencies&lt;/span&gt;:
+  &lt;span style=&#34;color:#f92672&#34;&gt;cache_directories&lt;/span&gt;:
+    - &lt;span style=&#34;color:#ae81ff&#34;&gt;~/.m2&lt;/span&gt;
+    - &lt;span style=&#34;color:#ae81ff&#34;&gt;~/.ivy2&lt;/span&gt;
+    - &lt;span style=&#34;color:#ae81ff&#34;&gt;~/.sbt&lt;/span&gt;
+
+  &lt;span style=&#34;color:#f92672&#34;&gt;override&lt;/span&gt;:
+    - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;./activator update&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#f92672&#34;&gt;database&lt;/span&gt;:
+  &lt;span style=&#34;color:#f92672&#34;&gt;override&lt;/span&gt;:
+    - &lt;span style=&#34;color:#ae81ff&#34;&gt;cp ./conf/test.conf.circleci ./conf/test.conf&lt;/span&gt;
+
+&lt;span style=&#34;color:#f92672&#34;&gt;test&lt;/span&gt;:
+  &lt;span style=&#34;color:#f92672&#34;&gt;override&lt;/span&gt;:
+    - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;./activator clean test&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#f92672&#34;&gt;deployment&lt;/span&gt;:
+  &lt;span style=&#34;color:#f92672&#34;&gt;development&lt;/span&gt;:
+    &lt;span style=&#34;color:#f92672&#34;&gt;branch&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;master&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;commands&lt;/span&gt;:
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;pip install -r requirements.txt&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;fab dev deploy&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Travis ProからCircleCIに移行して、CIにかかる時間が4分の1に短縮されて満足度高い。&lt;/p&gt;
+</content:encoded>
     </item>
     
     <item>
@@ -39,6 +125,68 @@
       
       <guid>https://blog.dakatsuka.jp/2014/08/01/play2-scaldi.html</guid>
       <description>Play2でDIをどうしようか悩んでいたところscaldiというライブラリが目に止まった。Playに組み込むためのライブラリをあるし、公式サ</description>
+      <content:encoded>&lt;p&gt;Play2でDIをどうしようか悩んでいたところ&lt;a href=&#34;http://scaldi.org/&#34;&gt;scaldi&lt;/a&gt;というライブラリが目に止まった。Playに組み込むためのライブラリをあるし、公式サイトも作り込まれているし、これは試すしかない。&lt;/p&gt;
+&lt;p&gt;ただし日本語の情報は無いに等しい。Guiceほどメジャーでもないし人柱感覚で使う必要がありそうだ。&lt;/p&gt;
+&lt;h2 id=&#34;インストール&#34;&gt;インストール&lt;/h2&gt;
+&lt;p&gt;build.sbtのlibraryDependenciesにscaldiを追加する。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;libraryDependencies &lt;span style=&#34;color:#f92672&#34;&gt;++=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.scaldi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;scaldi-play&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;0.4.1&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;インジェクションの種類&#34;&gt;インジェクションの種類&lt;/h2&gt;
+&lt;p&gt;コンストラクタ・インジェクションとバインディング・インジェクションの2種類があるようだ。&lt;/p&gt;
+&lt;h3 id=&#34;コンストラクタインジェクション&#34;&gt;コンストラクタ・インジェクション&lt;/h3&gt;
+&lt;p&gt;名前の通り、コンストラクタで依存を受け取るパターン。scaldiに全く依存しないので通常はこのパターンを使うのが良いと思う。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;package&lt;/span&gt; services
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; repositories.AccountRepository
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AccountManager&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;accountRepository&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;AccountRepository&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;バインディングインジェクション&#34;&gt;バインディング・インジェクション&lt;/h3&gt;
+&lt;p&gt;ScaldiのInjector（コンテナ）を暗黙の引数で渡すパターン。コントローラなどはこちらを使う。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;package&lt;/span&gt; controllers
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; scaldi.&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Injectable&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Injector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Application&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;implicit&lt;/span&gt; inj&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Injector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Controller&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Injectable&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; accountManager &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; inject &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;AccountManager&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;モジュールの作成&#34;&gt;モジュールの作成&lt;/h2&gt;
+&lt;p&gt;Injector（コンテナ）にサービスを登録するには Module を作成する必要がある。置く場所はどこでも良いのだがPlayならapp/modulesあたりに入れておくのが分かりやすいと思う。Moduleは複数定義して結合することが出来るので、うまく分割しておけばテストの時だけ別のModuleに差し替えるといったことが可能になる。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;package&lt;/span&gt; modules
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; scaldi.Module
+&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; repositories._
+&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; services._
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ServiceModule&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Module&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+  bind &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;AccountRepository&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; to &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AccountRepository&lt;/span&gt;
+  bind &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;AccountManager&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;    to &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AccountManager&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;inject&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;AccountRepository&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;])&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ControllerInjector&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Module&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+  binding to &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Application&lt;/span&gt;
+  binding to &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FooController&lt;/span&gt;
+  binding to &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;BarController&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;bindで型を指定してto以降に同一型のオブジェクトを作っていく感じ。inject[型]でbindで登録したものが取り出せるので各サービスのコンストラクタに渡すことが出来る。&lt;/p&gt;
+&lt;p&gt;Injectorを暗黙の引数で受け取るクラスはbinding toで指定していく。&lt;/p&gt;
+&lt;p&gt;また下記のようにbindで登録する時にシンボルで名前を付けることが出来る。Configurationのパラメータを登録しておく時に便利だろう。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;bind &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; identifiedBy &amp;#39;secret to &lt;span style=&#34;color:#a6e22e&#34;&gt;Configuration&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ConfigFactory&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;load&lt;span style=&#34;color:#f92672&#34;&gt;()).&lt;/span&gt;getString&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;secret&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;).&lt;/span&gt;getOrElse&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hoge&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;名前をつけたサービスを取り出す時は下記のようにする。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; secret &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; inject&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;](&lt;/span&gt;&amp;#39;secret&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;モジュールをplayに登録&#34;&gt;モジュールをPlayに登録&lt;/h2&gt;
+&lt;p&gt;scaldi-playは下記のようにGlobalに書いておくことで、リクエストが来た際に依存関係を自動で解決してくれるようになる。&lt;/p&gt;
+&lt;p&gt;app/Global.scal&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; modules._
+&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; play.api.GlobalSetting
+&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; scaldi.play.ScaldiSupport
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;object&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Global&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;GlobalSettings&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ScaldiSupport&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; applicationModule &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ControllerInjector&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ServiceModule&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;まとめ&#34;&gt;まとめ&lt;/h2&gt;
+&lt;p&gt;Scaldi悪くないと思う。まだ使い出して日が浅いので罠が待ってるかもしれないけど、今のところ問題なく使えてる。DIの選択肢のひとつとしてどうですか。&lt;/p&gt;
+</content:encoded>
     </item>
     
   </channel>

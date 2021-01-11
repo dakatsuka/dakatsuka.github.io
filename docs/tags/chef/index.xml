@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Chef on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/chef.html</link>
@@ -21,6 +21,177 @@
       
       <guid>https://blog.dakatsuka.jp/2011/12/08/chef-install.html</guid>
       <description>前回に引き続き Chef に関するエントリです。このエントリではChef Serverのインストールと初期設定、更にNodeの接続までを書いていこうと思</description>
+      <content:encoded>&lt;p&gt;前回に引き続き Chef に関するエントリです。このエントリではChef Serverのインストールと初期設定、更にNodeの接続までを書いていこうと思います。自分のメモ書きを整理して書き出しているので、何かおかしな箇所があったら是非指摘してください！&lt;/p&gt;
+&lt;p&gt;さて、作業を進めていく上で複数のマシンが出てくるので、便宜上、下図のようなネットワーク構成にしようと思います。192.168.50.100はグローバルIPだと思ってください。また、Chef Server, 各Nodeは全てUbuntu 11.10 Serverと仮定します（Debian squeezeでも大丈夫）。&lt;/p&gt;
+&lt;figure&gt;
+    &lt;img src=&#34;https://blog.dakatsuka.jp/media/2011-12-08-chef-install/chef-network.png&#34;/&gt; 
+&lt;/figure&gt;
+
+&lt;h2 id=&#34;chef-server-はパッケージシステムからインストールするのが無難&#34;&gt;Chef Server はパッケージシステムからインストールするのが無難&lt;/h2&gt;
+&lt;p&gt;前回の「Chefの仕組み」でも書いたように、自力で Chef Server をセットアップするのは骨が折れます。サーバの構築を自動化したいのに肝心のChefで手間取るなど本末転倒ですね。なるべくならディストリビューション付属のパッケージシステムで導入したいところです。&lt;/p&gt;
+&lt;p&gt;有り難いことに開発元の Opscode が、&lt;a href=&#34;http://wiki.opscode.com/display/chef/Installing+Chef+Server+on+Debian+or+Ubuntu+using+Packages&#34;&gt;Debina/Ubuntu用のAPT Repository&lt;/a&gt;を提供して下さっていますので迷わず利用しましょう。…CentOSは…美味しいんでしょうか…&lt;/p&gt;
+&lt;p&gt;作業手順は下記の通り。まずChef ServerにSSHでログインし、KeyとRepositoryを登録して apt-get で chef-server をインストールします。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Ubuntu
+chefserver:$ echo &amp;quot;deb http://apt.opscode.com/ `lsb_release -cs`-0.10 main&amp;quot; | sudo tee /etc/apt/sources.list.d/opscode.list
+ 
+# Debian
+chefserver:$ echo &amp;quot;deb http://apt.opscode.com/ squeeze-0.10 main&amp;quot; | sudo tee /etc/apt/sources.list.d/opscode.list
+ 
+chefserver:$ sudo apt-get update
+chefserver:$ sudo apt-get install opscode-keyring
+chefserver:$ sudo apt-get update
+chefserver:$ sudo apt-get install chef-server
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;インストールの途中で3回質問が出ますので入力が必要になります。&lt;/p&gt;
+&lt;figure&gt;
+    &lt;img src=&#34;https://blog.dakatsuka.jp/media/2011-12-08-chef-install/chef-q1.png&#34;/&gt; 
+&lt;/figure&gt;
+
+&lt;p&gt;これはChef Server内にインストールされるChef ClientからみたChef Server APIのURIを入力します。同一サーバなのでここでは &lt;code&gt;http://localhost:4000&lt;/code&gt; と入力してください。&lt;/p&gt;
+&lt;figure&gt;
+    &lt;img src=&#34;https://blog.dakatsuka.jp/media/2011-12-08-chef-install/chef-q2.png&#34;/&gt; 
+&lt;/figure&gt;
+
+&lt;p&gt;AMQP Server（RabbitMQ）のパスワードを入力します。任意の文字列を入力してください。ここで入力したパスワードは /etc/chef/solr.rb 内に記述されます。&lt;/p&gt;
+&lt;figure&gt;
+    &lt;img src=&#34;https://blog.dakatsuka.jp/media/2011-12-08-chef-install/chef-q3.png&#34;/&gt; 
+&lt;/figure&gt;
+
+&lt;p&gt;WebUIの初期ユーザー（admin）のパスワードを設定します。任意の文字列を入力してください。&lt;/p&gt;
+&lt;p&gt;インストールが無事終わるとChef Serverが自動的に立ち上がります。結構な量のパッケージが入りますので多少時間がかかると思います。&lt;/p&gt;
+&lt;h2 id=&#34;管理用clientを登録する&#34;&gt;管理用Clientを登録する&lt;/h2&gt;
+&lt;p&gt;Chef Serverのインストールが終わったら管理用Clientを登録します。ここで登録するClientはChef Server内でのみ使用します。&lt;/p&gt;
+&lt;p&gt;まずホームディレクトリに.chefディレクトリを作成し、鍵二種類を/etc/chefからコピーしてきます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chefserver:$ mkdir -p ~/.chef
+chefserver:$ sudo cp /etc/chef/validation.pem /etc/chef/webui.pem ~/.chef
+chefserver:$ sudo chown -R $USER:$USER ~/.chef
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;そのあとにknifeコマンドで初期設定を行います。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chefserver:$ knife configure -i
+WARNING: No knife configuration file found
+Where should I put the config file? [~/.chef/knife.rb] [ENTER]
+Please enter the chef server URL: [http://chefserver:4000] http://localhost:4000
+Please enter a clientname for the new client: [username] master
+Please enter the existing admin clientname: [chef-webui] [ENTER]
+Please enter the location of the existing admin client&#39;s private key: [/etc/chef/webui.pem] /home/username/.chef/webui.pem
+Please enter the validation clientname: [chef-validator] [ENTER]
+Please enter the location of the validation key: [/etc/chef/validation.pem] /home/username/.chef/validation.pem
+Please enter the path to a chef repository (or leave blank): [ENTER]
+Creating initial API user...
+Created client[master]
+Configuration file written to /home/username/.chef/knife.rb
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;これでmasterという管理用Clientが登録されました。試しに下記コマンドを叩いてみましょう。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chefserver:$ knife client list
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;次のように返ってくれば成功です。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chefserver:$ knife client list
+  chef
+  chef-validator
+  chef-webui
+  master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Clientの詳細をみることも出来ます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chefserver:$ knife client show master
+_rev:        1-2901b7c2eb6d33b01f8f12951933b709
+admin:       true
+chef_type:   client
+json_class:  Chef::ApiClient
+name:        master
+public_key:  -----BEGIN RSA PUBLIC KEY-----
+             snip
+             -----END RSA PUBLIC KEY-----
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;ローカル環境用に管理用clientを作成する&#34;&gt;ローカル環境用に管理用Clientを作成する&lt;/h2&gt;
+&lt;p&gt;今後、Chefの操作はほぼKnifeコマンドで行う事になるのですが、毎回サーバにログインして作業するのは微妙です。Cookbookなどは別の環境で作成してGitなどのSCMで管理したいですよね。&lt;/p&gt;
+&lt;p&gt;ですので別の環境からでもアクセス出来る管理用Clientを作成したいと思います。&lt;/p&gt;
+&lt;p&gt;下記コマンドを実行しましょう。これはakatsukaという管理用Clientを作成するコマンドになります。Client名は適宜置き換えて下さい。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chefserver:$ knife client create akatsuka -n -a -f /tmp/akatsuka.pem
+Created client[akatsuka]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ちゃんと作成出来ているか確認します。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chefserver:$ knife client list
+  akatsuka
+  chef
+  chef-validator
+  chef-webui
+  master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;あとは上記コマンドで生成された/tmp/akatsuka.pemと~/.chef/validation.pemの二つの鍵をSCPなどでローカル環境にコピーしてください。&lt;/p&gt;
+&lt;h2 id=&#34;ローカル環境の準備&#34;&gt;ローカル環境の準備&lt;/h2&gt;
+&lt;p&gt;ローカル環境側はknifeコマンドを使うだけですので、RubyとRubygemsが入っていればgem installだけで済みます（Rubyのインストールは割愛します）。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;workstation:$ gem install chef
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;インストールが終わったら先ほどSCPで持ってきた akatsuka.pem と validation.pem を ~/.chef にコピーして、下記コマンドを実行します。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;workstation: $ knife configure
+WARNING: No knife configuration file found
+Where should I put the config file? [~/.chef/knife.rb] [ENTER]
+Please enter the chef server URL: [http://workstation:4000] http://192.168.50.100:4000
+Please enter an existing username or clientname for the API: [username] akatsuka
+Please enter the validation clientname: [chef-validator] [ENTER]
+Please enter the location of the validation key: [/etc/chef/validation.pem] /Users/username/.chef/validation.pem
+Please enter the path to a chef repository (or leave blank): [ENTER]
+*****
+ 
+You must place your client key in:
+  /Users/username/.chef/akatsuka.pem
+Before running commands with Knife!
+ 
+*****
+ 
+You must place your validation key in:
+  /Users/username/.chef/validation.pem
+Before generating instance data with Knife!
+ 
+*****
+Configuration file written to /Users/username/.chef/knife.rb
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ローカル環境からでも接続出来るか確認してみましょう。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;workstation:$ knife client list
+  akatsuka
+  chef
+  chef-validator
+  chef-webui
+  master
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;chef-server-apiをhttpsにしてセキュアにする&#34;&gt;Chef Server APIをHTTPSにしてセキュアにする&lt;/h2&gt;
+&lt;p&gt;Chef Server APIのプロトコルは普通のHTTPなので、フロントエンドに nginx を置いてHTTPSに対応させます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chefserver:$ sudo apt-get install nginx
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;OpenSSLを使って鍵を生成します。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chefserver:$ cd /etc/nginx
+chefserver:$ sudo mkdir ssl
+chefserver:$ sudo openssl req -new -key ssl/server.key -out ssl/server.csr
+chefserver:$ sudo openssl x509 -in ssl/server.csr -out ssl/server.crt -req -signkey ssl/server.key -days 365
+chefserver:$ sudo chmod 400 ssl/server.*
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;nginxのデフォルトファイルを削除します。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo rm -rf /etc/nginx/sites-enabled/default
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;/etc/nginx/conf.d/proxy.confを作成します。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# /etc/nginx/conf.d/proxy.conf
+proxy_redirect                          off;
+proxy_set_header Host                   $host;
+proxy_set_header X-Real-IP              $remote_addr;
+proxy_set_header X-Forwarded-Host       $host;
+proxy_set_header X-Forwarded-Server     $host;
+proxy_set_header X-Forwarded-For        $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto      https;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;/etc/nginx/sites-available/sslを作成します。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# /etc/nginx/sites-available/ssl
+server {
+    listen 443;
+    server_name localhost;
+ 
+    ssl on;
+    ssl_certificate /etc/nginx/ssl/server.crt;
+    ssl_certificate_key /etc/nginx/ssl/server.key;
+    ssl_session_timeout 5m;
+    ssl_protocols SSLv2 SSLv3 TLSv1;
+    ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
+    ssl_prefer_server_ciphers on;
+ 
+    location / {
+        proxy_pass http://127.0.0.1:4000/;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;上で作ったファイルのシンボリックリンクを/etc/nginx/sites-enabled内に作成します。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chefserver:$ sudo ln -s /etc/nginx/sites-available/ssl /etc/nginx/sites-enabled/ssl
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;nginxを起動させます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chefserver:$ sudo /etc/init.d/nginx start
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;これでChef ServerはHTTPS対応になりました。ローカル環境のほうもHTTPSで繋がるように変更しておきましょう。~/.chef/knife.rbを開いてchef_server_urlの値を修正します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-chef_server_url          &amp;#39;http://192.168.50.100:4000&amp;#39;
+&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+chef_server_url          &amp;#39;https://192.168.50.100&amp;#39;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;まとめ&#34;&gt;まとめ&lt;/h2&gt;
+&lt;p&gt;うーん・・・。書いていて思ったのはやはり手間ですね！もう少し何とかならないものか・・・。あと完全にWebUIをスルーしておりますが、今後もスルーする方向で行こうと思っています。理由は、WebUIだけだと出来ない事がある、何故かOpenIDを使ってログイン出来てしまう（致命的なような…）、そもそも使い勝手的にどうなんだ、といったところです。あと設定ファイルもローカルに残らないのでそれもマイナスですね。&lt;/p&gt;
+&lt;p&gt;さて、次はいよいよNodeを登録して実際にレシピを書いていこうと思います。年内に書ければいいなぁ&lt;/p&gt;
+</content:encoded>
     </item>
     
     <item>
@@ -30,6 +201,38 @@
       
       <guid>https://blog.dakatsuka.jp/2011/12/05/chef-introduction.html</guid>
       <description>最近 Chef というシステムの構成を自動で管理するツールを使い始めました。同様のツールとして Puppet が有名ですが、レシピを内部DSLで記述出来るほうが自分</description>
+      <content:encoded>&lt;p&gt;最近 Chef というシステムの構成を自動で管理するツールを使い始めました。同様のツールとして Puppet が有名ですが、レシピを内部DSLで記述出来るほうが自分には合っていると思ったので、今回は Chef を採用しました。折角覚えたので復習も兼ねてエントリを起こしてみます。このエントリがChefの導入を検討している方への手助けになれば幸いです。&lt;/p&gt;
+&lt;h2 id=&#34;chefの仕組み--意外と依存関係が面倒なchef-server&#34;&gt;Chefの仕組み – 意外と依存関係が面倒なChef Server&lt;/h2&gt;
+&lt;figure&gt;
+    &lt;img src=&#34;https://blog.dakatsuka.jp/media/2011-12-05-chef-introduction/chef.png&#34;/&gt; 
+&lt;/figure&gt;
+
+&lt;p&gt;Chefの基本的な仕組みは、サーバに設定を置き、クライアントがサーバに問い合わせるPull型のシステムです。クライアントはサーバからのレスポンスに従いパッケージのインストールなどを行います。しかし、Chef ServerはRuby(Merb), CouchDB, RabbitMQなど依存が多く、お世辞にもシンプルなシステムとは言えません。そのせいかネットで検索して出てくる情報もサーバを必要としない Chef-Solo を使ったものが多い印象です。&lt;/p&gt;
+&lt;h2 id=&#34;最低限覚えておきたい用語&#34;&gt;最低限覚えておきたい用語&lt;/h2&gt;
+&lt;p&gt;Chefをインストールする前に覚えておきたい用語集です。たくさんありますがどれもChefを使いこなすためには必須の用語と言えるでしょう。ざっくりと概要を書いてみます。&lt;/p&gt;
+&lt;h3 id=&#34;knife&#34;&gt;knife&lt;/h3&gt;
+&lt;p&gt;Chef Server上で使用する管理コマンドです。後述のClinet, Node, Environmentなど全てこのコマンドで制御します。&lt;/p&gt;
+&lt;h3 id=&#34;client&#34;&gt;Client&lt;/h3&gt;
+&lt;p&gt;Chef Serverに接続するもの全てを指します。Chef Serverからみた場合、Chefで管理するサーバ群は勿論のこと、knifeコマンドを使用する管理者もClinetになります。&lt;/p&gt;
+&lt;h3 id=&#34;node&#34;&gt;Node&lt;/h3&gt;
+&lt;p&gt;Nodeは、Chef Serverに接続するClientのうち、Chefで管理するサーバ／マシンを指します。Clientとごっちゃになりやすいので注意。&lt;/p&gt;
+&lt;figure&gt;
+    &lt;img src=&#34;https://blog.dakatsuka.jp/media/2011-12-05-chef-introduction/chef-node-client.png&#34;/&gt; 
+&lt;/figure&gt;
+
+&lt;p&gt;ClientとNodeの関係を図で表すと上のようなイメージになります。&lt;/p&gt;
+&lt;h3 id=&#34;attributes&#34;&gt;Attributes&lt;/h3&gt;
+&lt;p&gt;Attributesは、NodeのKernelのバージョンやディストリビューションの種類・バージョン、IPアドレスなどの様々な情報が記述されています。これらの情報はCookbookから参照することが可能で、Cookbook, Role, Environmentで値を追加・上書きすることも出来ます。&lt;/p&gt;
+&lt;h3 id=&#34;cookbook&#34;&gt;Cookbook&lt;/h3&gt;
+&lt;p&gt;Cookbookは、NodeにソフトウェアをインストールためのレシピでChefのメイン機能ですね。実際はインストールだけではなくてサーバの各種設定を変更したりユーザーやグループを作成したりと何でも出来ます。ERBで記述するTemplatesを使って動的に*.confを生成する事も可能です。CookbookはNodeに直接割り当てるか、もしくはRole経由で使用します。&lt;/p&gt;
+&lt;h3 id=&#34;role&#34;&gt;Role&lt;/h3&gt;
+&lt;p&gt;Roleは、Cookbookを複数束ねることができ、同じ構成のNodeをたくさん作るときに使用します。例えば昨今のWebサービスですと proxy, app, db という風に定義をするとイイ感じです。RoleはNodeに対して複数割り当てることが可能です。&lt;/p&gt;
+&lt;h3 id=&#34;environment&#34;&gt;Environment&lt;/h3&gt;
+&lt;p&gt;Environmentは、環境名を定義してNodeに割り当てる事ができます。RailsのEnvironmentと同じ概念ですね。環境毎にAttributesの値を変えたり、使用するCookbookのバージョンを指定・固定したり出来ます。本番環境とステージング環境ではデータベースのアドレスが違うだけなんて構成はよくあると思いますが、そういう時にこのEnvironmentが活躍します。&lt;/p&gt;
+&lt;p&gt;EnvironmentとRoleを制する者はChefを制す（大げさ）&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;と、長くなったのでその1はここで終了です。その2では実際にChef Serverをインストールして環境を整えるところまで書こうと思います。多分今週中には…&lt;/p&gt;
+</content:encoded>
     </item>
     
   </channel>

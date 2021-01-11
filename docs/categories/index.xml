@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Categories on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/categories.html</link>
@@ -21,6 +21,7 @@
       
       <guid>https://blog.dakatsuka.jp/categories/programming.html</guid>
       <description></description>
+      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -30,6 +31,7 @@
       
       <guid>https://blog.dakatsuka.jp/categories/uncategorized.html</guid>
       <description></description>
+      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -39,6 +41,7 @@
       
       <guid>https://blog.dakatsuka.jp/categories/devops.html</guid>
       <description></description>
+      <content:encoded></content:encoded>
     </item>
     
   </channel>

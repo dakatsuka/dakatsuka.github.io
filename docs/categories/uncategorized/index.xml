@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Uncategorized on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/categories/uncategorized.html</link>
@@ -21,6 +21,11 @@
       
       <guid>https://blog.dakatsuka.jp/2020/12/10/hugo.html</guid>
       <description>このブログで使っている静的サイトジェネレーターをMiddlemanからHugoに移行しました。また、良い機会だったのでホスティングサービスも</description>
+      <content:encoded>&lt;p&gt;このブログで使っている静的サイトジェネレーターをMiddlemanからHugoに移行しました。また、良い機会だったのでホスティングサービスもGitHub Pagesに引っ越しをしました。&lt;/p&gt;
+&lt;p&gt;MiddlemanからHugoへの移行作業について特にあれこれと語ることはないのですが、強いて言うなら、各記事のパーマリンクを変えたくなかったので&lt;code&gt;UglyURLs&lt;/code&gt;オプションを有効にしたところ、これに対応してるテーマが全然なくて地味に苦戦を強いられたくらいですかね。&lt;/p&gt;
+&lt;p&gt;このブログで使うことにした&lt;a href=&#34;https://github.com/matsuyoshi30/harbor&#34;&gt;Harbor&lt;/a&gt;というテーマもうまく動かなかったのですが、ちょっとの手直しで対応できることが分かったので&lt;a href=&#34;https://github.com/matsuyoshi30/harbor/pull/83&#34;&gt;PRを出しました&lt;/a&gt;。無事マージもされたので、もし既存のブログのURLが&lt;code&gt;*.html&lt;/code&gt;終わりになっていてそのまま移行したい人がいたら参考になると思います。&lt;/p&gt;
+&lt;p&gt;それにしても3年間もブログを放置してしまいました。また少しずつ更新を再開していくつもりですが、全然ネタがないので果たしてどうなるやら。&lt;/p&gt;
+</content:encoded>
     </item>
     
   </channel>

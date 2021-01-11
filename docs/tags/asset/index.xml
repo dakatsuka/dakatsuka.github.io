@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Asset on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/asset.html</link>
@@ -21,6 +21,36 @@
       
       <guid>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</guid>
       <description>実は数年前から細々とインデックス投資を実践している。その前は個別銘柄（日本株式の現物）を買い漁ってスイングトレードをして、まぁ程々に利益は出</description>
+      <content:encoded>&lt;p&gt;実は数年前から細々とインデックス投資を実践している。その前は個別銘柄（日本株式の現物）を買い漁ってスイングトレードをして、まぁ程々に利益は出せていたのだけど、仕事中に株価が気にならないかと言われると嘘になる。精神衛生上良くないし、そもそもあぶく銭を得るためにやってる訳でも無かったので、毎月淡々と積立ができるインデックス投資のほうが自分には合っていた。&lt;/p&gt;
+&lt;p&gt;わたしの場合、インデックス投資のセオリーに則り、日本株式、先進国株式、新興国株式、日本債権、外国債権、REITに分散投資するスタイルにしている。年に2回程度、比率を確認してリバランスを行っているので、せっかくだしブログに結果を残しておこうと思う。&lt;/p&gt;
+&lt;p&gt;当然ですが、投資は自己責任です。あまり他人のは参考にしないほうが良いと思われます。&lt;/p&gt;
+&lt;h2 id=&#34;2016年12月末-資産分配アセットアロケーション&#34;&gt;2016年12月末 資産分配（アセットアロケーション）&lt;/h2&gt;
+&lt;figure&gt;
+    &lt;img src=&#34;https://blog.dakatsuka.jp/media/2017-01-03-asset-allocationin-2016/2016.12.asset1.png&#34;/&gt; &lt;figcaption&gt;
+            &lt;h4&gt;2016年12月末 資産分配&lt;/h4&gt;
+        &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;アメリカ大統領選挙の影響で日本株式と先進国株式が後半にかけて伸び、日本債権が30%を切ってしまった。個人的には日本債権の比率=年齢くらいにしておきたいので、リバランスを計画中。2017年は国外の政治経済が流動的になりそうだけど、焦らずにまったりやっていく。&lt;/p&gt;
+&lt;p&gt;現在積立中の商品&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;日本株式インデックスｅ&lt;/li&gt;
+&lt;li&gt;外国株式インデックスｅ&lt;/li&gt;
+&lt;li&gt;ｅＭＡＸＩＳ　新興国株式インデックス&lt;/li&gt;
+&lt;li&gt;日本債券インデックスｅ&lt;/li&gt;
+&lt;li&gt;外国債券インデックスｅ&lt;/li&gt;
+&lt;li&gt;ｅＭＡＸＩＳ　国内リートインデックス&lt;/li&gt;
+&lt;li&gt;ニッセイグローバルリートインデックスＦ&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2016年12月末-資産内訳&#34;&gt;2016年12月末 資産内訳&lt;/h2&gt;
+&lt;figure&gt;
+    &lt;img src=&#34;https://blog.dakatsuka.jp/media/2017-01-03-asset-allocationin-2016/2016.12.asset2.png&#34;/&gt; &lt;figcaption&gt;
+            &lt;h4&gt;2016年12月末 資産内訳&lt;/h4&gt;
+        &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;貯蓄全てをインデックス投資に突っ込んでいるかというとそうではなく、現預金も一応それなりに確保している。去年はカメラや洗濯機を買って現金を減らしてしまったので、今年は自重して現金も増やしておきたい。&lt;/p&gt;
+</content:encoded>
     </item>
     
   </channel>

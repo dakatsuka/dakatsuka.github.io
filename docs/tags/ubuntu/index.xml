@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Ubuntu on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/ubuntu.html</link>
@@ -21,6 +21,77 @@
       
       <guid>https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html</guid>
       <description>EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。 RabbitMQ</description>
+      <content:encoded>&lt;p&gt;EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。&lt;/p&gt;
+&lt;h2 id=&#34;rabbitmqをインストール&#34;&gt;RabbitMQをインストール&lt;/h2&gt;
+&lt;p&gt;オフィシャルで配布されているパッケージを使うのがお手軽です。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd /tmp
+wget wget http://www.rabbitmq.com/releases/rabbitmq-server/v2.8.1/rabbitmq-server_2.8.1-1_all.deb
+sudo apt-get install erlang-nox
+sudo dpkg -i rabbitmq-server_2.8.1-1_all.deb
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;下記コマンドでエラーが出なければ、正常にRabbitMQが起動しています。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo rabbitmqctl status
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;rabbitmqの初期設定&#34;&gt;RabbitMQの初期設定&lt;/h2&gt;
+&lt;p&gt;RabbitMQはデフォルトでノード名がインストールしたサーバのhostname -sになっています。このノード名を変更するには /etc/rabbitmq/rabbitmq-env.conf でNODENAMEを指定すれば良いのですが、何故かNODENAMEにはFQDNが使えません。&lt;/p&gt;
+&lt;p&gt;このままだと、別のRabbitMQサーバをクラスタに追加する時にノード名の不一致が起き、正常に追加出来ないという罠が待っています。まぁ、/etc/hosts に全サーバのホスト名を書いていけば問題無いのですが、EC2だとインスタンスの再起動でIPとホスト名が変わったりするので、あまり現実的ではありませんね。極力ドメイン名で処理したいところです。&lt;/p&gt;
+&lt;p&gt;そこで /etc/rabbitmq/rabbitmq-env.conf でFQDNが使えるようにRabbitMQ本体に若干手を加えます。といってもオプションを書き換えるだけです。&lt;/p&gt;
+&lt;p&gt;書き換える前にサーバを停止しておきます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo /etc/init.d/rabbitmq-server stop
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;/usr/lib/rabbitmq/lib/rabbitmq_server-2.8.1/sbin/rabbitmq-server&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;--- rabbitmq-Server2012-04-18 16:17:39.168100001 +0900
+&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+++ rabbitmq-Server2012-04-18 16:17:13.304100001 +0900
+&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;@@ -102,7 +102,7 @@
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt; exec erl \
+     ${RABBITMQ_EBIN_PATH} \
+     ${RABBITMQ_START_RABBIT} \
+&lt;span style=&#34;color:#f92672&#34;&gt;-    -sname ${RABBITMQ_NODENAME} \
+&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+    -name ${RABBITMQ_NODENAME} \
+&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;&lt;/span&gt;     -boot ${RABBITMQ_BOOT_FILE} \
+     ${RABBITMQ_CONFIG_ARG} \
+     +W w \
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;/usr/lib/rabbitmq/lib/rabbitmq_server-2.8.1/sbin/rabbitmqctl&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;--- rabbitmqctl2012-04-18 16:12:54.016100001 +0900
+&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+++ rabbitmqctl2012-04-18 16:12:32.828100000 +0900
+&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;@@ -31,7 +31,7 @@
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;     -noinput \
+     -hidden \
+     ${RABBITMQ_CTL_ERL_ARGS} \
+&lt;span style=&#34;color:#f92672&#34;&gt;-    -sname rabbitmqctl$$ \
+&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+    -name rabbitmqctl$$ \
+&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;&lt;/span&gt;     -s rabbit_control \
+     -nodename $RABBITMQ_NODENAME \
+     -extra &amp;#34;$@&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;/etc/rabbitmq/rabbitmq-env.conf は下記のようにします。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;NODENAME=rabbit@rabbit1.foo.bar.internal
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;これでRabbitMQを再度起動させてエラーが出なければ設定完了です。&lt;/p&gt;
+&lt;h2 id=&#34;クラスタ化する&#34;&gt;クラスタ化する&lt;/h2&gt;
+&lt;p&gt;rabbit1.foo.bar.internal と rabbit2.foobar.internal に対して、上記手順に則ってRabbitMQをインストールしたと仮定します。&lt;/p&gt;
+&lt;p&gt;rabbit1を初期化する&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rabbit1% sudo rabbitmqctl stop_app
+rabbit1% sudo rabbitmqctl reset
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;rabbit1上でrabbit2をクラスタに参加させる&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rabbit1% sudo rabbitmqctl cluster rabbit2.foo.bar.internal
+rabbit1% sudo rabbitmqctl start_app
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;クラスタに追加されているか確認する&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rabbit1% sudo rabbitmqctl cluster_status
+ 
+Cluster status of node &#39;rabbit@rabbit1.foo.bar.internal&#39; ...
+[{nodes,[{disc,[&#39;rabbit@rabbit2.foo.bar.internal&#39;]},
+         {ram,[&#39;rabbit@rabbit1.foo.bar.internal&#39;]}]},
+ {running_nodes,[&#39;rabbit@rabbit2.foo.bar.internal&#39;,
+                 &#39;rabbit@rabbit1.foo.bar.internal&#39;]}]
+...done.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;追加されてますね。rabbit2からも確認してみます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rabbit2% sudo rabbitmqctl cluster_status
+ 
+Cluster status of node &#39;rabbit@rabbit2.foo.bar.internal&#39; ...
+[{nodes,[{disc,[&#39;rabbit@rabbit2.foo.bar.internal&#39;]},
+         {ram,[&#39;rabbit@rabbit1.foo.bar.internal&#39;]}]},
+ {running_nodes,[&#39;rabbit@rabbit1.foo.bar.internal&#39;,
+                 &#39;rabbit@rabbit2.foo.bar.internal&#39;]}]
+...done.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;これでrabbit1, rabbit2どちらに接続してもキューをpublish, subscribeすることが出来ます。クラスタ化自体はそこまで難しくないと思います。&lt;/p&gt;
+&lt;p&gt;詳しくは&lt;a href=&#34;http://www.rabbitmq.com/clustering.html&#34;&gt;オフィシャルドキュメント&lt;/a&gt;に全部書いてあるので、そちらを参照してください。&lt;/p&gt;
+</content:encoded>
     </item>
     
     <item>
@@ -30,6 +101,27 @@
       
       <guid>https://blog.dakatsuka.jp/2011/07/14/red5.html</guid>
       <description>とある事情でさくらのVPSにRed5（ストリーミングサーバ）を入れたので、その時のメモをブログに残しておきます。なお、さくらのVPSで動かし</description>
+      <content:encoded>&lt;p&gt;とある事情でさくらのVPSにRed5（ストリーミングサーバ）を入れたので、その時のメモをブログに残しておきます。なお、さくらのVPSで動かしているOSはUbuntu 10.04です。&lt;/p&gt;
+&lt;p&gt;※ Red5とはRTMPを使ったオープンソースのストリーミングサーバですが、詳しい説明は割愛します。&lt;/p&gt;
+&lt;p&gt;Red5はSun Javaで動かした方が良いらしいので、まずsun-java6をインストールします。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get install python-software-properties
+sudo add-apt-repository &#39;deb http://archive.canonical.com/ lucid partner&#39;
+sudo apt-get update
+sudo apt-get install sun-java6-jre sun-java6-jdk ant java-common java-package
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Subversionをインストールします。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get install subversion
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Red5のソースをSubversionでチェックアウトしてきます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd /usr/localbin # Red5を入れるディレクトリを指定（お好きな場所に）
+sudo svn co http://red5.googlecode.com/svn/java/server/trunk red5
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Red5をビルドします。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ./red5
+sudo ant prepare
+sudo ant dist
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Red5を起動。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ./dist
+sudo nohup sh red5.sh &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;http://hostname:5080/ にアクセスして Red5 の画面が出てれば起動成功です。&lt;/p&gt;
+</content:encoded>
     </item>
     
     <item>
@@ -39,6 +131,161 @@
       
       <guid>https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html</guid>
       <description>Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。 MogileFS には次のような特徴があります</description>
+      <content:encoded>&lt;p&gt;Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。&lt;/p&gt;
+&lt;p&gt;MogileFS には次のような特徴があります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Perl で実装されている&lt;/li&gt;
+&lt;li&gt;HTTPを利用（NFSとか使わなくてOK）&lt;/li&gt;
+&lt;li&gt;自動フェイルオーバー&lt;/li&gt;
+&lt;li&gt;自動レプリケーション&lt;/li&gt;
+&lt;li&gt;そこそこ実績がある（たしかはてなでも使われていたはず）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以下参考にさせて頂いたサイトです。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.sixapart.jp/techtalk/2006/10/dev_mogilefs.html&#34;&gt;分散ファイルシステム MogileFS について : Tech Talk Blog – Six Apart&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.sixapart.jp/techtalk/2006/10/dev_mogilefs_install.html&#34;&gt;MogileFS のインストールと初期設定 : Tech Talk Blog – Six Apart&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://builder.japan.zdnet.com/virtualization/sp_open-source-software-moonlinx-2009/20391825/&#34;&gt;MogileFSで構築する高速スケーラブルな分散ファイルシステム – builder&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://builder.japan.zdnet.com/virtualization/sp_open-source-software-moonlinx-2009/20391968/&#34;&gt;PerlbalでMogileFSを更に高速化、効率化する – builder&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.slideshare.net/kazuhisa/090214ldd-mogilefs&#34;&gt;OSS分散ファイルシステムMogileFS で組む素敵システム&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;動作環境&#34;&gt;動作環境&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Ubuntu Server 10.04 LTS / 64bit&lt;/li&gt;
+&lt;li&gt;MySQL 5.1&lt;/li&gt;
+&lt;li&gt;Perl 5.10.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;mogilefsが依存しているライブラリなどを入れる&#34;&gt;MogileFSが依存しているライブラリなどを入れる&lt;/h2&gt;
+&lt;p&gt;あらかじめGCC、MySQLをインストールしておきます。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;sudo apt-get install build-essential mysql-server-5.1 libmysqlclient16-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;次にMogileFSのインストールに必要なライブラリをCPANでインストールします。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ sudo cpan
+cpan&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;1&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&amp;gt; install YAML
+capn&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;2&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&amp;gt; install Net::Netmask
+cpan&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;3&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&amp;gt; install Danga::Socket
+cpan&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;4&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&amp;gt; install IO::AIO
+cpan&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;5&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&amp;gt; install IO::WrapTie
+cpan&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;6&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&amp;gt; install DBI
+cpan&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;7&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&amp;gt; install DBD::mysql
+cpan&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;8&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&amp;gt; install Perlbal
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;mogilefsのインストール&#34;&gt;MogileFSのインストール&lt;/h2&gt;
+&lt;p&gt;MogileFS-Clientのソースをダウンロード、展開、インストールします。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ cd /usr/local/src
+$ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Client-1.14.tar.gz
+$ sudo tar zxvf sudo tar zxvf MogileFS-Client-1.14.tar.gz
+$ cd MogileFS-Client-1.14/
+$ sudo perl Makefile.PL
+$ sudo make
+$ sudo make install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;MogileFS-Utilsのソースをダウンロード、展開、インストールします。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ cd /usr/local/src
+$ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Utils-2.19.tar.gz
+$ sudo tar zxvf MogileFS-Utils-2.19.tar.gz
+$ cd MogileFS-Utils-2.19/
+$ sudo perl Makefile.PL
+$ sudo make
+$ sudo make install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;MogileFS-Serverのソースをダウンロード、展開、インストールします。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ cd /usr/local/src
+$ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Server-2.46.tar.gz
+$ sudo tar zxvf MogileFS-Server-2.46.tar.gz
+$ cd MogileFS-Server-2.46/
+$ sudo perl Makefile.PL
+$ sudo make
+$ sudo make install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;mogilefsの初期設定&#34;&gt;MogileFSの初期設定&lt;/h2&gt;
+&lt;p&gt;DBにスキーマを作成します。一発でDB、ユーザーを作成してくれるコマンドがあるので利用します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;mogdbsetup --dbrootuser&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;root --dbrootpass&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;hogehoge --dbuser&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;mogilefs --dbpass&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;mogilefs --yes
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;trackerの設定mogilefsd&#34;&gt;Trackerの設定（mogilefsd）&lt;/h3&gt;
+&lt;p&gt;デフォルトだと /etc/mogilefs/mogilefsd.conf を読みに行きます。特に変更する必要も無いのでデフォルトのままいきます。変更したい場合は -c で指定出来ます。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ sudo mkdir /etc/mogilefs
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;/etc/mogilefs/mogilefsd.conf は&lt;a href=&#34;http://www.sixapart.jp/techtalk/2006/10/dev_mogilefs_install.html&#34;&gt;このページを参考&lt;/a&gt;にして次のようにしました。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-conf&#34; data-lang=&#34;conf&#34;&gt;daemonize = 1
+db_dsn = DBI:mysql:mogilefs:host=127.0.0.1
+db_user = mogilefs
+db_pass = mogilefs
+conf_port = 7001
+listener_jobs = 10
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Trackerは root ユーザーでは実行出来ませんので 専用のユーザーを作ってあげる必要があります。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;sudo useradd -s /bin/false mogilefs
+sudo -u mogilefs mogilefsd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;psコマンドで起動しているか確認。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ ps ax | grep mogilefsd
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11160&lt;/span&gt; ?        S      0:00 mogilefsd
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11161&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;replicate&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11162&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;delete&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11163&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;queryworker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11164&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;queryworker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11165&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;queryworker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11166&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;queryworker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11167&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;queryworker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11168&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;queryworker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11169&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;queryworker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11170&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;queryworker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11171&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;queryworker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11172&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;queryworker&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11173&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;monitor&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11174&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;reaper&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11175&lt;/span&gt; ?        S      0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;job_master&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11176&lt;/span&gt; ?        SN     0:00 mogilefsd &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;fsck&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;storage-nodeの設定mogstored&#34;&gt;Storage nodeの設定（mogstored）&lt;/h3&gt;
+&lt;p&gt;デフォルトだと /etc/mogilefs/mogstored.conf を読みに行きます。Trackerと同様、変更したい場合は -c で指定出来ます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-conf&#34; data-lang=&#34;conf&#34;&gt;httplisten = 0.0.0.0:7500
+mgmtlisten = 0.0.0.0:7501
+docroot = /var/mogdata
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;/etc/mogilefs/mogstored.conf で指定したdocrootのディレクトリを作成します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;sudo mkdir /var/mogdata
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Trackerとは違いStorage nodeは root ユーザーで起動させます。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ sudo mogstored -d
+$ ps ax | grep mogstored
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11209&lt;/span&gt; ?        Ss     0:00 mogstored
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11210&lt;/span&gt; ?        S      0:00 mogstored &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;diskusage&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;11211&lt;/span&gt; ?        S      0:00 mogstored &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;iostat&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;storage-node-の登録&#34;&gt;Storage node の登録&lt;/h2&gt;
+&lt;p&gt;上記インストール・初期設定が終われば、あとはmogadmコマンドを使用して設定していくことが出来ます。&lt;/p&gt;
+&lt;p&gt;Trackerが正常に動作しているか確認。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ mogadm check
+Checking trackers...
+  127.0.0.1:7001 ... OK
+ 
+Checking hosts...
+No devices found on tracker&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;TrackerはOKと出ていますが、Checking hosts…ではNo devicesと出てしまっていますので、mogadm host add で Storage node を登録します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ mogadm host add localhost --port&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;7500&lt;/span&gt;
+$ mogadm check
+Checking trackers...
+  127.0.0.1:7001 ... OK
+ 
+Checking hosts...
+  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; 1&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; localhost ... skipping; status &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; down
+No devices found on tracker&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;deviceの登録&#34;&gt;Deviceの登録&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ mogadm device add localhost &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+$ mogadm device add localhost &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+$ sudo mkdir /var/mogdata/&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;dev1,dev2&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+$ mogadm device list
+localhost &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;1&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;: down
+                   used&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;G&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; free&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;G&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; total&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;G&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+  dev1: down       0.000   0.000   0.000  
+  dev2: down       0.000   0.000   0.000
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;downとなっているので有効にしてあげます。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ mogadm host mark localhost alive
+$ mogadm check
+Checking trackers...
+  127.0.0.1:7001 ... OK
+ 
+Checking hosts...
+  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; 1&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; localhost ... OK
+ 
+Checking devices...
+  host device         size&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;G&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;    used&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;G&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;    free&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;G&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;   use%   ob state   I/O%
+  ---- ------------ ---------- ---------- ---------- ------ ---------- -----
+  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; 1&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; dev1             7.109      1.066      6.042  15.00%  writeable   0.0
+  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; 1&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; dev2             7.109      1.066      6.042  15.00%  writeable   0.0
+  ---- ------------ ---------- ---------- ---------- ------
+             total:    14.217      2.132     12.085  15.00%
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;これでようやくMogileFSが使用可能になりました！&lt;/p&gt;
+&lt;p&gt;MogileFSのクライアントはPerl以外でも出ていますので、分散ストレージとして色々使い道があるのではないでしょうか。私の会社ではRailsアプリの画像ストレージとして利用しています。&lt;/p&gt;
+</content:encoded>
     </item>
     
     <item>
@@ -48,6 +295,15 @@
       
       <guid>https://blog.dakatsuka.jp/2007/06/13/nvidia-beryl.html</guid>
       <description>たくさんウインドウを表示したり、既存のウインドウをリサイズしたりするとこの現象が起こるようです。 この現象を回避するには、Berylマネージャ</description>
+      <content:encoded>&lt;p&gt;たくさんウインドウを表示したり、既存のウインドウをリサイズしたりするとこの現象が起こるようです。&lt;/p&gt;
+&lt;p&gt;この現象を回避するには、Berylマネージャを右クリックして、[Berylのより高度なオプション] → [描画プラットフォーム]で AIGLXを強制 にチェックを入れます。これで多分直ります。&lt;/p&gt;
+&lt;p&gt;またウインドウの移動やエフェクトがカクカクする場合は、[Berylの設定] → General Option を開いて以下のように変更すればスムーズに動きます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;リフレッシュレートを検出 のチェックを外す&lt;/li&gt;
+&lt;li&gt;リフレッシュレートを200に設定&lt;/li&gt;
+&lt;li&gt;VBlankに同期 のチェックを外す&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded>
     </item>
     
     <item>
@@ -57,6 +313,17 @@
       
       <guid>https://blog.dakatsuka.jp/2007/04/29/ich-ac97.html</guid>
       <description>私の使っているノートPC（LaVie G Type J）は、デフォルトのままだと音が出てくれませんorz。どうやら915GM ExpressのICH6でこ</description>
+      <content:encoded>&lt;p&gt;私の使っているノートPC（LaVie G Type J）は、デフォルトのままだと音が出てくれませんorz。どうやら915GM ExpressのICH6でこの症状が出るようです。&lt;/p&gt;
+&lt;h2 id=&#34;設定を変えれば音が出た&#34;&gt;設定を変えれば音が出た&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;パネル上にあるスピーカーアイコンをダブルクリックしてAlsa mixerを開きます&lt;/li&gt;
+&lt;li&gt;[編集]→設定&lt;/li&gt;
+&lt;li&gt;表示するトラックの選択でExternal Amplifierにチェックを入れ閉じる&lt;/li&gt;
+&lt;li&gt;[スイッチ]というタブが増えているので、そこを開く&lt;/li&gt;
+&lt;li&gt;External Amplifierのチェックを外す&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;これで音が出るようになりました。&lt;/p&gt;
+</content:encoded>
     </item>
     
     <item>
@@ -66,6 +333,25 @@
       
       <guid>https://blog.dakatsuka.jp/2007/04/22/install-wine-with-ie-on-ubuntu-feisty.html</guid>
       <description>64bit環境だと apt-get install wine で導入出来なかったので &amp;ndash;force-architecture オプションで無理矢理入れる方法。 Wineをインストール i386用のdebパッケージを落として</description>
+      <content:encoded>&lt;p&gt;64bit環境だと apt-get install wine で導入出来なかったので &amp;ndash;force-architecture オプションで無理矢理入れる方法。&lt;/p&gt;
+&lt;h2 id=&#34;wineをインストール&#34;&gt;Wineをインストール&lt;/h2&gt;
+&lt;p&gt;i386用のdebパッケージを落としてきます。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;cd /tmp
+wget http://wine.budgetdedicated.com/apt/pool/main/w/wine/wine_0.9.35~winehq0~ubuntu~7.04-1_i386.deb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ia32-libsを入れた後（入ってなかったら）dpkgでインストール。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;sudo apt-get install ia32-libs
+sudo dpkg -i --force-architecture wine_0.9.35~winehq0~ubuntu~7.04-1_i386.deb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;ies4linuxをインストール&#34;&gt;IEs4Linuxをインストール&lt;/h2&gt;
+&lt;p&gt;事前にcabextractをいれておきます。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;sudo apt-get install cabextract
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;IEs4Linuxのbeta6をダウンロードしてインストールします。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;wget http://www.tatanka.com.br/ies4linux/downloads/ies4linux-2.5beta6.tar.gz
+tar zxvf ies4linux-2.5beta6.tar.gz
+cd ies4linux-*
+./ies4linux
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;デフォルトのまま作業を進めるとデスクトップにIEのアイコンが出来ますので、それをダブルクリックすればIEが起動します。&lt;/p&gt;
+&lt;p&gt;…JAを選んでインストールしたせいかメニューが激しく文字化けしました。もしかしたら英語で入れたほうが幸せになれるかもしれません。&lt;/p&gt;
+</content:encoded>
     </item>
     
     <item>
@@ -75,6 +361,33 @@
       
       <guid>https://blog.dakatsuka.jp/2007/04/21/build-jd-on-ubuntu-feisty.html</guid>
       <description>Feistyの日本語ローカライズ版が出ました。しかしAMD64への対応はもうちょっとかかるみたいなので、気が短い私はリリースまでの間JD（2</description>
+      <content:encoded>&lt;p&gt;Feistyの日本語ローカライズ版が出ました。しかしAMD64への対応はもうちょっとかかるみたいなので、気が短い私はリリースまでの間JD（2ちゃんねるブラウザ）を自前でビルドして使おうと思います。&lt;/p&gt;
+&lt;p&gt;アンインストールも手軽に出来るようにdebパッケージ化までしてみます。&lt;/p&gt;
+&lt;h2 id=&#34;必要なパッケージをインストール&#34;&gt;必要なパッケージをインストール&lt;/h2&gt;
+&lt;p&gt;まずdebパッケージを作成するのに必要なツールをインスコします。（余計なものまで入れたかも…&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;sudo apt-get install autoconf automake libtool libc6-dev dpkg-dev gpc fakeroot debhelper lintian devscripts g++ dh-make g77
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;次にJDのビルドに必要なライブラリを入れておきます。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;sudo apt-get install libgtkmm-2.4-dev zlib1g-dev libssl-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;パッケージ化&#34;&gt;パッケージ化&lt;/h2&gt;
+&lt;p&gt;最新のソースをダウンロードしてきて適当なディレクトリに解凍します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;mkdir /tmp/deb
+cd /tmp/deb
+wget http://keihanna.dl.sourceforge.jp/jd4linux/24814/jd-1.8.8-070403.tgz
+tar zxvf jd-1.8.8-070403.tgz
+cd jd-1.8.8-070403
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;autoreconfを実行します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;autoreconf -i
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;パッケージの基本情報ファイルを作る&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;dh_make -e clavice@dotted.jp -s -f ../jd-1.8.8-070403.tgz
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;個人用なので何も変更せずこのままパッケージ化&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;dpkg-buildpackage -rfakeroot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ビルドが終わるとひとつ上の階層（ここでは/tmp/deb）にパッケージが出来上がっています。&lt;/p&gt;
+&lt;h2 id=&#34;インストール&#34;&gt;インストール&lt;/h2&gt;
+&lt;p&gt;出来上がったパッケージ jd-1.8.8_070403-1_amd64.deb をダブルクリックしてインストール出来ます。&lt;/p&gt;
+&lt;p&gt;起動方法は、&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;jd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;です。かなりやっつけですがこれでJDが使えるようになります。&lt;/p&gt;
+</content:encoded>
     </item>
     
     <item>
@@ -84,6 +397,44 @@
       
       <guid>https://blog.dakatsuka.jp/2007/04/08/feisty-ipamona.html</guid>
       <description>日本語ローカライズ版が出るまでの繋ぎとして。 $ cd /tmp $ wget http://www.geocities.jp/ipa_mona/opfc-ModuleHP-1.1.1_withIPAMonaFonts-1.0.5.tar.gz $ tar zxvf opfc-ModuleHP-1.1.1_withIPAMonaFonts-1.0.5.tar.gz $ cd opfc-*/fonts $ sudo mkdir /usr/share/fonts/truetype/ttf-ipamona $ sudo cp *.ttf /usr/share/fonts/truetype/ttf-ipamona これで次回ログイン時からデフォルトのフォントがIPA</description>
+      <content:encoded>&lt;p&gt;日本語ローカライズ版が出るまでの繋ぎとして。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ cd /tmp
+$ wget http://www.geocities.jp/ipa_mona/opfc-ModuleHP-1.1.1_withIPAMonaFonts-1.0.5.tar.gz
+$ tar zxvf opfc-ModuleHP-1.1.1_withIPAMonaFonts-1.0.5.tar.gz
+$ cd opfc-*/fonts
+$ sudo mkdir /usr/share/fonts/truetype/ttf-ipamona
+$ sudo cp *.ttf /usr/share/fonts/truetype/ttf-ipamona
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;これで次回ログイン時からデフォルトのフォントがIPAモナーフォントになります。ならない場合は、&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ sudo gedit /etc/fonts/local.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;で、geditを起動して&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;fontconfig&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;match&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;target=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pattern&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;test&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;qual=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;any&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;family&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;sans-serif&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/test&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;edit&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;family&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mode=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;prepend&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;binding=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;strong&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;IPAMonaPGothic&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/edit&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/match&amp;gt;&lt;/span&gt; 
+  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;match&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;target=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pattern&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;test&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;qual=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;any&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;family&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;serif&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/test&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;edit&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;family&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mode=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;prepend&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;binding=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;strong&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;IPAMonaPMincho&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/edit&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/match&amp;gt;&lt;/span&gt; 
+  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;match&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;target=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pattern&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;test&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;qual=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;any&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;family&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;monospace&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/test&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;edit&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;family&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mode=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;prepend&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;binding=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;strong&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;IPAMonaGothic&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/edit&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/match&amp;gt;&lt;/span&gt; 
+&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/fontconfig&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上記を貼りつけて保存すればフォントが置き換わるはずです。多分&lt;/p&gt;
+</content:encoded>
     </item>
     
     <item>
@@ -93,6 +444,10 @@
       
       <guid>https://blog.dakatsuka.jp/2007/04/07/anthy.html</guid>
       <description>変換キーを押すと漢字に変換されず空白が挿入されてしまう謎現象が頻繁に起きています。調べてみるとscim-bridge-client-gtkを</description>
+      <content:encoded>&lt;p&gt;変換キーを押すと漢字に変換されず空白が挿入されてしまう謎現象が頻繁に起きています。調べてみるとscim-bridge-client-gtkを入れれば直る模様。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install scim-bridge-client-gtk
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;直った！&lt;/p&gt;
+</content:encoded>
     </item>
     
     <item>
@@ -102,6 +457,14 @@
       
       <guid>https://blog.dakatsuka.jp/2007/04/06/nautilus.html</guid>
       <description>Xfce4.4のファイルマネージャであるThunarやKDEのKonquerorには「ターミナルで開く」みたいなメニューがあるんですが、何故</description>
+      <content:encoded>&lt;p&gt;Xfce4.4のファイルマネージャであるThunarやKDEのKonquerorには「ターミナルで開く」みたいなメニューがあるんですが、何故かNautilusにはデフォルトでありません。&lt;/p&gt;
+&lt;p&gt;あまりにも不便なので自作でもしようかと思ったのですが既にパッケージとして存在していました。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install nautilus-open-terminal
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;一度ログアウトして、再ログインすると使えるようになります。&lt;/p&gt;
+&lt;p&gt;ちなみに自分でメニューを作成する場合はnautilus-actionsを入れます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install nautilus-actions
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;[メインメニュー] → [システム] → [設定] → [Nautilus アクションの設定] で新規アクションを設定できます。&lt;/p&gt;
+</content:encoded>
     </item>
     
     <item>
@@ -111,6 +474,65 @@
       
       <guid>https://blog.dakatsuka.jp/2007/04/04/ubuntu-feisty.html</guid>
       <description>サブで使用しているノートPC（NEC LaVie G Type J）にUbuntu 7.04βを入れたのでそのメモ。 マシンスペックはこんな感じです。二世代ほど前のB</description>
+      <content:encoded>&lt;p&gt;サブで使用しているノートPC（NEC LaVie G Type J）にUbuntu 7.04βを入れたのでそのメモ。&lt;/p&gt;
+&lt;p&gt;マシンスペックはこんな感じです。二世代ほど前のB5ノートです。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;CPU&lt;/th&gt;
+&lt;th&gt;MEM&lt;/th&gt;
+&lt;th&gt;HDD&lt;/th&gt;
+&lt;th&gt;GPU&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Pentium-M 1.2GHz&lt;/td&gt;
+&lt;td&gt;1.25G&lt;/td&gt;
+&lt;td&gt;80GB&lt;/td&gt;
+&lt;td&gt;Intel 915GM&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;ではインストール&#34;&gt;ではインストール&lt;/h2&gt;
+&lt;p&gt;LiveCDをドライブに挿入してPCを起動させます。無事に起動したらまずGNOMEターミナルを開いて&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;sudo apt-get install gparted
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;とタイプしてGNOME Partition Editorをインストールします。NICが認識されていてDHCPな環境ならばサクっと入ります。というかEdgyにはデフォルトで入っていたのに何故外されたのでしょうか…不思議です。&lt;/p&gt;
+&lt;p&gt;私はgpartedを使って以下のようにパーティションを切りました。ReiserFSなのは私の好みです。普通はext3で問題ないと思います。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Mount Point&lt;/th&gt;
+&lt;th&gt;Size&lt;/th&gt;
+&lt;th&gt;FS&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;/boot&lt;/td&gt;
+&lt;td&gt;100MB&lt;/td&gt;
+&lt;td&gt;ReiserFS&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;/&lt;/td&gt;
+&lt;td&gt;12GB&lt;/td&gt;
+&lt;td&gt;ReiserFS&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;/home&lt;/td&gt;
+&lt;td&gt;65GB&lt;/td&gt;
+&lt;td&gt;ReiserFS&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;swap&lt;/td&gt;
+&lt;td&gt;2GG&lt;/td&gt;
+&lt;td&gt;linux-swap&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;後はデスクトップにあるInstallアイコンをダブルクリックして、ウィザードに従って進めていくだけでインストールが終わります。簡単すぎる…&lt;/p&gt;
+&lt;p&gt;インストール後の環境設定などはまた後日ということで。&lt;/p&gt;
+</content:encoded>
     </item>
     
   </channel>

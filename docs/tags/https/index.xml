@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>HTTPS on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/https.html</link>
@@ -21,6 +21,38 @@
       
       <guid>https://blog.dakatsuka.jp/2015/12/01/https.html</guid>
       <description>さくらのSSL1でRapidSSLが1年分無料になるキャンペーンをやっていたので、このブログを思い切ってHTTPSに移行した。最初はClou</description>
+      <content:encoded>&lt;p&gt;&lt;a href=&#34;http://ssl.sakura.ad.jp/&#34;&gt;さくらのSSL&lt;/a&gt;&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;でRapidSSLが1年分無料になるキャンペーンをやっていたので、このブログを思い切ってHTTPSに移行した。最初は&lt;a href=&#34;https://www.cloudflare.com/&#34;&gt;CloudFlare&lt;/a&gt;を使おうかと考えていたのだけど、どうせならHTTP/2にしたいと思い、さくらのVPSにnginx 1.9.7を入れて運用してみることにした。&lt;/p&gt;
+&lt;p&gt;概ね問題なく移行出来た気がするけど、まぁぶっちゃけた話、個人サイトでHTTPS, HTTP/2に急いで移行するメリットは無さそうだ。画像やJavaScript, CSSが大量に使われているサイトなら効果出るかもしれない？&lt;/p&gt;
+&lt;p&gt;作業内容は主に下記4点。これといって難しいことはしていない。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;nginxを最新の1.9.7に上げた&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;Strict-Transport-Securityヘッダを返すようにした&lt;/li&gt;
+&lt;li&gt;HTTPはHTTPSに301リダイレクトするようにした&lt;/li&gt;
+&lt;li&gt;サイト内のパーマリンク修正&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;また、ずっと放置していた検索エンジン向けの対応もついでに行った。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;robots.txt用意した&lt;/li&gt;
+&lt;li&gt;sitemap.xml用意した&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;参考にしたサイト&#34;&gt;参考にしたサイト&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://hail2u.net/blog/webdesign/moved-to-https.html&#34;&gt;HTTPSへ - Weblog - Hail2u.net&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://qiita.com/takapan/items/756be5b47134f9e51a11&#34;&gt;nginxでHTTP2接続(not spdy3.1)の検証 - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://d.hatena.ne.jp/ASnoKaze/20150923/1442937121&#34;&gt;Nginx 1.9.5 でHTTP2を試そう！ - あすのかぜ&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;SSLの証明書を販売するサービスがHTTPのままなのでとてもシュール &lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;http://nginx.org/en/download.html&#34;&gt;http://nginx.org/en/download.html&lt;/a&gt; &lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</content:encoded>
     </item>
     
   </channel>

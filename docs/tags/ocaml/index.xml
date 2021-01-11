@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>OCaml on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/ocaml.html</link>
@@ -21,6 +21,98 @@
       
       <guid>https://blog.dakatsuka.jp/2021/01/11/ocaml-binding-operators.html</guid>
       <description>OCaml 4.08.0 で Binding operators 1 という機能が導入されていました。これでOCamlでもHaskellのdo記法やScalaのfor式に近いかたちでモナディックな計</description>
+      <content:encoded>&lt;p&gt;OCaml 4.08.0 で Binding operators &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; という機能が導入されていました。これでOCamlでもHaskellのdo記法やScalaのfor式に近いかたちでモナディックな計算が可能になります。&lt;/p&gt;
+&lt;p&gt;4.08.0は結構前に出ているので今更感はありますが&amp;hellip; 普段触っていないのがバレてしまう！&lt;/p&gt;
+&lt;p&gt;オプションモナドは以下のように書くことができます。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ocaml&#34; data-lang=&#34;ocaml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;(* int -&amp;gt; int -&amp;gt; int option *)&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; div x y &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Some&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;x &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; y&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Division_by_zero&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;None&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;(* binding operators を定義 *)&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; x f &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Option.bind x f
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; r1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; div 100 2 &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; r2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; div r1 10 &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; r3 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; div r2 0 &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;(* None *)&lt;/span&gt;
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;Some&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;r3 &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; 10&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;match&lt;/span&gt; result &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Some&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;None&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;上のコードだとr3の計算結果はNoneになるのでr3 + 10は実行されない&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;モナドごとにモジュールを作ってローカルオープンするのが可読性も高くなり良さそうです。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ocaml&#34; data-lang=&#34;ocaml&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Option_ops&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; x f &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Option.bind x f
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; return &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Option.some
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;open&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Option_ops&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; r1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; div 100 2 &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; r2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; div r1 10 &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; r3 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; div r2 0 &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  return &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;r3 &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; 10&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ちなみに &lt;code&gt;let*&lt;/code&gt; 以外にも &lt;code&gt;let+&lt;/code&gt; や &lt;code&gt;and+&lt;/code&gt; なども定義出来ます。使用できる記号はドキュメント&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; を参照してください。&lt;/p&gt;
+&lt;h2 id=&#34;応用編&#34;&gt;応用編&lt;/h2&gt;
+&lt;p&gt;Binding operators は自分で定義しなければいけないという若干の面倒臭さがある反面、異なるモナドがネストしているような値に対しても柔軟に対応することができます。&lt;/p&gt;
+&lt;p&gt;例えば下記のように任意の型を内包できる &lt;code&gt;Io&lt;/code&gt; 型があり、その中に &lt;code&gt;Result&lt;/code&gt; 型が入っているケースです。IOは非同期処理の成功・失敗を表現し、Resultはビジネスロジックの成功・失敗を表現するような使い方ですね。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ocaml&#34; data-lang=&#34;ocaml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;(* オレオレIO型 *)&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Io&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;sig&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;a&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; t &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;of&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;a &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Failure&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;of&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;e
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; bind &lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;a&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;b&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; t &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;a &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;b&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; t&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;b&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; t
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;a&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; t &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;of&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;a &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Failure&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;of&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;#39;&lt;/span&gt;e
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; bind io f &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;match&lt;/span&gt; io &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; v &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; f v &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Failure&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; e &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; e
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;次のように実装すると &lt;code&gt;Io.Success&lt;/code&gt; 且つ &lt;code&gt;Result.Ok&lt;/code&gt; のときだけ値を取り出して後続に処理を渡していくことができます。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ocaml&#34; data-lang=&#34;ocaml&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Io_result_ops&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; x f &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;match&lt;/span&gt; x &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Ok&lt;/span&gt; v&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; f v
+    &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Error&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; e&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; e
+    &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; e &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; e
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; return x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Ok&lt;/span&gt; x&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;open&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Io_result_ops&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; io1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Ok&lt;/span&gt; 10&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; io2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Ok&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;io1 &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; 10&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; io3 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Ok&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;io2 &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; 10&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; io4 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Ok&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;io3 &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; 10&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  return io4&lt;span style=&#34;color:#f92672&#34;&gt;;;&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;(* val result : ((int, &amp;#39;a) result, &amp;#39;b) Io.t = Io.Success (Ok 10000) *)&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;open&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Io_result_ops&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; io1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Ok&lt;/span&gt; 10&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; io2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Failure&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Internal Server Error&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; io3 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Ok&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;io2 &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; 10&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; io4 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Ok&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;io3 &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; 10&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  return io4&lt;span style=&#34;color:#f92672&#34;&gt;;;&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;(* val result : ((int, &amp;#39;a) result, string) Io.t = Io.Failure &amp;#34;Internal Server Error&amp;#34; *)&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;open&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Io_result_ops&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; io1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Ok&lt;/span&gt; 10&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; io2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Error&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(-&lt;/span&gt;1&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; io3 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Ok&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;io2 &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; 10&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; io4 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Io.&lt;span style=&#34;color:#a6e22e&#34;&gt;Success&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Ok&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;io3 &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; 10&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  return io4&lt;span style=&#34;color:#f92672&#34;&gt;;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;(* val result : ((int, int) result, &amp;#39;a) Io.t = Io.Success (Error (-1)) *)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;こういうとき、ScalaやHaskellなどはモナドトランスフォーマーを使いますがOcamlのBinding operatorsでも似たようなことは出来ますよというお話でした。&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://caml.inria.fr/pub/docs/manual-ocaml/bindingops.html&#34;&gt;8.23 Binding operators&lt;/a&gt; &lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://ocaml.org/releases/4.11/htmlman/lex.html#core-operator-char&#34;&gt;core-operator-char&lt;/a&gt; &lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</content:encoded>
     </item>
     
     <item>
@@ -30,6 +122,53 @@
       
       <guid>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</guid>
       <description>OCamlに慣れるために何か書こうと思ったけど、あまりいいネタが思い浮かばなかったのでLuhnアルゴリズムを書いてみた。クレジットカードの番</description>
+      <content:encoded>&lt;p&gt;OCamlに慣れるために何か書こうと思ったけど、あまりいいネタが思い浮かばなかったのでLuhnアルゴリズムを書いてみた。クレジットカードの番号などを検証することができる。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ocaml&#34; data-lang=&#34;ocaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;#&lt;/span&gt;load &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;str.cma&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; check_number number &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; calculate i x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;mod&lt;/span&gt; 2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 0 &lt;span style=&#34;color:#66d9ef&#34;&gt;then&lt;/span&gt;
+      int_of_string x
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; d &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int_of_string x &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; 2 &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; d &lt;span style=&#34;color:#f92672&#34;&gt;mod&lt;/span&gt; 10 &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; d &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; 10
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+
+  Str.split &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Str.regexp &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; number
+  &lt;span style=&#34;color:#f92672&#34;&gt;|&amp;gt;&lt;/span&gt; List.rev
+  &lt;span style=&#34;color:#f92672&#34;&gt;|&amp;gt;&lt;/span&gt; List.mapi calculate
+  &lt;span style=&#34;color:#f92672&#34;&gt;|&amp;gt;&lt;/span&gt; List.fold_left &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; x y &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; y&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; 0
+  &lt;span style=&#34;color:#f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;mod&lt;/span&gt; 10 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 0
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+  &lt;span style=&#34;color:#75715e&#34;&gt;(* テスト用のクレジットカード番号 *)&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; numbers &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;5555555555554444&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;5105105105105100&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;4111111111111111&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;4012888888881881&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;3530111333300000&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;3566002020360505&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;30569309025904&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;38520000023237&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;378282246310005&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;371449635398431&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;378734493671000&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;6011111111111117&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;6011000990139424&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt;
+  List.iter &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; n &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; n &lt;span style=&#34;color:#f92672&#34;&gt;|&amp;gt;&lt;/span&gt; check_number &lt;span style=&#34;color:#f92672&#34;&gt;|&amp;gt;&lt;/span&gt; string_of_bool &lt;span style=&#34;color:#f92672&#34;&gt;|&amp;gt;&lt;/span&gt; print_string&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; numbers
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;参考文献&#34;&gt;参考文献&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://ja.wikipedia.org/wiki/%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%87%E3%82%A3%E3%82%B8%E3%83%83%E3%83%88&#34;&gt;チェックディジット - Wikipedia&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://ja.wikipedia.org/wiki/Luhn%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0&#34;&gt;Luhnアルゴリズム - Wikipedia&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.softel.co.jp/blogs/tech/archives/4388&#34;&gt;クレジットカード番号についてのメモ at softelメモ&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;追記&#34;&gt;追記&lt;/h3&gt;
+&lt;p&gt;有益な情報をいただきました。演算子気をつけよう&lt;/p&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;&lt;a href=&#34;https://twitter.com/d_akatsuka?ref_src=twsrc%5Etfw&#34;&gt;@d_akatsuka&lt;/a&gt; == じゃなくて = を使ったほうが良いです。そのコードでは問題ないんですけども、ポインタ比較を間違って使ってハマる人多いので&lt;/p&gt;&amp;mdash; Jun Furuse 🐫🌴 (@camloeba) &lt;a href=&#34;https://twitter.com/camloeba/status/701638766235025409?ref_src=twsrc%5Etfw&#34;&gt;February 22, 2016&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+</content:encoded>
     </item>
     
     <item>
@@ -39,6 +178,78 @@
       
       <guid>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</guid>
       <description>本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で</description>
+      <content:encoded>&lt;p&gt;本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で開発環境を整えてみた。&lt;/p&gt;
+&lt;p&gt;まずシステムにOcamlとOPAMをインストールする。2016年1月時点ではOCaml 4.02.3が入った。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo add-apt-repository ppa:avsm/ppa
+$ sudo apt-get update
+$ sudo apt-get install ocaml ocaml-native-compilers camlp4-extra opam m4 git mercurial darcs
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;バージョンを確認。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ ocaml -version
+The OCaml toplevel, version 4.02.3
+
+$ opam --version
+1.2.2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;OPAMを使うためには初期化が必要。このコマンドを実行すると &lt;code&gt;~/.opam&lt;/code&gt; が作られる。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ opam init
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;初期化が終わると下記メッセージが出てくるので指示に従う。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1. To configure OPAM in the current shell session, you need to run:
+
+      eval `opam config env`
+
+2. To correctly configure OPAM for subsequent use, add the following
+   line to your profile file (for instance ~/.profile):
+
+      . /home/vagrant/.opam/opam-init/init.sh &amp;gt; /dev/null 2&amp;gt; /dev/null || true
+
+3. To avoid issues related to non-system installations of `ocamlfind`
+   add the following lines to ~/.ocamlinit (create it if necessary):
+
+      let () =
+        try Topdirs.dir_directory (Sys.getenv &amp;quot;OCAML_TOPLEVEL_PATH&amp;quot;)
+        with Not_found -&amp;gt; ()
+      ;;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;システムワイドにインストールされたOcaml環境はクリーンに保っておきたいので、開発用に新しい環境を用意しよう。&lt;code&gt;opam switch&lt;/code&gt;コマンドで環境の作成や切り替えなどが行える。OPAMはパッケージ管理と環境管理がセットになったものと思っておけば良いだろう &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ opam switch install dev --alias-of 4.02.3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;OCamlのソースコードをダウンロードしてきてコンパイルまでやってくれる。少し時間がかかるが、昨今のPCなら数分程度で終わるはず。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;=-=- Installing compiler 4.02.3 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+[default.comp] http://caml.inria.fr/pub/distrib/ocaml-4.02/ocaml-4.02.3.tar.gz downloaded
+Now compiling OCaml. This may take a while, please bear with us...
+Done.
+
+=-=- Gathering sources =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+=-=- Processing actions -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+∗  installed base-bigarray.base
+∗  installed base-ocamlbuild.base
+∗  installed base-threads.base
+∗  installed base-unix.base
+Done.
+# To setup the new switch in the current shell, you need to run:
+eval `opam config env`
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;evalして環境を適用する。ocamlコマンドやopamコマンドのパスが変わっていることが確認できる。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ eval `opam config env`
+$ which ocaml
+/home/vagrant/.opam/dev/bin/ocaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;VimやEmacsなどのエディタで補完を有効にするためにmerlinというライブラリを入れる。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ opam install merlin
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;.vimrc&lt;/code&gt; に下記コードを追加すれば &lt;code&gt;.merlin&lt;/code&gt; ファイルの存在するプロジェクトではオムニ補完が働くようになる。このファイルに依存するパッケージやモジュールを指定しないと駄目なのでちょっと面倒くさい。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-vim&#34; data-lang=&#34;vim&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;syntax&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;on&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;filetype&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;plugin&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;on&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;g&lt;/span&gt;:&lt;span style=&#34;color:#a6e22e&#34;&gt;opamshare&lt;/span&gt; = &lt;span style=&#34;color:#a6e22e&#34;&gt;substitute&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;system&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;opam config var share&amp;#39;&lt;/span&gt;),&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;\n$&amp;#39;&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;execute&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;set rtp+=&amp;#34;&lt;/span&gt; . &lt;span style=&#34;color:#a6e22e&#34;&gt;g&lt;/span&gt;:&lt;span style=&#34;color:#a6e22e&#34;&gt;opamshare&lt;/span&gt; . &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/merlin/vim&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;あとはutopやoasisなどをOPAMでインストールしておけば開発に取り掛かれると思う。なお、utopで日本語の扱いが残念なので&lt;code&gt;~/.ocamlinit&lt;/code&gt;ファイルを作って下記コードを書いておくと良い。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ocaml&#34; data-lang=&#34;ocaml&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; printer ppf &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Format.fprintf ppf &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%s&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;#&lt;/span&gt;install_printer printer
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;RubyでいうところのGem + Bundler + rbenvがひとつのコマンドに集約された感じ &lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</content:encoded>
     </item>
     
   </channel>

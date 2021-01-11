@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>vim on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/vim.html</link>
@@ -21,6 +21,10 @@
       
       <guid>https://blog.dakatsuka.jp/2007/09/07/vim-css.html</guid>
       <description>CSSも標準で対応してるみたい。以下の行を.vimrcに貼り付けるだけ。 autocmd FileType css set omnifunc=csscomplete#CompleteCSSC-x C-oで動作しますが、場合によっては普通に入力したほうが早</description>
+      <content:encoded>&lt;p&gt;CSSも標準で対応してるみたい。以下の行を.vimrcに貼り付けるだけ。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-vim&#34; data-lang=&#34;vim&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;autocmd&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FileType&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;css&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;set&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;omnifunc&lt;/span&gt;=&lt;span style=&#34;color:#a6e22e&#34;&gt;csscomplete&lt;/span&gt;#&lt;span style=&#34;color:#a6e22e&#34;&gt;CompleteCSS&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;C-x C-oで動作しますが、場合によっては普通に入力したほうが早いかも…。background-color等を入力する時には効果を発揮しそうです。&lt;/p&gt;
+</content:encoded>
     </item>
     
   </channel>

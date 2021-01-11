@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Capistrano on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/capistrano.html</link>
@@ -21,6 +21,106 @@
       
       <guid>https://blog.dakatsuka.jp/2011/10/13/node-cap-upstart.html</guid>
       <description>Node.js アプリをデプロイする場合、Heroku などの PaaS を使っているとすごく簡単なのですが、デプロイ先が VPS や専用サーバの場合、何かしらのツールを使っ</description>
+      <content:encoded>&lt;p&gt;Node.js アプリをデプロイする場合、Heroku などの PaaS を使っているとすごく簡単なのですが、デプロイ先が VPS や専用サーバの場合、何かしらのツールを使ってデプロイをする事になると思います。&lt;/p&gt;
+&lt;p&gt;今回はデプロイツールに Capistrano を使うことにしました。ただ、Capistrano はそのままだと Rails 用になっているので、Node.js 用に少しレシピを書き換えます。ちなみに当初の予定では起動・監視ツールに Node.js製の Forever を使うはずだったのですが、v0.5系でうまく動作しなかったので急遽 Upstart で代用することにしました。他にも Upstart + God という組み合わせも良さそうですがまだ未検証。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# This program is free software. It comes without any warranty, to&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;# the extent permitted by applicable law. You can redistribute it&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;# and/or modify it under the terms of the Do What The Fuck You Want&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;# To Public License, Version 2, as published by Sam Hocevar. See&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;# http://sam.zoy.org/wtfpl/COPYING for more details.&lt;/span&gt;
+ 
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:application&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;nodeapp&amp;#34;&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:scm&lt;/span&gt;,         &lt;span style=&#34;color:#e6db74&#34;&gt;:git&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:repository&lt;/span&gt;,  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;git://github.com:hogehoge/foobar.git&amp;#34;&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:branch&lt;/span&gt;,      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;master&amp;#34;&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:deploy_via&lt;/span&gt;,  &lt;span style=&#34;color:#e6db74&#34;&gt;:remote_cache&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:deploy_to&lt;/span&gt;,   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/home/nodeapp/&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;application&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:node_path&lt;/span&gt;,   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/opt/node-current/bin&amp;#34;&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:node_script&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;app.js&amp;#34;&lt;/span&gt;
+ 
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:user&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;nodeapp&amp;#34;&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:use_sudo&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:default_run_options&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:pty&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
+ 
+role &lt;span style=&#34;color:#e6db74&#34;&gt;:app&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;xxx.xxx.xxx.xxx&amp;#34;&lt;/span&gt;
+ 
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:shared_children&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;%w(log node_modules)&lt;/span&gt;
+ 
+namespace &lt;span style=&#34;color:#e6db74&#34;&gt;:deploy&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+  task &lt;span style=&#34;color:#e6db74&#34;&gt;:default&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+    update
+    start
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+ 
+  task &lt;span style=&#34;color:#e6db74&#34;&gt;:cold&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+    update
+    start
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+  
+  task &lt;span style=&#34;color:#e6db74&#34;&gt;:setup&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:expect&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; { &lt;span style=&#34;color:#e6db74&#34;&gt;:no_release&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt; } &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+    dirs  &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;deploy_to, releases_path, shared_path&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+    dirs &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; shared_children&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map { &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;d&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;File&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(shared_path, d) }
+    run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;mkdir -p &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;dirs&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+    run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;chmod g+w &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;dirs&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; fetch(&lt;span style=&#34;color:#e6db74&#34;&gt;:group_writable&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;)
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+  
+  task &lt;span style=&#34;color:#e6db74&#34;&gt;:finalize_update&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:except&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; { &lt;span style=&#34;color:#e6db74&#34;&gt;:no_release&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt; } &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+    run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;chmod -R g+w &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;latest_release&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; fetch(&lt;span style=&#34;color:#e6db74&#34;&gt;:group_writable&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;)
+    run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;lt;&amp;lt;-CMD
+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&lt;/span&gt;      rm &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;rf &lt;span style=&#34;color:#75715e&#34;&gt;#{latest_release}/log #{latest_release}/node_modules &amp;amp;&amp;amp;&lt;/span&gt;
+      ln &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;s &lt;span style=&#34;color:#75715e&#34;&gt;#{shared_path}/log #{latest_release}/log &amp;amp;&amp;amp;&lt;/span&gt;
+      ln &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;s &lt;span style=&#34;color:#75715e&#34;&gt;#{shared_path}/node_modules #{latest_release}/node_modules&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;CMD&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+  
+  task &lt;span style=&#34;color:#e6db74&#34;&gt;:start&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:roles&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:app&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+    run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;sudo&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; restart &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;application&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; || &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;sudo&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; start &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;application&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+ 
+  task &lt;span style=&#34;color:#e6db74&#34;&gt;:stop&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:roles&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:app&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+    run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;sudo&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; stop &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;application&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+ 
+  task &lt;span style=&#34;color:#e6db74&#34;&gt;:restart&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:roles&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:app&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+    start
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+  
+  task &lt;span style=&#34;color:#e6db74&#34;&gt;:npm&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:roles&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:app&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+    run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;lt;&amp;lt;-CMD
+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&lt;/span&gt;      export &lt;span style=&#34;color:#66d9ef&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#{node_path}:$PATH &amp;amp;&amp;amp;&lt;/span&gt;
+      cd &lt;span style=&#34;color:#75715e&#34;&gt;#{latest_release} &amp;amp;&amp;amp;&lt;/span&gt;
+      npm install 
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;CMD&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+  
+  task &lt;span style=&#34;color:#e6db74&#34;&gt;:write_upstart_script&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:roles&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:app&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+    upstart_script &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;lt;&amp;lt;-UPSTART_SCRIPT
+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&lt;/span&gt;description &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;application&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; upstart script&amp;#34;&lt;/span&gt;
+start on (local&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;filesystem &lt;span style=&#34;color:#f92672&#34;&gt;and&lt;/span&gt; net&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;device&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;up)
+stop on shutdown
+respawn
+respawn limit &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;60&lt;/span&gt;
+script
+  chdir &lt;span style=&#34;color:#75715e&#34;&gt;#{current_path}&lt;/span&gt;
+  exec sudo &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;u &lt;span style=&#34;color:#75715e&#34;&gt;#{user} NODE_ENV=&amp;#34;production&amp;#34; #{node_path}/node #{node_script} &amp;gt;&amp;gt; log/production.log 2&amp;gt;&amp;amp;1&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt; script
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;UPSTART_SCRIPT&lt;/span&gt;
+    
+    put upstart_script &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/tmp/&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;application&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;.conf&amp;#34;&lt;/span&gt;
+    run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;sudo&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; mv /tmp/&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;application&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;.conf /etc/init&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+ 
+after &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;deploy:setup&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;deploy:write_upstart_script&amp;#39;&lt;/span&gt;
+after &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;deploy:finalize_update&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;deploy:npm&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;使い方&#34;&gt;使い方&lt;/h2&gt;
+&lt;p&gt;set :node_pathで Node.js がインストールされているパスを指定し、set :node_scriptで起動したいJSファイルを指定します。あとの項目は通常のデプロイと変わらないと思います（上のレシピはGit前提で書いていますが）&lt;/p&gt;
+&lt;p&gt;デプロイ先に必要なディレクトリや Upstart のスクリプトを作成するには下記コマンドを使います。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cap deploy:setup
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;デプロイしてアプリを起動するには下記コマンドを使います。リポジトリに package.json を置いておけば自動的にnpm installが動いて node_modules にインストールされます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cap deploy:cold
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;以上です。それでは、良い Node.js 生活を。&lt;/p&gt;
+</content:encoded>
     </item>
     
     <item>
@@ -30,6 +130,54 @@
       
       <guid>https://blog.dakatsuka.jp/2011/05/25/cap-subdirectory.html</guid>
       <description>複数のRailsアプリが１つのリポジトリに同居しているような状態で Capistrano を使ってデプロイしたい場合、そのままでは動作しないので少々手を加える必要</description>
+      <content:encoded>&lt;p&gt;複数のRailsアプリが１つのリポジトリに同居しているような状態で Capistrano を使ってデプロイしたい場合、そのままでは動作しないので少々手を加える必要があります。&lt;/p&gt;
+&lt;p&gt;下記のようにRailsアプリがサブディレクトリにある場合を想定しています。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;repogitory/
+      ├── admin
+      ├── mobile
+      ├── share
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;capfileを書き換える&#34;&gt;Capfileを書き換える&lt;/h2&gt;
+&lt;p&gt;通常の手順通り、Rails.root 直下に Capfile を設置し config/deploy.rb にレシピを書いていくのですが、上記のようにリポジトリ直下 = Rails.root では無い場合、Capfile を少し変更する必要があります。&lt;/p&gt;
+&lt;p&gt;Stackoverflow の &lt;a href=&#34;http://stackoverflow.com/questions/29168/deploying-a-git-subdirectory-in-capistrano&#34;&gt;Deploying a Git subdirectory in Capistrano&lt;/a&gt; を参考に（というかほぼそのままですが）Capfile を以下のようにします。オリジナルと違う箇所はcpのオプションです。オリジナルのほうはシンボリックリンクをシンボリックリンクとしてコピーしますが、このコードは実体ファイルをコピーします。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;capistrano/recipes/deploy/strategy/remote_cache&amp;#39;&lt;/span&gt;
+ 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;RemoteCacheSubdir&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Capistrano&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Deploy&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Strategy&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;RemoteCache&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;repository_cache_subdir&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:deploy_subdir&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;then&lt;/span&gt;
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;File&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(repository_cache, configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:deploy_subdir&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
+      repository_cache
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+ 
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;copy_repository_cache&lt;/span&gt;
+    logger&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;trace &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;copying the cached version to &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:release_path&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; copy_exclude&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;empty? 
+      run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;cp -RpL &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;repository_cache_subdir&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:release_path&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; &amp;amp;&amp;amp; &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;mark&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
+      exclusions &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; copy_exclude&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map { &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;--exclude=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;e&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; }&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;)
+      run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;rsync -lrpt &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;exclusions&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;repository_cache_subdir&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;/* &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:release_path&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; &amp;amp;&amp;amp; &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;mark&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+ 
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:strategy&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;RemoteCacheSubdir&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new(self)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Capfile を書き換えたら deploy.rb を次のようにすれば指定したサブディレクトリだけをデプロイする事が出来ます。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;capistrano/ext/multistage&amp;#39;&lt;/span&gt;
+require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;bundler/capistrano&amp;#39;&lt;/span&gt;
+require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;erb&amp;#39;&lt;/span&gt;
+ 
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:application&lt;/span&gt;,   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;app&amp;#34;&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:scm&lt;/span&gt;,           &lt;span style=&#34;color:#e6db74&#34;&gt;:git&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:repository&lt;/span&gt;,    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;git://domain.com/path/to/repository.git&amp;#34;&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:deploy_subdir&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/path/to/app&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# require https://gist.github.com/970910 to Capfile&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:deploy_via&lt;/span&gt;,    &lt;span style=&#34;color:#e6db74&#34;&gt;:copy&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:use_sudo&lt;/span&gt;,      &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;
+set &lt;span style=&#34;color:#e6db74&#34;&gt;:bundle_without&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:development&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:test&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;そもそも&#34;&gt;そもそも&lt;/h2&gt;
+&lt;p&gt;何故このような構成になってるかというと、admin、mobileでモデルとライブラリを共通化したくなった為です。共通ファイルを share に放り込み、各Railsアプリからはシンボリックリンクで参照する形にしています。最初は Git の submodule を考えたのですがどうもしっくり来なかったんですよね。。。&lt;/p&gt;
+</content:encoded>
     </item>
     
   </channel>

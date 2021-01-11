@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>DevOps on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/categories/devops.html</link>
@@ -21,6 +21,31 @@
       
       <guid>https://blog.dakatsuka.jp/2015/05/16/sbt-publish-to-s3.html</guid>
       <description>fm-sbt-s3-resolverというプラグインを入れることでS3をMaven Repositoryとして扱えるようになります。社内のサー</description>
+      <content:encoded>&lt;p&gt;&lt;a href=&#34;https://github.com/frugalmechanic/fm-sbt-s3-resolver&#34;&gt;fm-sbt-s3-resolver&lt;/a&gt;というプラグインを入れることでS3をMaven Repositoryとして扱えるようになります。社内のサーバにリポジトリを構築するよりお手軽です。&lt;/p&gt;
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
+&lt;p&gt;project/plugin.sbt:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;addSbtPlugin&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;com.frugalmechanic&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fm-sbt-s3-resolver&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;0.5.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;事前に&lt;code&gt;AWS_ACCESS_KEY_ID&lt;/code&gt;と&lt;code&gt;AWS_SECRET_ACCESS_KEY&lt;/code&gt;を環境変数で定義しておくこと。またはProperty Fileを&lt;code&gt;$HOME/.sbt&lt;/code&gt;以下に作成しておく。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ export AWS_ACCESS_KEY_ID&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;xxxxxx
+$ export AWS_SECRET_ACCESS_KEY&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;xxxxx
+
+or
+
+$ cat ~/.sbt/.bucket-name_s3credentials
+accessKey &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; xxxxxx
+secretKey &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; xxxxxx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;publish&#34;&gt;Publish&lt;/h2&gt;
+&lt;p&gt;build.sbtにPublish先を設定する。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;publishTo &lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Some&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hoge Snapshots&amp;#34;&lt;/span&gt; at &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;s3://hoge-maven.s3-ap-northeast-1.amazonaws.com/hoge/snapshots&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;これで&lt;code&gt;sbt publish&lt;/code&gt;コマンドでS3にPublishできる。&lt;/p&gt;
+&lt;h2 id=&#34;usage&#34;&gt;Usage&lt;/h2&gt;
+&lt;p&gt;resolversにS3に置いたMavenリポジトリを追加する。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;resolvers &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hoge Snapshots&amp;#34;&lt;/span&gt; at &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;s3://hoge-maven.s3-ap-northeast-1.amazonaws.com/hoge/snapshots&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;あとはライブラリと同様にlibraryDependenciesに依存関係を書いていくだけ。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;libraryDependencies &lt;span style=&#34;color:#f92672&#34;&gt;++=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;foo.bar&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hoge-project&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1.0-SNAPSHOT&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -30,6 +55,23 @@
       
       <guid>https://blog.dakatsuka.jp/2015/03/24/amazon-sns-to-slack.html</guid>
       <description>CloudWatchやAuto Scalingのアラームは、Amazon SNSのTopicにPublishする仕組みになっていて、通常はこのT</description>
+      <content:encoded>&lt;p&gt;CloudWatchやAuto Scalingのアラームは、Amazon SNSのTopicにPublishする仕組みになっていて、通常はこのTopicに通知先のメールアドレスを設定することが多いと思う。&lt;/p&gt;
+&lt;p&gt;メールでもあまり困らないんだけど、社内ではChatOpsを進めていてコミュニケーションツールにSlackを使っているので、ほとんどメールの出番がない。必然的にメーラーよりSlackを立ち上げている時間が長いので、通知系はSlackに集約したくなった。&lt;/p&gt;
+&lt;p&gt;こんな感じでチャットに流れてくるようになって満足度高い。&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;
+    &lt;img src=&#34;https://blog.dakatsuka.jp/media/2015-03-24-amazon-sns-to-slack/amazon-sns-to-slack01.png&#34;/&gt; 
+&lt;/figure&gt;
+
+&lt;figure&gt;
+    &lt;img src=&#34;https://blog.dakatsuka.jp/media/2015-03-24-amazon-sns-to-slack/amazon-sns-to-slack02.png&#34;/&gt; 
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;念のためメールアドレスにも通知するようにはしているけど、今のところSlackに通知が来なかったり遅れてくることはない。スマートフォンへのプッシュもSlack任せにしている。&lt;/p&gt;
+&lt;h2 id=&#34;仕組み&#34;&gt;仕組み&lt;/h2&gt;
+&lt;p&gt;Amazon SNSから直接Slackにリクエストを送ることは出来ないので、中継サーバを立てる必要がある。今回はSinatraでサクッと実装してHerokuにデプロイして使ってます。中継サーバが死んだ場合は当然通知は来ないので、この辺はそのうち考えたい。&lt;/p&gt;
+&lt;p&gt;コードを整理してGitHubに公開したのでご自由に使ってください。CloudWatchとAuto Scaling以外に対応したい場合も簡単に追加できる仕組みにはなってます。PRもお待ちしてます。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/dakatsuka/amazon-sns-to-slack&#34;&gt;dakatsuka/amazon-sns-to-slack&lt;/a&gt;&lt;/p&gt;
+</content:encoded>
     </item>
     
   </channel>

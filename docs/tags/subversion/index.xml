@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Subversion on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/subversion.html</link>
@@ -21,6 +21,32 @@
       
       <guid>https://blog.dakatsuka.jp/2007/04/05/meld.html</guid>
       <description>MeldとはGUIで差分表示が出来るツールです。Shift_JIS、EUC-JP、UTF-8等の文字コードに対応し、インターフェースも日本語</description>
+      <content:encoded>&lt;p&gt;&lt;a href=&#34;http://meldmerge.org/&#34;&gt;Meld&lt;/a&gt;とはGUIで差分表示が出来るツールです。Shift_JIS、EUC-JP、UTF-8等の文字コードに対応し、インターフェースも日本語化されていて使い勝手は上々です。単体でもSubversionに対応しているようですが、ここではsvn diff用の外部ツールに設定をしてみます。&lt;/p&gt;
+&lt;h2 id=&#34;meldをインストール&#34;&gt;Meldをインストール&lt;/h2&gt;
+&lt;p&gt;DebianやUbuntuの場合はパッケージ化されているので導入は簡単です。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install meld
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;日本語を含むファイルを扱う場合は同時にpython-japanese-codecsもインストールしておくと良いでしょう。&lt;/p&gt;
+&lt;h2 id=&#34;subversionの設定&#34;&gt;Subversionの設定&lt;/h2&gt;
+&lt;p&gt;基本的には/etc/subversion/config内のdiff-cmdの値を編集すればいいのですが、diff-cmdにはファイル名のみで引数を設定出来ないようです。ですので、meldを呼び出すためのシェルスクリプトをあらかじめ作っておく必要があります。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/bin/sh
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;# 外部Diffプログラム&lt;/span&gt;
+DIFF&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;meld&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# 引数の指定&lt;/span&gt;
+LEFT&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;6&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;
+RIGHT&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;7&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;
+
+$DIFF $LEFT $RIGHT &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;こんな内容のファイルをどこか適当な場所に保存し、chmod +xで実行権限を与えておきます。&lt;/p&gt;
+&lt;p&gt;次に/etc/subversion/configを開き、&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# diff-cmd = diff_program (diff, gdiff, etc.)
+diff-cmd = 上で作ったファイルのフルパス
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;と、diff-cmdの値を書き換えて保存します。これでsvn diffで呼び出されるツールがmeldに切り替わります。&lt;/p&gt;
+&lt;h2 id=&#34;注意点&#34;&gt;注意点&lt;/h2&gt;
+&lt;p&gt;多数のファイルを編集していて、その親ディレクトリでファイル名を指定せずにsvn diffとやるとファイル数分のMeldが立ち上がります…&lt;/p&gt;
+&lt;p&gt;あとsvn-diff.vimをすでに導入している方はやらないほうがいいでしょう。&lt;/p&gt;
+</content:encoded>
     </item>
     
   </channel>

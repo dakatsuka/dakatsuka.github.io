@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Fedora on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/fedora.html</link>
@@ -21,6 +21,16 @@
       
       <guid>https://blog.dakatsuka.jp/2007/09/05/fedora8.html</guid>
       <description>そのままDVDを突っ込んでもACPIのチェックでコケてインストーラが起動しないので、起動オプションでACPIを無効にします。 最初の「Welc</description>
+      <content:encoded>&lt;p&gt;そのままDVDを突っ込んでもACPIのチェックでコケてインストーラが起動しないので、起動オプションでACPIを無効にします。&lt;/p&gt;
+&lt;p&gt;最初の「Welcome to Fedora！」画面が表示されたら&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Install or upgrade an existing system
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;を選択しTabキーを押します。押したら枠下のほうに&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; vmlinuz initrd=initrd.img
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;と表示され入力出来る状態になるので&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; vmlinuz initrd=initrd.img acpi=off
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;と書き加えてEnterを押します。=を入力するには、^（へ）キーを押します（英語キーボードとして認識されてるので）以上でひとまずインストールは出来ます。しかしCore2Quadなのに1Coreしか認識してませんでしたorz&lt;/p&gt;
+&lt;p&gt;ちなみにUbuntu7.10（Gusty）だと正常にインストール出来ました。新チップセットは鬼門ですね。。。&lt;/p&gt;
+</content:encoded>
     </item>
     
   </channel>

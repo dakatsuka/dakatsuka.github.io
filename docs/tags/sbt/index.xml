@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>sbt on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/sbt.html</link>
@@ -21,6 +21,64 @@
       
       <guid>https://blog.dakatsuka.jp/2015/06/11/play-multiple-project.html</guid>
       <description>ドメイン層（普通のScalaプロジェクト）とアプリケーション層（Play）でsbtプロジェクトを分けたい場合は、sbtのマルチプロジェクトを</description>
+      <content:encoded>&lt;p&gt;ドメイン層（普通のScalaプロジェクト）とアプリケーション層（Play）でsbtプロジェクトを分けたい場合は、sbtのマルチプロジェクトを使うと良い。&lt;/p&gt;
+&lt;p&gt;完全にリポジトリごとに分けても良いのだけど、IDEのリファクタリング機能などの便利機能の恩恵を受けたいとか、開発初期でドメインの更新が頻繁にあるなら、同一リポジトリでマルチプロジェクト構成のほうがおすすめ。&lt;/p&gt;
+&lt;p&gt;ディレクトリ構成は下記のようにする。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;sbtはサブプロジェクト内のprojectディレクトリを無視するので、Playのsbt-pluginなどはメインプロジェクトで読み込む。&lt;/p&gt;
+&lt;p&gt;project/pugin.sbt&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;resolvers &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Typesafe repository&amp;#34;&lt;/span&gt; at &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://repo.typesafe.com/typesafe/releases/&amp;#34;&lt;/span&gt;
+
+addSbtPlugin&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;com.typesafe.play&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;sbt-plugin&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.4.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;またライブラリの依存関係はサブプロジェクトのbuild.sbtでは行わず、全てメインプロジェクトのbuild.sbtに記述していく。&lt;code&gt;commonSettings&lt;/code&gt;で共通の設定や依存ライブラリを定義しておくと便利。&lt;/p&gt;
+&lt;p&gt;build.sbt&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;name &lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;myapplication&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;lazy&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; commonSettings &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; scalariformSettings &lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+  organization &lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.example&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+  scalaVersion &lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.11.6&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+  resolvers &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;scalaz-bintray&amp;#34;&lt;/span&gt; at &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://dl.bintray.com/scalaz/releases&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+  libraryDependencies &lt;span style=&#34;color:#f92672&#34;&gt;++=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.specs2&amp;#34;&lt;/span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;specs2-core&amp;#34;&lt;/span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;3.6.1&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.specs2&amp;#34;&lt;/span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;specs2-mock&amp;#34;&lt;/span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;3.6.1&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.specs2&amp;#34;&lt;/span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;specs2-junit&amp;#34;&lt;/span&gt;           &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;3.6.1&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ch.qos.logback&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;logback-classic&amp;#34;&lt;/span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1.1.+&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;lazy&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; domain &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; project&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;in&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;domain&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;settings&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;commonSettings&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;_&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;settings&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+    libraryDependencies &lt;span style=&#34;color:#f92672&#34;&gt;++=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;mysql&amp;#34;&lt;/span&gt;           &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;mysql-connector-java&amp;#34;&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;5.1.31&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.scalikejdbc&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;scalikejdbc&amp;#34;&lt;/span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.2.+&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.scalikejdbc&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;scalikejdbc-config&amp;#34;&lt;/span&gt;     &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.2.+&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.scalikejdbc&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;scalikejdbc-test&amp;#34;&lt;/span&gt;       &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.2.+&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;lazy&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; api &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;project&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;in&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;file&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;api&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)))&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;enablePlugins&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;PlayScala&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;settings&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;commonSettings&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;_&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;settings&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+    libraryDependencies &lt;span style=&#34;color:#f92672&#34;&gt;++=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+      jdbc&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      cache&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      ws&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;com.typesafe.play&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;play-specs2&amp;#34;&lt;/span&gt;                  &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.4.0&amp;#34;&lt;/span&gt;       &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.scalikejdbc&amp;#34;&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;scalikejdbc-play-initializer&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.4.0.RC1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;org.scalikejdbc&amp;#34;&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;scalikejdbc-play-fixture&amp;#34;&lt;/span&gt;     &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.4.0.RC1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dependsOn&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;domain&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;サブプロジェクトのbuild.sbtには&lt;code&gt;name&lt;/code&gt; &lt;code&gt;version&lt;/code&gt; &lt;code&gt;javaOptions&lt;/code&gt;などを個別に定義していく。&lt;/p&gt;
+&lt;p&gt;Playでサーバを起動する場合は下記コマンドを使う。テストをサブプロジェクト単位で実行する場合も同様。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sbt &amp;quot;project api&amp;quot; run
+$ sbt &amp;quot;project api&amp;quot; test
+$ sbt &amp;quot;project domain&amp;quot; test
+$ sbt test // all test
+&lt;/code&gt;&lt;/pre&gt;</content:encoded>
     </item>
     
     <item>
@@ -30,6 +88,31 @@
       
       <guid>https://blog.dakatsuka.jp/2015/05/16/sbt-publish-to-s3.html</guid>
       <description>fm-sbt-s3-resolverというプラグインを入れることでS3をMaven Repositoryとして扱えるようになります。社内のサー</description>
+      <content:encoded>&lt;p&gt;&lt;a href=&#34;https://github.com/frugalmechanic/fm-sbt-s3-resolver&#34;&gt;fm-sbt-s3-resolver&lt;/a&gt;というプラグインを入れることでS3をMaven Repositoryとして扱えるようになります。社内のサーバにリポジトリを構築するよりお手軽です。&lt;/p&gt;
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
+&lt;p&gt;project/plugin.sbt:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;addSbtPlugin&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;com.frugalmechanic&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fm-sbt-s3-resolver&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;0.5.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;事前に&lt;code&gt;AWS_ACCESS_KEY_ID&lt;/code&gt;と&lt;code&gt;AWS_SECRET_ACCESS_KEY&lt;/code&gt;を環境変数で定義しておくこと。またはProperty Fileを&lt;code&gt;$HOME/.sbt&lt;/code&gt;以下に作成しておく。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ export AWS_ACCESS_KEY_ID&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;xxxxxx
+$ export AWS_SECRET_ACCESS_KEY&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;xxxxx
+
+or
+
+$ cat ~/.sbt/.bucket-name_s3credentials
+accessKey &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; xxxxxx
+secretKey &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; xxxxxx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;publish&#34;&gt;Publish&lt;/h2&gt;
+&lt;p&gt;build.sbtにPublish先を設定する。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;publishTo &lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Some&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hoge Snapshots&amp;#34;&lt;/span&gt; at &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;s3://hoge-maven.s3-ap-northeast-1.amazonaws.com/hoge/snapshots&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;これで&lt;code&gt;sbt publish&lt;/code&gt;コマンドでS3にPublishできる。&lt;/p&gt;
+&lt;h2 id=&#34;usage&#34;&gt;Usage&lt;/h2&gt;
+&lt;p&gt;resolversにS3に置いたMavenリポジトリを追加する。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;resolvers &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hoge Snapshots&amp;#34;&lt;/span&gt; at &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;s3://hoge-maven.s3-ap-northeast-1.amazonaws.com/hoge/snapshots&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;あとはライブラリと同様にlibraryDependenciesに依存関係を書いていくだけ。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;libraryDependencies &lt;span style=&#34;color:#f92672&#34;&gt;++=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;foo.bar&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hoge-project&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;1.0-SNAPSHOT&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
   </channel>
