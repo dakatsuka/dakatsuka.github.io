@@ -221,9 +221,10 @@
   <span style="color:#66d9ef">let</span> <span style="color:#f92672">(</span> <span style="color:#66d9ef">let</span><span style="color:#f92672">*</span> <span style="color:#f92672">)</span> x f <span style="color:#f92672">=</span>
     <span style="color:#66d9ef">match</span> x <span style="color:#66d9ef">with</span>
     <span style="color:#f92672">|</span> Io.<span style="color:#a6e22e">Success</span> <span style="color:#f92672">(</span><span style="color:#a6e22e">Ok</span> v<span style="color:#f92672">)</span> <span style="color:#f92672">-&gt;</span> f v
-    <span style="color:#f92672">|</span> Io.<span style="color:#a6e22e">Success</span> <span style="color:#f92672">(</span><span style="color:#a6e22e">Error</span> <span style="color:#f92672">_</span> <span style="color:#66d9ef">as</span> e<span style="color:#f92672">)</span> <span style="color:#f92672">-&gt;</span> Io.<span style="color:#a6e22e">Success</span> e
-    <span style="color:#f92672">|</span> <span style="color:#f92672">_</span> <span style="color:#66d9ef">as</span> e <span style="color:#f92672">-&gt;</span> e
-  <span style="color:#66d9ef">let</span> return x <span style="color:#f92672">=</span> Io.<span style="color:#a6e22e">Success</span> <span style="color:#f92672">(</span><span style="color:#a6e22e">Ok</span> x<span style="color:#f92672">)</span>
+    <span style="color:#f92672">|</span> Io.<span style="color:#a6e22e">Success</span> <span style="color:#f92672">(</span><span style="color:#a6e22e">Error</span> e<span style="color:#f92672">)</span> <span style="color:#f92672">-&gt;</span> Io.<span style="color:#a6e22e">Success</span> <span style="color:#f92672">(</span><span style="color:#a6e22e">Error</span> e<span style="color:#f92672">)</span>
+    <span style="color:#f92672">|</span> Io.<span style="color:#a6e22e">Failure</span> <span style="color:#f92672">_</span> <span style="color:#66d9ef">as</span> e <span style="color:#f92672">-&gt;</span> e
+
+  <span style="color:#66d9ef">let</span> return v <span style="color:#f92672">=</span> Io.<span style="color:#a6e22e">Success</span> <span style="color:#f92672">(</span><span style="color:#a6e22e">Ok</span> v<span style="color:#f92672">)</span>
 <span style="color:#66d9ef">end</span>
 
 <span style="color:#66d9ef">let</span> result <span style="color:#f92672">=</span>
@@ -254,6 +255,8 @@
 
 <span style="color:#75715e">(* val result : ((int, int) result, &#39;a) Io.t = Io.Success (Error (-1)) *)</span>
 </code></pre></div><p>こういうとき、ScalaやHaskellなどはモナドトランスフォーマーを使いますがOcamlのBinding operatorsでも似たようなことは出来ますよというお話でした。</p>
+<h2 id="追記">追記</h2>
+<p>上記の <code>Io_result_ops</code> だと <code>Error</code> に格納する型を同じにしないと駄目そうです。回避方法は… パッとは思いつかないです</p>
 <section class="footnotes" role="doc-endnotes">
 <hr>
 <ol>

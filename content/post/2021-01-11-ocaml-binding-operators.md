@@ -72,9 +72,10 @@ module Io_result_ops = struct
   let ( let* ) x f =
     match x with
     | Io.Success (Ok v) -> f v
-    | Io.Success (Error _ as e) -> Io.Success e
-    | _ as e -> e
-  let return x = Io.Success (Ok x)
+    | Io.Success (Error e) -> Io.Success (Error e)
+    | Io.Failure _ as e -> e
+
+  let return v = Io.Success (Ok v)
 end
 
 let result =
@@ -107,6 +108,10 @@ let result =
 ```
 
 こういうとき、ScalaやHaskellなどはモナドトランスフォーマーを使いますがOcamlのBinding operatorsでも似たようなことは出来ますよというお話でした。
+
+## 追記
+
+上記の `Io_result_ops` だと `Error` に格納する型を同じにしないと駄目そうです。回避方法は… パッとは思いつかないです
 
 [^1]: [8.23 Binding operators](https://caml.inria.fr/pub/docs/manual-ocaml/bindingops.html)
 [^2]: [core-operator-char](https://ocaml.org/releases/4.11/htmlman/lex.html#core-operator-char)
