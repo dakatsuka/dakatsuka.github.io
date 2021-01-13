@@ -29,14 +29,19 @@
     opacity: .7;
 }
 
+.archives td {
+  vertical-align: top;
+}
+
 pre {
   background-color:#272822;
   color:#f8f8f2;
 }
 
 .intro-header [class$="-heading"] h1 {
-  line-height: 1.4;
+  line-height: 1.2;
   font-weight: bold;
+  font-size: 36px;
 }
 
 @media (max-width: 600px) {

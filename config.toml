@@ -37,13 +37,6 @@ googleAnalytics = "UA-45923728-1"
   weight = 3
 
 [[params.nav]]
-  identifier = "categories"
-  name = "Categories"
-  icon = "fas fa-folder-open fa-lg"
-  url = "categories.html"
-  weight = 3
-
-[[params.nav]]
   identifier = "tags"
   name = "Tags"
   icon = "fas fa-tag fa-lg"
