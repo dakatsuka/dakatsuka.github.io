@@ -29,8 +29,18 @@
     opacity: .7;
 }
 
+.article p > code {
+  font-family: Menlo, Monaco, Consolas, monospace;
+  font-weight: 600;
+}
+
 .archives td {
   vertical-align: top;
+}
+
+a.footnote-ref {
+  text-decoration: underline;
+  color: #666;
 }
 
 pre {
