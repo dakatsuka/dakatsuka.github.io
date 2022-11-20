@@ -4,13 +4,10 @@
     <title>Middleman on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/middleman.html</link>
     <description>Recent content in Middleman on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Sun, 24 Nov 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/middleman/index.xml" rel="self" type="application/rss+xml" />
@@ -21,13 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2013/11/24/middleman-build-helper.html</guid>
       <description>Livereload環境では特に出力しなくても良いもの、または出力されるとマズいものがあったりする。例えばソーシャルサービス系のシェアボタン</description>
-      <content:encoded>&lt;p&gt;Livereload環境では特に出力しなくても良いもの、または出力されるとマズいものがあったりする。例えばソーシャルサービス系のシェアボタンやGoogle Analyticsのトラッキングコードなど。&lt;/p&gt;
-&lt;p&gt;テンプレート内では&lt;a href=&#34;http://rubydoc.info/github/middleman/middleman/Middleman/Application&#34;&gt;Middleman::Application&lt;/a&gt;のメソッドが使えるようなので&lt;code&gt;build?&lt;/code&gt;メソッドを利用する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-haml&#34; data-lang=&#34;haml&#34;&gt;- if build?
-    :javascript
-      /** Google Analytics Tracking code */
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;確認してないけど&lt;code&gt;development?&lt;/code&gt;は逆の動きをしそう。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -37,20 +27,6 @@
       
       <guid>https://blog.dakatsuka.jp/2013/11/22/change-from-wordpress-to-middleman.html</guid>
       <description>今まで惰性でWordPressを使い続けてきたが、ふと思い立ってMiddlemanで全面的に作り直すことにした。折角作り直すのだからブログの</description>
-      <content:encoded>&lt;p&gt;今まで惰性でWordPressを使い続けてきたが、ふと思い立ってMiddlemanで全面的に作り直すことにした。折角作り直すのだからブログのデザインもたまには自分でやってみようと思い、数年ぶりにHTMLやCSSを超時間触ることに。最近はネイティブアプリの案件が多く、JSONを吐く仕事ばかりだったので中々刺激的だった。&lt;/p&gt;
-&lt;h2 id=&#34;middleman&#34;&gt;Middleman&lt;/h2&gt;
-&lt;p&gt;MiddlemanはJekyllやOctopress同様、静的サイト生成ツールの類いだ。個人的にはMakrdownで記事が書けてGitで管理出来るのが条件だったのでJekyllやOctopressでも良かったのだが、それぞれをローカル環境で試用してみたらMiddlemanが一番しっくりきた。&lt;/p&gt;
-&lt;p&gt;用意されているヘルパーなどはRailsに共通しているところが多いし、Asset Pipelineなどの同様の機能もあるので、Railsに慣れ親しんでいる人なら簡単に使いこなせると思う。&lt;/p&gt;
-&lt;p&gt;逆にRubyやRailsを全く触ったことない人やWindows環境の人には扱いづらいかもしれない。あと他ツールに比べてドキュメントがやや少ない気もする。凝ったことをしようと思ったらちょっと面倒かも。例えばテンプレートではたくさんのヘルパーを利用出来るが、公式ドキュメントでは全て紹介されていない。&lt;/p&gt;
-&lt;h2 id=&#34;github-pages&#34;&gt;GitHub Pages&lt;/h2&gt;
-&lt;p&gt;username.github.io というサブドメインでホスティング出来ることは知っていたけど、独自ドメインの割り当ても可能だというのは今回初めて知った。masterブランチの直下にドメイン名を記述したCNAMEというファイルを設置するだけでOKだった。お手軽で良いね。&lt;/p&gt;
-&lt;p&gt;将来的にはTravis CIでmasterブランチへのPushを自動化しようと考えてるけど、Travisは反映に少しラグが出るし、今の自分の使い方なら当面はmiddleman-deployで事足りるかもしれない。&lt;/p&gt;
-&lt;h2 id=&#34;design&#34;&gt;Design&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://purecss.io/&#34;&gt;Pure&lt;/a&gt;という軽量CSSフレームワークを利用してコーディングを行った。Bootstrapよりは出来ることは少ないんだけど、個人ブログ程度なら丁度良いと思う。&lt;/p&gt;
-&lt;p&gt;一応IE10, Firefox, Chromeでちゃんと表示されていることを確認しているが、HTML/CSS供に殴り書きに近いので追々綺麗にする。HTML5から使える新しいタグを活用していきたい。&lt;/p&gt;
-&lt;h2 id=&#34;まとめ&#34;&gt;まとめ&lt;/h2&gt;
-&lt;p&gt;ドメイン、デザイン、ブログエンジンを変更して心機一転。記事の語調もですます調からである調に変えてみた。最近更新ペースが落ちていたので、気を取り直してもっと気軽に更新していこうと思う。&lt;/p&gt;
-</content:encoded>
     </item>
     
   </channel>

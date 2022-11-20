@@ -1,197 +1,238 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8" />
+<html lang="ja" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
 <title>Rails 3.1 を試してみる（導入編） | dakatsuka&#39;s blog</title>
+<meta name="keywords" content="Ruby, Rails">
+<meta name="description" content="Rails3.1の機能を試せると聞いたので、早速下記サイトを参考にローカル環境に入れてみました。噂のCoffeeScriptやSCSSが使え">
+<meta name="author" content="Dai Akatsuka">
+<link rel="canonical" href="https://blog.dakatsuka.jp/2011/04/19/rails3-1-1.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.bc1149f4a72aa4858d3a9f71462f75e5884ffe8073ea9d6d5761d5663d651e20.css" integrity="sha256-vBFJ9KcqpIWNOp9xRi915YhP/oBz6p1tV2HVZj1lHiA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
 
-  
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-45923728-1');
-  </script>
-  
+            .list {
+                background: var(--theme);
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  href="https://blog.dakatsuka.jp/index.xml"
-  title="dakatsuka&#39;s blog"
-/>
-
-<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
-<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
-<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
-<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
-<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
-<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
-<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
-<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-<link rel="manifest" href="/manifest.json" />
-<meta name="msapplication-TileColor" content="#ffffff" />
-<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-<meta name="theme-color" content="#ffffff" />
-
-<meta property="og:title" content="Rails 3.1 を試してみる（導入編）" />
+    </style>
+</noscript>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-45923728-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script><meta property="og:title" content="Rails 3.1 を試してみる（導入編）" />
 <meta property="og:description" content="Rails3.1の機能を試せると聞いたので、早速下記サイトを参考にローカル環境に入れてみました。噂のCoffeeScriptやSCSSが使え" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2011/04/19/rails3-1-1.html" />
-<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/>
+<meta property="og:url" content="https://blog.dakatsuka.jp/2011/04/19/rails3-1-1.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2011-04-19T00:00:00+00:00" />
 <meta property="article:modified_time" content="2011-04-19T00:00:00+00:00" />
 
-
 <meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
+
+<meta name="twitter:title" content="Rails 3.1 を試してみる（導入編）"/>
+<meta name="twitter:description" content="Rails3.1の機能を試せると聞いたので、早速下記サイトを参考にローカル環境に入れてみました。噂のCoffeeScriptやSCSSが使え"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
 
-<link rel="stylesheet" href="https://blog.dakatsuka.jp/fontawesome/css/all.min.css" />
-<link
-  id="dark-mode-theme"
-  rel="stylesheet"
-  href="https://blog.dakatsuka.jp/css/dark.css"
-/>
 
-<script>
-  var darkTheme = document.getElementById('dark-mode-theme')
-  var storedTheme = localStorage.getItem('dark-mode-storage')
-  if (storedTheme === 'dark') {
-    darkTheme.disabled = false
-  } else if (storedTheme === 'light') {
-    darkTheme.disabled = true
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Rails 3.1 を試してみる（導入編）",
+      "item": "https://blog.dakatsuka.jp/2011/04/19/rails3-1-1.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Rails 3.1 を試してみる（導入編）",
+  "name": "Rails 3.1 を試してみる（導入編）",
+  "description": "Rails3.1の機能を試せると聞いたので、早速下記サイトを参考にローカル環境に入れてみました。噂のCoffeeScriptやSCSSが使え",
+  "keywords": [
+    "Ruby", "Rails"
+  ],
+  "articleBody": "Rails3.1の機能を試せると聞いたので、早速下記サイトを参考にローカル環境に入れてみました。噂のCoffeeScriptやSCSSが使えるようになっています。\nedge rails(Rails 3.1)の新機能を調べてみる – おもしろWEBサービス開発日記 インストールその1 rvmにRails3.1専用のgemsetを用意しました。Rubyのバージョンは Ruby 1.9.2-p180 です。\nrvm gemset create rails31 rvm gemset use rails31 この状態だとRakeしか入っていません。\n$ gem list *** LOCAL GEMS *** rake (0.8.7) Railsアプリ用のディレクトリを作成します。\nmkdir rails_app cd rails_app vim Gemfile Gemfileを作ってRailsのGithubリポジトリを指定します。\n# Gemfile source \"http://rubygems.org/\" gem 'rails', :git =\u003e 'git://github.com/rails/rails.git' BundlerとRails3.1をインストールします。\ngem install bundler bundle install インストールされたRailsのバージョンを確認してみましょう。\n$ bundle exec rails -v Rails 3.1.0.beta 無事入ってそうです。\nインストールその2 Railsが入ったことを確認出来たら、実際にRailsアプリを生成してみます。先ほど作成したGemfileとコンフリクトしますが、気にせず上書きしてしまいましょう。\n$ bundle exec rails new . exist create README create Rakefile create config.ru create .gitignore force Gemfile create app create app/assets/javascripts/application.js create app/assets/stylesheets/application.css create app/controllers/application_controller.rb create app/helpers/application_helper.rb create app/mailers create app/models create app/views/layouts/application.html.erb create app/mailers/.gitkeep create app/models/.gitkeep create config create config/routes.rb create config/application.rb create config/environment.rb create config/environments create config/environments/development.rb create config/environments/production.rb create config/environments/test.rb create config/initializers create config/initializers/backtrace_silencers.rb create config/initializers/inflections.rb create config/initializers/mime_types.rb create config/initializers/secret_token.rb create config/initializers/session_store.rb create config/locales create config/locales/en.yml create config/boot.rb create config/database.yml create db create db/seeds.rb create doc create doc/README_FOR_APP create lib create lib/tasks create lib/tasks/.gitkeep create log create log/.gitkeep create public create public/404.html create public/422.html create public/500.html create public/favicon.ico create public/index.html create public/robots.txt create public/images create public/images/rails.png create script create script/rails create test/fixtures create test/fixtures/.gitkeep create test/functional create test/functional/.gitkeep create test/integration create test/integration/.gitkeep create test/unit create test/unit/.gitkeep create test/performance/browsing_test.rb create test/test_helper.rb create tmp/cache create tmp/cache/.gitkeep create vendor/assets/javascripts/jquery.js create vendor/assets/javascripts/jquery_ujs.js create vendor/assets/stylesheets create vendor/assets/stylesheets/.gitkeep create vendor/plugins create vendor/plugins/.gitkeep 新しく生成されたGemfileを眺めてみます。\nsource 'http://rubygems.org' gem 'rails', '3.1.0.beta' # Bundle edge Rails instead: # gem 'rails', :git =\u003e 'git://github.com/rails/rails.git' # gem 'arel', :git =\u003e 'git://github.com/rails/arel.git' # gem 'rack', :git =\u003e 'git://github.com/rack/rack.git' # gem 'sprockets', :git =\u003e \"git://github.com/sstephenson/sprockets.git\" gem 'sqlite3' # Asset template engines gem 'sass', '~\u003e 3.1.0.alpha' gem 'coffee-script' # Use unicorn as the web server # gem 'unicorn' # Deploy with Capistrano # gem 'capistrano' # To use debugger # gem 'ruby-debug19', :require =\u003e 'ruby-debug' group :test do # Pretty printed test output gem 'turn', :require =\u003e false end 相変わらず標準のDBはSQLite3のようです。またsassとcoffee-scriptのgemが書かれていますね。さて、このままbundle installを実行するとRubygemsにrails 3.1.0.beta’なんて無いと怒られてしまうのでコメントアウトし、コメントアウトされているBundle edge Rails instead以下を有効にします。\n# gem 'rails', '3.1.0.beta' # Bundle edge Rails instead: gem 'rails', :git =\u003e 'git://github.com/rails/rails.git' gem 'arel', :git =\u003e 'git://github.com/rails/arel.git' gem 'rack', :git =\u003e 'git://github.com/rack/rack.git' gem 'sprockets', :git =\u003e \"git://github.com/sstephenson/sprockets.git\" 再度bundle installを実行。\nbundle install Scaffoldで生成されたものを覗く 実際何が変わったかはScaffoldで生成されたファイルを見てみるのが一番早いと思いますので、適当にジェネレートしてみます。\n$ bundle exec rails g scaffold article subject:string body:text invoke active_record create db/migrate/20110419121620_create_articles.rb create app/models/article.rb invoke test_unit create test/unit/article_test.rb create test/fixtures/articles.yml route resources :articles invoke scaffold_controller create app/controllers/articles_controller.rb invoke erb create app/views/articles create app/views/articles/index.html.erb create app/views/articles/edit.html.erb create app/views/articles/show.html.erb create app/views/articles/new.html.erb create app/views/articles/_form.html.erb invoke test_unit create test/functional/articles_controller_test.rb invoke helper create app/helpers/articles_helper.rb invoke test_unit create test/unit/helpers/articles_helper_test.rb create app/assets/stylesheets/scaffold.css.scss invoke assets create app/assets/javascripts/articles.js.coffee create app/assets/stylesheets/articles.css.scss 現状のRails EdgeだとまだRSpecが標準にはなっていないようです。その代わりapp/assetsというディレクトリが新たに出現していて、その中に.coffeeと.scssなファイルが作られています。\napp/assets/stylesheets/scaffold.css.scssを覗いてみましょう。\nbody { background-color: #fff; color: #333; } body, p, ol, ul, td { font-family: verdana, arial, helvetica, sans-serif; font-size: 13px; line-height: 18px; } pre { background-color: #eee; padding: 10px; font-size: 11px; } a { color: #000; \u0026:visited { color: #666; } \u0026:hover { color: #fff; background-color:#000; } } div.field, div.actions { margin-bottom: 10px; } #notice { color: green; } .field_with_errors { padding: 2px; background-color: red; display: table; } #error_explanation { width: 450px; border: 2px solid red; padding: 7px; padding-bottom: 0; margin-bottom: 20px; background-color: #f0f0f0; h2 { text-align: left; font-weight: bold; padding: 5px 5px 5px 15px; font-size: 12px; margin: -7px; margin-bottom: 0px; background-color: #c00; color: #fff; } ul li { font-size: 12px; list-style: square; } } まとめ 今回はRails3.1をインストールし、Scaffoldの生成物を眺めただけです。。。実を言うと、私は最近までCoffeeScriptもSCSSも完全にノーマークでして、両方ともさわり程度しか知りませんでした(^^; 油断するとあっという間に置き去りにされそうです。\n次回はCoffeeScriptとSCSSがどれくらい便利なのか色々触ってみたいと思います（多分）。\n",
+  "wordCount" : "1522",
+  "inLanguage": "ja",
+  "datePublished": "2011-04-19T00:00:00Z",
+  "dateModified": "2011-04-19T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Dai Akatsuka"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.dakatsuka.jp/2011/04/19/rails3-1-1.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "dakatsuka's blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.dakatsuka.jp/favicon.ico"
+    }
   }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
 </script>
 
-<script src="https://blog.dakatsuka.jp/js/bundle.js"></script>
-<script src="https://blog.dakatsuka.jp/js/instantpage.min.js" type="module" defer></script>
-
-  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
-
-<meta name="generator" content="Hugo 0.80.0-DEV" />
-
-
-  </head>
-  <body>
-    
-  
-
-
-
-
-  <header>
-    <nav class="navbar">
-  <div class="nav">
-    
-      <a href="https://blog.dakatsuka.jp/" class="nav-logo">
-        <img
-          src="https://blog.dakatsuka.jp/images/logo.png"
-          width="80"
-          height="80"
-          alt="logo"
-        />
-      </a>
-    
-
-    <ul class="nav-links">
-      
-        
-          <li>
-            <a href="/about.html" id="About"
-              ><em class="fas fa-user fa-lg"></em
-            ></a>
-          </li>
-          
-      
-        
-          <li>
-            <a href="/tags.html" id="Tags"
-              ><em class="fas fa-tag fa-lg"></em
-            ></a>
-          </li>
-          
-      
-        
-          <li>
-            <a href="/archives.html" id="Archives"
-              ><em class="fas fa-archive fa-lg"></em
-            ></a>
-          </li>
-          
-      
-    </ul>
-  </div>
-</nav>
-
-    <div class="intro-header">
-      <div class="container">
-        <div class="post-heading">
-          
-            <h1>
-              Rails 3.1 を試してみる（導入編）
-            </h1>
-          
-          
-            <span class="meta-post">
-  <em class="fa fa-calendar-alt"></em
-  >&nbsp;Apr 19, 2011
-  
-</span>
-
-          
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.dakatsuka.jp/" accesskey="h" title="dakatsuka&#39;s blog (Alt + H)">dakatsuka&#39;s blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
         </div>
-      </div>
-    </div>
-  </header>
-  
+        <ul id="menu">
+            <li>
+                <a href="https://blog.dakatsuka.jp/about.html" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.dakatsuka.jp/archives.html" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.dakatsuka.jp/tags.html" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
 
+<article class="post-single">
+  <header class="post-header">
     
-  <div class="container" role="main">
-    <article class="article" class="blog-post">
-      
-  <p>Rails3.1の機能を試せると聞いたので、早速下記サイトを参考にローカル環境に入れてみました。噂のCoffeeScriptやSCSSが使えるようになっています。</p>
+    <h1 class="post-title">
+      Rails 3.1 を試してみる（導入編）
+    </h1>
+    <div class="post-meta"><span title='2011-04-19 00:00:00 +0000 UTC'>2011/4/19</span>&nbsp;·&nbsp;Dai Akatsuka
+
+</div>
+  </header> 
+  <div class="post-content"><p>Rails3.1の機能を試せると聞いたので、早速下記サイトを参考にローカル環境に入れてみました。噂のCoffeeScriptやSCSSが使えるようになっています。</p>
 <ul>
 <li><a href="http://d.hatena.ne.jp/willnet/20110417/1303064684">edge rails(Rails 3.1)の新機能を調べてみる – おもしろWEBサービス開発日記</a></li>
 </ul>
-<h2 id="インストールその1">インストールその1</h2>
+<h2 id="インストールその1">インストールその1<a hidden class="anchor" aria-hidden="true" href="#インストールその1">#</a></h2>
 <p>rvmにRails3.1専用のgemsetを用意しました。Rubyのバージョンは Ruby 1.9.2-p180 です。</p>
-<pre><code>rvm gemset create rails31
+<pre tabindex="0"><code>rvm gemset create rails31
 rvm gemset use rails31
 </code></pre><p>この状態だとRakeしか入っていません。</p>
-<pre><code>$ gem list
+<pre tabindex="0"><code>$ gem list
  
 *** LOCAL GEMS ***
  
 rake (0.8.7)
 </code></pre><p>Railsアプリ用のディレクトリを作成します。</p>
-<pre><code>mkdir rails_app
+<pre tabindex="0"><code>mkdir rails_app
 cd rails_app
 vim Gemfile
 </code></pre><p>Gemfileを作ってRailsのGithubリポジトリを指定します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Gemfile</span>
-source <span style="color:#e6db74">&#34;http://rubygems.org/&#34;</span>
-gem <span style="color:#e6db74">&#39;rails&#39;</span>, <span style="color:#e6db74">:git</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;git://github.com/rails/rails.git&#39;</span>
-</code></pre></div><p>BundlerとRails3.1をインストールします。</p>
-<pre><code>gem install bundler
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#75715e"># Gemfile</span>
+</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">&#34;http://rubygems.org/&#34;</span>
+</span></span><span style="display:flex;"><span>gem <span style="color:#e6db74">&#39;rails&#39;</span>, <span style="color:#e6db74">:git</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;git://github.com/rails/rails.git&#39;</span>
+</span></span></code></pre></div><p>BundlerとRails3.1をインストールします。</p>
+<pre tabindex="0"><code>gem install bundler
 bundle install
 </code></pre><p>インストールされたRailsのバージョンを確認してみましょう。</p>
-<pre><code>$ bundle exec rails -v
+<pre tabindex="0"><code>$ bundle exec rails -v
 Rails 3.1.0.beta
 </code></pre><p>無事入ってそうです。</p>
-<h2 id="インストールその2">インストールその2</h2>
+<h2 id="インストールその2">インストールその2<a hidden class="anchor" aria-hidden="true" href="#インストールその2">#</a></h2>
 <p>Railsが入ったことを確認出来たら、実際にRailsアプリを生成してみます。先ほど作成したGemfileとコンフリクトしますが、気にせず上書きしてしまいましょう。</p>
-<pre><code>$ bundle exec rails new .
+<pre tabindex="0"><code>$ bundle exec rails new .
        exist  
       create  README
       create  Rakefile
@@ -265,48 +306,48 @@ Rails 3.1.0.beta
       create  vendor/plugins
       create  vendor/plugins/.gitkeep 
 </code></pre><p>新しく生成されたGemfileを眺めてみます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">source <span style="color:#e6db74">&#39;http://rubygems.org&#39;</span>
- 
-gem <span style="color:#e6db74">&#39;rails&#39;</span>, <span style="color:#e6db74">&#39;3.1.0.beta&#39;</span>
- 
-<span style="color:#75715e"># Bundle edge Rails instead:</span>
-<span style="color:#75715e"># gem &#39;rails&#39;,     :git =&gt; &#39;git://github.com/rails/rails.git&#39;</span>
-<span style="color:#75715e"># gem &#39;arel&#39;,      :git =&gt; &#39;git://github.com/rails/arel.git&#39;</span>
-<span style="color:#75715e"># gem &#39;rack&#39;,      :git =&gt; &#39;git://github.com/rack/rack.git&#39;</span>
-<span style="color:#75715e"># gem &#39;sprockets&#39;, :git =&gt; &#34;git://github.com/sstephenson/sprockets.git&#34;</span>
- 
-gem <span style="color:#e6db74">&#39;sqlite3&#39;</span>
- 
-<span style="color:#75715e"># Asset template engines</span>
-gem <span style="color:#e6db74">&#39;sass&#39;</span>, <span style="color:#e6db74">&#39;~&gt; 3.1.0.alpha&#39;</span>
-gem <span style="color:#e6db74">&#39;coffee-script&#39;</span>
- 
-<span style="color:#75715e"># Use unicorn as the web server</span>
-<span style="color:#75715e"># gem &#39;unicorn&#39;</span>
- 
-<span style="color:#75715e"># Deploy with Capistrano</span>
-<span style="color:#75715e"># gem &#39;capistrano&#39;</span>
- 
-<span style="color:#75715e"># To use debugger</span>
-<span style="color:#75715e"># gem &#39;ruby-debug19&#39;, :require =&gt; &#39;ruby-debug&#39;</span>
- 
-group <span style="color:#e6db74">:test</span> <span style="color:#66d9ef">do</span>
-  <span style="color:#75715e"># Pretty printed test output</span>
-  gem <span style="color:#e6db74">&#39;turn&#39;</span>, <span style="color:#e6db74">:require</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">false</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>相変わらず標準のDBはSQLite3のようです。またsassとcoffee-scriptのgemが書かれていますね。さて、このままbundle installを実行するとRubygemsにrails 3.1.0.beta’なんて無いと怒られてしまうのでコメントアウトし、コメントアウトされているBundle edge Rails instead以下を有効にします。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># gem &#39;rails&#39;, &#39;3.1.0.beta&#39;</span>
- 
-<span style="color:#75715e"># Bundle edge Rails instead:</span>
-gem <span style="color:#e6db74">&#39;rails&#39;</span>,     <span style="color:#e6db74">:git</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;git://github.com/rails/rails.git&#39;</span>
-gem <span style="color:#e6db74">&#39;arel&#39;</span>,      <span style="color:#e6db74">:git</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;git://github.com/rails/arel.git&#39;</span>
-gem <span style="color:#e6db74">&#39;rack&#39;</span>,      <span style="color:#e6db74">:git</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;git://github.com/rack/rack.git&#39;</span>
-gem <span style="color:#e6db74">&#39;sprockets&#39;</span>, <span style="color:#e6db74">:git</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;git://github.com/sstephenson/sprockets.git&#34;</span>
-</code></pre></div><p>再度bundle installを実行。</p>
-<pre><code>bundle install
-</code></pre><h2 id="scaffoldで生成されたものを覗く">Scaffoldで生成されたものを覗く</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>source <span style="color:#e6db74">&#39;http://rubygems.org&#39;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>gem <span style="color:#e6db74">&#39;rails&#39;</span>, <span style="color:#e6db74">&#39;3.1.0.beta&#39;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Bundle edge Rails instead:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># gem &#39;rails&#39;,     :git =&gt; &#39;git://github.com/rails/rails.git&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># gem &#39;arel&#39;,      :git =&gt; &#39;git://github.com/rails/arel.git&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># gem &#39;rack&#39;,      :git =&gt; &#39;git://github.com/rack/rack.git&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># gem &#39;sprockets&#39;, :git =&gt; &#34;git://github.com/sstephenson/sprockets.git&#34;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>gem <span style="color:#e6db74">&#39;sqlite3&#39;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Asset template engines</span>
+</span></span><span style="display:flex;"><span>gem <span style="color:#e6db74">&#39;sass&#39;</span>, <span style="color:#e6db74">&#39;~&gt; 3.1.0.alpha&#39;</span>
+</span></span><span style="display:flex;"><span>gem <span style="color:#e6db74">&#39;coffee-script&#39;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Use unicorn as the web server</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># gem &#39;unicorn&#39;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Deploy with Capistrano</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># gem &#39;capistrano&#39;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># To use debugger</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># gem &#39;ruby-debug19&#39;, :require =&gt; &#39;ruby-debug&#39;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>group <span style="color:#e6db74">:test</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Pretty printed test output</span>
+</span></span><span style="display:flex;"><span>  gem <span style="color:#e6db74">&#39;turn&#39;</span>, <span style="color:#e6db74">:require</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>相変わらず標準のDBはSQLite3のようです。またsassとcoffee-scriptのgemが書かれていますね。さて、このままbundle installを実行するとRubygemsにrails 3.1.0.beta’なんて無いと怒られてしまうのでコメントアウトし、コメントアウトされているBundle edge Rails instead以下を有効にします。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#75715e"># gem &#39;rails&#39;, &#39;3.1.0.beta&#39;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Bundle edge Rails instead:</span>
+</span></span><span style="display:flex;"><span>gem <span style="color:#e6db74">&#39;rails&#39;</span>,     <span style="color:#e6db74">:git</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;git://github.com/rails/rails.git&#39;</span>
+</span></span><span style="display:flex;"><span>gem <span style="color:#e6db74">&#39;arel&#39;</span>,      <span style="color:#e6db74">:git</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;git://github.com/rails/arel.git&#39;</span>
+</span></span><span style="display:flex;"><span>gem <span style="color:#e6db74">&#39;rack&#39;</span>,      <span style="color:#e6db74">:git</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;git://github.com/rack/rack.git&#39;</span>
+</span></span><span style="display:flex;"><span>gem <span style="color:#e6db74">&#39;sprockets&#39;</span>, <span style="color:#e6db74">:git</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;git://github.com/sstephenson/sprockets.git&#34;</span>
+</span></span></code></pre></div><p>再度bundle installを実行。</p>
+<pre tabindex="0"><code>bundle install
+</code></pre><h2 id="scaffoldで生成されたものを覗く">Scaffoldで生成されたものを覗く<a hidden class="anchor" aria-hidden="true" href="#scaffoldで生成されたものを覗く">#</a></h2>
 <p>実際何が変わったかはScaffoldで生成されたファイルを見てみるのが一番早いと思いますので、適当にジェネレートしてみます。</p>
-<pre><code>$ bundle exec rails g scaffold article subject:string body:text
+<pre tabindex="0"><code>$ bundle exec rails g scaffold article subject:string body:text
       invoke  active_record
       create    db/migrate/20110419121620_create_articles.rb
       create    app/models/article.rb
@@ -335,125 +376,148 @@ gem <span style="color:#e6db74">&#39;sprockets&#39;</span>, <span style="color:#
       create    app/assets/stylesheets/articles.css.scss
 </code></pre><p>現状のRails EdgeだとまだRSpecが標準にはなっていないようです。その代わりapp/assetsというディレクトリが新たに出現していて、その中に.coffeeと.scssなファイルが作られています。</p>
 <p>app/assets/stylesheets/scaffold.css.scssを覗いてみましょう。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scss" data-lang="scss"><span style="color:#f92672">body</span> { <span style="color:#f92672">background-color</span><span style="color:#a6e22e">:</span> #fff; <span style="color:#f92672">color</span><span style="color:#a6e22e">:</span> #333; }
- 
-<span style="color:#f92672">body</span><span style="color:#f92672">,</span> <span style="color:#f92672">p</span><span style="color:#f92672">,</span> <span style="color:#f92672">ol</span><span style="color:#f92672">,</span> <span style="color:#f92672">ul</span><span style="color:#f92672">,</span> <span style="color:#f92672">td</span> {
-  <span style="color:#f92672">font-family</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">verdana</span><span style="color:#f92672">,</span> <span style="color:#f92672">arial</span><span style="color:#f92672">,</span> <span style="color:#f92672">helvetica</span><span style="color:#f92672">,</span> <span style="color:#f92672">sans-serif</span>;
-  <span style="color:#f92672">font-size</span><span style="color:#a6e22e">:</span>   <span style="color:#f92672">13px</span>;
-  <span style="color:#f92672">line-height</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">18px</span>;
-}
- 
-<span style="color:#f92672">pre</span> {
-  <span style="color:#f92672">background-color</span><span style="color:#a6e22e">:</span> #eee;
-  <span style="color:#f92672">padding</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">10px</span>;
-  <span style="color:#f92672">font-size</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">11px</span>;
-}
- 
-<span style="color:#f92672">a</span> { 
-  <span style="color:#f92672">color</span><span style="color:#a6e22e">:</span> #000;
-  <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">:visited</span> { <span style="color:#f92672">color</span><span style="color:#a6e22e">:</span> #666; }
-  <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">:hover</span> { <span style="color:#f92672">color</span><span style="color:#a6e22e">:</span> #fff; <span style="color:#f92672">background-color</span><span style="color:#a6e22e">:</span>#000; }
-}
- 
-<span style="color:#f92672">div</span><span style="color:#a6e22e">.field</span><span style="color:#f92672">,</span> <span style="color:#f92672">div</span><span style="color:#a6e22e">.actions</span> {
-  <span style="color:#f92672">margin-bottom</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">10px</span>;
-}
- 
-#notice {
-  <span style="color:#f92672">color</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">green</span>;
-}
- 
-<span style="color:#a6e22e">.field_with_errors</span> {
-  <span style="color:#f92672">padding</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">2px</span>;
-  <span style="color:#f92672">background-color</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">red</span>;
-  <span style="color:#f92672">display</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">table</span>;
-}
- 
-#error_explanation {
-  <span style="color:#f92672">width</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">450px</span>;
-  <span style="color:#f92672">border</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">2px</span> <span style="color:#f92672">solid</span> <span style="color:#f92672">red</span>;
-  <span style="color:#f92672">padding</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">7px</span>;
-  <span style="color:#f92672">padding-bottom</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">0</span>;
-  <span style="color:#f92672">margin-bottom</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">20px</span>;
-  <span style="color:#f92672">background-color</span><span style="color:#a6e22e">:</span> #f0f0f0;
-  
-  <span style="color:#f92672">h2</span> {
-    <span style="color:#f92672">text-align</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">left</span>;
-    <span style="color:#f92672">font-weight</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">bold</span>;
-    <span style="color:#f92672">padding</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">5px</span> <span style="color:#f92672">5px</span> <span style="color:#f92672">5px</span> <span style="color:#f92672">15px</span>;
-    <span style="color:#f92672">font-size</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">12px</span>;
-    <span style="color:#f92672">margin</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">-7px</span>;
-    <span style="color:#f92672">margin-bottom</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">0px</span>;
-    <span style="color:#f92672">background-color</span><span style="color:#a6e22e">:</span> #c00;
-    <span style="color:#f92672">color</span><span style="color:#a6e22e">:</span> #fff;
-  }
-  
-  <span style="color:#f92672">ul</span> <span style="color:#f92672">li</span> {
-    <span style="color:#f92672">font-size</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">12px</span>;
-    <span style="color:#f92672">list-style</span><span style="color:#a6e22e">:</span> <span style="color:#f92672">square</span>;
-  }
-}
-</code></pre></div><h2 id="まとめ">まとめ</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scss" data-lang="scss"><span style="display:flex;"><span><span style="color:#f92672">body</span> { <span style="color:#a6e22e">background-color</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">#fff</span>; <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">#333</span>; }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">body</span><span style="color:#f92672">,</span> <span style="color:#f92672">p</span><span style="color:#f92672">,</span> <span style="color:#f92672">ol</span><span style="color:#f92672">,</span> <span style="color:#f92672">ul</span><span style="color:#f92672">,</span> <span style="color:#f92672">td</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">font-family</span><span style="color:#f92672">:</span> verdana<span style="color:#f92672">,</span> arial<span style="color:#f92672">,</span> helvetica<span style="color:#f92672">,</span> sans-serif;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">font-size</span><span style="color:#f92672">:</span>   <span style="color:#ae81ff">13</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">line-height</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">18</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">pre</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">background-color</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">#eee</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">padding</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">font-size</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">11</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">a</span> { 
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">#000</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">:visited</span> { <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">#666</span>; }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">:hover</span> { <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">#fff</span>; <span style="color:#a6e22e">background-color</span><span style="color:#f92672">:</span><span style="color:#ae81ff">#000</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">div</span><span style="color:#a6e22e">.field</span><span style="color:#f92672">,</span> <span style="color:#f92672">div</span><span style="color:#a6e22e">.actions</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">margin-bottom</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>#notice {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">green</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">.field_with_errors</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">padding</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">background-color</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">red</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">display</span><span style="color:#f92672">:</span> table;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>#error_explanation {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">width</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">450</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">border</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span><span style="color:#66d9ef">px</span> solid <span style="color:#66d9ef">red</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">padding</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">7</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">padding-bottom</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">margin-bottom</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">background-color</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">#f0f0f0</span>;
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">h2</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">text-align</span><span style="color:#f92672">:</span> left;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">font-weight</span><span style="color:#f92672">:</span> bold;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">padding</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">15</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">font-size</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">12</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">margin</span><span style="color:#f92672">:</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">7</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">margin-bottom</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">background-color</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">#c00</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">#fff</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ul</span> <span style="color:#f92672">li</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">font-size</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">12</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">list-style</span><span style="color:#f92672">:</span> square;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="まとめ">まとめ<a hidden class="anchor" aria-hidden="true" href="#まとめ">#</a></h2>
 <p>今回はRails3.1をインストールし、Scaffoldの生成物を眺めただけです。。。実を言うと、私は最近までCoffeeScriptもSCSSも完全にノーマークでして、両方ともさわり程度しか知りませんでした(^^; 油断するとあっという間に置き去りにされそうです。</p>
 <p>次回はCoffeeScriptとSCSSがどれくらい便利なのか色々触ってみたいと思います（多分）。</p>
 
 
-
-
-      
-        <div class="blog-tags">
-          
-            <a href="https://blog.dakatsuka.jp/tags/ruby.html">Ruby</a
-            >&nbsp;
-          
-            <a href="https://blog.dakatsuka.jp/tags/rails.html">Rails</a
-            >&nbsp;
-          
-        </div>
-      
-    </article>
-    
-    
-      
-
-    
   </div>
 
-    <footer>
-  
-  <div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://blog.dakatsuka.jp/tags/ruby.html">Ruby</a></li>
+      <li><a href="https://blog.dakatsuka.jp/tags/rails.html">Rails</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
     
-      <a href="https://twitter.com/d_akatsuka" name="twitter"
-        ><em class="fab fa-twitter"></em
-      ></a>
-    
-      <a href="https://github.com/dakatsuka" name="github"
-        ><em class="fab fa-github"></em
-      ></a>
-    
-  </div>
-
-
-  <div class="container">
-    <p class="credits copyright">
-      <a href="https://blog.dakatsuka.jp/about">Dai Akatsuka</a>
-      &nbsp;&copy;
-      2021
-      
-        &nbsp;/&nbsp;
-        <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a>
-      
-      &nbsp;&ndash;&nbsp;
-      <em class="fas fa-moon" id="dark-mode-toggle"></em>
-    </p>
-
-    <p class="credits theme-by">
-       <a href="https://gohugo.io">Hugo</a>&nbsp;
-      
-      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
-    </p>
-  </div>
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
 </footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
 
-  </body>
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
 </html>

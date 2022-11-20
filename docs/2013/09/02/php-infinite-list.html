@@ -1,386 +1,452 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8" />
+<html lang="ja" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
 <title>PHPで無限リストを作る | dakatsuka&#39;s blog</title>
+<meta name="keywords" content="PHP">
+<meta name="description" content="PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。 &lt;?php class Stream implements \Iterator { private $position; private $offset; private $limit; public function __construct($offset, $limit = null) { $this-&gt;position = $offset;">
+<meta name="author" content="Dai Akatsuka">
+<link rel="canonical" href="https://blog.dakatsuka.jp/2013/09/02/php-infinite-list.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.bc1149f4a72aa4858d3a9f71462f75e5884ffe8073ea9d6d5761d5663d651e20.css" integrity="sha256-vBFJ9KcqpIWNOp9xRi915YhP/oBz6p1tV2HVZj1lHiA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
 
-  
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-45923728-1');
-  </script>
-  
+            .list {
+                background: var(--theme);
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  href="https://blog.dakatsuka.jp/index.xml"
-  title="dakatsuka&#39;s blog"
-/>
-
-<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
-<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
-<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
-<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
-<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
-<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
-<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
-<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-<link rel="manifest" href="/manifest.json" />
-<meta name="msapplication-TileColor" content="#ffffff" />
-<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-<meta name="theme-color" content="#ffffff" />
-
-<meta property="og:title" content="PHPで無限リストを作る" />
+    </style>
+</noscript>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-45923728-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script><meta property="og:title" content="PHPで無限リストを作る" />
 <meta property="og:description" content="PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。 &lt;?php class Stream implements \Iterator { private $position; private $offset; private $limit; public function __construct($offset, $limit = null) { $this-&gt;position = $offset;" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2013/09/02/php-infinite-list.html" />
-<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/>
+<meta property="og:url" content="https://blog.dakatsuka.jp/2013/09/02/php-infinite-list.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2013-09-02T00:00:00+00:00" />
 <meta property="article:modified_time" content="2013-09-02T00:00:00+00:00" />
 
-
 <meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
+
+<meta name="twitter:title" content="PHPで無限リストを作る"/>
+<meta name="twitter:description" content="PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。 &lt;?php class Stream implements \Iterator { private $position; private $offset; private $limit; public function __construct($offset, $limit = null) { $this-&gt;position = $offset;"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
 
-<link rel="stylesheet" href="https://blog.dakatsuka.jp/fontawesome/css/all.min.css" />
-<link
-  id="dark-mode-theme"
-  rel="stylesheet"
-  href="https://blog.dakatsuka.jp/css/dark.css"
-/>
 
-<script>
-  var darkTheme = document.getElementById('dark-mode-theme')
-  var storedTheme = localStorage.getItem('dark-mode-storage')
-  if (storedTheme === 'dark') {
-    darkTheme.disabled = false
-  } else if (storedTheme === 'light') {
-    darkTheme.disabled = true
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "PHPで無限リストを作る",
+      "item": "https://blog.dakatsuka.jp/2013/09/02/php-infinite-list.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "PHPで無限リストを作る",
+  "name": "PHPで無限リストを作る",
+  "description": "PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。 \u0026lt;?php class Stream implements \\Iterator { private $position; private $offset; private $limit; public function __construct($offset, $limit = null) { $this-\u0026gt;position = $offset;",
+  "keywords": [
+    "PHP"
+  ],
+  "articleBody": "PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。\n\u003c?php class Stream implements \\Iterator { private $position; private $offset; private $limit; public function __construct($offset, $limit = null) { $this-\u003eposition = $offset; $this-\u003eoffset = $offset; $this-\u003elimit = $limit; } public function current() { return $this-\u003eposition; } public function next() { $this-\u003eposition++; } public function valid() { if ($this-\u003elimit \u0026\u0026 $this-\u003eposition \u003e $this-\u003elimit) { return false; } return true; } public function key() { return $this-\u003eposition; } public function rewind() { $this-\u003eposition = $this-\u003eoffset; } public function take($n) { return new \\LimitIterator($this, 0, $n); } } 無限ループさせる。\n\u003c?php $stream = new Stream(0); foreach ($stream as $i) { echo $i . \"\\n\"; } =\u003e // 0 // 1 // 2 // 3 // 4 // . // . 範囲指定してみる。\n\u003c?php $stream = new Stream(50, 55); foreach ($stream as $i) { echo $i . \"\\n\"; } =\u003e // 50 // 51 // 52 // 53 // 54 // 54 LimitIteratorを使えば無限リストから必要な数だけ取り出すことが出来ます。今回はtakeメソッドでラップしました。\n\u003c?php $stream = new Stream(0); foreach ($stream-\u003etake(5) as $i) { echo $i . \"\\n\"; } =\u003e // 0 // 1 // 2 // 3 // 4 しかしこれだけだとあまり使い道がないので、せめてmap機能は欲しい気がしますね。イテレータオブジェクトにはarray_系の関数が使えませんので、LazyMapIteratorを作ってみます。\n\u003c?php class LazyMapIterator implements \\Iterator { protected $iterator; protected $callback; public function __construct(\\Iterator $iterator, callable $callback) { $this-\u003eiterator = $iterator; $this-\u003ecallback = $callback; } public function getIterator() { return $this-\u003eiterator; } public function current(){ $f = $this-\u003ecallback; return $f($this-\u003eiterator-\u003ecurrent()); } public function next() { $this-\u003eiterator-\u003enext(); } public function key() { return $this-\u003eiterator-\u003ekey(); } public function valid() { return $this-\u003eiterator-\u003evalid(); } public function rewind() { $this-\u003eiterator-\u003erewind(); } } Streamクラスにmapメソッドを生やします。\n\u003c?php public function map(callable $f) { return new LazyMapIterator($this, $f); } mapメソッドを使ってみます。\n\u003c?php $stream = new Stream(1, 5); $result = $stream-\u003emap(function($i) { return $i * 10; }); var_dump(iterator_to_array($result)); array(5) { [1] =\u003e int(10) [2] =\u003e int(20) [3] =\u003e int(30) [4] =\u003e int(40) [5] =\u003e int(50) } ちなみにPHPはSPLで色々なイテレータが用意されていますので、PHPの残念な配列操作にイラついている方は是非覗いてみてください（CallbackFilterIteratorを使えばfilter機能もすぐ実装できます）\n",
+  "wordCount" : "653",
+  "inLanguage": "ja",
+  "datePublished": "2013-09-02T00:00:00Z",
+  "dateModified": "2013-09-02T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Dai Akatsuka"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.dakatsuka.jp/2013/09/02/php-infinite-list.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "dakatsuka's blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.dakatsuka.jp/favicon.ico"
+    }
   }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
 </script>
 
-<script src="https://blog.dakatsuka.jp/js/bundle.js"></script>
-<script src="https://blog.dakatsuka.jp/js/instantpage.min.js" type="module" defer></script>
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.dakatsuka.jp/" accesskey="h" title="dakatsuka&#39;s blog (Alt + H)">dakatsuka&#39;s blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://blog.dakatsuka.jp/about.html" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.dakatsuka.jp/archives.html" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.dakatsuka.jp/tags.html" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
 
-  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
-
-<meta name="generator" content="Hugo 0.80.0-DEV" />
-
-
-  </head>
-  <body>
+<article class="post-single">
+  <header class="post-header">
     
-  
+    <h1 class="post-title">
+      PHPで無限リストを作る
+    </h1>
+    <div class="post-meta"><span title='2013-09-02 00:00:00 +0000 UTC'>2013/9/2</span>&nbsp;·&nbsp;Dai Akatsuka
+
+</div>
+  </header> 
+  <div class="post-content"><p>PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Stream</span> <span style="color:#66d9ef">implements</span> <span style="color:#a6e22e">\Iterator</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> $position;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> $offset;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> $limit;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct($offset, $limit <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">position</span> <span style="color:#f92672">=</span> $offset;
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">offset</span>   <span style="color:#f92672">=</span> $offset;
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">limit</span>    <span style="color:#f92672">=</span> $limit;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">current</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">position</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">next</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">position</span><span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">valid</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">limit</span> <span style="color:#f92672">&amp;&amp;</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">position</span> <span style="color:#f92672">&gt;</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">limit</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">key</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">position</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">rewind</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">position</span> <span style="color:#f92672">=</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">offset</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">take</span>($n)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\LimitIterator</span>($this, <span style="color:#ae81ff">0</span>, $n);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>無限ループさせる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>$stream <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Stream</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">foreach</span> ($stream <span style="color:#66d9ef">as</span> $i) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> $i <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;   
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 3
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 4
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// .
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// .
+</span></span></span></code></pre></div><p>範囲指定してみる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>$stream <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Stream</span>(<span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">55</span>);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">foreach</span> ($stream <span style="color:#66d9ef">as</span> $i) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> $i <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 50
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 51
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 52
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 53
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 54
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 54
+</span></span></span></code></pre></div><p>LimitIteratorを使えば無限リストから必要な数だけ取り出すことが出来ます。今回はtakeメソッドでラップしました。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>$stream <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Stream</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">foreach</span> ($stream<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">take</span>(<span style="color:#ae81ff">5</span>) <span style="color:#66d9ef">as</span> $i) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> $i <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 3
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 4
+</span></span></span></code></pre></div><p>しかしこれだけだとあまり使い道がないので、せめてmap機能は欲しい気がしますね。イテレータオブジェクトにはarray_系の関数が使えませんので、LazyMapIteratorを作ってみます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LazyMapIterator</span> <span style="color:#66d9ef">implements</span> <span style="color:#a6e22e">\Iterator</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> $iterator;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> $callback;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct(<span style="color:#a6e22e">\Iterator</span> $iterator, <span style="color:#a6e22e">callable</span> $callback)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">iterator</span> <span style="color:#f92672">=</span> $iterator;
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">callback</span> <span style="color:#f92672">=</span> $callback;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getIterator</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">iterator</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">current</span>(){
+</span></span><span style="display:flex;"><span>        $f <span style="color:#f92672">=</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">callback</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $f($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">current</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">next</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">next</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">key</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">key</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">valid</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">valid</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">rewind</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">rewind</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Streamクラスにmapメソッドを生やします。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">callable</span> $f)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">LazyMapIterator</span>($this, $f);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>mapメソッドを使ってみます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>$stream <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Stream</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>);
+</span></span><span style="display:flex;"><span>$result <span style="color:#f92672">=</span> $stream<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">map</span>(<span style="color:#66d9ef">function</span>($i) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> $i <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">var_dump</span>(<span style="color:#a6e22e">iterator_to_array</span>($result));
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">array</span>(<span style="color:#ae81ff">5</span>) {
+</span></span><span style="display:flex;"><span>  [<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">int</span>(<span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>  [<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">int</span>(<span style="color:#ae81ff">20</span>)
+</span></span><span style="display:flex;"><span>  [<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">int</span>(<span style="color:#ae81ff">30</span>)
+</span></span><span style="display:flex;"><span>  [<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">int</span>(<span style="color:#ae81ff">40</span>)
+</span></span><span style="display:flex;"><span>  [<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">int</span>(<span style="color:#ae81ff">50</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>ちなみにPHPはSPLで色々なイテレータが用意されていますので、PHPの残念な配列操作にイラついている方は是非覗いてみてください（CallbackFilterIteratorを使えばfilter機能もすぐ実装できます）</p>
 
 
+  </div>
 
-
-  <header>
-    <nav class="navbar">
-  <div class="nav">
-    
-      <a href="https://blog.dakatsuka.jp/" class="nav-logo">
-        <img
-          src="https://blog.dakatsuka.jp/images/logo.png"
-          width="80"
-          height="80"
-          alt="logo"
-        />
-      </a>
-    
-
-    <ul class="nav-links">
-      
-        
-          <li>
-            <a href="/about.html" id="About"
-              ><em class="fas fa-user fa-lg"></em
-            ></a>
-          </li>
-          
-      
-        
-          <li>
-            <a href="/tags.html" id="Tags"
-              ><em class="fas fa-tag fa-lg"></em
-            ></a>
-          </li>
-          
-      
-        
-          <li>
-            <a href="/archives.html" id="Archives"
-              ><em class="fas fa-archive fa-lg"></em
-            ></a>
-          </li>
-          
-      
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://blog.dakatsuka.jp/tags/php.html">PHP</a></li>
     </ul>
-  </div>
-</nav>
-
-    <div class="intro-header">
-      <div class="container">
-        <div class="post-heading">
-          
-            <h1>
-              PHPで無限リストを作る
-            </h1>
-          
-          
-            <span class="meta-post">
-  <em class="fa fa-calendar-alt"></em
-  >&nbsp;Sep 2, 2013
-  
-</span>
-
-          
-        </div>
-      </div>
-    </div>
-  </header>
-  
-
+  </footer>
+</article>
+    </main>
     
-  <div class="container" role="main">
-    <article class="article" class="blog-post">
-      
-  <p>PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
- 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Stream</span> <span style="color:#66d9ef">implements</span> <span style="color:#a6e22e">\Iterator</span>
-{
-    <span style="color:#66d9ef">private</span> $position;
-    <span style="color:#66d9ef">private</span> $offset;
-    <span style="color:#66d9ef">private</span> $limit;
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct($offset, $limit <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>)
-    {
-        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">position</span> <span style="color:#f92672">=</span> $offset;
-        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">offset</span>   <span style="color:#f92672">=</span> $offset;
-        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">limit</span>    <span style="color:#f92672">=</span> $limit;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">current</span>()
-    {
-        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">position</span>;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">next</span>()
-    {
-        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">position</span><span style="color:#f92672">++</span>;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">valid</span>()
-    {
-        <span style="color:#66d9ef">if</span> ($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">limit</span> <span style="color:#f92672">&amp;&amp;</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">position</span> <span style="color:#f92672">&gt;</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">limit</span>) {
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-        }
- 
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">key</span>()
-    {
-        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">position</span>;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">rewind</span>()
-    {
-        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">position</span> <span style="color:#f92672">=</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">offset</span>;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">take</span>($n)
-    {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\LimitIterator</span>($this, <span style="color:#ae81ff">0</span>, $n);
-    }
-}
-</code></pre></div><p>無限ループさせる。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-$stream <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Stream</span>(<span style="color:#ae81ff">0</span>);
- 
-<span style="color:#66d9ef">foreach</span> ($stream <span style="color:#66d9ef">as</span> $i) {
-    <span style="color:#66d9ef">echo</span> $i <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;   
-}
-
-<span style="color:#f92672">=&gt;</span>
-<span style="color:#75715e">// 0
-</span><span style="color:#75715e">// 1
-</span><span style="color:#75715e">// 2
-</span><span style="color:#75715e">// 3
-</span><span style="color:#75715e">// 4
-</span><span style="color:#75715e">// .
-</span><span style="color:#75715e">// .
-</span></code></pre></div><p>範囲指定してみる。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-$stream <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Stream</span>(<span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">55</span>);
- 
-<span style="color:#66d9ef">foreach</span> ($stream <span style="color:#66d9ef">as</span> $i) {
-    <span style="color:#66d9ef">echo</span> $i <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
-}
- 
-<span style="color:#f92672">=&gt;</span>
-<span style="color:#75715e">// 50
-</span><span style="color:#75715e">// 51
-</span><span style="color:#75715e">// 52
-</span><span style="color:#75715e">// 53
-</span><span style="color:#75715e">// 54
-</span><span style="color:#75715e">// 54
-</span></code></pre></div><p>LimitIteratorを使えば無限リストから必要な数だけ取り出すことが出来ます。今回はtakeメソッドでラップしました。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-$stream <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Stream</span>(<span style="color:#ae81ff">0</span>);
- 
-<span style="color:#66d9ef">foreach</span> ($stream<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">take</span>(<span style="color:#ae81ff">5</span>) <span style="color:#66d9ef">as</span> $i) {
-    <span style="color:#66d9ef">echo</span> $i <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
-}
- 
-<span style="color:#f92672">=&gt;</span>
-<span style="color:#75715e">// 0
-</span><span style="color:#75715e">// 1
-</span><span style="color:#75715e">// 2
-</span><span style="color:#75715e">// 3
-</span><span style="color:#75715e">// 4
-</span></code></pre></div><p>しかしこれだけだとあまり使い道がないので、せめてmap機能は欲しい気がしますね。イテレータオブジェクトにはarray_系の関数が使えませんので、LazyMapIteratorを作ってみます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LazyMapIterator</span> <span style="color:#66d9ef">implements</span> <span style="color:#a6e22e">\Iterator</span>
-{
-    <span style="color:#66d9ef">protected</span> $iterator;
-    <span style="color:#66d9ef">protected</span> $callback;
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct(<span style="color:#a6e22e">\Iterator</span> $iterator, <span style="color:#a6e22e">callable</span> $callback)
-    {
-        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">iterator</span> <span style="color:#f92672">=</span> $iterator;
-        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">callback</span> <span style="color:#f92672">=</span> $callback;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getIterator</span>()
-    {
-        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">iterator</span>;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">current</span>(){
-        $f <span style="color:#f92672">=</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">callback</span>;
-        <span style="color:#66d9ef">return</span> $f($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">current</span>());
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">next</span>()
-    {
-        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">next</span>();
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">key</span>()
-    {
-        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">key</span>();
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">valid</span>()
-    {
-        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">valid</span>();
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">rewind</span>()
-    {
-        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">rewind</span>();
-    }
-}
-</code></pre></div><p>Streamクラスにmapメソッドを生やします。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">callable</span> $f)
-{
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">LazyMapIterator</span>($this, $f);
-}
-</code></pre></div><p>mapメソッドを使ってみます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-$stream <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Stream</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>);
-$result <span style="color:#f92672">=</span> $stream<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">map</span>(<span style="color:#66d9ef">function</span>($i) {
-    <span style="color:#66d9ef">return</span> $i <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span>;
-});
- 
-<span style="color:#a6e22e">var_dump</span>(<span style="color:#a6e22e">iterator_to_array</span>($result));
- 
-<span style="color:#66d9ef">array</span>(<span style="color:#ae81ff">5</span>) {
-  [<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=&gt;</span>
-  <span style="color:#a6e22e">int</span>(<span style="color:#ae81ff">10</span>)
-  [<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=&gt;</span>
-  <span style="color:#a6e22e">int</span>(<span style="color:#ae81ff">20</span>)
-  [<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=&gt;</span>
-  <span style="color:#a6e22e">int</span>(<span style="color:#ae81ff">30</span>)
-  [<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=&gt;</span>
-  <span style="color:#a6e22e">int</span>(<span style="color:#ae81ff">40</span>)
-  [<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=&gt;</span>
-  <span style="color:#a6e22e">int</span>(<span style="color:#ae81ff">50</span>)
-}
-</code></pre></div><p>ちなみにPHPはSPLで色々なイテレータが用意されていますので、PHPの残念な配列操作にイラついている方は是非覗いてみてください（CallbackFilterIteratorを使えばfilter機能もすぐ実装できます）</p>
-
-
-
-
-      
-        <div class="blog-tags">
-          
-            <a href="https://blog.dakatsuka.jp/tags/php.html">PHP</a
-            >&nbsp;
-          
-        </div>
-      
-    </article>
-    
-    
-      
-
-    
-  </div>
-
-    <footer>
-  
-  <div>
-    
-      <a href="https://twitter.com/d_akatsuka" name="twitter"
-        ><em class="fab fa-twitter"></em
-      ></a>
-    
-      <a href="https://github.com/dakatsuka" name="github"
-        ><em class="fab fa-github"></em
-      ></a>
-    
-  </div>
-
-
-  <div class="container">
-    <p class="credits copyright">
-      <a href="https://blog.dakatsuka.jp/about">Dai Akatsuka</a>
-      &nbsp;&copy;
-      2021
-      
-        &nbsp;/&nbsp;
-        <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a>
-      
-      &nbsp;&ndash;&nbsp;
-      <em class="fas fa-moon" id="dark-mode-toggle"></em>
-    </p>
-
-    <p class="credits theme-by">
-       <a href="https://gohugo.io">Hugo</a>&nbsp;
-      
-      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
-    </p>
-  </div>
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
 </footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
 
-  </body>
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
 </html>

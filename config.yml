@@ -1,0 +1,68 @@
+theme: "PaperMod"
+baseurl: "https://blog.dakatsuka.jp/"
+title: "dakatsuka's blog"
+paginate: 5
+languageCode: "ja"
+DefaultContentLanguage: "ja"
+hasCJKLanguage: true
+enableInlineShortcodes: true
+footnoteReturnLinkContents: "^"
+uglyurls: true
+
+publishDir: "docs"
+
+googleAnalytics: "UA-45923728-1"
+
+permalinks:
+  post: "/:year/:month/:day/:slug"
+
+outputs:
+  section: ["JSON", "HTML"]
+
+Social:
+  twitter: d_akatsuka
+
+params:
+  env: production
+  author: "Dai Akatsuka"
+  DateFormat: "2006/1/2"
+  images:
+    - "images/card.png"
+  twitterId: "@d_akatsuka"
+  profileMode:
+    enabled: true
+    title: Hi&#x1f92a;
+    imageUrl: "/images/logo.png"
+    imageWidth: 120
+    imageHeight: 120
+    buttons:
+      - name: About
+        url: "/about.html"
+      - name: Archives
+        url: "/archives.html"
+      - name: Tags
+        url: "/tags.html"
+  socialIcons:
+    - name: twitter
+      url: "http://twitter.com/d_akatsuka"
+    - name: facebook
+      url: "http://facebook.com/dai.akatsuka"
+    - name: github
+      url: "http://github.com/dakatsuka"
+  assets:
+    apple_touch_icon: "/apple-icon-180x180.png"
+
+menu:
+  main:
+    - identifier: about
+      name: About
+      url: /about.html"
+      weight: 10
+    - identifier: archives
+      name: Archives
+      url: /archives.html"
+      weight: 20
+    - identifier: tags
+      name: Tags
+      url: /tags.html"
+      weight: 30

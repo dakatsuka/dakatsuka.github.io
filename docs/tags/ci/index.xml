@@ -4,13 +4,10 @@
     <title>CI on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/ci.html</link>
     <description>Recent content in CI on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Sat, 22 Aug 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/ci/index.xml" rel="self" type="application/rss+xml" />
@@ -21,31 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2015/08/22/elasticsearch-on-circleci.html</guid>
       <description>CircleCIでElasticsearchの最新版とKuromojiを使うならDockerが便利だった。circle.ymlでwgetして</description>
-      <content:encoded>&lt;p&gt;CircleCIでElasticsearchの最新版とKuromojiを使うならDockerが便利だった。circle.ymlでwgetして頑張るよりは&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;こちらのほうがスマートだし、ここで用意したDockerfileはCI以外でも使える。&lt;/p&gt;
-&lt;p&gt;下記コードをcontainers/elasticsearch/Dockerfileに保存する。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Dockerfile&#34; data-lang=&#34;Dockerfile&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; elasticsearch:1.7.1&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;RUN&lt;/span&gt; plugin install mobz/elasticsearch-head&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;RUN&lt;/span&gt; plugin install elasticsearch/elasticsearch-analysis-kuromoji/2.7.0&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;circle.ymlでDockerを有効化して、dependenciesでコンテナを起動するだけ。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;machine&lt;/span&gt;:
-  &lt;span style=&#34;color:#f92672&#34;&gt;services&lt;/span&gt;:
-    - &lt;span style=&#34;color:#ae81ff&#34;&gt;docker&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;dependencies&lt;/span&gt;:
-  &lt;span style=&#34;color:#f92672&#34;&gt;override&lt;/span&gt;:
-    - &lt;span style=&#34;color:#ae81ff&#34;&gt;docker build -t foobar/elasticsearch:1.7.1 ./containers/elasticsearch&lt;/span&gt;
-    - &lt;span style=&#34;color:#ae81ff&#34;&gt;docker run -d -p 9200:9200 -p 9300:9300 foobar/elasticsearch:1.7.1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;で、このエントリを書いている最中に &lt;a href=&#34;https://github.com/circleci/docker-elasticsearch&#34;&gt;https://github.com/circleci/docker-elasticsearch&lt;/a&gt; そのものズバリのリポジトリを発見した。こちらのほうがイメージのキャッシュまでしているので参考になると思う。&lt;/p&gt;
-&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
-&lt;p&gt;&lt;a href=&#34;https://circleci.com/docs/installing-elasticsearch&#34;&gt;Install a custom version of Elasticsearch&lt;/a&gt; &lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/section&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -55,25 +27,6 @@
       
       <guid>https://blog.dakatsuka.jp/2015/01/28/use-packer-on-circleci.html</guid>
       <description>コンテナ起動後にLinux版Packerをダウンロードして、パスの通っている場所に配置すれば動く。毎回Packerをダウンロードするのは無駄</description>
-      <content:encoded>&lt;p&gt;コンテナ起動後にLinux版Packerをダウンロードして、パスの通っている場所に配置すれば動く。毎回Packerをダウンロードするのは無駄なのでキャッシュしておく。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# circle.yml&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;machine&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;post&lt;/span&gt;:
-      - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;if [[ ! -e ~/packer ]]; then cd ~ &amp;amp;&amp;amp; wget --no-check-certificate https://dl.bintray.com/mitchellh/packer/packer_0.7.5_linux_amd64.zip &amp;amp;&amp;amp; unzip -d packer packer_0.7.5_linux_amd64.zip ;fi&amp;#34;&lt;/span&gt;
-      - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;if [[ ! -e ~/bin/packer ]]; then ln -s ~/packer/packer ~/bin/packer ;fi&amp;#34;&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;dependencies&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;cache_directories&lt;/span&gt;:
-      - &lt;span style=&#34;color:#ae81ff&#34;&gt;~/packer&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;deployment&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;production&lt;/span&gt;:
-        &lt;span style=&#34;color:#f92672&#34;&gt;branch&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;deployment/production&lt;/span&gt;
-        &lt;span style=&#34;color:#f92672&#34;&gt;commands&lt;/span&gt;:
-            - &lt;span style=&#34;color:#ae81ff&#34;&gt;packer build amazon-ebs.json&lt;/span&gt;
-                  &lt;span style=&#34;color:#f92672&#34;&gt;timeout&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;600&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;AMIの作成は時間がかかるので、念のためタイムアウトの閾値は上げておいたほうが安心。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -83,34 +36,6 @@
       
       <guid>https://blog.dakatsuka.jp/2014/08/24/play2-on-circleci.html</guid>
       <description>Play framework 2.3 (Scala版）で開発しているアプリをTravis ProでCIしていたのだけど、ビルド時間がネックになってきたのでインスタンス性能が高</description>
-      <content:encoded>&lt;p&gt;Play framework 2.3 (Scala版）で開発しているアプリをTravis ProでCIしていたのだけど、ビルド時間がネックになってきたのでインスタンス性能が高いと噂のCircleCIに移行することにした。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://circleci.com/docs/languages&#34;&gt;CircleCIの対応言語&lt;/a&gt;の中にScalaは入っていないが、Javaが使えるので特に問題はない（何故かちょっと古いsbtが入っていたのでexperimental扱いなのかな？）&lt;/p&gt;
-&lt;p&gt;circle.ymlは下記のようにしてる。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;dependencies&lt;/span&gt;:
-  &lt;span style=&#34;color:#f92672&#34;&gt;cache_directories&lt;/span&gt;:
-    - &lt;span style=&#34;color:#ae81ff&#34;&gt;~/.m2&lt;/span&gt;
-    - &lt;span style=&#34;color:#ae81ff&#34;&gt;~/.ivy2&lt;/span&gt;
-    - &lt;span style=&#34;color:#ae81ff&#34;&gt;~/.sbt&lt;/span&gt;
-
-  &lt;span style=&#34;color:#f92672&#34;&gt;override&lt;/span&gt;:
-    - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;./activator update&amp;#34;&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;database&lt;/span&gt;:
-  &lt;span style=&#34;color:#f92672&#34;&gt;override&lt;/span&gt;:
-    - &lt;span style=&#34;color:#ae81ff&#34;&gt;cp ./conf/test.conf.circleci ./conf/test.conf&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;test&lt;/span&gt;:
-  &lt;span style=&#34;color:#f92672&#34;&gt;override&lt;/span&gt;:
-    - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;./activator clean test&amp;#34;&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;deployment&lt;/span&gt;:
-  &lt;span style=&#34;color:#f92672&#34;&gt;development&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;branch&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;master&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;commands&lt;/span&gt;:
-      - &lt;span style=&#34;color:#ae81ff&#34;&gt;pip install -r requirements.txt&lt;/span&gt;
-      - &lt;span style=&#34;color:#ae81ff&#34;&gt;fab dev deploy&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Travis ProからCircleCIに移行して、CIにかかる時間が4分の1に短縮されて満足度高い。&lt;/p&gt;
-</content:encoded>
     </item>
     
   </channel>

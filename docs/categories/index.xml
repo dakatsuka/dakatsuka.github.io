@@ -4,13 +4,10 @@
     <title>Categories on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/categories.html</link>
     <description>Recent content in Categories on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Mon, 11 Jan 2021 19:20:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/categories/index.xml" rel="self" type="application/rss+xml" />
@@ -21,7 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/categories/programming.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -31,7 +27,6 @@
       
       <guid>https://blog.dakatsuka.jp/categories/uncategorized.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -41,7 +36,6 @@
       
       <guid>https://blog.dakatsuka.jp/categories/devops.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
   </channel>

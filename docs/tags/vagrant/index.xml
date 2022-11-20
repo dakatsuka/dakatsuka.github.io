@@ -4,13 +4,10 @@
     <title>Vagrant on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/vagrant.html</link>
     <description>Recent content in Vagrant on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Thu, 24 Apr 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/vagrant/index.xml" rel="self" type="application/rss+xml" />
@@ -21,144 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2014/04/24/vagrant-hdd-resize.html</guid>
       <description>前提条件 Vagrant BoxがファイルシステムにLVM + ext3/4を使っていること。今回はVagrantbox.esで配布されているDebian Whe</description>
-      <content:encoded>&lt;h2 id=&#34;前提条件&#34;&gt;前提条件&lt;/h2&gt;
-&lt;p&gt;Vagrant BoxがファイルシステムにLVM + ext3/4を使っていること。今回はVagrantbox.esで配布されているDebian Wheezyを利用した。&lt;/p&gt;
-&lt;h2 id=&#34;仮想ディスクを拡張する&#34;&gt;仮想ディスクを拡張する&lt;/h2&gt;
-&lt;p&gt;VMDK形式だとサイズを変更することが出来ないのでVDI形式に変換する必要がある。リサイズが完了したらVirtualBoxのVMの設定画面でHDDをVDIのほうに差し替えておく。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ cd ~/VirtualBox\ VMs/vagrant_default_xxxxx_xxxxx
-$ VBoxManage clonehd box-disk1.vmdk box-disk1.vdi --format VDI
-$ VBoxManage modifyhd box-disk1.vdi --resize 20480
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;パーティションテーブルを変更する&#34;&gt;パーティションテーブルを変更する&lt;/h2&gt;
-&lt;p&gt;ここからはゲスト側での操作。&lt;/p&gt;
-&lt;p&gt;fdiskで/dev/sdaの容量が増えている事を確認する。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sudo fdisk -l
-
-Disk /dev/sda: 21.5 GB, 21474836480 bytes
-255 heads, 63 sectors/track, 2610 cylinders, total 41943040 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0x000e1fac
-
-   Device Boot      Start         End      Blocks   Id  System
-/dev/sda1   *        2048      499711      248832   83  Linux
-/dev/sda2          501758    20764671    10131457    5  Extended
-/dev/sda5          501760    20764671    10131456   8e  Linux LVM
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;/dev/sda2と/dev/sda5の情報を一度削除して再定義する。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sudo fdisk /dev/sda
-
-Command (m for help): d
-Partition number (1-5): 5
-
-Command (m for help): d
-Partition number (1-5): 2
-
-Command (m for help): n
-Partition type:
-   p   primary (1 primary, 0 extended, 3 free)
-   e   extended
-Select (default p): e
-Partition number (1-4, default 2):
-First sector (499712-41943039, default 499712):
-Using default value 499712
-Last sector, +sectors or +size{K,M,G} (499712-41943039, default 41943039):
-Using default value 41943039
-
-Command (m for help): n
-Partition type:
-   p   primary (1 primary, 1 extended, 2 free)
-   l   logical (numbered from 5)
-Select (default p): l
-Adding logical partition 5
-First sector (501760-41943039, default 501760):
-Using default value 501760
-Last sector, +sectors or +size{K,M,G} (501760-41943039, default 41943039):
-Using default value 41943039
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;再定義できているか確認する。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Command (m for help): p
-
-Disk /dev/sda: 21.5 GB, 21474836480 bytes
-255 heads, 63 sectors/track, 2610 cylinders, total 41943040 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0x000e1fac
-
-   Device Boot      Start         End      Blocks   Id  System
-/dev/sda1   *        2048      499711      248832   83  Linux
-/dev/sda2          499712    41943039    20721664    5  Extended
-/dev/sda5          501760    41943039    20720640   83  Linux
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;/dev/sda5をLinux LVMに変更する。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Command (m for help): t
-Partition number (1-5): 5
-Hex code (type L to list codes): 8e
-Changed system type of partition 5 to 8e (Linux LVM)
-
-Command (m for help): p
-
-Disk /dev/sda: 21.5 GB, 21474836480 bytes
-255 heads, 63 sectors/track, 2610 cylinders, total 41943040 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0x000e1fac
-
-   Device Boot      Start         End      Blocks   Id  System
-/dev/sda1   *        2048      499711      248832   83  Linux
-/dev/sda2          499712    41943039    20721664    5  Extended
-/dev/sda5          501760    41943039    20720640   8e  Linux LVM
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;変更を保存するして再起動する。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Command (m for help): wq
-The partition table has been altered!
-
-Calling ioctl() to re-read partition table.
-
-WARNING: Re-reading the partition table failed with error 16: Device or resource busy.
-The kernel still uses the old table. The new table will be used at
-the next reboot or after you run partprobe(8) or kpartx(8)
-Syncing disks.
-
-$ sudo shutdown -r now
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;lvmの設定をする&#34;&gt;LVMの設定をする&lt;/h2&gt;
-&lt;p&gt;pvresizeで物理ボリューム /dev/sda5 をリサイズする。pvscanでちゃんと容量が増えていることを確認する。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sudo pvresize /dev/sda5
-  Physical volume &amp;quot;/dev/sda5&amp;quot; changed
-  1 physical volume(s) resized / 0 physical volume(s) not resized
-
-$ sudo pvscan
-  PV /dev/sda5   VG debian-7   lvm2 [19.76 GiB / 10.10 GiB free]
-  Total: 1 [19.76 GiB] / in use: 1 [19.76 GiB] / in no VG: 0 [0   ]
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;次に論理ボリュームをリサイズする。論理ボリューム名はlvscanで確認できる。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sudo lvscan
-  ACTIVE            &#39;/dev/debian-7/root&#39; [9.21 GiB] inherit
-  ACTIVE            &#39;/dev/debian-7/swap_1&#39; [456.00 MiB] inherit
-
-$ sudo lvresize -l +100%FREE /dev/debian-7/root
-  Extending logical volume root to 19.31 GiB
-  Logical volume root successfully resized
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;再度lvscanで容量が増えているか確認する。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sudo lvscan
-  ACTIVE            &#39;/dev/debian-7/root&#39; [19.31 GiB] inherit
-  ACTIVE            &#39;/dev/debian-7/swap_1&#39; [456.00 MiB] inherit
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;ファイルシステムをリサイズする&#34;&gt;ファイルシステムをリサイズする&lt;/h2&gt;
-&lt;p&gt;resize2fsを使ってファイルシステムをリサイズする。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sudo resize2fs /dev/debian-7/root
-resize2fs 1.42.5 (29-Jul-2012)
-Filesystem at /dev/debian-7/root is mounted on /; on-line resizing required
-old_desc_blocks = 1, new_desc_blocks = 2
-Performing an on-line resize of /dev/debian-7/root to 5062656 (4k) blocks.
-The filesystem on /dev/debian-7/root is now 5062656 blocks long.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;dfで容量が増えていれば完了！&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ df
-Filesystem                 1K-blocks    Used Available Use% Mounted on
-rootfs                      19932432 7272316  11649560  39% /
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://stackoverflow.com/questions/11659005/how-to-resize-a-virtualbox-vmdk-file&#34;&gt;How to resize a VirtualBox vmdk file - Stack Overflow&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://askubuntu.com/questions/317338/how-can-i-increase-disk-size-on-a-vagrant-vm&#34;&gt;virtualbox - How can I increase disk size on a Vagrant VM? - Ask Ubuntu&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://access.redhat.com/site/documentation/ja-JP/Red_Hat_Enterprise_Linux/6/html/Logical_Volume_Manager_Administration/LV.html&#34;&gt;論理ボリュームの管理&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
     </item>
     
   </channel>

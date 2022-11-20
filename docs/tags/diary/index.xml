@@ -4,13 +4,10 @@
     <title>Diary on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/diary.html</link>
     <description>Recent content in Diary on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Sun, 01 Jan 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/diary/index.xml" rel="self" type="application/rss+xml" />
@@ -21,26 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</guid>
       <description>あけましておめでとうございます。去年のうちに書くのをすっかり忘れていましたが、流行り？に乗って買ってよかったものをまとめておきます。あまり人</description>
-      <content:encoded>&lt;p&gt;あけましておめでとうございます。去年のうちに書くのをすっかり忘れていましたが、流行り？に乗って買ってよかったものをまとめておきます。あまり人にすすめられるものではないので完全にチラシの裏という感じです。&lt;/p&gt;
-&lt;p&gt;書いてて気付いたのだけど散財しすぎなので今年は節約を心がける所存。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;Canon EOS M2とFUJIFILM X-E2とRICOH GRを持っていたのだけど、当然のようにそんなに持っていても使いこなせるわけがなかった。そこでFUJINONレンズを残して全て売却。2月に新発売したFUJIFILM X-Pro2を購入して一本化しました。&lt;/p&gt;
-&lt;p&gt;旅行が好きなので旅先で写真をたくさん撮ったりして活躍中。2016年後半は仕事が忙しくて防湿庫で眠りっぱなしになっていたので、もう少し稼働率を上げたいところ。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;X-Pro2買ってしばらくしてから購入。元々XF35mm F1.4のほうを持っていたけどこの小ささに惹かれた。見た目的にもX-Pro2にとても似合う。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;我が家の洗濯事情に革命が起きた。結婚した時に買った洗濯機が壊れたので仕方なく買い替えという感じなのだけど、もっと早く買い替えておけば良かったと後悔。これは便利だ。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;会社で薦められて半ば衝動買いした。会社内でも自分と同じように衝動買いした人が数名いるくらいには評判が良い。音質面では今一歩と感じるとこはあるけれど、仕事に集中したい時や新幹線、飛行機などでゆっくり音楽を聞きたいという人には最高なアイテムだと思う。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;もともと会社に置いてあったものが壊れたので同じ機種を再度買った。よく投げるメンバーで出し合って買ったので共同所有って感じだけど、ScalaのコンパイルやCI待ってる間の微妙な時間を潰すのに最適です。身体を動かすとまではいかないけど、席を立つので足腰や血流にも良くて頭もリフレッシュするので個人的には◎&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;映画「オデッセイ」の原作。すらすら読めるので映画を観た人も観ていない人にもおすすめ。とか言っておいて自分は映画観てないですが。。。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;少年の青春時代、主に夏休みの出来事が書かれた短編小説…という体をしたミステリー小説です。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;ポケモンは安定して面白い。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -50,60 +27,6 @@
       
       <guid>https://blog.dakatsuka.jp/2015/12/30/lookback.html</guid>
       <description>仕事全般 2013年にA社を退職したあと、しばらくフリーランスをやっていたのだけど、紆余曲折あって2014年の途中から古巣に戻って、現場でコー</description>
-      <content:encoded>&lt;h2 id=&#34;仕事全般&#34;&gt;仕事全般&lt;/h2&gt;
-&lt;p&gt;2013年に&lt;a href=&#34;https://blog.dakatsuka.jp/2013/11/26/resignation.html&#34;&gt;A社を退職した&lt;/a&gt;あと、しばらくフリーランスをやっていたのだけど、紆余曲折あって2014年の途中から&lt;a href=&#34;http://fzl.co.jp&#34;&gt;古巣&lt;/a&gt;に戻って、現場でコードも書きつつ経営にもコミットしてました。良いこともあったし盛大に失敗したこともあったけど、そこそこ充実してた1年だった気がする。&lt;/p&gt;
-&lt;figure&gt;
-    &lt;img src=&#34;https://blog.dakatsuka.jp/media/2015-12-30-lookback/2015-github-contributions.png&#34;/&gt; 
-&lt;/figure&gt;
-
-&lt;p&gt;毎日コードを書く…というのは残念ながら無理だった。が、自分が書かなくても仕事がまわる状況になってきたという意味では正しいかたちなのかもしれない。&lt;/p&gt;
-&lt;p&gt;来年はもう少しプライベートでコードを書く機会を増やしたい。&lt;/p&gt;
-&lt;h2 id=&#34;scala&#34;&gt;Scala&lt;/h2&gt;
-&lt;p&gt;仕事面では、去年から開発が続いているScalaプロジェクトが2本あり、無事にローンチすることができた。安定して運用もできている。どちらもスマートフォン向けゲームのバックエンドだったので、ひたすらJSONを返すAPIの実装だった。&lt;/p&gt;
-&lt;p&gt;自分は開発初期の基盤設計や開発方針・環境整備・テスト周りを整えるなどの作業が中心で、実際の実装はチームに任せっきりだった。一部設計がイケてなくて迷惑を掛けたかもしれない。&lt;/p&gt;
-&lt;p&gt;開発方針は、関数型の側面はあまり出さずPlay + ScalikeJDBCでDDDという方針にした。混乱もなく概ねうまくいったと思っているが、リポジトリに実装したメソッドの戻り型がほとんど&lt;code&gt;Try[A]&lt;/code&gt;になっていて、引きずられるようにサービスレイヤーも&lt;code&gt;Try&lt;/code&gt;だらけになっていた気がする。これで良いのかと若干の不安は残る。&lt;/p&gt;
-&lt;p&gt;なお、開発後期はずっとコンパイルの遅さとテストの遅さに悩まされる日々だった &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-&lt;p&gt;プライベートではScalaz, Finagle, Finch, http4sなどを弄って遊んでいた。http4sにはしょうもないPRを送ったりするなどしていた。来年も引き続きScalaは使っていきたい。&lt;/p&gt;
-&lt;h2 id=&#34;python&#34;&gt;Python&lt;/h2&gt;
-&lt;p&gt;Pythonで直接何かを開発していた訳ではないが、Scalaの仕事をしているときに、sbtのタスクがあまりにも使いにくくてInvokeというPython製ツールで代用していた。Invokeで書いたタスクはのちにFabricに全面移行したけど、今年は間接的にPythonをよく読み書きした気がする。ああ、AnsibleもPythonだった。&lt;/p&gt;
-&lt;h2 id=&#34;ruby&#34;&gt;Ruby&lt;/h2&gt;
-&lt;p&gt;APIや管理画面の開発に使った。もうRuby（とRuby on Rails）は長いこと使っているのだけど、限られた時間のなかですぐ形にして出すという要求には強いなと改めて思った &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-&lt;p&gt;あとRakeが何だかんだいって便利。&lt;/p&gt;
-&lt;p&gt;Rubyは来年も変わらず手に馴染むツールとして使ってると思う。&lt;/p&gt;
-&lt;h2 id=&#34;golang&#34;&gt;Golang&lt;/h2&gt;
-&lt;p&gt;社内でも使われている言語なので把握くらいはしておこうと思いつつ、全然できていない。&lt;/p&gt;
-&lt;h2 id=&#34;haskell&#34;&gt;Haskell&lt;/h2&gt;
-&lt;p&gt;すごいH本を読みながら細々と家でコード書いたりしている。モナ◯や型クラスなどの概念はScalaで把握していたのでそこで躓くことは無さそう。ただ独特の構文に慣れるには書く頻度を増やさないとダメだ。&lt;/p&gt;
-&lt;h2 id=&#34;ocaml&#34;&gt;OCaml&lt;/h2&gt;
-&lt;p&gt;Haskellをやりつつ最近はOCamlに浮気している。&lt;a href=&#34;https://realworldocaml.org&#34;&gt;Real World OCaml&lt;/a&gt;読んで年越し予定。まだかじった程度だけど悪くなさそう。&lt;/p&gt;
-&lt;h2 id=&#34;c&#34;&gt;C++&lt;/h2&gt;
-&lt;p&gt;自分がC++を書くことが当面無さそう。ただ仕事でC++プロジェクトに少しだけ関わる雰囲気が出てきたので、ビルド周りなどを調べてた。&lt;a href=&#34;http://bazel.io/&#34;&gt;Bazel&lt;/a&gt;良さそう。&lt;/p&gt;
-&lt;h2 id=&#34;ansible&#34;&gt;Ansible&lt;/h2&gt;
-&lt;p&gt;今年はよくAnsibleのYAMLを書いていた気がする。慣れていない初期は書いては実行し、失敗し、の繰り返しで正直嫌いになりかけた。&lt;/p&gt;
-&lt;p&gt;社内のプロジェクトは全てCircleCIから自動的にプロビジョニングするようになっていたけど、CircleCIからの多段SSHがとても不安定で、一部プロジェクトではCircleCIからAnsibleを実行するのは止めたようだ（直近関わっているプロジェクトでは多段SSHでプロビジョニングしているが安定はしてる。ただし遅い）&lt;/p&gt;
-&lt;p&gt;まぁ文句ばかり言ってるがChefよりは使いやすいと思っているので、きっと来年も使っていると思う。&lt;/p&gt;
-&lt;h2 id=&#34;docker&#34;&gt;Docker&lt;/h2&gt;
-&lt;p&gt;本番環境で運用してみたいと思いつつ、出来ずにいる。&lt;/p&gt;
-&lt;p&gt;開発に必要なミドルウェアの提供やテスト環境の再現をするために一部プロジェクトで利用してる程度になって留まってしまっている。来年はもう少し活用の幅を広げたいなぁ。&lt;/p&gt;
-&lt;h2 id=&#34;electron&#34;&gt;Electron&lt;/h2&gt;
-&lt;p&gt;眺めていただけ。フロントエンドの技術には置いて行かれている感がある。やばい&lt;/p&gt;
-&lt;h2 id=&#34;健康&#34;&gt;健康&lt;/h2&gt;
-&lt;p&gt;概ね健康体を維持できているが、昔より疲労を覚えることが多くなってきた。単に運動不足だろって気もするが、なるほどこれが老いか。&lt;/p&gt;
-&lt;p&gt;あと天皇誕生日にウイルス性胃腸炎という一足早いステキなクリスマスプレゼントを頂いた。おかげで今年の最終出社日が22日になってしまい、年末年始の休日数だけは過去最高になった気がする。&lt;/p&gt;
-&lt;h2 id=&#34;学問&#34;&gt;学問&lt;/h2&gt;
-&lt;p&gt;関数型言語を本格的に触り始めた影響で、数学や論理学を再勉強しはじめている。あまり捗っていないけど、これからも少しずつ勉強していくと思う。&lt;/p&gt;
-&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
-&lt;p&gt;結局CircleCIを捨てて、AWSにc4.2xlargeインスタンスを借りてDroneを動かす感じにしてしまった。 &lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li id=&#34;fn:2&#34; role=&#34;doc-endnote&#34;&gt;
-&lt;p&gt;4人で半年くらいかけて1サービスがローンチできた &lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/section&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -113,9 +36,6 @@
       
       <guid>https://blog.dakatsuka.jp/2015/11/21/2007.html</guid>
       <description>その昔 http://d.hatena.ne.jp/CLA という技術ブログを書いていた。なぜ消したのか最早記憶にはないが、特に隠す内容のものでも無さそうだったので、このブログにインポートする</description>
-      <content:encoded>&lt;p&gt;その昔 &lt;a href=&#34;http://d.hatena.ne.jp/CLA&#34;&gt;http://d.hatena.ne.jp/CLA&lt;/a&gt; という技術ブログを書いていた。なぜ消したのか最早記憶にはないが、特に隠す内容のものでも無さそうだったので、このブログにインポートすることにした。せっかく書いた訳だし自身の記録として残しておこうかと。&lt;/p&gt;
-&lt;p&gt;ちなみに肝心の内容だが、Ubuntu 7.04（Feisty）を弄くってどうこうするというエントリがほとんどで、今となっては全く役に立たないだろう。時代を感じる。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -125,9 +45,6 @@
       
       <guid>https://blog.dakatsuka.jp/2015/11/15/diary.html</guid>
       <description>この2年間で6キロくらい太った。食べる量は変わっていないので単純に運動不足だと思う。まぁストレスも多少影響しているかも。 最近は退社後に、西新</description>
-      <content:encoded>&lt;p&gt;この2年間で6キロくらい太った。食べる量は変わっていないので単純に運動不足だと思う。まぁストレスも多少影響しているかも。&lt;/p&gt;
-&lt;p&gt;最近は退社後に、西新宿五丁目にあるオフィスから中野駅まで歩いたりしているが（調子が良くないと中野坂上駅や東中野駅がゴールになる）残念ながらまだ体重低下には繋がっていない。ぶっちゃけ軽い運動にもなっていないのでは…と薄々思い始めているが、こういうのは継続が大事ということなのでもう暫く続けてみるつもり。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -137,17 +54,6 @@
       
       <guid>https://blog.dakatsuka.jp/2007/08/27/akihabara.html</guid>
       <description>以下購入したものリスト。今週末あたりにDebian突っ込んでファイルサーバにする予定です。 Intel Core2Quad Q6600 Intel DG33FBC crucial 1GB PC2-6400 UnBuffered x2 3ware 9500S-4LP ST3750640AS(750G SATA300 7200) x4 Owltech M12 SS-600HM Antec P182</description>
-      <content:encoded>&lt;p&gt;以下購入したものリスト。今週末あたりにDebian突っ込んでファイルサーバにする予定です。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Intel Core2Quad Q6600&lt;/li&gt;
-&lt;li&gt;Intel DG33FBC&lt;/li&gt;
-&lt;li&gt;crucial 1GB PC2-6400 UnBuffered x2&lt;/li&gt;
-&lt;li&gt;3ware 9500S-4LP&lt;/li&gt;
-&lt;li&gt;ST3750640AS(750G SATA300 7200) x4&lt;/li&gt;
-&lt;li&gt;Owltech M12 SS-600HM&lt;/li&gt;
-&lt;li&gt;Antec P182&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -157,8 +63,6 @@
       
       <guid>https://blog.dakatsuka.jp/2007/04/20/holidays.html</guid>
       <description>Ubuntu 7.04とCentOS5をKVMで動かして色々と遊んでみようと思います。</description>
-      <content:encoded>&lt;p&gt;Ubuntu 7.04とCentOS5をKVMで動かして色々と遊んでみようと思います。&lt;/p&gt;
-</content:encoded>
     </item>
     
   </channel>

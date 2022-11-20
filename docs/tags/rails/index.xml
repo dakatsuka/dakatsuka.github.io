@@ -4,13 +4,10 @@
     <title>Rails on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/rails.html</link>
     <description>Recent content in Rails on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Wed, 18 Nov 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/rails/index.xml" rel="self" type="application/rss+xml" />
@@ -21,30 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2015/11/18/activerecord-import.html</guid>
       <description>どちらのgemもActiveRecordモデルにimportメソッドを生やそうとする。 いい感じに共存させる方法をググっていたら同じことをIs</description>
-      <content:encoded>&lt;p&gt;どちらのgemもActiveRecordモデルに&lt;code&gt;import&lt;/code&gt;メソッドを生やそうとする。&lt;/p&gt;
-&lt;p&gt;いい感じに共存させる方法をググっていたら同じことを&lt;a href=&#34;https://github.com/zdennis/activerecord-import/issues/149&#34;&gt;Issue&lt;/a&gt;で質問している人がいて、解決方法が書いてあったので助かった。&lt;code&gt;config/application.rb&lt;/code&gt;で&lt;code&gt;activerecord-import&lt;/code&gt;側のメソッド名を変更する。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;require &lt;span style=&#34;color:#66d9ef&#34;&gt;File&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;expand_path(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;../boot&amp;#39;&lt;/span&gt;, __FILE__)
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rails/all&amp;#39;&lt;/span&gt;
-
-&lt;span style=&#34;color:#75715e&#34;&gt;# https://github.com/zdennis/activerecord-import/issues/149&lt;/span&gt;
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;activerecord-import/base&amp;#39;&lt;/span&gt;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ActiveRecord&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Base&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; self
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;alias&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:bulk_insert&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:import&lt;/span&gt;
-    remove_method &lt;span style=&#34;color:#e6db74&#34;&gt;:import&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;Bundler&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;require(&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;groups)
-&lt;span style=&#34;color:#f92672&#34;&gt;....&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;参考文献&#34;&gt;参考文献&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/elastic/elasticsearch-rails&#34;&gt;elasticsearch-rails&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/zdennis/activerecord-import&#34;&gt;activerecord-import&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/zdennis/activerecord-import/issues/149&#34;&gt;Name clash with the elasticsearch gem · Issue #149 · zdennis/activerecord-import&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -54,11 +27,6 @@ require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;activerecord-import/b
       
       <guid>https://blog.dakatsuka.jp/2014/03/03/rails-jasmine-timezone.html</guid>
       <description>あまりタイムゾーンに依存するテストって宜しくないと思いますが。。。とはいえ特定のタイムゾーンで固定しておきたい事もあるので調べてみた。 Pha</description>
-      <content:encoded>&lt;p&gt;あまりタイムゾーンに依存するテストって宜しくないと思いますが。。。とはいえ特定のタイムゾーンで固定しておきたい事もあるので調べてみた。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/ariya/phantomjs/issues/10379&#34;&gt;PhantomJSのIssue&lt;/a&gt;をみると、TZという環境変数を設定することでタイムゾーンを変更出来るようなので  &lt;code&gt;spec/javascripts/support/jasmine_helper.rb&lt;/code&gt; に下記コードを追加する。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;ENV&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;TZ&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;UTC&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;これで &lt;code&gt;rake jasmine:ci&lt;/code&gt; 実行時は常にUTCになる。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -68,25 +36,6 @@ require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;activerecord-import/b
       
       <guid>https://blog.dakatsuka.jp/2014/02/13/mongo-mapper-diagram.html</guid>
       <description>モデルの数がそれなりにあるプロジェクトに途中から参加すると、モデル同士の関連を把握するのに結構苦労するので、ER図の存在が重要になってくる。</description>
-      <content:encoded>&lt;p&gt;モデルの数がそれなりにあるプロジェクトに途中から参加すると、モデル同士の関連を把握するのに結構苦労するので、ER図の存在が重要になってくる。ActiveRecordなら&lt;a href=&#34;http://rails-erd.rubyforge.org/&#34;&gt;Rails ERD&lt;/a&gt;というgemを使えばER図を生成してくれるのだが、MongoMapper用のツールは無さそうだったので作った。&lt;/p&gt;
-&lt;p&gt;こんな感じの画像を生成できる。&lt;/p&gt;
-&lt;figure&gt;
-    &lt;img src=&#34;https://blog.dakatsuka.jp/media/2014-02-13-mongo-mapper-diagram/diagram.png&#34;/&gt; 
-&lt;/figure&gt;
-
-&lt;p&gt;まだ One-To-Many だけで Many-To-Many や Embedded には対応していないのだけど、ひとまず全体を把握するのには役にたった。余裕があれば対応していきたい。Pull requestも待ってます！&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/dakatsuka/mongo_mapper_diagram&#34;&gt;dakatsuka/mongo_mapper_diagram - GitHub&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;ちなみにグラフの生成には&lt;a href=&#34;https://twitter.com/merborne&#34;&gt;@merborne&lt;/a&gt;氏の&lt;a href=&#34;https://github.com/melborne/Gviz&#34;&gt;Gviz&lt;/a&gt;を使いました。Rubyから簡単にGraphvizが扱えて便利だった。&lt;/p&gt;
-&lt;h2 id=&#34;使い方&#34;&gt;使い方&lt;/h2&gt;
-&lt;p&gt;Gemfileに追加。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;group &lt;span style=&#34;color:#e6db74&#34;&gt;:development&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-  gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;mongo_mapper_diagram&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Rakeタスクを実行するとRails.rootにdiagram.pngとdiagram.dotが生成される。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ rake mongo_mapper:diagram
-&lt;/code&gt;&lt;/pre&gt;</content:encoded>
     </item>
     
     <item>
@@ -96,14 +45,6 @@ require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;activerecord-import/b
       
       <guid>https://blog.dakatsuka.jp/2013/11/27/rails4-rspec-guard-spring.html</guid>
       <description>ちょっと前までのRailsのテスト環境といえば、RSpec + Guardという構成が定番だったように思う。最近はこれにSpringを加えるのが</description>
-      <content:encoded>&lt;p&gt;ちょっと前までのRailsのテスト環境といえば、RSpec + Guardという構成が定番だったように思う。最近はこれにSpringを加えるのが流行のようだ。&lt;/p&gt;
-&lt;p&gt;そこそこ時間も出来たので、&lt;a href=&#34;http://lab.heathrow.co.jp/2013/09/17/3421&#34;&gt;こちらの記事を参考&lt;/a&gt;にして、作りかけて放置していたRailsアプリにSpringを組み込んでみたら、動くには動くのだけどDEPRECATION WARNINGが出てしまった。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;22:16:29 - WARN - Guard::RSpec DEPRECATION WARNING: The :spring option is deprecated. Please customize the new :cmd option
-to fit your need.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;調べてみるとGuardfileの書き方が少し変わったらしい。spring-commands-rspecというgemを追加して1行修正するだけ。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-guard :rspec, spring: true do
-&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+guard :rspec, cmd: &amp;#39;spring rspec&amp;#39; do
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -113,59 +54,6 @@ to fit your need.
       
       <guid>https://blog.dakatsuka.jp/2012/09/13/rails-backbone-intro.html</guid>
       <description>最近Backbone.jsを触っています。Backbone.jsをRailsで使いたいならパッケージで導入してしまうのが一番簡単でしょう。 G</description>
-      <content:encoded>&lt;p&gt;最近Backbone.jsを触っています。Backbone.jsをRailsで使いたいならパッケージで導入してしまうのが一番簡単でしょう。&lt;/p&gt;
-&lt;p&gt;Gemfileにrails-backboneを追加して&lt;code&gt;bundle install&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;source &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;https://rubygems.org&amp;#39;&lt;/span&gt;
- 
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rails&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;3.2.8&amp;#39;&lt;/span&gt;
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;mysql2&amp;#39;&lt;/span&gt;
- 
-group &lt;span style=&#34;color:#e6db74&#34;&gt;:assets&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;jquery-rails&amp;#39;&lt;/span&gt;
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rails-backbone&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# &amp;lt;- 追加&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Backbone.jsを組み込みます。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ bundle exec rails g backbone:install
-      insert  app/assets/javascripts/application.js
-      create  app/assets/javascripts/backbone/routers
-      create  app/assets/javascripts/backbone/routers/.gitkeep
-      create  app/assets/javascripts/backbone/models
-      create  app/assets/javascripts/backbone/models/.gitkeep
-      create  app/assets/javascripts/backbone/views
-      create  app/assets/javascripts/backbone/views/.gitkeep
-      create  app/assets/javascripts/backbone/templates
-      create  app/assets/javascripts/backbone/templates/.gitkeep
-      create  app/assets/javascripts/backbone/app.js.coffee
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;app/assets/javascript/application.js は以下のように変更されます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require jquery
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require jquery_ujs
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require underscore
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require backbone
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require backbone_rails_sync
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require backbone_datalink
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require backbone/app
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require_tree .
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;この下から2行目、ファイルでは app/assets/javascript/backbone/app.js.coffee が各モデル・ビュー・テンプレートなどを読み込むようになっています（ファイル名はRailsアプリと同じ名前になります）&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-coffee&#34; data-lang=&#34;coffee&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#= require_self
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#= require_tree ./templates
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#= require_tree ./models
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#= require_tree ./views
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#= require_tree ./routers
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt; 
-window.App =
-  Models: {}
-  Collections: {}
-  Routers: {}
-  Views: {}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;rails-backboneのお作法は（scaffoldで生成されたコードをみる限り）モデル・ビュー・ルーターをディレクトリに分けて管理するようです。そしてその構造がそのまま名前空間になります。&lt;/p&gt;
-&lt;p&gt;例えばUserモデルなら app/assets/javascript/backbone/models/user.js.coffee にファイルを作り、下記のようなコードを書いていきます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-coffee&#34; data-lang=&#34;coffee&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;App&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Models&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Backbone&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Model&lt;/span&gt;
-  url: &lt;span style=&#34;color:#a6e22e&#34;&gt;-&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/api/users/&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@id&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;アプリ名が長いと若干タイプが面倒かなーって印象ですが、まぁ app/* と同じ感覚で作れるのでRails慣れしてる人は違和感なく使えそうです。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -175,60 +63,6 @@ window.App =
       
       <guid>https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html</guid>
       <description>ruby-amqpはEventMachineに依存しているので、unicorn上のRailsアプリからRabbitMQに接続する場合は少し手</description>
-      <content:encoded>&lt;p&gt;&lt;a href=&#34;https://github.com/ruby-amqp/amqp&#34;&gt;ruby-amqp&lt;/a&gt;はEventMachineに依存しているので、unicorn上のRailsアプリからRabbitMQに接続する場合は少し手間がかかります。EventMachineで実装されているThinなどはそのまま動くようですが。。。&lt;/p&gt;
-&lt;p&gt;下記コードをconfig/unicorn.rbに追記します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;ENV&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;UNICORN&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;true&amp;#34;&lt;/span&gt;
- 
-after_fork &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;server, worker&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQPManager&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;start
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;config/amqp.ymlを用意します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;development&lt;/span&gt;:
-  &lt;span style=&#34;color:#f92672&#34;&gt;uri&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;amqp://localhost&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;開発環境（WebRickなど）からもRabbitMQに接続出来るようにします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# config/initializers/amqp.rb&lt;/span&gt;
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;amqp/utilities/event_loop_helper&amp;#39;&lt;/span&gt;
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;amqp/integration/rails&amp;#39;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; AMQPManager
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;start&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Utilities&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;EventLoopHelper&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;run
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Integration&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;start &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;connection&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
-      connection&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;on_error &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;ch, connection_close&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;raise&lt;/span&gt; connection_close&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reply_text
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-      connection&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;on_tcp_connection_loss &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;conn, settings&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
-        conn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reconnect(&lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-      connection&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;on_tcp_connection_failure &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;conn, settings&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
-        conn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reconnect(&lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-      channel &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Channel&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new(connection, &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Channel&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;next_channel_id, &lt;span style=&#34;color:#e6db74&#34;&gt;:auto_recovery&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;)
-      channel&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;on_error &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;ch, channel_close&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;raise&lt;/span&gt; channel_close&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reply_text
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;channel &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; channel
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;AMQPManager&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;start &lt;span style=&#34;color:#66d9ef&#34;&gt;unless&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ENV&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;UNICORN&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;コントローラからパブリッシュする場合は下記のようにします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# coding: utf-8&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AmqpController&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ApplicationController&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;publish&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Utilities&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;EventLoopHelper&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;run &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;AMQP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;channel&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;default_exchange&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;publish(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello World!!!!!&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;routing_key&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;queue.name&amp;#34;&lt;/span&gt;)
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-    head &lt;span style=&#34;color:#e6db74&#34;&gt;:created&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -238,24 +72,6 @@ require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;amqp/integration/rail
       
       <guid>https://blog.dakatsuka.jp/2011/10/20/simplecov.html</guid>
       <description>Ruby (Rails) でテストカバレッジといえば Rcov ですね。 しかし Rcov は Ruby 1.9.x に非対応なので Ruby 1.9.2 + Rails3 な環境で開発をしている方は SimpleCov を使うと幸せになれます。名前にSim</description>
-      <content:encoded>&lt;p&gt;Ruby (Rails) でテストカバレッジといえば Rcov ですね。&lt;/p&gt;
-&lt;p&gt;しかし Rcov は Ruby 1.9.x に非対応なので Ruby 1.9.2 + Rails3 な環境で開発をしている方は &lt;a href=&#34;https://github.com/colszowka/simplecov&#34;&gt;SimpleCov&lt;/a&gt; を使うと幸せになれます。名前にSimpleと付いていますが高機能で見た目も綺麗です。また &lt;a href=&#34;https://github.com/fguillen/simplecov-rcov&#34;&gt;simplecov-rcov&lt;/a&gt; を併用すれば Rcov のフォーマットで出力することも出来るので、Jenkins などのCIツールとの連携も難しくないはずです。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/colszowka/simplecov&#34;&gt;colszowka/simplecov – GitHub&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/fguillen/simplecov-rcov&#34;&gt;fguillen/simplecov-rcov – GitHub&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;使い方&#34;&gt;使い方&lt;/h2&gt;
-&lt;p&gt;Gemfileに下記コードを追加してbundle installします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;group &lt;span style=&#34;color:#e6db74&#34;&gt;:test&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-  gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;simplecov&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:require&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;spec/spec_helper.rb の最上位に下記コードを追記します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;simplecov&amp;#39;&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;SimpleCov&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;start &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rails&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;準備完了。rake specを実行すれば coverage ディレクトリの中に結果が生成されています。&lt;/p&gt;
-&lt;h2 id=&#34;そういえば&#34;&gt;そういえば&lt;/h2&gt;
-&lt;p&gt;以前 &lt;a href=&#34;https://github.com/markbates/cover_me&#34;&gt;cover_me&lt;/a&gt; の&lt;a href=&#34;https://blog.dakatsuka.jp/2010/12/23/rails3_cover_me.html&#34;&gt;紹介記事&lt;/a&gt;を書いた事を今更思い出しました。こちらのライブラリも引き続き開発が続けられているようです。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -265,25 +81,6 @@ require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;amqp/integration/rail
       
       <guid>https://blog.dakatsuka.jp/2011/09/30/nested-has-one.html</guid>
       <description>先日、has_one関連でaccepts_nested_attributesを使ってフォームを作ろうとしたら、ネスト先のフィールドが画面に出</description>
-      <content:encoded>&lt;p&gt;先日、has_one関連でaccepts_nested_attributesを使ってフォームを作ろうとしたら、ネスト先のフィールドが画面に出てこなくて小一時間ハマりました。そういえば以前も同じ事で悩んだような気がしたのでブログに残しておきます。&lt;/p&gt;
-&lt;p&gt;UserモデルとProfileモデルが存在し、1対1の関連で結ばれているよくある構成を例にします。ユーザー登録を行うフォームで同時にプロフィールも登録出来るようにします。&lt;/p&gt;
-&lt;p&gt;Userモデル&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ActiveRecord&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Base&lt;/span&gt;
-  has_one &lt;span style=&#34;color:#e6db74&#34;&gt;:profile&lt;/span&gt;
-  accepts_nested_attributes_for &lt;span style=&#34;color:#e6db74&#34;&gt;:profile&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Profileモデル&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Profile&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ActiveRecord&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Base&lt;/span&gt;
-  belongs_to &lt;span style=&#34;color:#e6db74&#34;&gt;:profile&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;_form.html.hamlビュー&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; form_for @user &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;f&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; f&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;fields_for &lt;span style=&#34;color:#e6db74&#34;&gt;:profile&lt;/span&gt;, @user&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;profile &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Profile&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;p&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;field
-      &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; p&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;label &lt;span style=&#34;color:#e6db74&#34;&gt;:nickname&lt;/span&gt;
-      &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; p&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text_field &lt;span style=&#34;color:#e6db74&#34;&gt;:nickname&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上のコードのように fields_for の第二引数で@user.profileが存在するかチェックし、存在しない場合はProfileのインスタンスを新規に作成します。こうすることで new, edit 両方に対応することが出来ます。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -293,28 +90,6 @@ require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;amqp/integration/rail
       
       <guid>https://blog.dakatsuka.jp/2011/09/01/upgrade-rails31.html</guid>
       <description>Rails v3.1.0が出たのでv3.0.10で開発しているプロジェクトの対応を行いました。その時のメモを残しておきます。 といっても、このRails</description>
-      <content:encoded>&lt;p&gt;Rails v3.1.0が出たのでv3.0.10で開発しているプロジェクトの対応を行いました。その時のメモを残しておきます。&lt;/p&gt;
-&lt;p&gt;といっても、このRailsプロジェクトはJSONを返すだけの単純なREST APIでしたので修正箇所は少なかったです。あまり参考にならないかもしれません。。。&lt;/p&gt;
-&lt;p&gt;Gemfileを開き、Rails, Rake, mysql2のバージョンを上げます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-gem &amp;#39;rails&amp;#39;,                &amp;#39;3.0.10&amp;#39;
-&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-gem &amp;#39;rake&amp;#39;,                 &amp;#39;0.8.7&amp;#39;
-&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-gem &amp;#39;mysql2&amp;#39;,               &amp;#39;0.2.11&amp;#39;
-&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+gem &amp;#39;rails&amp;#39;,                &amp;#39;3.1.0&amp;#39;
-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+gem &amp;#39;rake&amp;#39;,                 &amp;#39;0.9.2&amp;#39;
-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+gem &amp;#39;mysql2&amp;#39;,               &amp;#39;0.3.7&amp;#39;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;おなじみBundlerでgemを更新します。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ bundle update
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;問題なく動作するかテストを走らせてみます。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ rake spec
-rake aborted!
-undefined method `debug_rjs=&#39; for ActionView::Base:Class
- 
-Tasks: TOP =&amp;gt; spec =&amp;gt; db:test:prepare =&amp;gt; db:abort_if_pending_migrations =&amp;gt; environment
-(See full trace by running task with --trace)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;……どうやら&lt;a href=&#34;https://github.com/rails/rails/commit/d8f23ca627df85b33fe8db87db5483c10b62bfe6&#34;&gt;debug_rjs というメソッドが無くなった&lt;/a&gt;ようです。config/environments/development.rbから該当の行を削除します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-  config.action_view.debug_rjs = true
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以上を修正するだけで対応することが出来ました。色々と書き直しが発生しなくて一安心です。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -324,22 +99,6 @@ Tasks: TOP =&amp;gt; spec =&amp;gt; db:test:prepare =&amp;gt; db:abort_if_pendin
       
       <guid>https://blog.dakatsuka.jp/2011/06/01/omniauth-mixi.html</guid>
       <description>OmniAuthを使ってTwitterやFacebookと連携・認証をする方法はググればたくさん出てくるのですが、mixi OpenIDを使っ</description>
-      <content:encoded>&lt;p&gt;&lt;a href=&#34;https://github.com/intridea/omniauth&#34;&gt;OmniAuth&lt;/a&gt;を使ってTwitterやFacebookと連携・認証をする方法はググればたくさん出てくるのですが、&lt;a href=&#34;http://developer.mixi.co.jp/openid&#34;&gt;mixi OpenID&lt;/a&gt;を使ったやり方は出てこなかったので調べてみました。&lt;/p&gt;
-&lt;h2 id=&#34;omniauthの設定&#34;&gt;OmniAuthの設定&lt;/h2&gt;
-&lt;p&gt;config/initializers/omniauth.rbに以下を記述して保存します。OpenID.fetcher.ca_fileを指定しないと Warning が出まくるのでしっかり指定してあげましょう。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;omniauth/openid&amp;#39;&lt;/span&gt;
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;openid/fetchers&amp;#39;&lt;/span&gt;
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;openid/store/filesystem&amp;#39;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;OpenID&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;fetcher&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ca_file &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/usr/lib/ssl/certs/ca-certificates.crt&amp;#34;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;application&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;config&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;middleware&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;use &lt;span style=&#34;color:#66d9ef&#34;&gt;OmniAuth&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Builder&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-  provider &lt;span style=&#34;color:#e6db74&#34;&gt;:openid&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;OpenID&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Store&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Filesystem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/tmp&amp;#34;&lt;/span&gt;), &lt;span style=&#34;color:#e6db74&#34;&gt;:name&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;mixi&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:identifier&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;mixi.jp&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;providerにTwitterやFacebookを追加すれば、3サイトで認証出来るようになります。&lt;/p&gt;
-&lt;h2 id=&#34;参考サイト&#34;&gt;参考サイト&lt;/h2&gt;
-&lt;p&gt;UserモデルやSessionsControllerの実装などは、&lt;a href=&#34;http://twitter.com/jugyo&#34;&gt;@jugyo&lt;/a&gt;さんの &lt;a href=&#34;http://blog.twiwt.org/e/c3afce&#34;&gt;OmniAuth で簡単 Twitter 認証！&lt;/a&gt;の通りにやれば完璧だと思います。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -349,94 +108,6 @@ require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;openid/store/filesyst
       
       <guid>https://blog.dakatsuka.jp/2011/05/27/grape.html</guid>
       <description>RESTful API の作成に特化したマイクロフレームワーク grape の存在を知ったので調査してみる事にしました。API の実装 に Rails の ActionController は重厚すぎる、Sinatra は軽</description>
-      <content:encoded>&lt;p&gt;RESTful API の作成に特化したマイクロフレームワーク &lt;a href=&#34;https://github.com/intridea/grape/wiki&#34;&gt;grape&lt;/a&gt; の存在を知ったので調査してみる事にしました。API の実装 に Rails の ActionController は重厚すぎる、Sinatra は軽いけど手間がかかる。。。という中で作られたこのフレームワーク、はたしてその実力は…&lt;/p&gt;
-&lt;h2 id=&#34;grape-の特徴&#34;&gt;grape の特徴&lt;/h2&gt;
-&lt;p&gt;grape の特徴は概ね以下の通りです。grape 自体が Rack アプリケーションなので Rails3 に組み込むことが出来ます。というよりは組み込んで使うのが前提のようです（勿論単体でも動きます）。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Rack アプリケーション&lt;/li&gt;
-&lt;li&gt;Sinatra ライクな DSL&lt;/li&gt;
-&lt;li&gt;自動で JSON にシリアライズ（#serializable_hash または #to_json が存在すればOKみたい）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;grape-を使ってみる&#34;&gt;grape を使ってみる&lt;/h2&gt;
-&lt;p&gt;特徴を掴んだところで、実際にインストールして使ってみます。Rails3 の一部として使う場合は Gemfile に下記1行を追加して、おなじみ bundle install を実行します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;grape&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;今回は lib/api.rb に実装していきます。実装したコードは下記をご覧下さい。prefix を指定すると /api/articles/1 という感じのURLになります。コメントアウトしてますが、version を指定すると /1/articles/1 のようにアクセス出来るようになるみたいです（これに何のメリットがあるのかはちょっと分かりませんでした）。&lt;/p&gt;
-&lt;p&gt;用意されている DSL の詳細は、&lt;a href=&#34;https://github.com/intridea/grape&#34;&gt;intridea/grape – GitHub&lt;/a&gt; や &lt;a href=&#34;http://intridea.github.com/grape/&#34;&gt;YARD documentation for the Grape API&lt;/a&gt; などを見て下さい。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# lib/api.rb&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; TestApp
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;API&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Grape&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;API&lt;/span&gt;
-    &lt;span style=&#34;color:#75715e&#34;&gt;# version 1&lt;/span&gt;
-    prefix &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;api&amp;#34;&lt;/span&gt;
- 
-    resource &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;articles&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-      get &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;:id&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;Article&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find(params&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;)
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;APIの実装が終わったら次はRailsへの組み込みです。Rails3 から lib の中は自動で読み込まれないので initializers で呼び出すようにします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# config/initializers/api.rb&lt;/span&gt;
- 
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;root&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;lib&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;api&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最後に TestApp::API を routes.rb でマウントして完成です。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# config/routes.rb&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;TestApp&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Application&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;routes&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;draw &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-  mount &lt;span style=&#34;color:#66d9ef&#34;&gt;TestApp&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;API&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ここまで出来たら rails s で WEBRick を起動し、http://localhost:3000/api/articles/1 にアクセスしてみましょう。Article.find(1) の実行結果が JSON で返ってくるはずです。&lt;/p&gt;
-&lt;h2 id=&#34;軽くベンチマークしてみた&#34;&gt;軽くベンチマークしてみた&lt;/h2&gt;
-&lt;p&gt;試しに ActionController と grape どちらがパフォーマンス良いのかをベンチマークしてみました。&lt;/p&gt;
-&lt;p&gt;コントローラの実装は次のようにしました。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# app/controllers/articles_controller.rb&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ArticlesController&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ApplicationController&lt;/span&gt;
-  respond_to &lt;span style=&#34;color:#e6db74&#34;&gt;:json&lt;/span&gt;
- 
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;show&lt;/span&gt;
-    respond_with &lt;span style=&#34;color:#66d9ef&#34;&gt;Article&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find(params&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;)
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-&lt;span style=&#34;color:#75715e&#34;&gt;# config/routes.rb&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;TestApp&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Application&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;routes&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;draw &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-  resources &lt;span style=&#34;color:#e6db74&#34;&gt;:articles&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Apache Bench で測定してみます。測定環境ですが、ローカルは自宅のiMac、リモートはさくらのVPS 4G（unicorn 使用）で行いました。ですのでベンチマーク結果はあくまで参考程度に考えてください。&lt;/p&gt;
-&lt;p&gt;grape&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Concurrency Level:      10
-Time taken for tests:   5.039 seconds
-Complete requests:      1000
-Failed requests:        0
-Write errors:           0
-Total transferred:      545000 bytes
-HTML transferred:       345000 bytes
-Requests per second:    198.47 [#/sec] (mean)
-Time per request:       50.385 [ms] (mean)
-Time per request:       5.039 [ms] (mean, across all concurrent requests)
-Transfer rate:          105.63 [Kbytes/sec] received
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ActionController&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Concurrency Level:      10
-Time taken for tests:   7.573 seconds
-Complete requests:      1000
-Failed requests:        0
-Write errors:           0
-Total transferred:      643000 bytes
-HTML transferred:       355000 bytes
-Requests per second:    132.05 [#/sec] (mean)
-Time per request:       75.731 [ms] (mean)
-Time per request:       7.573 [ms] (mean, across all concurrent requests)
-Transfer rate:          82.92 [Kbytes/sec] received
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;grape のほうが少し速い結果となりました。何回かやってみたのですが、多少誤差はあるものの grape のほうが速そうです。&lt;/p&gt;
-&lt;h2 id=&#34;総評&#34;&gt;総評&lt;/h2&gt;
-&lt;p&gt;Sinatra ライクな DSL なおかげでかなりシンプルに書けることが分かりました。ただ、Rails3 からは respond_with が使えるようになったので、コード量ではあまり差は無くなってしまいますね。通常のHTMLページとAPIを分離したい場合やパフォーマンスアップを狙いたい場合には良いかもしれません。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/intridea/grape/wiki/Roadmap&#34;&gt;ロードマップ&lt;/a&gt;を見ると、OAuth認証やXMLでの出力、Streaming APIの対応も予定されているようです。&lt;/p&gt;
-&lt;h2 id=&#34;関連リンク&#34;&gt;関連リンク&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://confreaks.net/videos/475-rubyconf2010-the-grapes-of-rapid&#34;&gt;The Grapes of Rapid&lt;/a&gt; / &lt;a href=&#34;http://cloud.github.com/downloads/intridea/grape/The%20Grapes%20of%20Rapid.pdf&#34;&gt;Slide&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -446,54 +117,6 @@ Transfer rate:          82.92 [Kbytes/sec] received
       
       <guid>https://blog.dakatsuka.jp/2011/05/25/cap-subdirectory.html</guid>
       <description>複数のRailsアプリが１つのリポジトリに同居しているような状態で Capistrano を使ってデプロイしたい場合、そのままでは動作しないので少々手を加える必要</description>
-      <content:encoded>&lt;p&gt;複数のRailsアプリが１つのリポジトリに同居しているような状態で Capistrano を使ってデプロイしたい場合、そのままでは動作しないので少々手を加える必要があります。&lt;/p&gt;
-&lt;p&gt;下記のようにRailsアプリがサブディレクトリにある場合を想定しています。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;repogitory/
-      ├── admin
-      ├── mobile
-      ├── share
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;capfileを書き換える&#34;&gt;Capfileを書き換える&lt;/h2&gt;
-&lt;p&gt;通常の手順通り、Rails.root 直下に Capfile を設置し config/deploy.rb にレシピを書いていくのですが、上記のようにリポジトリ直下 = Rails.root では無い場合、Capfile を少し変更する必要があります。&lt;/p&gt;
-&lt;p&gt;Stackoverflow の &lt;a href=&#34;http://stackoverflow.com/questions/29168/deploying-a-git-subdirectory-in-capistrano&#34;&gt;Deploying a Git subdirectory in Capistrano&lt;/a&gt; を参考に（というかほぼそのままですが）Capfile を以下のようにします。オリジナルと違う箇所はcpのオプションです。オリジナルのほうはシンボリックリンクをシンボリックリンクとしてコピーしますが、このコードは実体ファイルをコピーします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;capistrano/recipes/deploy/strategy/remote_cache&amp;#39;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;RemoteCacheSubdir&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Capistrano&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Deploy&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Strategy&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;RemoteCache&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;repository_cache_subdir&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:deploy_subdir&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;then&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;File&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(repository_cache, configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:deploy_subdir&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;)
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
-      repository_cache
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;copy_repository_cache&lt;/span&gt;
-    logger&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;trace &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;copying the cached version to &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:release_path&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; copy_exclude&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;empty? 
-      run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;cp -RpL &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;repository_cache_subdir&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:release_path&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; &amp;amp;&amp;amp; &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;mark&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
-      exclusions &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; copy_exclude&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map { &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;--exclude=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;e&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; }&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;)
-      run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;rsync -lrpt &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;exclusions&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;repository_cache_subdir&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;/* &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:release_path&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; &amp;amp;&amp;amp; &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;mark&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:strategy&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;RemoteCacheSubdir&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new(self)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Capfile を書き換えたら deploy.rb を次のようにすれば指定したサブディレクトリだけをデプロイする事が出来ます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;capistrano/ext/multistage&amp;#39;&lt;/span&gt;
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;bundler/capistrano&amp;#39;&lt;/span&gt;
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;erb&amp;#39;&lt;/span&gt;
- 
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:application&lt;/span&gt;,   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;app&amp;#34;&lt;/span&gt;
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:scm&lt;/span&gt;,           &lt;span style=&#34;color:#e6db74&#34;&gt;:git&lt;/span&gt;
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:repository&lt;/span&gt;,    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;git://domain.com/path/to/repository.git&amp;#34;&lt;/span&gt;
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:deploy_subdir&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/path/to/app&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# require https://gist.github.com/970910 to Capfile&lt;/span&gt;
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:deploy_via&lt;/span&gt;,    &lt;span style=&#34;color:#e6db74&#34;&gt;:copy&lt;/span&gt;
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:use_sudo&lt;/span&gt;,      &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:bundle_without&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:development&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:test&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;そもそも&#34;&gt;そもそも&lt;/h2&gt;
-&lt;p&gt;何故このような構成になってるかというと、admin、mobileでモデルとライブラリを共通化したくなった為です。共通ファイルを share に放り込み、各Railsアプリからはシンボリックリンクで参照する形にしています。最初は Git の submodule を考えたのですがどうもしっくり来なかったんですよね。。。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -503,46 +126,6 @@ set &lt;span style=&#34;color:#e6db74&#34;&gt;:bundle_without&lt;/span&gt;, &lt;
       
       <guid>https://blog.dakatsuka.jp/2011/05/14/hirb-rails-console.html</guid>
       <description>Rails 3: Fully Loaded | Intridea Blog で hirb という gem が紹介されていたので試してみることにしました。hirb は Rails Console 上で ActiveRecord の結果を見やすく整形してくれるツールのようです。</description>
-      <content:encoded>&lt;p&gt;&lt;a href=&#34;http://intridea.com/2011/5/13/rails3-gems&#34;&gt;Rails 3: Fully Loaded | Intridea Blog&lt;/a&gt; で &lt;a href=&#34;https://github.com/cldwalker/hirb&#34;&gt;hirb&lt;/a&gt; という gem が紹介されていたので試してみることにしました。hirb は Rails Console 上で ActiveRecord の結果を見やすく整形してくれるツールのようです。&lt;/p&gt;
-&lt;p&gt;le に下記コードを追加して bundle install を実行してインストールします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;group &lt;span style=&#34;color:#e6db74&#34;&gt;:development&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-  gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;hirb&amp;#39;&lt;/span&gt;
-  gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;hirb-unicode&amp;#39;&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;あとは rails console を起動して Hirb.enable と打つだけで使用可能になります。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ruby-1.9.2-p180 &amp;gt; Hirb.enable
- &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&amp;gt; true 
-ruby-1.9.2-p180 &amp;gt; Prefecture.limit&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;3&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-  Prefecture Load &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;0.3ms&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;  SELECT &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;prefectures&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;.* FROM &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;prefectures&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt; LIMIT &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;
-+----+--------+
-| id | name   |
-+----+--------+
-| &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;  | 北海道 |
-| &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;  | 青森県 |
-| &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;  | 岩手県 |
-+----+--------+
-&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt; rows in set
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;すばらしい！ちなみにウインドウが狭い場合は自動で文字を省略するので見にくくなることも無さそうです。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ruby-1.9.2-p180 &amp;gt; Gender.limit&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;3&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-  Gender Load &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;0.4ms&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;  SELECT &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;genders&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;.* FROM &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;genders&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt; LIMIT &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;
-+----+------+---------------+---------------+
-| id | name | created_at    | updated_at    |
-+----+------+---------------+---------------+
-| &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;  | 女性 | 2011-04-27... | 2011-04-27... |
-| &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;  | 男性 | 2011-04-27... | 2011-04-27... |
-| &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;  | 秘密 | 2011-04-27... | 2011-04-27... |
-+----+------+---------------+---------------+
-&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt; rows in set
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;私は毎回 Hirb.enable と入力するのが面倒なので $HOME/.irbrc に書いて自動で実行されるようにしました。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; defined? &lt;span style=&#34;color:#66d9ef&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Console&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;ActiveRecord&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Base&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;logger &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Logger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new(&lt;span style=&#34;color:#66d9ef&#34;&gt;STDOUT&lt;/span&gt;)
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;ActiveResource&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Base&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;logger &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Logger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new(&lt;span style=&#34;color:#66d9ef&#34;&gt;STDOUT&lt;/span&gt;)
- 
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; defined? &lt;span style=&#34;color:#66d9ef&#34;&gt;Hirb&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;Hirb&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;enable
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -552,243 +135,6 @@ ruby-1.9.2-p180 &amp;gt; Prefecture.limit&lt;span style=&#34;color:#f92672&#34;&
       
       <guid>https://blog.dakatsuka.jp/2011/04/19/rails3-1-1.html</guid>
       <description>Rails3.1の機能を試せると聞いたので、早速下記サイトを参考にローカル環境に入れてみました。噂のCoffeeScriptやSCSSが使え</description>
-      <content:encoded>&lt;p&gt;Rails3.1の機能を試せると聞いたので、早速下記サイトを参考にローカル環境に入れてみました。噂のCoffeeScriptやSCSSが使えるようになっています。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://d.hatena.ne.jp/willnet/20110417/1303064684&#34;&gt;edge rails(Rails 3.1)の新機能を調べてみる – おもしろWEBサービス開発日記&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;インストールその1&#34;&gt;インストールその1&lt;/h2&gt;
-&lt;p&gt;rvmにRails3.1専用のgemsetを用意しました。Rubyのバージョンは Ruby 1.9.2-p180 です。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;rvm gemset create rails31
-rvm gemset use rails31
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;この状態だとRakeしか入っていません。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ gem list
- 
-*** LOCAL GEMS ***
- 
-rake (0.8.7)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Railsアプリ用のディレクトリを作成します。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;mkdir rails_app
-cd rails_app
-vim Gemfile
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Gemfileを作ってRailsのGithubリポジトリを指定します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Gemfile&lt;/span&gt;
-source &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://rubygems.org/&amp;#34;&lt;/span&gt;
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rails&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:git&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;git://github.com/rails/rails.git&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;BundlerとRails3.1をインストールします。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;gem install bundler
-bundle install
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;インストールされたRailsのバージョンを確認してみましょう。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ bundle exec rails -v
-Rails 3.1.0.beta
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;無事入ってそうです。&lt;/p&gt;
-&lt;h2 id=&#34;インストールその2&#34;&gt;インストールその2&lt;/h2&gt;
-&lt;p&gt;Railsが入ったことを確認出来たら、実際にRailsアプリを生成してみます。先ほど作成したGemfileとコンフリクトしますが、気にせず上書きしてしまいましょう。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ bundle exec rails new .
-       exist  
-      create  README
-      create  Rakefile
-      create  config.ru
-      create  .gitignore
-       force  Gemfile
-      create  app
-      create  app/assets/javascripts/application.js
-      create  app/assets/stylesheets/application.css
-      create  app/controllers/application_controller.rb
-      create  app/helpers/application_helper.rb
-      create  app/mailers
-      create  app/models
-      create  app/views/layouts/application.html.erb
-      create  app/mailers/.gitkeep
-      create  app/models/.gitkeep
-      create  config
-      create  config/routes.rb
-      create  config/application.rb
-      create  config/environment.rb
-      create  config/environments
-      create  config/environments/development.rb
-      create  config/environments/production.rb
-      create  config/environments/test.rb
-      create  config/initializers
-      create  config/initializers/backtrace_silencers.rb
-      create  config/initializers/inflections.rb
-      create  config/initializers/mime_types.rb
-      create  config/initializers/secret_token.rb
-      create  config/initializers/session_store.rb
-      create  config/locales
-      create  config/locales/en.yml
-      create  config/boot.rb
-      create  config/database.yml
-      create  db
-      create  db/seeds.rb
-      create  doc
-      create  doc/README_FOR_APP
-      create  lib
-      create  lib/tasks
-      create  lib/tasks/.gitkeep
-      create  log
-      create  log/.gitkeep
-      create  public
-      create  public/404.html
-      create  public/422.html
-      create  public/500.html
-      create  public/favicon.ico
-      create  public/index.html
-      create  public/robots.txt
-      create  public/images
-      create  public/images/rails.png
-      create  script
-      create  script/rails
-      create  test/fixtures
-      create  test/fixtures/.gitkeep
-      create  test/functional
-      create  test/functional/.gitkeep
-      create  test/integration
-      create  test/integration/.gitkeep
-      create  test/unit
-      create  test/unit/.gitkeep
-      create  test/performance/browsing_test.rb
-      create  test/test_helper.rb
-      create  tmp/cache
-      create  tmp/cache/.gitkeep
-      create  vendor/assets/javascripts/jquery.js
-      create  vendor/assets/javascripts/jquery_ujs.js
-      create  vendor/assets/stylesheets
-      create  vendor/assets/stylesheets/.gitkeep
-      create  vendor/plugins
-      create  vendor/plugins/.gitkeep 
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;新しく生成されたGemfileを眺めてみます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;source &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;http://rubygems.org&amp;#39;&lt;/span&gt;
- 
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rails&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;3.1.0.beta&amp;#39;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#75715e&#34;&gt;# Bundle edge Rails instead:&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;# gem &amp;#39;rails&amp;#39;,     :git =&amp;gt; &amp;#39;git://github.com/rails/rails.git&amp;#39;&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;# gem &amp;#39;arel&amp;#39;,      :git =&amp;gt; &amp;#39;git://github.com/rails/arel.git&amp;#39;&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;# gem &amp;#39;rack&amp;#39;,      :git =&amp;gt; &amp;#39;git://github.com/rack/rack.git&amp;#39;&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;# gem &amp;#39;sprockets&amp;#39;, :git =&amp;gt; &amp;#34;git://github.com/sstephenson/sprockets.git&amp;#34;&lt;/span&gt;
- 
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;sqlite3&amp;#39;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#75715e&#34;&gt;# Asset template engines&lt;/span&gt;
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;sass&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;~&amp;gt; 3.1.0.alpha&amp;#39;&lt;/span&gt;
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;coffee-script&amp;#39;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#75715e&#34;&gt;# Use unicorn as the web server&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;# gem &amp;#39;unicorn&amp;#39;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#75715e&#34;&gt;# Deploy with Capistrano&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;# gem &amp;#39;capistrano&amp;#39;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#75715e&#34;&gt;# To use debugger&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;# gem &amp;#39;ruby-debug19&amp;#39;, :require =&amp;gt; &amp;#39;ruby-debug&amp;#39;&lt;/span&gt;
- 
-group &lt;span style=&#34;color:#e6db74&#34;&gt;:test&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-  &lt;span style=&#34;color:#75715e&#34;&gt;# Pretty printed test output&lt;/span&gt;
-  gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;turn&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:require&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;相変わらず標準のDBはSQLite3のようです。またsassとcoffee-scriptのgemが書かれていますね。さて、このままbundle installを実行するとRubygemsにrails 3.1.0.beta’なんて無いと怒られてしまうのでコメントアウトし、コメントアウトされているBundle edge Rails instead以下を有効にします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# gem &amp;#39;rails&amp;#39;, &amp;#39;3.1.0.beta&amp;#39;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#75715e&#34;&gt;# Bundle edge Rails instead:&lt;/span&gt;
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rails&amp;#39;&lt;/span&gt;,     &lt;span style=&#34;color:#e6db74&#34;&gt;:git&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;git://github.com/rails/rails.git&amp;#39;&lt;/span&gt;
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;arel&amp;#39;&lt;/span&gt;,      &lt;span style=&#34;color:#e6db74&#34;&gt;:git&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;git://github.com/rails/arel.git&amp;#39;&lt;/span&gt;
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rack&amp;#39;&lt;/span&gt;,      &lt;span style=&#34;color:#e6db74&#34;&gt;:git&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;git://github.com/rack/rack.git&amp;#39;&lt;/span&gt;
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;sprockets&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:git&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;git://github.com/sstephenson/sprockets.git&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;再度bundle installを実行。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;bundle install
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;scaffoldで生成されたものを覗く&#34;&gt;Scaffoldで生成されたものを覗く&lt;/h2&gt;
-&lt;p&gt;実際何が変わったかはScaffoldで生成されたファイルを見てみるのが一番早いと思いますので、適当にジェネレートしてみます。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ bundle exec rails g scaffold article subject:string body:text
-      invoke  active_record
-      create    db/migrate/20110419121620_create_articles.rb
-      create    app/models/article.rb
-      invoke    test_unit
-      create      test/unit/article_test.rb
-      create      test/fixtures/articles.yml
-       route  resources :articles
-      invoke  scaffold_controller
-      create    app/controllers/articles_controller.rb
-      invoke    erb
-      create      app/views/articles
-      create      app/views/articles/index.html.erb
-      create      app/views/articles/edit.html.erb
-      create      app/views/articles/show.html.erb
-      create      app/views/articles/new.html.erb
-      create      app/views/articles/_form.html.erb
-      invoke    test_unit
-      create      test/functional/articles_controller_test.rb
-      invoke    helper
-      create      app/helpers/articles_helper.rb
-      invoke      test_unit
-      create        test/unit/helpers/articles_helper_test.rb
-      create  app/assets/stylesheets/scaffold.css.scss
-      invoke  assets
-      create    app/assets/javascripts/articles.js.coffee
-      create    app/assets/stylesheets/articles.css.scss
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;現状のRails EdgeだとまだRSpecが標準にはなっていないようです。その代わりapp/assetsというディレクトリが新たに出現していて、その中に.coffeeと.scssなファイルが作られています。&lt;/p&gt;
-&lt;p&gt;app/assets/stylesheets/scaffold.css.scssを覗いてみましょう。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scss&#34; data-lang=&#34;scss&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;body&lt;/span&gt; { &lt;span style=&#34;color:#f92672&#34;&gt;background-color&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; #fff; &lt;span style=&#34;color:#f92672&#34;&gt;color&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; #333; }
- 
-&lt;span style=&#34;color:#f92672&#34;&gt;body&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;ol&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;ul&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt; {
-  &lt;span style=&#34;color:#f92672&#34;&gt;font-family&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;verdana&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;arial&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;helvetica&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;sans-serif&lt;/span&gt;;
-  &lt;span style=&#34;color:#f92672&#34;&gt;font-size&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;13px&lt;/span&gt;;
-  &lt;span style=&#34;color:#f92672&#34;&gt;line-height&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;18px&lt;/span&gt;;
-}
- 
-&lt;span style=&#34;color:#f92672&#34;&gt;pre&lt;/span&gt; {
-  &lt;span style=&#34;color:#f92672&#34;&gt;background-color&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; #eee;
-  &lt;span style=&#34;color:#f92672&#34;&gt;padding&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;10px&lt;/span&gt;;
-  &lt;span style=&#34;color:#f92672&#34;&gt;font-size&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;11px&lt;/span&gt;;
-}
- 
-&lt;span style=&#34;color:#f92672&#34;&gt;a&lt;/span&gt; { 
-  &lt;span style=&#34;color:#f92672&#34;&gt;color&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; #000;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:visited&lt;/span&gt; { &lt;span style=&#34;color:#f92672&#34;&gt;color&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; #666; }
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:hover&lt;/span&gt; { &lt;span style=&#34;color:#f92672&#34;&gt;color&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; #fff; &lt;span style=&#34;color:#f92672&#34;&gt;background-color&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt;#000; }
-}
- 
-&lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;.field&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;div&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;.actions&lt;/span&gt; {
-  &lt;span style=&#34;color:#f92672&#34;&gt;margin-bottom&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;10px&lt;/span&gt;;
-}
- 
-#notice {
-  &lt;span style=&#34;color:#f92672&#34;&gt;color&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;green&lt;/span&gt;;
-}
- 
-&lt;span style=&#34;color:#a6e22e&#34;&gt;.field_with_errors&lt;/span&gt; {
-  &lt;span style=&#34;color:#f92672&#34;&gt;padding&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;2px&lt;/span&gt;;
-  &lt;span style=&#34;color:#f92672&#34;&gt;background-color&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;red&lt;/span&gt;;
-  &lt;span style=&#34;color:#f92672&#34;&gt;display&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;table&lt;/span&gt;;
-}
- 
-#error_explanation {
-  &lt;span style=&#34;color:#f92672&#34;&gt;width&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;450px&lt;/span&gt;;
-  &lt;span style=&#34;color:#f92672&#34;&gt;border&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;2px&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;solid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;red&lt;/span&gt;;
-  &lt;span style=&#34;color:#f92672&#34;&gt;padding&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;7px&lt;/span&gt;;
-  &lt;span style=&#34;color:#f92672&#34;&gt;padding-bottom&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;0&lt;/span&gt;;
-  &lt;span style=&#34;color:#f92672&#34;&gt;margin-bottom&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;20px&lt;/span&gt;;
-  &lt;span style=&#34;color:#f92672&#34;&gt;background-color&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; #f0f0f0;
-  
-  &lt;span style=&#34;color:#f92672&#34;&gt;h2&lt;/span&gt; {
-    &lt;span style=&#34;color:#f92672&#34;&gt;text-align&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;left&lt;/span&gt;;
-    &lt;span style=&#34;color:#f92672&#34;&gt;font-weight&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;bold&lt;/span&gt;;
-    &lt;span style=&#34;color:#f92672&#34;&gt;padding&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;5px&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;5px&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;5px&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;15px&lt;/span&gt;;
-    &lt;span style=&#34;color:#f92672&#34;&gt;font-size&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;12px&lt;/span&gt;;
-    &lt;span style=&#34;color:#f92672&#34;&gt;margin&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-7px&lt;/span&gt;;
-    &lt;span style=&#34;color:#f92672&#34;&gt;margin-bottom&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;0px&lt;/span&gt;;
-    &lt;span style=&#34;color:#f92672&#34;&gt;background-color&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; #c00;
-    &lt;span style=&#34;color:#f92672&#34;&gt;color&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; #fff;
-  }
-  
-  &lt;span style=&#34;color:#f92672&#34;&gt;ul&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;li&lt;/span&gt; {
-    &lt;span style=&#34;color:#f92672&#34;&gt;font-size&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;12px&lt;/span&gt;;
-    &lt;span style=&#34;color:#f92672&#34;&gt;list-style&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;square&lt;/span&gt;;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;まとめ&#34;&gt;まとめ&lt;/h2&gt;
-&lt;p&gt;今回はRails3.1をインストールし、Scaffoldの生成物を眺めただけです。。。実を言うと、私は最近までCoffeeScriptもSCSSも完全にノーマークでして、両方ともさわり程度しか知りませんでした(^^; 油断するとあっという間に置き去りにされそうです。&lt;/p&gt;
-&lt;p&gt;次回はCoffeeScriptとSCSSがどれくらい便利なのか色々触ってみたいと思います（多分）。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -798,61 +144,6 @@ gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;sprockets&amp;#39;&lt;/sp
       
       <guid>https://blog.dakatsuka.jp/2011/04/04/patch-rails3-mail.html</guid>
       <description>Rails3のActionMailer（Mail）で、DoCoMoやauに存在するRFC違反のメールアドレス（@の前にドットが連続するやつ）</description>
-      <content:encoded>&lt;p&gt;Rails3のActionMailer（Mail）で、DoCoMoやauに存在するRFC違反のメールアドレス（@の前にドットが連続するやつ）を受信するときの対処方法を書いておきます。&lt;/p&gt;
-&lt;p&gt;Rails2以前（TMail）のときはFromがnilになって取得出来なくて、仕方なくパーサを書き換えるという結構面倒な事をしていましたが、Rails3では一応取得することは出来ます。ただし、Fromのフォーマットによって挙動が変わってきますので注意が必要です。&lt;/p&gt;
-&lt;p&gt;具体的には下記のようになります。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# 通常のメールアドレスの場合
-ruby-1.9.2-p180 &amp;gt; mail.from
-=&amp;gt; [&amp;quot;d.akatsuka@gmail.com&amp;quot;]
-ruby-1.9.2-p180 &amp;gt; mail.from.class
-=&amp;gt; Mail::AddressContainer
- 
-# @の前にドットが連続するメールアドレスの場合
-ruby-1.9.2-p180 &amp;gt; mail.from
-=&amp;gt; d.akatsuka...@gmail.com
-ruby-1.9.2-p180 &amp;gt; mail.from.class
-=&amp;gt; ActiveSupport::Multibyte::Chars 
- 
-# @の前にドットが連続し、かつ名前が入っている場合
-ruby-1.9.2-p180 &amp;gt; mail.from
-=&amp;gt; Dai Akatsuka &amp;lt;d.akatsuka...@gmail.com&amp;gt;
-ruby-1.9.2-p180 &amp;gt; mail.from.class
-=&amp;gt; ActiveSupport::Multibyte::Chars
- 
-# @の前にドットが連続し、かつマルチバイトな名前が入っている場合
-ruby-1.9.2-p180 &amp;gt; mail.from
-=&amp;gt; &amp;quot;赤塚 &amp;lt;d.akatsuka...@gmail.com&amp;gt;&amp;quot;
-ruby-1.9.2-p180 &amp;gt; mail.from.class
-=&amp;gt; String
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;こ、これは面倒臭い（# ＾ω＾）&lt;/p&gt;
-&lt;p&gt;Fromのフォーマットによってオブジェクトまで変わってしまうと扱うのが面倒です。（しかもメールアドレスだけではなくて名前まで取得してしまうという。。）&lt;/p&gt;
-&lt;p&gt;そこでどのフォーマットのメールアドレスが来ても、FromをStringで取得出来るパッチを書きました。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# coding: utf-8&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; Mail
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Message&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;from_with_patch_rfc_violation&lt;/span&gt;
-      str &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; from_without_patch_rfc_violation
- 
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;begin&lt;/span&gt;
-        str &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; str&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;rescue&lt;/span&gt;
-        str &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; str&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to_s
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-      str&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;scan(&lt;span style=&#34;color:#e6db74&#34;&gt;/^.*?([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+?)(?![a-zA-Z0-9._-]).*$/&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;flatten&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;first
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-    alias_method_chain &lt;span style=&#34;color:#e6db74&#34;&gt;:from&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:patch_rfc_violation&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上記パッチを config/initializers に mail_patch.rb として保存するだけでOKです。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;ruby-1.9.2-p180 &amp;gt; mail.from
-&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&amp;gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;d.akatsuka...@gmail.com&amp;#34;&lt;/span&gt;
-ruby-1.9.2-p180 &amp;gt; mail.from.class
-&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&amp;gt; String
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一応某サイトに仕込んで2週間ほど経過していますが、特に不具合は出ていないようです。もし同様の件で困っている方が居ましたらお試しください。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -862,9 +153,6 @@ ruby-1.9.2-p180 &amp;gt; mail.from.class
       
       <guid>https://blog.dakatsuka.jp/2011/02/22/rails3-helpers.html</guid>
       <description>例えばコントローラやモデル、もしくはバッチ処理でヘルパーを使いたい時がたまにあるんですよね。いつも忘れてしまうのでブログに残しておきます。 ApplicationController.helpers.image_tag(</description>
-      <content:encoded>&lt;p&gt;例えばコントローラやモデル、もしくはバッチ処理でヘルパーを使いたい時がたまにあるんですよね。いつも忘れてしまうのでブログに残しておきます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;ApplicationController&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;helpers&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;image_tag( &lt;span style=&#34;color:#f92672&#34;&gt;.....&lt;/span&gt; )
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -874,77 +162,6 @@ ruby-1.9.2-p180 &amp;gt; mail.from.class
       
       <guid>https://blog.dakatsuka.jp/2011/01/24/rails3-jpmobile-cucumber.html</guid>
       <description>地味に苦戦したのでメモしておきます。これだから携帯向けサイトは大変・・・ 開発環境 Ruby 1.9.2-p136 Ruby on Rails 3.0.3 jpmobile 0.1.4 cucumber 0.10.0 ( capybara 0.4.0 ) インストール cucumberを動</description>
-      <content:encoded>&lt;p&gt;地味に苦戦したのでメモしておきます。これだから携帯向けサイトは大変・・・&lt;/p&gt;
-&lt;p&gt;開発環境&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Ruby 1.9.2-p136&lt;/li&gt;
-&lt;li&gt;Ruby on Rails 3.0.3&lt;/li&gt;
-&lt;li&gt;jpmobile 0.1.4&lt;/li&gt;
-&lt;li&gt;cucumber 0.10.0 ( capybara 0.4.0 )&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;インストール&#34;&gt;インストール&lt;/h2&gt;
-&lt;p&gt;cucumberを動かすためのgemをインストールします。今回はバックエンドにcapybaraを使用します。（WebratはRails3だとうまく動きませんでした）&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Gemfile&lt;/span&gt;
-group &lt;span style=&#34;color:#e6db74&#34;&gt;:test&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-  gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rspec-rails&amp;#39;&lt;/span&gt;
-  gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;cucumber-rails&amp;#39;&lt;/span&gt;
-  gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;capybara&amp;#39;&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Bundlerでインストールし、cucumberをRailsプロジェクトに組み込みます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;bundle install
-rails g cucumber:install ja --rspec --capybara
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;capybaraのuseragentを偽装する&#34;&gt;capybaraのUserAgentを偽装する&lt;/h2&gt;
-&lt;p&gt;モバイルサイトのテストなので、UAを偽装してアクセスしたいところです。ところがcapybaraは、HTTPヘッダをカスタマイズする機能が標準では備わっていないようなので、自力で何とかしないといけません。ググってみると、&lt;a href=&#34;http://aflatter.de/2010/06/testing-headers-and-ssl-with-cucumber-and-capybara/&#34;&gt;Testing custom headers and ssl with Cucumber and Capybara&lt;/a&gt; という記事を発見しました。ここにcapybaraでHTTPヘッダを変える方法が書いてあります。&lt;/p&gt;
-&lt;p&gt;この記事を参考に下記ソースを features/support/headers_hack.rb に保存します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; RackTestMixin
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;included&lt;/span&gt;(mod)
-    mod&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;class_eval &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-      &lt;span style=&#34;color:#75715e&#34;&gt;# This is where we save additional entries.&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;hacked_env&lt;/span&gt;
-        @hacked_env &lt;span style=&#34;color:#f92672&#34;&gt;||=&lt;/span&gt; {}
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-      
-      &lt;span style=&#34;color:#75715e&#34;&gt;# Alias the original method for further use.&lt;/span&gt;
-      alias_method  &lt;span style=&#34;color:#e6db74&#34;&gt;:original_env&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:env&lt;/span&gt;
- 
-      &lt;span style=&#34;color:#75715e&#34;&gt;# Override the method to merge additional headers.&lt;/span&gt;
-      &lt;span style=&#34;color:#75715e&#34;&gt;# Plus this implicitly makes it public.&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;env&lt;/span&gt;
-        original_env&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;merge(hacked_env)
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;Capybara&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Driver&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;RackTest&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;send &lt;span style=&#34;color:#e6db74&#34;&gt;:include&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;RackTestMixin&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; HeadersHackHelper
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;add_headers&lt;/span&gt;(headers)
-    page&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;driver&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hacked_env&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;merge!(headers)
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;World&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;HeadersHackHelper&lt;/span&gt;)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;そして、features/step_definitions/mobile_support.rb というファイルを作成して、下記コードを貼り付けます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# coding: utf-8&lt;/span&gt;
- 
-&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;前提&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;/^携帯端末でアクセスしている$/&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-  add_headers({&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;HTTP_USER_AGENT&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;KDDI-CA39 UP.Browser/6.2.0.13.1.5 (GUI) MMP/2.0&amp;#39;&lt;/span&gt;,
-               &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;HTTP_X_UP_SUBNO&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;subscriber&amp;#39;&lt;/span&gt;})
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;これで、各シナリオの前提に「携帯端末でアクセスしている」と書くことによってUAが偽装された状態でテストが実行されます。&lt;/p&gt;
-&lt;p&gt;ちなみに偽装するUAは、セッション・クッキーの仕様上、DoCoMoではなくauをお勧めします。&lt;/p&gt;
-&lt;h2 id=&#34;invalid-byte-sequence-in-shift_jis-を黙らせる&#34;&gt;invalid byte sequence in Shift_JIS を黙らせる&lt;/h2&gt;
-&lt;p&gt;capybaraの仕様なのかcucumberの仕様なのか分からないのですが、フォームで入力される文字はUTF-8固定になるようです。&lt;/p&gt;
-&lt;p&gt;jpmobileのmobile_filterを有効にしていると、半角カタカナなどが混ざったデータがポストされた時に invalid byte sequence in Shift_JIS というエラーが発生してしまいます。&lt;/p&gt;
-&lt;p&gt;これを回避するために、テストが実行される時のみmobile_filterを動作させないようにします。若干無理矢理ですが、config/application.rb の mobile_filter 呼び出し箇所を次のように変更します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;unless&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Rails&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;env &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;
-  config&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;jpmobile&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;mobile_filter
-  config&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;jpmobile&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;form_accept_charset_conversion &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以上で、通常のサイトをテストする感じでモバイルサイトもテスト出来るようになるはずです。&lt;/p&gt;
-&lt;p&gt;何か間違っている箇所やもっとベストな方法があったら教えて下さい！&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -954,19 +171,6 @@ rails g cucumber:install ja --rspec --capybara
       
       <guid>https://blog.dakatsuka.jp/2010/12/23/rails3-cover-me.html</guid>
       <description>Ruby 1.9 + Rails3 で rcov がうまく動かなかったので cover_me というカバレッジツールを使ってみる事にしました。 Gemfileに下記行を追加して、 gem &amp;#34;cover_me&amp;#34; 下記コマンドでイ</description>
-      <content:encoded>&lt;p&gt;Ruby 1.9 + Rails3 で rcov がうまく動かなかったので cover_me というカバレッジツールを使ってみる事にしました。&lt;/p&gt;
-&lt;p&gt;Gemfileに下記行を追加して、&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;cover_me&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;下記コマンドでインストールします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ bundle install
-$ rails g cover_me:install
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;あとはいつも通りrake specを実行すれば、自動でcoverageディレクトリが作成されその中にカバレッジ結果が格納されます（HTML形式）。&lt;/p&gt;
-&lt;p&gt;お手軽です！&lt;/p&gt;
-&lt;p&gt;ちなみにMacではテスト終了後自動でブラウザが起動してHTMLを表示してくれましたが、Ubuntuではエラーが出たため、下記コードをlib/tasks/cover_me.rakeの先頭に追加して自動でブラウザが起動しないようにしました。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;CoverMe&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;config &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
-  c&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;at_exit &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Proc&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new {}
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -976,20 +180,6 @@ $ rails g cover_me:install
       
       <guid>https://blog.dakatsuka.jp/2010/11/29/activerecord-dirty.html</guid>
       <description>ActiveRecord（Rails3だとActiveModel）は、自分自身（オブジェクト）のプロパティが変更されたかどうか、またどのプロ</description>
-      <content:encoded>&lt;p&gt;ActiveRecord（Rails3だとActiveModel）は、自分自身（オブジェクト）のプロパティが変更されたかどうか、またどのプロパティがどのように変更されたのかなどを取得する機能が備わっています。&lt;/p&gt;
-&lt;p&gt;管理画面で操作ログなどを実装する時に役立ちそうです。&lt;/p&gt;
-&lt;p&gt;変更無し：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;@user &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find_by_email(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;old@exmaple.com&amp;#34;&lt;/span&gt;)
-@user&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;changed? &lt;span style=&#34;color:#75715e&#34;&gt;# =&amp;gt; false&lt;/span&gt;
-@user&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;changes  &lt;span style=&#34;color:#75715e&#34;&gt;# =&amp;gt; {}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;emailを変更してみる：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;@user &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find_by_email(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;old@exmaple.com&amp;#34;&lt;/span&gt;)
-@user&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;email &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;new@exmaple.com&amp;#34;&lt;/span&gt;
-@user&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;changed?     &lt;span style=&#34;color:#75715e&#34;&gt;# =&amp;gt; true&lt;/span&gt;
-@user&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;changes      &lt;span style=&#34;color:#75715e&#34;&gt;# =&amp;gt; {&amp;#34;email&amp;#34;=&amp;gt;[&amp;#34;old@exmaple.com&amp;#34;, &amp;#34;new@exmaple.com&amp;#34;]}&lt;/span&gt;
-@user&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;email_change &lt;span style=&#34;color:#75715e&#34;&gt;# =&amp;gt; [&amp;#34;old@exmaple.com&amp;#34;, &amp;#34;new@example.com&amp;#34;]&lt;/span&gt;
-@user&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;email_was    &lt;span style=&#34;color:#75715e&#34;&gt;# =&amp;gt; &amp;#34;old@exmaple.com&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -999,79 +189,6 @@ $ rails g cover_me:install
       
       <guid>https://blog.dakatsuka.jp/2010/11/22/sharing-sessions-rails2-rails3.html</guid>
       <description>サブドメインが異なるRails2アプリとRails3アプリでセッションを共有したい場合、Cookie Session Storeに互換性が無いみたいでそのま</description>
-      <content:encoded>&lt;p&gt;サブドメインが異なるRails2アプリとRails3アプリでセッションを共有したい場合、Cookie Session Storeに互換性が無いみたいでそのまま共有しようとすると問題が発生します。&lt;/p&gt;
-&lt;p&gt;具体的にどういう問題があるかというと、&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Rails2はCookieのKeyをSymbolとして扱う。しかしRails3はStringとして扱っている。&lt;/li&gt;
-&lt;li&gt;Flash周りは何とマーシャルしてCookieに保存されている。Rails2とRails3でモジュール・クラス名が異なっているのでアンマーシャル時にuninitialized constantが発生する。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;まず1つ目の問題ですが、幸いなことにRails3はKeyがSymbolでも読み込みが可能です。ただし一度でも読み込むとStringに変換されてRails2からは読めなくなります。ということは、Rails2でStringなKeyを認識出来るようにすれば、この問題は解決出来そうです。&lt;/p&gt;
-&lt;p&gt;2つ目の問題は、双方に存在しないモジュール・クラスを予め定義しておけばエラーは出ないはずです。&lt;/p&gt;
-&lt;p&gt;以上を踏まえてRails2、Rails3にモンキーパッチを当てます。&lt;/p&gt;
-&lt;h2 id=&#34;rails2側&#34;&gt;Rails2側&lt;/h2&gt;
-&lt;p&gt;config/initializersにaccept_rails3_session.rbなど適当に名前をつけて下記ソースをコピペします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; ActionDispatch
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; Flash
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FlashHash&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Hash&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;method_missing&lt;/span&gt;(m, &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;a, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;b)
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; ActionController
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; Session
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;CookieStore&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;unmarshal&lt;/span&gt;(cookie)
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; cookie
-          data &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; persistent_session_id!(@verifier&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;verify(cookie))
-          data&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;symbolize_keys!
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;rescue&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ActiveSupport&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;MessageVerifier&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;InvalidSignature&lt;/span&gt;
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;requires_session_id?&lt;/span&gt;(data)
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; data
-          data&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;respond_to?(&lt;span style=&#34;color:#e6db74&#34;&gt;:key?&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;data&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;key?(&lt;span style=&#34;color:#e6db74&#34;&gt;:session_id&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;data&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;key?(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;session_id&amp;#34;&lt;/span&gt;)
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
-          &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;config/initializers/session_store.rbを開き、:key、:secret、:domainを設定します。この3つはRails3側も同じにする必要があります。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;ActionController&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Base&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;session &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {
-  &lt;span style=&#34;color:#e6db74&#34;&gt;:key&lt;/span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;_session&amp;#39;&lt;/span&gt;,
-  &lt;span style=&#34;color:#e6db74&#34;&gt;:secret&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&amp;#39;&lt;/span&gt;,
-  &lt;span style=&#34;color:#e6db74&#34;&gt;:domain&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.example.com&amp;#39;&lt;/span&gt;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;rails3側&#34;&gt;Rails3側&lt;/h2&gt;
-&lt;p&gt;config/initializersにaccept_rails2_session.rbなど適当に名前をつけて下記ソースをコピペします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; ActionController
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;module&lt;/span&gt; Flash
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FlashHash&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Hash&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;method_missing&lt;/span&gt;(m, &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;a, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;b)
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;config/initializers/session_store.rbを開き、:keyと:domainをRails2側で設定した値と同じ値にします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;AppName&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Application&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;config&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;session_store &lt;span style=&#34;color:#e6db74&#34;&gt;:cookie_store&lt;/span&gt;,
-                                          &lt;span style=&#34;color:#e6db74&#34;&gt;:key&lt;/span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;_session&amp;#39;&lt;/span&gt;,
-                                          &lt;span style=&#34;color:#e6db74&#34;&gt;:domain&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.example.com&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;config/initializers/secret_token.rbを開き、Rails2側で設定した:secretと同じ値にします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;AppName&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Application&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;config&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;secret_token &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以上です！これでRails2とRails3でセッションを共有出来るようになります。&lt;/p&gt;
-&lt;h2 id=&#34;まだ残る問題点&#34;&gt;まだ残る問題点&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Rails2側がRuby1.8.xでRails3側がRuby1.9.2の構成で、Rails2で作成したFlash MessageをRails3側で読み出すとincompatible character encodingsになります。&lt;/li&gt;
-&lt;li&gt;Rails2側で作成したFlash MessageをRails3側で呼び出すとFlashが消えてくれません。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Flash周りはもう少し考えないと厳しいかもしれません。。。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -1081,19 +198,6 @@ $ rails g cover_me:install
       
       <guid>https://blog.dakatsuka.jp/2010/11/14/rvm-gemset.html</guid>
       <description>Rubyの開発環境にRVMを使っている場合は、bundle install –pathを使うよりもgemsetという機能を使ったほうがお手軽に管理出来るみた</description>
-      <content:encoded>&lt;p&gt;Rubyの開発環境にRVMを使っている場合は、bundle install –pathを使うよりもgemsetという機能を使ったほうがお手軽に管理出来るみたいです。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ rvm gemset create hoge-project
-$ rvm gemset use hoge-project
-$ bundle install
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;どのgemsetを使用しているか確認&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ rvm gemset name
-hoge-project
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;gemsetの一覧を表示&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ rvm gemset list
-gemsets : &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; ruby-1.9.2-p0 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;found in /home/user/.rvm/gems/&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-global
-hoge-project
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -1103,28 +207,6 @@ hoge-project
       
       <guid>https://blog.dakatsuka.jp/2010/11/09/bundle-install.html</guid>
       <description>Rails3からBundlerが導入されgemの管理がしやすくなりましたが、色々なRailsアプリでほいほいbundle installを実行</description>
-      <content:encoded>&lt;p&gt;Rails3からBundlerが導入されgemの管理がしやすくなりましたが、色々なRailsアプリでほいほいbundle installを実行するとシステムにインストールされるgemが結構カオスになってきます。また、Rails2とRails3が同居する開発環境だとかなり面倒くさくなります。精神衛生上あまり宜しくありません。&lt;/p&gt;
-&lt;p&gt;そこでbundlerにオプションを渡してgemを任意のディレクトリにインストールし、gemをRailsプロジェクト毎に管理することをオススメします。&lt;/p&gt;
-&lt;p&gt;Rails3の場合、使い方はこんな感じになります。&lt;/p&gt;
-&lt;p&gt;まず、プロジェクト用のディレクトリを作成し、Gemfileを記述します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;mkdir newapp
-cd ./newapp
-vim Gemfile
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Gemfileにはrailsだけ指定します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;source &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://rubygems.org&amp;#34;&lt;/span&gt;
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;rails&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;3.0.1&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Gemfileを書き終わったらbundleコマンドを使いRailsをインストールします。ここではvendor/bundlerというディレクトリにgemをインストールします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;bundle install --path vendor/bundler
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;インストールが終わったらRailsプロジェクトを作成します。RailsがGemfileを上書きしていいか質問してくるのでyesと答えて上書きしてしまいましょう。なお、インストールするディレクトリを変えた場合、そのディレクトリにはパスが通っていないのでbundle execを通してRailsを実行する必要があります。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;bundle exec rails new .
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;あとは上書きされたGemfileを開いて、RSpecなりhamlなり導入したいgemを書いてbundle installしましょう。&lt;/p&gt;
-&lt;p&gt;毎回bundle execなんて打つの面倒過ぎるって人は、.bashrcや.zshrcにエイリアス設定しちゃいましょう。私は下記のようにしています。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;alias be&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;bundle exec&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;こうすることで、&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;be rake db:migrate
-be rails s
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;みたいな感じで使っていくことが出来ます。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -1134,13 +216,6 @@ be rails s
       
       <guid>https://blog.dakatsuka.jp/2010/11/01/mobile-site-in-cucumber.html</guid>
       <description>達人出版会から出版された「はじめる！Cucumber」という本を本日購入しました。日本語で丁寧に書かれている良書で、cucumberをこれか</description>
-      <content:encoded>&lt;p&gt;達人出版会から出版された「&lt;a href=&#34;http://tatsu-zine.com/books/2&#34;&gt;はじめる！Cucumber&lt;/a&gt;」という本を本日購入しました。日本語で丁寧に書かれている良書で、cucumberをこれから触ってみたい方にはオススメです。&lt;/p&gt;
-&lt;p&gt;さて、このcucumberを携帯サイトのプロジェクトで使った場合、そのままだとUAで弾かれたりして使用出来ないかもしれません。その場合は、下記をfeatures/support/env.rbに追記することによって、UAの偽装と個体識別番号の付与が出来ます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;前提&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;/^携帯でアクセスしている$/&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-  header(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;user_agent&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;DoCoMo/2.0 P906i(c100;TB;W24H15)&amp;#39;&lt;/span&gt;)
-  header(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;x_dcmguid&amp;#39;&lt;/span&gt;,  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;subscriber&amp;#39;&lt;/span&gt;)
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -1150,20 +225,6 @@ be rails s
       
       <guid>https://blog.dakatsuka.jp/2007/09/03/install-railsl.html</guid>
       <description>Railsで動くツールをいくつか試してみたくなったので、Ubuntuで環境を構築してみました。しょうもないですが手順をメモっておきます。 Ru</description>
-      <content:encoded>&lt;p&gt;Railsで動くツールをいくつか試してみたくなったので、Ubuntuで環境を構築してみました。しょうもないですが手順をメモっておきます。&lt;/p&gt;
-&lt;p&gt;Rubyをapt-getでインストールします。libredcloth-rubyはredMineのWikiで使われるみたいです。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ sudo apt-get install ruby rubygems libredcloth-ruby
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;gemでRailsをインストールします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ sudo gem install rails rake
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;/var/lib/gems/1.8/binにパスを通します。.bashrcをエディタで開いて&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;PATH&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$PATH&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;:/var/lib/gems/1.8/bin
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上記を最下部に追加します。即反映させたい場合は&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ source ~/.bashrc
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;確認&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ which rails rake
-/var/lib/gems/1.8/bin/rails
-/var/lib/gems/1.8/bin/rake
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
   </channel>

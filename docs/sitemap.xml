@@ -1,960 +1,503 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  
-  
-  
-  
   <url>
+    <loc>https://blog.dakatsuka.jp/categories.html</loc>
+    <lastmod>2021-01-11T19:20:00+09:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/</loc>
     <lastmod>2021-01-11T19:20:00+09:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/ocaml.html</loc>
+    <lastmod>2021-01-11T19:20:00+09:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2021/01/11/ocaml-binding-operators.html</loc>
     <lastmod>2021-01-11T19:20:00+09:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/post.html</loc>
+    <lastmod>2021-01-11T19:20:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/categories/programming.html</loc>
+    <lastmod>2021-01-11T19:20:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags.html</loc>
+    <lastmod>2021-01-11T19:20:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/hugo.html</loc>
+    <lastmod>2020-12-10T00:00:00+09:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2020/12/10/hugo.html</loc>
     <lastmod>2020-12-10T00:00:00+09:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/categories/uncategorized.html</loc>
+    <lastmod>2020-12-10T00:00:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/akka.html</loc>
+    <lastmod>2017-02-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/scala.html</loc>
+    <lastmod>2017-02-18T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</loc>
     <lastmod>2017-02-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</loc>
     <lastmod>2017-02-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2017/01/03/asset-allocation-2016.html</loc>
     <lastmod>2017-01-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/asset.html</loc>
+    <lastmod>2017-01-03T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</loc>
     <lastmod>2017-01-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/diary.html</loc>
+    <lastmod>2017-01-01T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</loc>
     <lastmod>2016-12-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</loc>
     <lastmod>2016-02-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</loc>
     <lastmod>2016-01-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/12/30/lookback.html</loc>
     <lastmod>2015-12-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</loc>
     <lastmod>2015-12-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/finagle.html</loc>
+    <lastmod>2015-12-15T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html</loc>
     <lastmod>2015-12-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/finch.html</loc>
+    <lastmod>2015-12-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/scalaz.html</loc>
+    <lastmod>2015-12-15T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/12/13/finch-endpoint-test.html</loc>
     <lastmod>2015-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/lua.html</loc>
+    <lastmod>2015-12-10T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/12/10/luaj.html</loc>
     <lastmod>2015-12-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/12/07/finch.html</loc>
     <lastmod>2015-12-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/https.html</loc>
+    <lastmod>2015-12-01T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/12/01/https.html</loc>
     <lastmod>2015-12-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/http4s.html</loc>
+    <lastmod>2015-11-22T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/11/22/http4s-with-ssl.html</loc>
     <lastmod>2015-11-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/11/21/2007.html</loc>
     <lastmod>2015-11-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/11/18/activerecord-import.html</loc>
     <lastmod>2015-11-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/rails.html</loc>
+    <lastmod>2015-11-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/ruby.html</loc>
+    <lastmod>2015-11-18T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/11/15/diary.html</loc>
     <lastmod>2015-11-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/11/14/http4s.html</loc>
     <lastmod>2015-11-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/11/07/future-to-task-transformer.html</loc>
     <lastmod>2015-11-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/ci.html</loc>
+    <lastmod>2015-08-22T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/08/22/elasticsearch-on-circleci.html</loc>
     <lastmod>2015-08-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/elasticsearch.html</loc>
+    <lastmod>2015-08-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/play.html</loc>
+    <lastmod>2015-06-11T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/06/11/play-multiple-project.html</loc>
     <lastmod>2015-06-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/sbt.html</loc>
+    <lastmod>2015-06-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/python.html</loc>
+    <lastmod>2015-06-10T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/06/10/horrible-code.html</loc>
     <lastmod>2015-06-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/aws.html</loc>
+    <lastmod>2015-05-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/categories/devops.html</loc>
+    <lastmod>2015-05-16T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/05/16/sbt-publish-to-s3.html</loc>
     <lastmod>2015-05-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/03/24/amazon-sns-to-slack.html</loc>
     <lastmod>2015-03-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/slack.html</loc>
+    <lastmod>2015-03-24T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/02/19/rbenv-sudo.html</loc>
     <lastmod>2015-02-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2015/01/28/use-packer-on-circleci.html</loc>
     <lastmod>2015-01-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/php.html</loc>
+    <lastmod>2014-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/symfony2.html</loc>
+    <lastmod>2014-08-28T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2014/08/28/symfony2-subdomain.html</loc>
     <lastmod>2014-08-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2014/08/24/play2-on-circleci.html</loc>
     <lastmod>2014-08-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/di.html</loc>
+    <lastmod>2014-08-01T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2014/08/01/play2-scaldi.html</loc>
     <lastmod>2014-08-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/vagrant.html</loc>
+    <lastmod>2014-04-24T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2014/04/24/vagrant-hdd-resize.html</loc>
     <lastmod>2014-04-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2014/04/03/symfony2-travis-ci.html</loc>
     <lastmod>2014-04-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/javascript.html</loc>
+    <lastmod>2014-03-03T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2014/03/03/rails-jasmine-timezone.html</loc>
     <lastmod>2014-03-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2014/02/13/mongo-mapper-diagram.html</loc>
     <lastmod>2014-02-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/12/24/autocheck-js.html</loc>
     <lastmod>2013-12-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/12/19/resolve-target-entity.html</loc>
     <lastmod>2013-12-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/work.html</loc>
+    <lastmod>2013-12-16T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/12/16/freelance.html</loc>
     <lastmod>2013-12-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/12/07/install-php55-on-mavericks.html</loc>
     <lastmod>2013-12-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/12/05/symfony2-functional-test.html</loc>
     <lastmod>2013-12-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/blog.html</loc>
+    <lastmod>2013-12-01T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/12/01/rewrite-html-for-blog.html</loc>
     <lastmod>2013-12-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/bdd.html</loc>
+    <lastmod>2013-11-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/11/27/rails4-rspec-guard-spring.html</loc>
     <lastmod>2013-11-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/11/26/resignation.html</loc>
     <lastmod>2013-11-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/middleman.html</loc>
+    <lastmod>2013-11-24T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/11/24/middleman-build-helper.html</loc>
     <lastmod>2013-11-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/11/22/change-from-wordpress-to-middleman.html</loc>
     <lastmod>2013-11-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/monolog.html</loc>
+    <lastmod>2013-10-18T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/10/18/monolog-fluentd.html</loc>
     <lastmod>2013-10-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/09/03/php-maybe-monad.html</loc>
     <lastmod>2013-09-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/09/02/php-infinite-list.html</loc>
     <lastmod>2013-09-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/08/13/doctrine-enum-bundle.html</loc>
     <lastmod>2013-08-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/08/12/php-mcrypt-is-too-slow.html</loc>
     <lastmod>2013-08-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2013/03/10/php54-trait-readonly-array.html</loc>
     <lastmod>2013-03-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/backbone.js.html</loc>
+    <lastmod>2012-09-13T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2012/09/13/rails-backbone-intro.html</loc>
     <lastmod>2012-09-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/node.js.html</loc>
+    <lastmod>2012-07-17T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2012/07/17/dtrace-nodejs.html</loc>
     <lastmod>2012-07-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/rabbitmq.html</loc>
+    <lastmod>2012-05-14T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html</loc>
     <lastmod>2012-05-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/ubuntu.html</loc>
+    <lastmod>2012-04-18T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html</loc>
     <lastmod>2012-04-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/mongodb.html</loc>
+    <lastmod>2012-03-07T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2012/03/07/sharding-mongoose.html</loc>
     <lastmod>2012-03-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2012/01/10/node-uuid.html</loc>
     <lastmod>2012-01-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/chef.html</loc>
+    <lastmod>2011-12-08T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/12/08/chef-install.html</loc>
     <lastmod>2011-12-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/12/05/chef-introduction.html</loc>
     <lastmod>2011-12-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/11/25/express-pjax.html</loc>
     <lastmod>2011-11-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/10/20/simplecov.html</loc>
     <lastmod>2011-10-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/capistrano.html</loc>
+    <lastmod>2011-10-13T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/10/13/node-cap-upstart.html</loc>
     <lastmod>2011-10-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/10/06/node-fakeweb.html</loc>
     <lastmod>2011-10-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/09/30/nested-has-one.html</loc>
     <lastmod>2011-09-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/tdd.html</loc>
+    <lastmod>2011-09-26T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/09/26/vows-setup-teardown.html</loc>
     <lastmod>2011-09-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/09/21/nodejs-tdd.html</loc>
     <lastmod>2011-09-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/09/01/upgrade-rails31.html</loc>
     <lastmod>2011-09-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/08/14/consistent-hashing-nodejs.html</loc>
     <lastmod>2011-08-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/08/01/firefox-websocket.html</loc>
     <lastmod>2011-08-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/07/18/connect-middleware.html</loc>
     <lastmod>2011-07-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/actionscript.html</loc>
+    <lastmod>2011-07-14T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/07/14/red5.html</loc>
     <lastmod>2011-07-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/06/19/nodejs-redis-pubsub.html</loc>
     <lastmod>2011-06-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/06/18/nodejs-opts.html</loc>
     <lastmod>2011-06-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/06/14/npm-package-json.html</loc>
     <lastmod>2011-06-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/06/09/express-redis.html</loc>
     <lastmod>2011-06-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/06/08/node-express-twitter.html</loc>
     <lastmod>2011-06-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/06/06/nave-npm-node.html</loc>
     <lastmod>2011-06-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/06/01/omniauth-mixi.html</loc>
     <lastmod>2011-06-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/05/27/grape.html</loc>
     <lastmod>2011-05-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/git.html</loc>
+    <lastmod>2011-05-25T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/05/25/cap-subdirectory.html</loc>
     <lastmod>2011-05-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/05/24/git-flow.html</loc>
     <lastmod>2011-05-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/05/14/hirb-rails-console.html</loc>
     <lastmod>2011-05-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/mogilefs.html</loc>
+    <lastmod>2011-04-24T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html</loc>
     <lastmod>2011-04-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/04/19/rails3-1-1.html</loc>
     <lastmod>2011-04-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/04/04/patch-rails3-mail.html</loc>
     <lastmod>2011-04-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/02/22/rails3-helpers.html</loc>
     <lastmod>2011-02-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/02/09/ruby-decoration-mail.html</loc>
     <lastmod>2011-02-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2011/01/24/rails3-jpmobile-cucumber.html</loc>
     <lastmod>2011-01-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2010/12/23/rails3-cover-me.html</loc>
     <lastmod>2010-12-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2010/11/29/activerecord-dirty.html</loc>
     <lastmod>2010-11-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2010/11/22/sharing-sessions-rails2-rails3.html</loc>
     <lastmod>2010-11-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2010/11/14/rvm-gemset.html</loc>
     <lastmod>2010-11-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2010/11/09/bundle-install.html</loc>
     <lastmod>2010-11-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2010/11/01/mobile-site-in-cucumber.html</loc>
     <lastmod>2010-11-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2010/10/31/streaming-api-to-mongodb.html</loc>
     <lastmod>2010-10-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/vim.html</loc>
+    <lastmod>2007-09-07T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/09/07/vim-css.html</loc>
     <lastmod>2007-09-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/fedora.html</loc>
+    <lastmod>2007-09-05T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/09/05/fedora8.html</loc>
     <lastmod>2007-09-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/linux.html</loc>
+    <lastmod>2007-09-05T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/09/03/install-railsl.html</loc>
     <lastmod>2007-09-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/08/27/akihabara.html</loc>
     <lastmod>2007-08-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/06/13/nvidia-beryl.html</loc>
     <lastmod>2007-06-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/05/24/qr.html</loc>
     <lastmod>2007-05-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/04/29/ich-ac97.html</loc>
     <lastmod>2007-04-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/04/22/install-wine-with-ie-on-ubuntu-feisty.html</loc>
     <lastmod>2007-04-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/04/21/build-jd-on-ubuntu-feisty.html</loc>
     <lastmod>2007-04-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/04/20/holidays.html</loc>
     <lastmod>2007-04-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/04/08/feisty-ipamona.html</loc>
     <lastmod>2007-04-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/04/07/anthy.html</loc>
     <lastmod>2007-04-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/04/06/nautilus.html</loc>
     <lastmod>2007-04-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  
-  
-  
-  <url>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/subversion.html</loc>
+    <lastmod>2007-04-05T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/04/05/meld.html</loc>
     <lastmod>2007-04-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2007/04/04/ubuntu-feisty.html</loc>
     <lastmod>2007-04-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/about.html</loc>
-  </url>
-  
-  
-  
-  <url>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/archives.html</loc>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/http/2.html</loc>
   </url>
-  
-  
-  
-  
-  
 </urlset>

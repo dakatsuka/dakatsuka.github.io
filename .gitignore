@@ -21,3 +21,5 @@
 .DS_Store
 
 /.cache
+
+/.hugo_build.lock

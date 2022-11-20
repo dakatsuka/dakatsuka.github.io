@@ -4,13 +4,10 @@
     <title>Symfony2 on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/symfony2.html</link>
     <description>Recent content in Symfony2 on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Thu, 28 Aug 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/symfony2/index.xml" rel="self" type="application/rss+xml" />
@@ -21,41 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2014/08/28/symfony2-subdomain.html</guid>
       <description>Symfony2では特定のBundleをサブドメインに切り出すことができる。正しくはBundle毎に任意のドメインを割り当てることができる。</description>
-      <content:encoded>&lt;p&gt;Symfony2では特定のBundleをサブドメインに切り出すことができる。正しくはBundle毎に任意のドメインを割り当てることができる。もちろん開発用のビルトインサーバでも使うことが可能。&lt;/p&gt;
-&lt;p&gt;将来的にサブドメインを使う想定があるならば、事前にBundleは分割しておくと良い。&lt;/p&gt;
-&lt;h2 id=&#34;example&#34;&gt;Example&lt;/h2&gt;
-&lt;p&gt;AcmeWebBundleは &lt;code&gt;www.example.com&lt;/code&gt; へ、AcmeSmartphoneBundleは &lt;code&gt;sp.example.com&lt;/code&gt; に割り当てるようにする。&lt;/p&gt;
-&lt;p&gt;まずapp/config/parameters.yml にドメインを書いておく。パラメータ名は自由に決められるが、今回は下記のようにした。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;parameters&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;acme.www.host&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;www.example.com&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;acme.smartphone.host&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;sp.example.com&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;app/config/routing.ymlでルーティングを下記のように設定する。通常のルーティングの設定にhost項目を増やすだけなので簡単ですね。どちらもprefixは &lt;code&gt;/&lt;/code&gt; にしておくこと。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;acme_web&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;resource&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;@AcmeWebBundle/Controller&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;type&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;annotation&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;prefix&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;/&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;host&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%acme.www.host%&amp;#34;&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;acme_smartphone&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;resource&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;@AcmeSmartphoneBundle/Controller&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;type&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;annotation&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;prefix&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;/&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;host&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%acme.smartphone.host%&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;これでAcmeWebBundleとAcmeSmartphoneBundle内のコントローラには指定したドメイン以外ではアクセス出来なくなる。また Twig の path 関数もよしなにやってくれる。ローカルで動作確認をしたい場合は/etc/hostsやDNSを書き換えて127.0.0.1に向けよう。&lt;/p&gt;
-&lt;p&gt;ただしローカル開発環境ではサブドメインではなくhttp://localhost:8000/sp/ でアクセス出来るようにしておくと開発しやすいケースもあると思うので、その場合は routing_dev.yml を次のようにする。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;_main&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;resource&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;routing.yml&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;acme_web&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;resource&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;@AcmeWebBundle/Controller&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;type&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;annotation&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;prefix&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;/&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;acme_smartphone&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;resource&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;@AcmeSmartphoneBundle/Controller&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;type&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;annotation&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;prefix&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;/sp&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -65,23 +27,6 @@
       
       <guid>https://blog.dakatsuka.jp/2014/04/03/symfony2-travis-ci.html</guid>
       <description>.travis.ymlを下記のようにした。TravisはComposerもPHPUnitもパスが通った状態になっているため、ダウンロードする</description>
-      <content:encoded>&lt;p&gt;.travis.ymlを下記のようにした。TravisはComposerもPHPUnitもパスが通った状態になっているため、ダウンロードするスクリプトをわざわざ書く必要はない。&lt;/p&gt;
-&lt;p&gt;CIの結果をHipChatに通知したい場合はnotificationsで設定するだけで良い。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;language&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;php&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;php&lt;/span&gt;:
-  - &lt;span style=&#34;color:#ae81ff&#34;&gt;5.5&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;before_script&lt;/span&gt;:
-  - &lt;span style=&#34;color:#ae81ff&#34;&gt;composer install --dev&lt;/span&gt;
-  - &lt;span style=&#34;color:#ae81ff&#34;&gt;php app/console doctrine:database:create --env=test&lt;/span&gt;
-  - &lt;span style=&#34;color:#ae81ff&#34;&gt;php app/console doctrine:schema:create --env=test&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;script&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;phpunit -c app&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;notifications&lt;/span&gt;:
-  &lt;span style=&#34;color:#f92672&#34;&gt;hipchat&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;secret_token@room_name&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -91,64 +36,6 @@
       
       <guid>https://blog.dakatsuka.jp/2013/12/19/resolve-target-entity.html</guid>
       <description>Doctrine2のOneToManyやManyToManyのtargetEntityにはAbstract classやInterfaceを指</description>
-      <content:encoded>&lt;p&gt;Doctrine2の&lt;code&gt;OneToMany&lt;/code&gt;や&lt;code&gt;ManyToMany&lt;/code&gt;の&lt;code&gt;targetEntity&lt;/code&gt;にはAbstract classやInterfaceを指定することができる。&lt;a href=&#34;http://symfony.com/doc/current/cookbook/doctrine/resolve_target_entity.html&#34;&gt;普通にリファレンスには書いてある&lt;/a&gt;のだが、日本語の情報は無さそうだったので紹介。&lt;/p&gt;
-&lt;p&gt;CoreBundle:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\CoreBundle\Entity&lt;/span&gt;;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Doctrine\ORM\Mapping&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ORM&lt;/span&gt;;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\BlogBundle\Model\Article&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;BaseArticle&lt;/span&gt;;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\BlogBundle\Model\Comment&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;BaseComment&lt;/span&gt;;
-
-&lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * @ORM\Entity
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * @ORM\Table(name=&amp;#34;articles&amp;#34;)
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; */&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Article&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;BaseArticle&lt;/span&gt;
-{}
-
-&lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * @ORM\Entity
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * @ORM\Table(name=&amp;#34;comments&amp;#34;)
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; */&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Comment&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;BaseComment&lt;/span&gt;
-{}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;BlogBundle:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\BlogBundle\Model&lt;/span&gt;;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Doctrine\ORM\Mapping&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ORM&lt;/span&gt;;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Doctrine\Common\Collections\ArrayCollection&lt;/span&gt;;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ArticleInterface&lt;/span&gt; {}
-&lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;CommentInterface&lt;/span&gt; {}
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Article&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ArticleInterface&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @ORM\OneToMany(targetEntity=&amp;#34;Acme\BlogBundle\Model\CommentInterface&amp;#34;, mappedBy=&amp;#34;article&amp;#34;)
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @var ArrayCollection
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     */&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $comments;
-}
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Comment&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;CommentInterface&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @ORM\ManyToOne(targetEntity=&amp;#34;Acme\BlogBundle\Model\ArticleInterface&amp;#34;)
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @ORM\JoinColumn(name=&amp;#34;article_id&amp;#34;, referencedColumnName=&amp;#34;id&amp;#34;)
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @var ArticleInterface
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     */&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $article;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;app/config/config.yml でInterface（またはAbstract class）と実装したクラスをマッピングする:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;doctrine&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;orm&lt;/span&gt;:
-        &lt;span style=&#34;color:#f92672&#34;&gt;resolve_target_entities&lt;/span&gt;:
-            &lt;span style=&#34;color:#f92672&#34;&gt;Acme\BlogBundle\Model\ArticleInterface&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;Acme\CoreBundle\Entity\Article&lt;/span&gt;
-            &lt;span style=&#34;color:#f92672&#34;&gt;Acme\BlogBundle\Model\CommentInterface&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;Acme\CoreBundle\Entity\Comment&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使いこなせば抽象度の高い汎用的なBundleを作ることができそうですね。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -158,68 +45,6 @@
       
       <guid>https://blog.dakatsuka.jp/2013/12/05/symfony2-functional-test.html</guid>
       <description>前置き Symfony2を構成するサービスはほぼDIコンテナの上に乗っているので、ドメインとデータベース、フレームワークがそれぞれ疎結合になっ</description>
-      <content:encoded>&lt;h2 id=&#34;前置き&#34;&gt;前置き&lt;/h2&gt;
-&lt;p&gt;Symfony2を構成するサービスはほぼDIコンテナの上に乗っているので、ドメインとデータベース、フレームワークがそれぞれ疎結合になっています。そのため、ドメインのテストを行う際はフレームワークの読み込みやデータベースに接続する必要はありません。依存部分はモックに置き換えてしまえば良いわけです。&lt;/p&gt;
-&lt;p&gt;とはいえ、コントローラやサービスは実際にデータベースに接続してテストを行っておきたいのが人情。モックで置き換えているユニットテストだと動いたけど、結合してみたら動かない…なんてよくある話ですから。&lt;/p&gt;
-&lt;p&gt;そしてSymfony2にはWebTestCaseというテスト用のクラスが用意されていて（中身はPHPUnitです）、これを継承したクラスを作ることでSymfony2が読み込まれた状態でテストをすることが可能になります。主にリクエストやルーティング、ビューのテストに使用するのが目的のようですが、ドメインの結合テストにも使うことが出来ます。&lt;/p&gt;
-&lt;h2 id=&#34;テストデータの投入&#34;&gt;テストデータの投入&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/doctrine/data-fixtures&#34;&gt;Doctrine Data Fixtures Extension&lt;/a&gt;というライブラリを使えば初期データをデータベースに投入することが出来ます。ただ、これは好みの問題かもしれませんが、自分はあまり使い勝手が良いとは思えませんでした。ただデータを投入するだけなら良いのですが、テストで使おうと思うとEntityを毎回findしてこないといけなくて辛い感じがします。&lt;code&gt;getOrder()&lt;/code&gt;メソッドで読み込み順を数値で設定するのもどうなの的な。&lt;/p&gt;
-&lt;p&gt;なので私は&lt;a href=&#34;https://github.com/dakatsuka/BlueprintBundle&#34;&gt;BlueprintBundle&lt;/a&gt;という代替ライブラリを作ってそちらを使っています。データベースに保存した上でエンティティを取得出来るので中々便利に使えています。自画自賛。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-
-&lt;span style=&#34;color:#a6e22e&#34;&gt;Blueprint&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;register&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;post&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Acme\BlogBundle\Entity\Post&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;($post, $blueprint) {
-    $post&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;setTitle&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Title&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt; $blueprint&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;sequence&lt;/span&gt;());
-    $post&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;setBody&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;BodyBodyBody&amp;#39;&lt;/span&gt;);
-});
-
-$blueprint &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$container&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;dakatsuka.blueprint&amp;#39;&lt;/span&gt;);
-
-$post1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $blueprint&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;create&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;post&amp;#39;&lt;/span&gt;);
-$post2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $blueprint&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;create&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;post&amp;#39;&lt;/span&gt;);
-$post3 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $blueprint&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;build&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;post&amp;#39;&lt;/span&gt;); &lt;span style=&#34;color:#75715e&#34;&gt;// DBには保存しない
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;データベースのお掃除&#34;&gt;データベースのお掃除&lt;/h2&gt;
-&lt;p&gt;ひとつ前のテストケースの影響を受けないようにするために、テスト毎にデータベースを掃除する必要があります。前述のDoctrine Data Fixtures Extensionの&lt;code&gt;ORMPurger&lt;/code&gt;クラスを使うことで実現出来ます。&lt;/p&gt;
-&lt;p&gt;ちなみに&lt;code&gt;ORMPurger&lt;/code&gt;は2種類のモードがあって&lt;code&gt;PURGE_MODE_DELETE&lt;/code&gt;か&lt;code&gt;PURGE_MODE_TRUNCATE&lt;/code&gt;を選ぶことができます。トランザクションで制御したい場合は、&lt;code&gt;ORMPurger&lt;/code&gt;は使わずにsetUpでトランザクションを開始してtearDownでロールバックする必要があります。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FunctionalTest&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;WebTestCase&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @var \Symfony\Component\HttpKernel\Kernel
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     */&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $kernel;
-
-    &lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @var \Symfony\Component\DependencyInjection\Container
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     */&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $container;
-
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;setUp&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;parent&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;setUp&lt;/span&gt;();
-
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$kernel &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createKernel&lt;/span&gt;();
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$kernel&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;boot&lt;/span&gt;();
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$container &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$kernel&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getContainer&lt;/span&gt;();
-
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$container&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;doctrine&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getManager&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;default&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;beginTransaction&lt;/span&gt;();
-    }
-
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;tearDown&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;parent&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;tearDown&lt;/span&gt;();
-
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$container&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;doctrine&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getManager&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;default&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;rollback&lt;/span&gt;();
-
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;foreach&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$container&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;doctrine&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getConnections&lt;/span&gt;() &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; $connection) {
-            $connection&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;close&lt;/span&gt;();
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;テストの数が多くなってくるとDELETEもTRUNCATEも遅くてつらいので、私はトランザクションを使ってテストケース毎にロールバックする方法を取っています。今のところ特に困ったことにはなっていませんので、テストが遅くて困ってる人は試してみる価値はあると思います。&lt;/p&gt;
-&lt;h2 id=&#34;最後&#34;&gt;最後&lt;/h2&gt;
-&lt;p&gt;Symfony2、あまり情報がなくて自分の方法が正しいのか不安になることが多々。間違っていたりもっと良い方法があったら是非教えてください！&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -229,73 +54,6 @@ $post3 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $blueprint&lt;sp
       
       <guid>https://blog.dakatsuka.jp/2013/08/13/doctrine-enum-bundle.html</guid>
       <description>DoctrineEnumBundleというBundleを導入することによって、Doctrine2でMySQLのENUM型を扱うことができます</description>
-      <content:encoded>&lt;p&gt;&lt;a href=&#34;https://github.com/fre5h/DoctrineEnumBundle&#34;&gt;DoctrineEnumBundle&lt;/a&gt;というBundleを導入することによって、Doctrine2でMySQLのENUM型を扱うことができます。&lt;/p&gt;
-&lt;h2 id=&#34;インストール&#34;&gt;インストール&lt;/h2&gt;
-&lt;p&gt;composer.jsonにfresh/doctrine-enum-bundleを追加します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;require&amp;#34;&lt;/span&gt;: {
-        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;php&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;gt;=5.3.3&amp;#34;&lt;/span&gt;,
-        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;symfony/symfony&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.3.*&amp;#34;&lt;/span&gt;,
-        &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;........&lt;/span&gt;
-        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;fresh/doctrine-enum-bundle&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dev-master&amp;#34;&lt;/span&gt;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;composer.phar installを実行します。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ php composer.phar install
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;app/AppKernel.phpにDoctrineEnumBundleを追加します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;registerBundles&lt;/span&gt;()
-{
-    $bundles &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Fresh\Bundle\DoctrineEnumBundle\FreshDoctrineEnumBundle&lt;/span&gt;()
-    ];
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;使い方&#34;&gt;使い方&lt;/h2&gt;
-&lt;p&gt;まずEnumTypeクラスを作成します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\DemoBundle\EnumType&lt;/span&gt;;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Fresh\Bundle\DoctrineEnumBundle\DBAL\Types\AbstractEnumType&lt;/span&gt;;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;GenderType&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AbstractEnumType&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;MALE&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;male&amp;#39;&lt;/span&gt;;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;FEMALE&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;female&amp;#39;&lt;/span&gt;;
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $name &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;GenderType&amp;#39;&lt;/span&gt;;
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; $choices &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [
-        &lt;span style=&#34;color:#a6e22e&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;MALE&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;男性&amp;#39;&lt;/span&gt;,
-        &lt;span style=&#34;color:#a6e22e&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;FEMALE&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;女性&amp;#39;&lt;/span&gt;
-    ];
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;app/config/config.yml で上で作ったEnumTypeをDBALに登録します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;doctrine&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;dbal&lt;/span&gt;:
-        &lt;span style=&#34;color:#f92672&#34;&gt;mapping_types&lt;/span&gt;:
-            &lt;span style=&#34;color:#f92672&#34;&gt;enum&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;string&lt;/span&gt;
-        &lt;span style=&#34;color:#f92672&#34;&gt;types&lt;/span&gt;:
-            &lt;span style=&#34;color:#f92672&#34;&gt;GenderType&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;Acme\DemoBundle\EnumType\GenderType&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;あとはENUM型にしたいメンバ変数に対してアノテーションでマッピングし、app/console doctrine:schema:updateを実行すればENUM型のカラムが作られます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\DemoBundle\Entity&lt;/span&gt;;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Doctrine\ORM\Mapping&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ORM&lt;/span&gt;;
- 
-&lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * @ORM\Table
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * @ORM\Entity
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; */&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @ORM\Column(name=&amp;#34;gender&amp;#34;, type=&amp;#34;GenderType&amp;#34;)
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     */&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; $gender;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
   </channel>

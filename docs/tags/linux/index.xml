@@ -4,13 +4,10 @@
     <title>Linux on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/linux.html</link>
     <description>Recent content in Linux on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Wed, 05 Sep 2007 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/linux/index.xml" rel="self" type="application/rss+xml" />
@@ -21,16 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2007/09/05/fedora8.html</guid>
       <description>そのままDVDを突っ込んでもACPIのチェックでコケてインストーラが起動しないので、起動オプションでACPIを無効にします。 最初の「Welc</description>
-      <content:encoded>&lt;p&gt;そのままDVDを突っ込んでもACPIのチェックでコケてインストーラが起動しないので、起動オプションでACPIを無効にします。&lt;/p&gt;
-&lt;p&gt;最初の「Welcome to Fedora！」画面が表示されたら&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Install or upgrade an existing system
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;を選択しTabキーを押します。押したら枠下のほうに&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; vmlinuz initrd=initrd.img
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;と表示され入力出来る状態になるので&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; vmlinuz initrd=initrd.img acpi=off
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;と書き加えてEnterを押します。=を入力するには、^（へ）キーを押します（英語キーボードとして認識されてるので）以上でひとまずインストールは出来ます。しかしCore2Quadなのに1Coreしか認識してませんでしたorz&lt;/p&gt;
-&lt;p&gt;ちなみにUbuntu7.10（Gusty）だと正常にインストール出来ました。新チップセットは鬼門ですね。。。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -40,15 +27,6 @@
       
       <guid>https://blog.dakatsuka.jp/2007/06/13/nvidia-beryl.html</guid>
       <description>たくさんウインドウを表示したり、既存のウインドウをリサイズしたりするとこの現象が起こるようです。 この現象を回避するには、Berylマネージャ</description>
-      <content:encoded>&lt;p&gt;たくさんウインドウを表示したり、既存のウインドウをリサイズしたりするとこの現象が起こるようです。&lt;/p&gt;
-&lt;p&gt;この現象を回避するには、Berylマネージャを右クリックして、[Berylのより高度なオプション] → [描画プラットフォーム]で AIGLXを強制 にチェックを入れます。これで多分直ります。&lt;/p&gt;
-&lt;p&gt;またウインドウの移動やエフェクトがカクカクする場合は、[Berylの設定] → General Option を開いて以下のように変更すればスムーズに動きます。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;リフレッシュレートを検出 のチェックを外す&lt;/li&gt;
-&lt;li&gt;リフレッシュレートを200に設定&lt;/li&gt;
-&lt;li&gt;VBlankに同期 のチェックを外す&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -58,17 +36,6 @@
       
       <guid>https://blog.dakatsuka.jp/2007/04/29/ich-ac97.html</guid>
       <description>私の使っているノートPC（LaVie G Type J）は、デフォルトのままだと音が出てくれませんorz。どうやら915GM ExpressのICH6でこ</description>
-      <content:encoded>&lt;p&gt;私の使っているノートPC（LaVie G Type J）は、デフォルトのままだと音が出てくれませんorz。どうやら915GM ExpressのICH6でこの症状が出るようです。&lt;/p&gt;
-&lt;h2 id=&#34;設定を変えれば音が出た&#34;&gt;設定を変えれば音が出た&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;パネル上にあるスピーカーアイコンをダブルクリックしてAlsa mixerを開きます&lt;/li&gt;
-&lt;li&gt;[編集]→設定&lt;/li&gt;
-&lt;li&gt;表示するトラックの選択でExternal Amplifierにチェックを入れ閉じる&lt;/li&gt;
-&lt;li&gt;[スイッチ]というタブが増えているので、そこを開く&lt;/li&gt;
-&lt;li&gt;External Amplifierのチェックを外す&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;これで音が出るようになりました。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -78,25 +45,6 @@
       
       <guid>https://blog.dakatsuka.jp/2007/04/22/install-wine-with-ie-on-ubuntu-feisty.html</guid>
       <description>64bit環境だと apt-get install wine で導入出来なかったので &amp;ndash;force-architecture オプションで無理矢理入れる方法。 Wineをインストール i386用のdebパッケージを落として</description>
-      <content:encoded>&lt;p&gt;64bit環境だと apt-get install wine で導入出来なかったので &amp;ndash;force-architecture オプションで無理矢理入れる方法。&lt;/p&gt;
-&lt;h2 id=&#34;wineをインストール&#34;&gt;Wineをインストール&lt;/h2&gt;
-&lt;p&gt;i386用のdebパッケージを落としてきます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;cd /tmp
-wget http://wine.budgetdedicated.com/apt/pool/main/w/wine/wine_0.9.35~winehq0~ubuntu~7.04-1_i386.deb
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ia32-libsを入れた後（入ってなかったら）dpkgでインストール。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;sudo apt-get install ia32-libs
-sudo dpkg -i --force-architecture wine_0.9.35~winehq0~ubuntu~7.04-1_i386.deb
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;ies4linuxをインストール&#34;&gt;IEs4Linuxをインストール&lt;/h2&gt;
-&lt;p&gt;事前にcabextractをいれておきます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;sudo apt-get install cabextract
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;IEs4Linuxのbeta6をダウンロードしてインストールします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;wget http://www.tatanka.com.br/ies4linux/downloads/ies4linux-2.5beta6.tar.gz
-tar zxvf ies4linux-2.5beta6.tar.gz
-cd ies4linux-*
-./ies4linux
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;デフォルトのまま作業を進めるとデスクトップにIEのアイコンが出来ますので、それをダブルクリックすればIEが起動します。&lt;/p&gt;
-&lt;p&gt;…JAを選んでインストールしたせいかメニューが激しく文字化けしました。もしかしたら英語で入れたほうが幸せになれるかもしれません。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -106,33 +54,6 @@ cd ies4linux-*
       
       <guid>https://blog.dakatsuka.jp/2007/04/21/build-jd-on-ubuntu-feisty.html</guid>
       <description>Feistyの日本語ローカライズ版が出ました。しかしAMD64への対応はもうちょっとかかるみたいなので、気が短い私はリリースまでの間JD（2</description>
-      <content:encoded>&lt;p&gt;Feistyの日本語ローカライズ版が出ました。しかしAMD64への対応はもうちょっとかかるみたいなので、気が短い私はリリースまでの間JD（2ちゃんねるブラウザ）を自前でビルドして使おうと思います。&lt;/p&gt;
-&lt;p&gt;アンインストールも手軽に出来るようにdebパッケージ化までしてみます。&lt;/p&gt;
-&lt;h2 id=&#34;必要なパッケージをインストール&#34;&gt;必要なパッケージをインストール&lt;/h2&gt;
-&lt;p&gt;まずdebパッケージを作成するのに必要なツールをインスコします。（余計なものまで入れたかも…&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;sudo apt-get install autoconf automake libtool libc6-dev dpkg-dev gpc fakeroot debhelper lintian devscripts g++ dh-make g77
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;次にJDのビルドに必要なライブラリを入れておきます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;sudo apt-get install libgtkmm-2.4-dev zlib1g-dev libssl-dev
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;パッケージ化&#34;&gt;パッケージ化&lt;/h2&gt;
-&lt;p&gt;最新のソースをダウンロードしてきて適当なディレクトリに解凍します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;mkdir /tmp/deb
-cd /tmp/deb
-wget http://keihanna.dl.sourceforge.jp/jd4linux/24814/jd-1.8.8-070403.tgz
-tar zxvf jd-1.8.8-070403.tgz
-cd jd-1.8.8-070403
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;autoreconfを実行します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;autoreconf -i
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;パッケージの基本情報ファイルを作る&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;dh_make -e clavice@dotted.jp -s -f ../jd-1.8.8-070403.tgz
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;個人用なので何も変更せずこのままパッケージ化&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;dpkg-buildpackage -rfakeroot
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ビルドが終わるとひとつ上の階層（ここでは/tmp/deb）にパッケージが出来上がっています。&lt;/p&gt;
-&lt;h2 id=&#34;インストール&#34;&gt;インストール&lt;/h2&gt;
-&lt;p&gt;出来上がったパッケージ jd-1.8.8_070403-1_amd64.deb をダブルクリックしてインストール出来ます。&lt;/p&gt;
-&lt;p&gt;起動方法は、&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;jd
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;です。かなりやっつけですがこれでJDが使えるようになります。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -142,44 +63,6 @@ cd jd-1.8.8-070403
       
       <guid>https://blog.dakatsuka.jp/2007/04/08/feisty-ipamona.html</guid>
       <description>日本語ローカライズ版が出るまでの繋ぎとして。 $ cd /tmp $ wget http://www.geocities.jp/ipa_mona/opfc-ModuleHP-1.1.1_withIPAMonaFonts-1.0.5.tar.gz $ tar zxvf opfc-ModuleHP-1.1.1_withIPAMonaFonts-1.0.5.tar.gz $ cd opfc-*/fonts $ sudo mkdir /usr/share/fonts/truetype/ttf-ipamona $ sudo cp *.ttf /usr/share/fonts/truetype/ttf-ipamona これで次回ログイン時からデフォルトのフォントがIPA</description>
-      <content:encoded>&lt;p&gt;日本語ローカライズ版が出るまでの繋ぎとして。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ cd /tmp
-$ wget http://www.geocities.jp/ipa_mona/opfc-ModuleHP-1.1.1_withIPAMonaFonts-1.0.5.tar.gz
-$ tar zxvf opfc-ModuleHP-1.1.1_withIPAMonaFonts-1.0.5.tar.gz
-$ cd opfc-*/fonts
-$ sudo mkdir /usr/share/fonts/truetype/ttf-ipamona
-$ sudo cp *.ttf /usr/share/fonts/truetype/ttf-ipamona
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;これで次回ログイン時からデフォルトのフォントがIPAモナーフォントになります。ならない場合は、&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ sudo gedit /etc/fonts/local.conf
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;で、geditを起動して&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;fontconfig&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;match&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;target=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pattern&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;test&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;qual=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;any&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;family&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;sans-serif&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/test&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;edit&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;family&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mode=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;prepend&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;binding=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;strong&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;IPAMonaPGothic&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/edit&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/match&amp;gt;&lt;/span&gt; 
-  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;match&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;target=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pattern&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;test&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;qual=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;any&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;family&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;serif&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/test&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;edit&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;family&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mode=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;prepend&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;binding=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;strong&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;IPAMonaPMincho&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/edit&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/match&amp;gt;&lt;/span&gt; 
-  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;match&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;target=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pattern&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;test&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;qual=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;any&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;family&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;monospace&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/test&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;edit&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;family&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mode=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;prepend&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;binding=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;strong&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;IPAMonaGothic&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/edit&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/match&amp;gt;&lt;/span&gt; 
-&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/fontconfig&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上記を貼りつけて保存すればフォントが置き換わるはずです。多分&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -189,10 +72,6 @@ $ sudo cp *.ttf /usr/share/fonts/truetype/ttf-ipamona
       
       <guid>https://blog.dakatsuka.jp/2007/04/07/anthy.html</guid>
       <description>変換キーを押すと漢字に変換されず空白が挿入されてしまう謎現象が頻繁に起きています。調べてみるとscim-bridge-client-gtkを</description>
-      <content:encoded>&lt;p&gt;変換キーを押すと漢字に変換されず空白が挿入されてしまう謎現象が頻繁に起きています。調べてみるとscim-bridge-client-gtkを入れれば直る模様。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sudo apt-get install scim-bridge-client-gtk
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;直った！&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -202,14 +81,6 @@ $ sudo cp *.ttf /usr/share/fonts/truetype/ttf-ipamona
       
       <guid>https://blog.dakatsuka.jp/2007/04/06/nautilus.html</guid>
       <description>Xfce4.4のファイルマネージャであるThunarやKDEのKonquerorには「ターミナルで開く」みたいなメニューがあるんですが、何故</description>
-      <content:encoded>&lt;p&gt;Xfce4.4のファイルマネージャであるThunarやKDEのKonquerorには「ターミナルで開く」みたいなメニューがあるんですが、何故かNautilusにはデフォルトでありません。&lt;/p&gt;
-&lt;p&gt;あまりにも不便なので自作でもしようかと思ったのですが既にパッケージとして存在していました。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sudo apt-get install nautilus-open-terminal
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;一度ログアウトして、再ログインすると使えるようになります。&lt;/p&gt;
-&lt;p&gt;ちなみに自分でメニューを作成する場合はnautilus-actionsを入れます。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sudo apt-get install nautilus-actions
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;[メインメニュー] → [システム] → [設定] → [Nautilus アクションの設定] で新規アクションを設定できます。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -219,32 +90,6 @@ $ sudo cp *.ttf /usr/share/fonts/truetype/ttf-ipamona
       
       <guid>https://blog.dakatsuka.jp/2007/04/05/meld.html</guid>
       <description>MeldとはGUIで差分表示が出来るツールです。Shift_JIS、EUC-JP、UTF-8等の文字コードに対応し、インターフェースも日本語</description>
-      <content:encoded>&lt;p&gt;&lt;a href=&#34;http://meldmerge.org/&#34;&gt;Meld&lt;/a&gt;とはGUIで差分表示が出来るツールです。Shift_JIS、EUC-JP、UTF-8等の文字コードに対応し、インターフェースも日本語化されていて使い勝手は上々です。単体でもSubversionに対応しているようですが、ここではsvn diff用の外部ツールに設定をしてみます。&lt;/p&gt;
-&lt;h2 id=&#34;meldをインストール&#34;&gt;Meldをインストール&lt;/h2&gt;
-&lt;p&gt;DebianやUbuntuの場合はパッケージ化されているので導入は簡単です。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sudo apt-get install meld
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;日本語を含むファイルを扱う場合は同時にpython-japanese-codecsもインストールしておくと良いでしょう。&lt;/p&gt;
-&lt;h2 id=&#34;subversionの設定&#34;&gt;Subversionの設定&lt;/h2&gt;
-&lt;p&gt;基本的には/etc/subversion/config内のdiff-cmdの値を編集すればいいのですが、diff-cmdにはファイル名のみで引数を設定出来ないようです。ですので、meldを呼び出すためのシェルスクリプトをあらかじめ作っておく必要があります。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/bin/sh
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;# 外部Diffプログラム&lt;/span&gt;
-DIFF&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;meld&amp;#34;&lt;/span&gt;
-
-&lt;span style=&#34;color:#75715e&#34;&gt;# 引数の指定&lt;/span&gt;
-LEFT&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;6&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;
-RIGHT&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;7&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;
-
-$DIFF $LEFT $RIGHT &amp;amp;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;こんな内容のファイルをどこか適当な場所に保存し、chmod +xで実行権限を与えておきます。&lt;/p&gt;
-&lt;p&gt;次に/etc/subversion/configを開き、&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# diff-cmd = diff_program (diff, gdiff, etc.)
-diff-cmd = 上で作ったファイルのフルパス
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;と、diff-cmdの値を書き換えて保存します。これでsvn diffで呼び出されるツールがmeldに切り替わります。&lt;/p&gt;
-&lt;h2 id=&#34;注意点&#34;&gt;注意点&lt;/h2&gt;
-&lt;p&gt;多数のファイルを編集していて、その親ディレクトリでファイル名を指定せずにsvn diffとやるとファイル数分のMeldが立ち上がります…&lt;/p&gt;
-&lt;p&gt;あとsvn-diff.vimをすでに導入している方はやらないほうがいいでしょう。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -254,65 +99,6 @@ diff-cmd = 上で作ったファイルのフルパス
       
       <guid>https://blog.dakatsuka.jp/2007/04/04/ubuntu-feisty.html</guid>
       <description>サブで使用しているノートPC（NEC LaVie G Type J）にUbuntu 7.04βを入れたのでそのメモ。 マシンスペックはこんな感じです。二世代ほど前のB</description>
-      <content:encoded>&lt;p&gt;サブで使用しているノートPC（NEC LaVie G Type J）にUbuntu 7.04βを入れたのでそのメモ。&lt;/p&gt;
-&lt;p&gt;マシンスペックはこんな感じです。二世代ほど前のB5ノートです。&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;CPU&lt;/th&gt;
-&lt;th&gt;MEM&lt;/th&gt;
-&lt;th&gt;HDD&lt;/th&gt;
-&lt;th&gt;GPU&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Pentium-M 1.2GHz&lt;/td&gt;
-&lt;td&gt;1.25G&lt;/td&gt;
-&lt;td&gt;80GB&lt;/td&gt;
-&lt;td&gt;Intel 915GM&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id=&#34;ではインストール&#34;&gt;ではインストール&lt;/h2&gt;
-&lt;p&gt;LiveCDをドライブに挿入してPCを起動させます。無事に起動したらまずGNOMEターミナルを開いて&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;sudo apt-get install gparted
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;とタイプしてGNOME Partition Editorをインストールします。NICが認識されていてDHCPな環境ならばサクっと入ります。というかEdgyにはデフォルトで入っていたのに何故外されたのでしょうか…不思議です。&lt;/p&gt;
-&lt;p&gt;私はgpartedを使って以下のようにパーティションを切りました。ReiserFSなのは私の好みです。普通はext3で問題ないと思います。&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Mount Point&lt;/th&gt;
-&lt;th&gt;Size&lt;/th&gt;
-&lt;th&gt;FS&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;/boot&lt;/td&gt;
-&lt;td&gt;100MB&lt;/td&gt;
-&lt;td&gt;ReiserFS&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;/&lt;/td&gt;
-&lt;td&gt;12GB&lt;/td&gt;
-&lt;td&gt;ReiserFS&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;/home&lt;/td&gt;
-&lt;td&gt;65GB&lt;/td&gt;
-&lt;td&gt;ReiserFS&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;swap&lt;/td&gt;
-&lt;td&gt;2GG&lt;/td&gt;
-&lt;td&gt;linux-swap&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;後はデスクトップにあるInstallアイコンをダブルクリックして、ウィザードに従って進めていくだけでインストールが終わります。簡単すぎる…&lt;/p&gt;
-&lt;p&gt;インストール後の環境設定などはまた後日ということで。&lt;/p&gt;
-</content:encoded>
     </item>
     
   </channel>

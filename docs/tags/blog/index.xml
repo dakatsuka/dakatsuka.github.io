@@ -4,13 +4,10 @@
     <title>Blog on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/blog.html</link>
     <description>Recent content in Blog on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Sun, 01 Dec 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/blog/index.xml" rel="self" type="application/rss+xml" />
@@ -21,10 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2013/12/01/rewrite-html-for-blog.html</guid>
       <description>ヘッダーとフッターを除いたコンテンツをmainタグで括ってみたり、RSSで配信される内容はarticleタグにしたり、投稿日をtimeタグに</description>
-      <content:encoded>&lt;p&gt;ヘッダーとフッターを除いたコンテンツを&lt;code&gt;main&lt;/code&gt;タグで括ってみたり、RSSで配信される内容は&lt;code&gt;article&lt;/code&gt;タグにしたり、投稿日を&lt;code&gt;time&lt;/code&gt;タグに置き換えたりした。&lt;code&gt;aside&lt;/code&gt;と&lt;code&gt;section&lt;/code&gt;どちらを使用しようか迷ったところもあったけど、&lt;code&gt;article&lt;/code&gt;で括った内容に関連する付加要素を&lt;code&gt;aside&lt;/code&gt;にして、右下に出てる簡易プロフィールは&lt;code&gt;section&lt;/code&gt;にしておいた。多分問題ないだろう。&lt;/p&gt;
-&lt;p&gt;今までPureという軽量CSSフレームワークを利用していたのだけど、一部要素にグリッド機能を使っていた程度だったので今回から外すことにした。この手のツールはどうしても余計な&lt;code&gt;div&lt;/code&gt;タグが増えてしまうのが悩みどころ。便利なんだけどね。&lt;/p&gt;
-&lt;p&gt;そういう意味では&lt;a href=&#34;http://semantic-ui.com/&#34;&gt;semantic-ui&lt;/a&gt;はとても良さそうにみえる。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -34,20 +27,6 @@
       
       <guid>https://blog.dakatsuka.jp/2013/11/22/change-from-wordpress-to-middleman.html</guid>
       <description>今まで惰性でWordPressを使い続けてきたが、ふと思い立ってMiddlemanで全面的に作り直すことにした。折角作り直すのだからブログの</description>
-      <content:encoded>&lt;p&gt;今まで惰性でWordPressを使い続けてきたが、ふと思い立ってMiddlemanで全面的に作り直すことにした。折角作り直すのだからブログのデザインもたまには自分でやってみようと思い、数年ぶりにHTMLやCSSを超時間触ることに。最近はネイティブアプリの案件が多く、JSONを吐く仕事ばかりだったので中々刺激的だった。&lt;/p&gt;
-&lt;h2 id=&#34;middleman&#34;&gt;Middleman&lt;/h2&gt;
-&lt;p&gt;MiddlemanはJekyllやOctopress同様、静的サイト生成ツールの類いだ。個人的にはMakrdownで記事が書けてGitで管理出来るのが条件だったのでJekyllやOctopressでも良かったのだが、それぞれをローカル環境で試用してみたらMiddlemanが一番しっくりきた。&lt;/p&gt;
-&lt;p&gt;用意されているヘルパーなどはRailsに共通しているところが多いし、Asset Pipelineなどの同様の機能もあるので、Railsに慣れ親しんでいる人なら簡単に使いこなせると思う。&lt;/p&gt;
-&lt;p&gt;逆にRubyやRailsを全く触ったことない人やWindows環境の人には扱いづらいかもしれない。あと他ツールに比べてドキュメントがやや少ない気もする。凝ったことをしようと思ったらちょっと面倒かも。例えばテンプレートではたくさんのヘルパーを利用出来るが、公式ドキュメントでは全て紹介されていない。&lt;/p&gt;
-&lt;h2 id=&#34;github-pages&#34;&gt;GitHub Pages&lt;/h2&gt;
-&lt;p&gt;username.github.io というサブドメインでホスティング出来ることは知っていたけど、独自ドメインの割り当ても可能だというのは今回初めて知った。masterブランチの直下にドメイン名を記述したCNAMEというファイルを設置するだけでOKだった。お手軽で良いね。&lt;/p&gt;
-&lt;p&gt;将来的にはTravis CIでmasterブランチへのPushを自動化しようと考えてるけど、Travisは反映に少しラグが出るし、今の自分の使い方なら当面はmiddleman-deployで事足りるかもしれない。&lt;/p&gt;
-&lt;h2 id=&#34;design&#34;&gt;Design&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://purecss.io/&#34;&gt;Pure&lt;/a&gt;という軽量CSSフレームワークを利用してコーディングを行った。Bootstrapよりは出来ることは少ないんだけど、個人ブログ程度なら丁度良いと思う。&lt;/p&gt;
-&lt;p&gt;一応IE10, Firefox, Chromeでちゃんと表示されていることを確認しているが、HTML/CSS供に殴り書きに近いので追々綺麗にする。HTML5から使える新しいタグを活用していきたい。&lt;/p&gt;
-&lt;h2 id=&#34;まとめ&#34;&gt;まとめ&lt;/h2&gt;
-&lt;p&gt;ドメイン、デザイン、ブログエンジンを変更して心機一転。記事の語調もですます調からである調に変えてみた。最近更新ペースが落ちていたので、気を取り直してもっと気軽に更新していこうと思う。&lt;/p&gt;
-</content:encoded>
     </item>
     
   </channel>

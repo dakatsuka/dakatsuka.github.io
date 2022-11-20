@@ -1,287 +1,349 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8" />
+<html lang="ja" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
 <title>Play framework 2.3.x と Scaldi で Dependency Injection | dakatsuka&#39;s blog</title>
+<meta name="keywords" content="Scala, Play, DI">
+<meta name="description" content="Play2でDIをどうしようか悩んでいたところscaldiというライブラリが目に止まった。Playに組み込むためのライブラリをあるし、公式サ">
+<meta name="author" content="Dai Akatsuka">
+<link rel="canonical" href="https://blog.dakatsuka.jp/2014/08/01/play2-scaldi.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.bc1149f4a72aa4858d3a9f71462f75e5884ffe8073ea9d6d5761d5663d651e20.css" integrity="sha256-vBFJ9KcqpIWNOp9xRi915YhP/oBz6p1tV2HVZj1lHiA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
 
-  
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-45923728-1');
-  </script>
-  
+            .list {
+                background: var(--theme);
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  href="https://blog.dakatsuka.jp/index.xml"
-  title="dakatsuka&#39;s blog"
-/>
-
-<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
-<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
-<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
-<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
-<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
-<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
-<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
-<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-<link rel="manifest" href="/manifest.json" />
-<meta name="msapplication-TileColor" content="#ffffff" />
-<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-<meta name="theme-color" content="#ffffff" />
-
-<meta property="og:title" content="Play framework 2.3.x と Scaldi で Dependency Injection" />
+    </style>
+</noscript>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-45923728-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script><meta property="og:title" content="Play framework 2.3.x と Scaldi で Dependency Injection" />
 <meta property="og:description" content="Play2でDIをどうしようか悩んでいたところscaldiというライブラリが目に止まった。Playに組み込むためのライブラリをあるし、公式サ" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2014/08/01/play2-scaldi.html" />
-<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/>
+<meta property="og:url" content="https://blog.dakatsuka.jp/2014/08/01/play2-scaldi.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2014-08-01T00:00:00+00:00" />
 <meta property="article:modified_time" content="2014-08-01T00:00:00+00:00" />
 
-
 <meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
+
+<meta name="twitter:title" content="Play framework 2.3.x と Scaldi で Dependency Injection"/>
+<meta name="twitter:description" content="Play2でDIをどうしようか悩んでいたところscaldiというライブラリが目に止まった。Playに組み込むためのライブラリをあるし、公式サ"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
 
-<link rel="stylesheet" href="https://blog.dakatsuka.jp/fontawesome/css/all.min.css" />
-<link
-  id="dark-mode-theme"
-  rel="stylesheet"
-  href="https://blog.dakatsuka.jp/css/dark.css"
-/>
 
-<script>
-  var darkTheme = document.getElementById('dark-mode-theme')
-  var storedTheme = localStorage.getItem('dark-mode-storage')
-  if (storedTheme === 'dark') {
-    darkTheme.disabled = false
-  } else if (storedTheme === 'light') {
-    darkTheme.disabled = true
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Play framework 2.3.x と Scaldi で Dependency Injection",
+      "item": "https://blog.dakatsuka.jp/2014/08/01/play2-scaldi.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Play framework 2.3.x と Scaldi で Dependency Injection",
+  "name": "Play framework 2.3.x と Scaldi で Dependency Injection",
+  "description": "Play2でDIをどうしようか悩んでいたところscaldiというライブラリが目に止まった。Playに組み込むためのライブラリをあるし、公式サ",
+  "keywords": [
+    "Scala", "Play", "DI"
+  ],
+  "articleBody": "Play2でDIをどうしようか悩んでいたところscaldiというライブラリが目に止まった。Playに組み込むためのライブラリをあるし、公式サイトも作り込まれているし、これは試すしかない。\nただし日本語の情報は無いに等しい。Guiceほどメジャーでもないし人柱感覚で使う必要がありそうだ。\nインストール build.sbtのlibraryDependenciesにscaldiを追加する。\nlibraryDependencies ++= Seq( \"org.scaldi\" %% \"scaldi-play\" % \"0.4.1\" ) インジェクションの種類 コンストラクタ・インジェクションとバインディング・インジェクションの2種類があるようだ。\nコンストラクタ・インジェクション 名前の通り、コンストラクタで依存を受け取るパターン。scaldiに全く依存しないので通常はこのパターンを使うのが良いと思う。\npackage services import repositories.AccountRepository class AccountManager(accountRepository: AccountRepository) バインディング・インジェクション ScaldiのInjector（コンテナ）を暗黙の引数で渡すパターン。コントローラなどはこちらを使う。\npackage controllers import scaldi.{Injectable, Injector} class Application(implicit inj: Injector) extends Controller with Injectable { val accountManager = inject [AccountManager] } モジュールの作成 Injector（コンテナ）にサービスを登録するには Module を作成する必要がある。置く場所はどこでも良いのだがPlayならapp/modulesあたりに入れておくのが分かりやすいと思う。Moduleは複数定義して結合することが出来るので、うまく分割しておけばテストの時だけ別のModuleに差し替えるといったことが可能になる。\npackage modules import scaldi.Module import repositories._ import services._ class ServiceModule extends Module { bind [AccountRepository] to new AccountRepository bind [AccountManager] to new AccountManager(inject[AccountRepository]) } class ControllerInjector extends Module { binding to new Application binding to new FooController binding to new BarController } bindで型を指定してto以降に同一型のオブジェクトを作っていく感じ。inject[型]でbindで登録したものが取り出せるので各サービスのコンストラクタに渡すことが出来る。\nInjectorを暗黙の引数で受け取るクラスはbinding toで指定していく。\nまた下記のようにbindで登録する時にシンボルで名前を付けることが出来る。Configurationのパラメータを登録しておく時に便利だろう。\nbind [String] identifiedBy 'secret to Configuration(ConfigFactory.load()).getString(\"secret\").getOrElse(\"hoge\") 名前をつけたサービスを取り出す時は下記のようにする。\nval secret = inject[String]('secret) モジュールをPlayに登録 scaldi-playは下記のようにGlobalに書いておくことで、リクエストが来た際に依存関係を自動で解決してくれるようになる。\napp/Global.scal\nimport modules._ import play.api.GlobalSetting import scaldi.play.ScaldiSupport object Global extends GlobalSettings with ScaldiSupport { def applicationModule = new ControllerInjector :: new ServiceModule } まとめ Scaldi悪くないと思う。まだ使い出して日が浅いので罠が待ってるかもしれないけど、今のところ問題なく使えてる。DIの選択肢のひとつとしてどうですか。\n",
+  "wordCount" : "1049",
+  "inLanguage": "ja",
+  "datePublished": "2014-08-01T00:00:00Z",
+  "dateModified": "2014-08-01T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Dai Akatsuka"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.dakatsuka.jp/2014/08/01/play2-scaldi.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "dakatsuka's blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.dakatsuka.jp/favicon.ico"
+    }
   }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
 </script>
 
-<script src="https://blog.dakatsuka.jp/js/bundle.js"></script>
-<script src="https://blog.dakatsuka.jp/js/instantpage.min.js" type="module" defer></script>
-
-  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
-
-<meta name="generator" content="Hugo 0.80.0-DEV" />
-
-
-  </head>
-  <body>
-    
-  
-
-
-
-
-  <header>
-    <nav class="navbar">
-  <div class="nav">
-    
-      <a href="https://blog.dakatsuka.jp/" class="nav-logo">
-        <img
-          src="https://blog.dakatsuka.jp/images/logo.png"
-          width="80"
-          height="80"
-          alt="logo"
-        />
-      </a>
-    
-
-    <ul class="nav-links">
-      
-        
-          <li>
-            <a href="/about.html" id="About"
-              ><em class="fas fa-user fa-lg"></em
-            ></a>
-          </li>
-          
-      
-        
-          <li>
-            <a href="/tags.html" id="Tags"
-              ><em class="fas fa-tag fa-lg"></em
-            ></a>
-          </li>
-          
-      
-        
-          <li>
-            <a href="/archives.html" id="Archives"
-              ><em class="fas fa-archive fa-lg"></em
-            ></a>
-          </li>
-          
-      
-    </ul>
-  </div>
-</nav>
-
-    <div class="intro-header">
-      <div class="container">
-        <div class="post-heading">
-          
-            <h1>
-              Play framework 2.3.x と Scaldi で Dependency Injection
-            </h1>
-          
-          
-            <span class="meta-post">
-  <em class="fa fa-calendar-alt"></em
-  >&nbsp;Aug 1, 2014
-  
-</span>
-
-          
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.dakatsuka.jp/" accesskey="h" title="dakatsuka&#39;s blog (Alt + H)">dakatsuka&#39;s blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
         </div>
-      </div>
-    </div>
-  </header>
-  
+        <ul id="menu">
+            <li>
+                <a href="https://blog.dakatsuka.jp/about.html" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.dakatsuka.jp/archives.html" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.dakatsuka.jp/tags.html" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
 
+<article class="post-single">
+  <header class="post-header">
     
-  <div class="container" role="main">
-    <article class="article" class="blog-post">
-      
-  <p>Play2でDIをどうしようか悩んでいたところ<a href="http://scaldi.org/">scaldi</a>というライブラリが目に止まった。Playに組み込むためのライブラリをあるし、公式サイトも作り込まれているし、これは試すしかない。</p>
+    <h1 class="post-title">
+      Play framework 2.3.x と Scaldi で Dependency Injection
+    </h1>
+    <div class="post-meta"><span title='2014-08-01 00:00:00 +0000 UTC'>2014/8/1</span>&nbsp;·&nbsp;Dai Akatsuka
+
+</div>
+  </header> 
+  <div class="post-content"><p>Play2でDIをどうしようか悩んでいたところ<a href="http://scaldi.org/">scaldi</a>というライブラリが目に止まった。Playに組み込むためのライブラリをあるし、公式サイトも作り込まれているし、これは試すしかない。</p>
 <p>ただし日本語の情報は無いに等しい。Guiceほどメジャーでもないし人柱感覚で使う必要がありそうだ。</p>
-<h2 id="インストール">インストール</h2>
+<h2 id="インストール">インストール<a hidden class="anchor" aria-hidden="true" href="#インストール">#</a></h2>
 <p>build.sbtのlibraryDependenciesにscaldiを追加する。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">libraryDependencies <span style="color:#f92672">++=</span> <span style="color:#a6e22e">Seq</span><span style="color:#f92672">(</span>
-  <span style="color:#e6db74">&#34;org.scaldi&#34;</span> <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;scaldi-play&#34;</span> <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.4.1&#34;</span>
-<span style="color:#f92672">)</span>
-</code></pre></div><h2 id="インジェクションの種類">インジェクションの種類</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span>libraryDependencies <span style="color:#f92672">++=</span> <span style="color:#a6e22e">Seq</span><span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;org.scaldi&#34;</span> <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;scaldi-play&#34;</span> <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.4.1&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><h2 id="インジェクションの種類">インジェクションの種類<a hidden class="anchor" aria-hidden="true" href="#インジェクションの種類">#</a></h2>
 <p>コンストラクタ・インジェクションとバインディング・インジェクションの2種類があるようだ。</p>
-<h3 id="コンストラクタインジェクション">コンストラクタ・インジェクション</h3>
+<h3 id="コンストラクタインジェクション">コンストラクタ・インジェクション<a hidden class="anchor" aria-hidden="true" href="#コンストラクタインジェクション">#</a></h3>
 <p>名前の通り、コンストラクタで依存を受け取るパターン。scaldiに全く依存しないので通常はこのパターンを使うのが良いと思う。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> services
-
-<span style="color:#66d9ef">import</span> repositories.AccountRepository
-
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AccountManager</span><span style="color:#f92672">(</span>accountRepository<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">AccountRepository</span><span style="color:#f92672">)</span>
-</code></pre></div><h3 id="バインディングインジェクション">バインディング・インジェクション</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#66d9ef">package</span> services
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> repositories.AccountRepository
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AccountManager</span><span style="color:#f92672">(</span>accountRepository<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">AccountRepository</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><h3 id="バインディングインジェクション">バインディング・インジェクション<a hidden class="anchor" aria-hidden="true" href="#バインディングインジェクション">#</a></h3>
 <p>ScaldiのInjector（コンテナ）を暗黙の引数で渡すパターン。コントローラなどはこちらを使う。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> controllers
-
-<span style="color:#66d9ef">import</span> scaldi.<span style="color:#f92672">{</span><span style="color:#a6e22e">Injectable</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Injector</span><span style="color:#f92672">}</span>
-
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Application</span><span style="color:#f92672">(</span><span style="color:#66d9ef">implicit</span> inj<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Injector</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Controller</span> <span style="color:#66d9ef">with</span> <span style="color:#a6e22e">Injectable</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">val</span> accountManager <span style="color:#66d9ef">=</span> inject <span style="color:#f92672">[</span><span style="color:#66d9ef">AccountManager</span><span style="color:#f92672">]</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h2 id="モジュールの作成">モジュールの作成</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#66d9ef">package</span> controllers
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> scaldi.<span style="color:#f92672">{</span><span style="color:#a6e22e">Injectable</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Injector</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Application</span><span style="color:#f92672">(</span><span style="color:#66d9ef">implicit</span> inj<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Injector</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Controller</span> <span style="color:#66d9ef">with</span> <span style="color:#a6e22e">Injectable</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">val</span> accountManager <span style="color:#66d9ef">=</span> inject <span style="color:#f92672">[</span><span style="color:#66d9ef">AccountManager</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h2 id="モジュールの作成">モジュールの作成<a hidden class="anchor" aria-hidden="true" href="#モジュールの作成">#</a></h2>
 <p>Injector（コンテナ）にサービスを登録するには Module を作成する必要がある。置く場所はどこでも良いのだがPlayならapp/modulesあたりに入れておくのが分かりやすいと思う。Moduleは複数定義して結合することが出来るので、うまく分割しておけばテストの時だけ別のModuleに差し替えるといったことが可能になる。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> modules
-
-<span style="color:#66d9ef">import</span> scaldi.Module
-<span style="color:#66d9ef">import</span> repositories._
-<span style="color:#66d9ef">import</span> services._
-
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ServiceModule</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Module</span> <span style="color:#f92672">{</span>
-  bind <span style="color:#f92672">[</span><span style="color:#66d9ef">AccountRepository</span><span style="color:#f92672">]</span> to <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AccountRepository</span>
-  bind <span style="color:#f92672">[</span><span style="color:#66d9ef">AccountManager</span><span style="color:#f92672">]</span>    to <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AccountManager</span><span style="color:#f92672">(</span>inject<span style="color:#f92672">[</span><span style="color:#66d9ef">AccountRepository</span><span style="color:#f92672">])</span>
-<span style="color:#f92672">}</span>
-
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ControllerInjector</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Module</span> <span style="color:#f92672">{</span>
-  binding to <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Application</span>
-  binding to <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">FooController</span>
-  binding to <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">BarController</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><p>bindで型を指定してto以降に同一型のオブジェクトを作っていく感じ。inject[型]でbindで登録したものが取り出せるので各サービスのコンストラクタに渡すことが出来る。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#66d9ef">package</span> modules
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> scaldi.Module
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> repositories._
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> services._
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ServiceModule</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Module</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  bind <span style="color:#f92672">[</span><span style="color:#66d9ef">AccountRepository</span><span style="color:#f92672">]</span> to <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AccountRepository</span>
+</span></span><span style="display:flex;"><span>  bind <span style="color:#f92672">[</span><span style="color:#66d9ef">AccountManager</span><span style="color:#f92672">]</span>    to <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AccountManager</span><span style="color:#f92672">(</span>inject<span style="color:#f92672">[</span><span style="color:#66d9ef">AccountRepository</span><span style="color:#f92672">])</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ControllerInjector</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Module</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  binding to <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Application</span>
+</span></span><span style="display:flex;"><span>  binding to <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">FooController</span>
+</span></span><span style="display:flex;"><span>  binding to <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">BarController</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>bindで型を指定してto以降に同一型のオブジェクトを作っていく感じ。inject[型]でbindで登録したものが取り出せるので各サービスのコンストラクタに渡すことが出来る。</p>
 <p>Injectorを暗黙の引数で受け取るクラスはbinding toで指定していく。</p>
 <p>また下記のようにbindで登録する時にシンボルで名前を付けることが出来る。Configurationのパラメータを登録しておく時に便利だろう。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">bind <span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">]</span> identifiedBy &#39;secret to <span style="color:#a6e22e">Configuration</span><span style="color:#f92672">(</span><span style="color:#a6e22e">ConfigFactory</span><span style="color:#f92672">.</span>load<span style="color:#f92672">()).</span>getString<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;secret&#34;</span><span style="color:#f92672">).</span>getOrElse<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hoge&#34;</span><span style="color:#f92672">)</span>
-</code></pre></div><p>名前をつけたサービスを取り出す時は下記のようにする。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">val</span> secret <span style="color:#66d9ef">=</span> inject<span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">](</span>&#39;secret<span style="color:#f92672">)</span>
-</code></pre></div><h2 id="モジュールをplayに登録">モジュールをPlayに登録</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span>bind <span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">]</span> identifiedBy &#39;secret to <span style="color:#a6e22e">Configuration</span><span style="color:#f92672">(</span><span style="color:#a6e22e">ConfigFactory</span><span style="color:#f92672">.</span>load<span style="color:#f92672">()).</span>getString<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;secret&#34;</span><span style="color:#f92672">).</span>getOrElse<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hoge&#34;</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>名前をつけたサービスを取り出す時は下記のようにする。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> secret <span style="color:#66d9ef">=</span> inject<span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">](</span>&#39;secret<span style="color:#f92672">)</span>
+</span></span></code></pre></div><h2 id="モジュールをplayに登録">モジュールをPlayに登録<a hidden class="anchor" aria-hidden="true" href="#モジュールをplayに登録">#</a></h2>
 <p>scaldi-playは下記のようにGlobalに書いておくことで、リクエストが来た際に依存関係を自動で解決してくれるようになる。</p>
 <p>app/Global.scal</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">import</span> modules._
-<span style="color:#66d9ef">import</span> play.api.GlobalSetting
-<span style="color:#66d9ef">import</span> scaldi.play.ScaldiSupport
-
-<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Global</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">GlobalSettings</span> <span style="color:#66d9ef">with</span> <span style="color:#a6e22e">ScaldiSupport</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">def</span> applicationModule <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ControllerInjector</span> <span style="color:#66d9ef">:</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">ServiceModule</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h2 id="まとめ">まとめ</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> modules._
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> play.api.GlobalSetting
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> scaldi.play.ScaldiSupport
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Global</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">GlobalSettings</span> <span style="color:#66d9ef">with</span> <span style="color:#a6e22e">ScaldiSupport</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> applicationModule <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ControllerInjector</span> <span style="color:#66d9ef">:</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">ServiceModule</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h2 id="まとめ">まとめ<a hidden class="anchor" aria-hidden="true" href="#まとめ">#</a></h2>
 <p>Scaldi悪くないと思う。まだ使い出して日が浅いので罠が待ってるかもしれないけど、今のところ問題なく使えてる。DIの選択肢のひとつとしてどうですか。</p>
 
 
-
-
-      
-        <div class="blog-tags">
-          
-            <a href="https://blog.dakatsuka.jp/tags/scala.html">Scala</a
-            >&nbsp;
-          
-            <a href="https://blog.dakatsuka.jp/tags/play.html">Play</a
-            >&nbsp;
-          
-            <a href="https://blog.dakatsuka.jp/tags/di.html">DI</a
-            >&nbsp;
-          
-        </div>
-      
-    </article>
-    
-    
-      
-
-    
   </div>
 
-    <footer>
-  
-  <div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://blog.dakatsuka.jp/tags/scala.html">Scala</a></li>
+      <li><a href="https://blog.dakatsuka.jp/tags/play.html">Play</a></li>
+      <li><a href="https://blog.dakatsuka.jp/tags/di.html">DI</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
     
-      <a href="https://twitter.com/d_akatsuka" name="twitter"
-        ><em class="fab fa-twitter"></em
-      ></a>
-    
-      <a href="https://github.com/dakatsuka" name="github"
-        ><em class="fab fa-github"></em
-      ></a>
-    
-  </div>
-
-
-  <div class="container">
-    <p class="credits copyright">
-      <a href="https://blog.dakatsuka.jp/about">Dai Akatsuka</a>
-      &nbsp;&copy;
-      2021
-      
-        &nbsp;/&nbsp;
-        <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a>
-      
-      &nbsp;&ndash;&nbsp;
-      <em class="fas fa-moon" id="dark-mode-toggle"></em>
-    </p>
-
-    <p class="credits theme-by">
-       <a href="https://gohugo.io">Hugo</a>&nbsp;
-      
-      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
-    </p>
-  </div>
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
 </footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
 
-  </body>
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
 </html>

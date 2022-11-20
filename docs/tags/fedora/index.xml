@@ -4,13 +4,10 @@
     <title>Fedora on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/fedora.html</link>
     <description>Recent content in Fedora on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Wed, 05 Sep 2007 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/fedora/index.xml" rel="self" type="application/rss+xml" />
@@ -21,16 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2007/09/05/fedora8.html</guid>
       <description>そのままDVDを突っ込んでもACPIのチェックでコケてインストーラが起動しないので、起動オプションでACPIを無効にします。 最初の「Welc</description>
-      <content:encoded>&lt;p&gt;そのままDVDを突っ込んでもACPIのチェックでコケてインストーラが起動しないので、起動オプションでACPIを無効にします。&lt;/p&gt;
-&lt;p&gt;最初の「Welcome to Fedora！」画面が表示されたら&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Install or upgrade an existing system
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;を選択しTabキーを押します。押したら枠下のほうに&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; vmlinuz initrd=initrd.img
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;と表示され入力出来る状態になるので&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; vmlinuz initrd=initrd.img acpi=off
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;と書き加えてEnterを押します。=を入力するには、^（へ）キーを押します（英語キーボードとして認識されてるので）以上でひとまずインストールは出来ます。しかしCore2Quadなのに1Coreしか認識してませんでしたorz&lt;/p&gt;
-&lt;p&gt;ちなみにUbuntu7.10（Gusty）だと正常にインストール出来ました。新チップセットは鬼門ですね。。。&lt;/p&gt;
-</content:encoded>
     </item>
     
   </channel>

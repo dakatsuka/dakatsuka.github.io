@@ -1,393 +1,449 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8" />
+<html lang="ja" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
 <title>Finch &#43; MySQLでREST APIサーバを構築する | dakatsuka&#39;s blog</title>
+<meta name="keywords" content="Scala, Finagle, Finch">
+<meta name="description" content="これはScala Advent Calendar 2015（Adventar版）7日目です。6日目はHiroyuki-NagataさんのScalatraとnon-bloc">
+<meta name="author" content="Dai Akatsuka">
+<link rel="canonical" href="https://blog.dakatsuka.jp/2015/12/07/finch.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.bc1149f4a72aa4858d3a9f71462f75e5884ffe8073ea9d6d5761d5663d651e20.css" integrity="sha256-vBFJ9KcqpIWNOp9xRi915YhP/oBz6p1tV2HVZj1lHiA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
 
-  
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-45923728-1');
-  </script>
-  
+            .list {
+                background: var(--theme);
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  href="https://blog.dakatsuka.jp/index.xml"
-  title="dakatsuka&#39;s blog"
-/>
-
-<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
-<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
-<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
-<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
-<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
-<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
-<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
-<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-<link rel="manifest" href="/manifest.json" />
-<meta name="msapplication-TileColor" content="#ffffff" />
-<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-<meta name="theme-color" content="#ffffff" />
-
-<meta property="og:title" content="Finch &#43; MySQLでREST APIサーバを構築する" />
+    </style>
+</noscript>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-45923728-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script><meta property="og:title" content="Finch &#43; MySQLでREST APIサーバを構築する" />
 <meta property="og:description" content="これはScala Advent Calendar 2015（Adventar版）7日目です。6日目はHiroyuki-NagataさんのScalatraとnon-bloc" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2015/12/07/finch.html" />
-<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/>
+<meta property="og:url" content="https://blog.dakatsuka.jp/2015/12/07/finch.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2015-12-07T00:00:00+00:00" />
 <meta property="article:modified_time" content="2015-12-07T00:00:00+00:00" />
 
-
 <meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
+
+<meta name="twitter:title" content="Finch &#43; MySQLでREST APIサーバを構築する"/>
+<meta name="twitter:description" content="これはScala Advent Calendar 2015（Adventar版）7日目です。6日目はHiroyuki-NagataさんのScalatraとnon-bloc"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
 
-<link rel="stylesheet" href="https://blog.dakatsuka.jp/fontawesome/css/all.min.css" />
-<link
-  id="dark-mode-theme"
-  rel="stylesheet"
-  href="https://blog.dakatsuka.jp/css/dark.css"
-/>
 
-<script>
-  var darkTheme = document.getElementById('dark-mode-theme')
-  var storedTheme = localStorage.getItem('dark-mode-storage')
-  if (storedTheme === 'dark') {
-    darkTheme.disabled = false
-  } else if (storedTheme === 'light') {
-    darkTheme.disabled = true
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Finch + MySQLでREST APIサーバを構築する",
+      "item": "https://blog.dakatsuka.jp/2015/12/07/finch.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Finch + MySQLでREST APIサーバを構築する",
+  "name": "Finch \u002b MySQLでREST APIサーバを構築する",
+  "description": "これはScala Advent Calendar 2015（Adventar版）7日目です。6日目はHiroyuki-NagataさんのScalatraとnon-bloc",
+  "keywords": [
+    "Scala", "Finagle", "Finch"
+  ],
+  "articleBody": "これはScala Advent Calendar 2015（Adventar版）7日目です。6日目はHiroyuki-NagataさんのScalatraとnon-blocking APIについてメモ - なんとな～くしあわせ？の日記でした。\nさて、7日目はFinchというFinagleラッパーを紹介しようと思います。よくあるSinatraライクなマイクロフレームワークのひとつです。Hello Wordをブラウザに出力してはい終わりというのも味気ないので、MySQLに接続してレコードを取り出したり登録出来るところまで持っていきます。\nはじめに 今回は以下のエンドポイントを作ることにします（更新と削除は面倒になったので無し！ごめんなさい）\nGET /users GET /users/:id POST /users コードを書く前にMySQLにテーブルを作っておきましょう。\nCREATE TABLE `users` ( `id` BIGINT NOT NULL AUTO_INCREMENT, `email` VARCHAR(255) NOT NULL, `screen_name` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB; 依存関係 開発版の0.9.2-SNAPSHOTを利用します。またMySQLに繋ぐためにfinagle-mysqlも入れます。\nbuild.sbtは下記のようになります。\nname := \"finchtest\" version := \"0.1.0\" scalaVersion := \"2.11.7\" resolvers += Resolver.sonatypeRepo(\"snapshots\") libraryDependencies ++= Seq( \"com.twitter\" %% \"finagle-mysql\" % \"6.30.0\", \"com.github.finagle\" %% \"finch-core\" % \"0.9.2-SNAPSHOT\" changing(), \"com.github.finagle\" %% \"finch-argonaut\" % \"0.9.2-SNAPSHOT\" changing() ) 実装 日本語の情報がほとんどないことや公式のドキュメントがやや分かりづらいことを除けば1Finch自体の使いかたはそんなに難しくないです。Finchよりもfinagle-mysqlの使いかたを調べるのに苦労したのは内緒です。\n今回はDBのCRUD操作をするUser.scalaとMain.scalaの2ファイル書きました。\npackage jp.dakatsuka.finch import argonaut.Argonaut._ import argonaut.CodecJson import com.twitter.finagle.exp.mysql._ import com.twitter.util.Future case class User(id: Long, email: String, screen_name: String) object User { implicit val userCodec: CodecJson[User] = casecodec3(User.apply, User.unapply)(\"id\", \"email\", \"screen_name\") def all()(implicit client: Client): Future[Seq[User]] = client.select(\"SELECT * FROM users\")(convertToEntity) def find(id: Long)(implicit client: Client): Future[Option[User]] = client.prepare(\"SELECT * FROM users WHERE id = ?\")(id) map { result =\u003e result.asInstanceOf[ResultSet].rows.map(convertToEntity).headOption } def create(email: String, screen_name: String)(implicit client: Client): Future[Long] = client.prepare(\"INSERT INTO users (email, screen_name) VALUES(?, ?)\")(email, screen_name) map { result =\u003e result.asInstanceOf[OK].insertId } def convertToEntity(row: Row): User = { val LongValue(id) = row(\"id\").get val StringValue(email) = row(\"email\").get val StringValue(screen_name) = row(\"screen_name\").get User(id, email, screen_name) } } package jp.dakatsuka.finch import com.twitter.finagle.Http import com.twitter.finagle.exp.Mysql import com.twitter.util.Await import io.finch._ import io.finch.argonaut._ object Main { implicit val client = Mysql.client .withCredentials(\"user\", \"password\") .withDatabase(\"database\") .newRichClient(\"127.0.0.1:3306\") case class UserParams(email: String, screen_name: String) val userParams: RequestReader[UserParams] = for { email \u003c- param(\"email\") screen_name \u003c- param(\"screen_name\") } yield UserParams(email, screen_name) val listUser: Endpoint[Seq[User]] = get(\"users\") { Ok(User.all) } val showUser: Endpoint[User] = get(\"users\" / long) { id: Long =\u003e User.find(id).map { case Some(user) =\u003e Ok(user) case _ =\u003e NotFound(new Exception(\"Record Not Found\")) } } val createUser: Endpoint[User] = post(\"users\" ? userParams) { p: UserParams =\u003e (for { id \u003c- User.create(p.email, p.screen_name) user \u003c- User.find(id) } yield user) map { case Some(user) =\u003e Created(user) case _ =\u003e NotFound(new Exception(\"Record Not Found\")) } } val userService = (listUser :+: showUser :+: createUser).toService def main(args: Array[String]): Unit = { Await.ready(Http.serve(\":8080\", userService)) } } 動かしてみよう いつものコマンドでサーバが起動します。\n$ sbt run [info] Set current project to finchtest (in build file:/path/to/project/) [info] Compiling 1 Scala source to /path/to/project/target/scala-2.11/classes... [info] Running jp.dakatsuka.finch.Main 12 05, 2015 11:30:49 午後 com.twitter.finagle.Init$$anonfun$1 apply$mcV$sp 情報: Finagle version 6.30.0 (rev=745578b931893c432e51da623287144e548cc489) built at 20151015-163818 curlでリクエストを送ってみましょう。\n$ curl http://localhost:8080/users [] $ curl http://localhost:8080/users/1 Record Not Found $ curl -X POST http://localhost:8080/users Required param 'email' not present in the request. $ curl -X POST -d \"email=user1@example.com\" http://localhost:8080/users Required param 'screen_name' not present in the request. $ curl -X POST -d \"email=user1@example.com\" -d \"screen_name=user1\" http://localhost:8080/users {\"id\":1,\"email\":\"user1@example.com\",\"screen_name\":\"user1\"} $ curl -X POST -d \"email=user2@example.com\" -d \"screen_name=user2\" http://localhost:8080/users {\"id\":2,\"email\":\"user2@example.com\",\"screen_name\":\"user2\"} $ curl http://localhost:8080/users [{\"id\":1,\"email\":\"user1@example.com\",\"screen_name\":\"user1\"},{\"id\":2,\"email\":\"user2@example.com\",\"screen_name\":\"user2\"}] $ curl http://localhost:8080/users/1 {\"id\":1,\"email\":\"user1@example.com\",\"screen_name\":\"user1\"} 期待通りの動きですね 😏\nまとめ Finchはいかがでしたか？\nFinagleのエコシステムの上に乗っているので、Finagleに慣れている人がサクッとREST APIを実装するには良い選択肢だと思います。finagle-*なライブラリも当然使えます。Finagle使ったことない人にも、静的型付けの恩恵を受けながらSinatraライクに開発出来るというのは魅力的に映るかもしれませんね。\n個人的にはエンドポイントの戻り値が型で保証出来るのが高ポイントです！\nちなみに、似たようなフレームワークとしてFinagle, Akka HTTP, Scalatra, http4sなどがあります。http4sはScalaのHTTPインターフェース http4s 超入門で雑に紹介しているので、興味ある方はどうぞ。\nScalaライブラリにはよくあることなので頑張って貢献したい… ↩︎\n",
+  "wordCount" : "1397",
+  "inLanguage": "ja",
+  "datePublished": "2015-12-07T00:00:00Z",
+  "dateModified": "2015-12-07T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Dai Akatsuka"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.dakatsuka.jp/2015/12/07/finch.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "dakatsuka's blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.dakatsuka.jp/favicon.ico"
+    }
   }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
 </script>
 
-<script src="https://blog.dakatsuka.jp/js/bundle.js"></script>
-<script src="https://blog.dakatsuka.jp/js/instantpage.min.js" type="module" defer></script>
-
-  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
-
-<meta name="generator" content="Hugo 0.80.0-DEV" />
-
-
-  </head>
-  <body>
-    
-  
-
-
-
-
-  <header>
-    <nav class="navbar">
-  <div class="nav">
-    
-      <a href="https://blog.dakatsuka.jp/" class="nav-logo">
-        <img
-          src="https://blog.dakatsuka.jp/images/logo.png"
-          width="80"
-          height="80"
-          alt="logo"
-        />
-      </a>
-    
-
-    <ul class="nav-links">
-      
-        
-          <li>
-            <a href="/about.html" id="About"
-              ><em class="fas fa-user fa-lg"></em
-            ></a>
-          </li>
-          
-      
-        
-          <li>
-            <a href="/tags.html" id="Tags"
-              ><em class="fas fa-tag fa-lg"></em
-            ></a>
-          </li>
-          
-      
-        
-          <li>
-            <a href="/archives.html" id="Archives"
-              ><em class="fas fa-archive fa-lg"></em
-            ></a>
-          </li>
-          
-      
-    </ul>
-  </div>
-</nav>
-
-    <div class="intro-header">
-      <div class="container">
-        <div class="post-heading">
-          
-            <h1>
-              Finch &#43; MySQLでREST APIサーバを構築する
-            </h1>
-          
-          
-            <span class="meta-post">
-  <em class="fa fa-calendar-alt"></em
-  >&nbsp;Dec 7, 2015
-  
-    &nbsp;&nbsp;&nbsp;<em class="fa fa-folder-open"></em>&nbsp;
-    
-      <a href="https://blog.dakatsuka.jp/categories/programming.html">Programming</a
-      >&nbsp;
-    
-  
-</span>
-
-          
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.dakatsuka.jp/" accesskey="h" title="dakatsuka&#39;s blog (Alt + H)">dakatsuka&#39;s blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
         </div>
-      </div>
-    </div>
-  </header>
-  
+        <ul id="menu">
+            <li>
+                <a href="https://blog.dakatsuka.jp/about.html" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.dakatsuka.jp/archives.html" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.dakatsuka.jp/tags.html" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
 
+<article class="post-single">
+  <header class="post-header">
     
-  <div class="container" role="main">
-    <article class="article" class="blog-post">
-      
-  <p>これは<a href="http://www.adventar.org/calendars/904">Scala Advent Calendar 2015（Adventar版）</a>7日目です。6日目はHiroyuki-Nagataさんの<a href="http://nantonaku-shiawase.hatenablog.com/entry/2015/12/06/003259">Scalatraとnon-blocking APIについてメモ - なんとな～くしあわせ？の日記</a>でした。</p>
+    <h1 class="post-title">
+      Finch &#43; MySQLでREST APIサーバを構築する
+    </h1>
+    <div class="post-meta"><span title='2015-12-07 00:00:00 +0000 UTC'>2015/12/7</span>&nbsp;·&nbsp;Dai Akatsuka
+
+</div>
+  </header> 
+  <div class="post-content"><p>これは<a href="http://www.adventar.org/calendars/904">Scala Advent Calendar 2015（Adventar版）</a>7日目です。6日目はHiroyuki-Nagataさんの<a href="http://nantonaku-shiawase.hatenablog.com/entry/2015/12/06/003259">Scalatraとnon-blocking APIについてメモ - なんとな～くしあわせ？の日記</a>でした。</p>
 <p>さて、7日目は<a href="https://github.com/finagle/finch">Finch</a>というFinagleラッパーを紹介しようと思います。よくあるSinatraライクなマイクロフレームワークのひとつです。Hello Wordをブラウザに出力してはい終わりというのも味気ないので、MySQLに接続してレコードを取り出したり登録出来るところまで持っていきます。</p>
-<h2 id="はじめに">はじめに</h2>
+<h2 id="はじめに">はじめに<a hidden class="anchor" aria-hidden="true" href="#はじめに">#</a></h2>
 <p>今回は以下のエンドポイントを作ることにします（更新と削除は面倒になったので無し！ごめんなさい）</p>
-<pre><code>GET  /users
+<pre tabindex="0"><code>GET  /users
 GET  /users/:id
 POST /users
 </code></pre><p>コードを書く前にMySQLにテーブルを作っておきましょう。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>users<span style="color:#f92672">`</span> (
-  <span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>          BIGINT       <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> AUTO_INCREMENT,
-  <span style="color:#f92672">`</span>email<span style="color:#f92672">`</span>       VARCHAR(<span style="color:#ae81ff">255</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-  <span style="color:#f92672">`</span>screen_name<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">255</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
-  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>)
-) ENGINE<span style="color:#f92672">=</span>InnoDB;
-</code></pre></div><h2 id="依存関係">依存関係</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>users<span style="color:#f92672">`</span> (
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>          BIGINT       <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> AUTO_INCREMENT,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>email<span style="color:#f92672">`</span>       VARCHAR(<span style="color:#ae81ff">255</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>screen_name<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">255</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>)
+</span></span><span style="display:flex;"><span>) ENGINE<span style="color:#f92672">=</span>InnoDB;
+</span></span></code></pre></div><h2 id="依存関係">依存関係<a hidden class="anchor" aria-hidden="true" href="#依存関係">#</a></h2>
 <p>開発版の0.9.2-SNAPSHOTを利用します。またMySQLに繋ぐためにfinagle-mysqlも入れます。</p>
 <p>build.sbtは下記のようになります。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">name <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;finchtest&#34;</span>
-
-version <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;0.1.0&#34;</span>
-
-scalaVersion <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2.11.7&#34;</span>
-
-resolvers <span style="color:#f92672">+=</span> <span style="color:#a6e22e">Resolver</span><span style="color:#f92672">.</span>sonatypeRepo<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;snapshots&#34;</span><span style="color:#f92672">)</span>
-
-libraryDependencies <span style="color:#f92672">++=</span> <span style="color:#a6e22e">Seq</span><span style="color:#f92672">(</span>
-  <span style="color:#e6db74">&#34;com.twitter&#34;</span>         <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;finagle-mysql&#34;</span>   <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;6.30.0&#34;</span><span style="color:#f92672">,</span>
-  <span style="color:#e6db74">&#34;com.github.finagle&#34;</span>  <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;finch-core&#34;</span>      <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.9.2-SNAPSHOT&#34;</span> changing<span style="color:#f92672">(),</span>
-  <span style="color:#e6db74">&#34;com.github.finagle&#34;</span>  <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;finch-argonaut&#34;</span>  <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.9.2-SNAPSHOT&#34;</span> changing<span style="color:#f92672">()</span>
-<span style="color:#f92672">)</span>
-</code></pre></div><h2 id="実装">実装</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span>name <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;finchtest&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>version <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;0.1.0&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>scalaVersion <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2.11.7&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>resolvers <span style="color:#f92672">+=</span> <span style="color:#a6e22e">Resolver</span><span style="color:#f92672">.</span>sonatypeRepo<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;snapshots&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>libraryDependencies <span style="color:#f92672">++=</span> <span style="color:#a6e22e">Seq</span><span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;com.twitter&#34;</span>         <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;finagle-mysql&#34;</span>   <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;6.30.0&#34;</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;com.github.finagle&#34;</span>  <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;finch-core&#34;</span>      <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.9.2-SNAPSHOT&#34;</span> changing<span style="color:#f92672">(),</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;com.github.finagle&#34;</span>  <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;finch-argonaut&#34;</span>  <span style="color:#f92672">%</span> <span style="color:#e6db74">&#34;0.9.2-SNAPSHOT&#34;</span> changing<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><h2 id="実装">実装<a hidden class="anchor" aria-hidden="true" href="#実装">#</a></h2>
 <p>日本語の情報がほとんどないことや公式のドキュメントがやや分かりづらいことを除けば<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>Finch自体の使いかたはそんなに難しくないです。Finchよりもfinagle-mysqlの使いかたを調べるのに苦労したのは内緒です。</p>
 <p>今回はDBのCRUD操作をする<code>User.scala</code>と<code>Main.scala</code>の2ファイル書きました。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> jp.dakatsuka.finch
-
-<span style="color:#66d9ef">import</span> argonaut.Argonaut._
-<span style="color:#66d9ef">import</span> argonaut.CodecJson
-<span style="color:#66d9ef">import</span> com.twitter.finagle.exp.mysql._
-<span style="color:#66d9ef">import</span> com.twitter.util.Future
-
-<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">(</span>id<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Long</span><span style="color:#f92672">,</span> email<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> screen_name<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span>
-
-<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">User</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">val</span> userCodec<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">CodecJson</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span>
-    casecodec3<span style="color:#f92672">(</span><span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>apply<span style="color:#f92672">,</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>unapply<span style="color:#f92672">)(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;screen_name&#34;</span><span style="color:#f92672">)</span>
-
-  <span style="color:#66d9ef">def</span> all<span style="color:#f92672">()(</span><span style="color:#66d9ef">implicit</span> client<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Client</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Future</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Seq</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]]</span> <span style="color:#66d9ef">=</span>
-    client<span style="color:#f92672">.</span>select<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;SELECT * FROM users&#34;</span><span style="color:#f92672">)(</span>convertToEntity<span style="color:#f92672">)</span>
-
-  <span style="color:#66d9ef">def</span> find<span style="color:#f92672">(</span>id<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Long</span><span style="color:#f92672">)(</span><span style="color:#66d9ef">implicit</span> client<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Client</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Future</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Option</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]]</span> <span style="color:#66d9ef">=</span>
-    client<span style="color:#f92672">.</span>prepare<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;SELECT * FROM users WHERE id = ?&#34;</span><span style="color:#f92672">)(</span>id<span style="color:#f92672">)</span> map <span style="color:#f92672">{</span> result <span style="color:#66d9ef">=&gt;</span>
-      result<span style="color:#f92672">.</span>asInstanceOf<span style="color:#f92672">[</span><span style="color:#66d9ef">ResultSet</span><span style="color:#f92672">].</span>rows<span style="color:#f92672">.</span>map<span style="color:#f92672">(</span>convertToEntity<span style="color:#f92672">).</span>headOption
-    <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">def</span> create<span style="color:#f92672">(</span>email<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> screen_name<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)(</span><span style="color:#66d9ef">implicit</span> client<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Client</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Future</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Long</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span>
-    client<span style="color:#f92672">.</span>prepare<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;INSERT INTO users (email, screen_name) VALUES(?, ?)&#34;</span><span style="color:#f92672">)(</span>email<span style="color:#f92672">,</span> screen_name<span style="color:#f92672">)</span> map <span style="color:#f92672">{</span> result <span style="color:#66d9ef">=&gt;</span>
-      result<span style="color:#f92672">.</span>asInstanceOf<span style="color:#f92672">[</span><span style="color:#66d9ef">OK</span><span style="color:#f92672">].</span>insertId
-    <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">def</span> convertToEntity<span style="color:#f92672">(</span>row<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Row</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">User</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">val</span> <span style="color:#a6e22e">LongValue</span><span style="color:#f92672">(</span>id<span style="color:#f92672">)</span>            <span style="color:#66d9ef">=</span> row<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">).</span>get
-    <span style="color:#66d9ef">val</span> <span style="color:#a6e22e">StringValue</span><span style="color:#f92672">(</span>email<span style="color:#f92672">)</span>       <span style="color:#66d9ef">=</span> row<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">).</span>get
-    <span style="color:#66d9ef">val</span> <span style="color:#a6e22e">StringValue</span><span style="color:#f92672">(</span>screen_name<span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> row<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;screen_name&#34;</span><span style="color:#f92672">).</span>get
-
-    <span style="color:#a6e22e">User</span><span style="color:#f92672">(</span>id<span style="color:#f92672">,</span> email<span style="color:#f92672">,</span> screen_name<span style="color:#f92672">)</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> jp.dakatsuka.finch
-
-<span style="color:#66d9ef">import</span> com.twitter.finagle.Http
-<span style="color:#66d9ef">import</span> com.twitter.finagle.exp.Mysql
-<span style="color:#66d9ef">import</span> com.twitter.util.Await
-<span style="color:#66d9ef">import</span> io.finch._
-<span style="color:#66d9ef">import</span> io.finch.argonaut._
-
-<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Main</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">val</span> client <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Mysql</span><span style="color:#f92672">.</span>client
-    <span style="color:#f92672">.</span>withCredentials<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;user&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;password&#34;</span><span style="color:#f92672">)</span>
-    <span style="color:#f92672">.</span>withDatabase<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;database&#34;</span><span style="color:#f92672">)</span>
-    <span style="color:#f92672">.</span>newRichClient<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;127.0.0.1:3306&#34;</span><span style="color:#f92672">)</span>
-
-  <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserParams</span><span style="color:#f92672">(</span>email<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> screen_name<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span>
-
-  <span style="color:#66d9ef">val</span> userParams<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">RequestReader</span><span style="color:#f92672">[</span><span style="color:#66d9ef">UserParams</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">for</span> <span style="color:#f92672">{</span>
-    email <span style="color:#66d9ef">&lt;-</span> param<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">)</span>
-    screen_name <span style="color:#66d9ef">&lt;-</span> param<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;screen_name&#34;</span><span style="color:#f92672">)</span>
-  <span style="color:#f92672">}</span> <span style="color:#66d9ef">yield</span> <span style="color:#a6e22e">UserParams</span><span style="color:#f92672">(</span>email<span style="color:#f92672">,</span> screen_name<span style="color:#f92672">)</span>
-
-  <span style="color:#66d9ef">val</span> listUser<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Endpoint</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Seq</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]]</span> <span style="color:#66d9ef">=</span> get<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;users&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-    <span style="color:#a6e22e">Ok</span><span style="color:#f92672">(</span><span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>all<span style="color:#f92672">)</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">val</span> showUser<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Endpoint</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> get<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;users&#34;</span> <span style="color:#f92672">/</span> long<span style="color:#f92672">)</span> <span style="color:#f92672">{</span> id<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Long</span> <span style="color:#f92672">=&gt;</span>
-    <span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>find<span style="color:#f92672">(</span>id<span style="color:#f92672">).</span>map <span style="color:#f92672">{</span>
-      <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Some</span><span style="color:#f92672">(</span>user<span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">Ok</span><span style="color:#f92672">(</span>user<span style="color:#f92672">)</span>
-      <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">NotFound</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Exception</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Record Not Found&#34;</span><span style="color:#f92672">))</span>
-    <span style="color:#f92672">}</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">val</span> createUser<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Endpoint</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> post<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;users&#34;</span> <span style="color:#f92672">?</span> userParams<span style="color:#f92672">)</span> <span style="color:#f92672">{</span> p<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">UserParams</span> <span style="color:#f92672">=&gt;</span>
-    <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> <span style="color:#f92672">{</span>
-      id   <span style="color:#66d9ef">&lt;-</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>create<span style="color:#f92672">(</span>p<span style="color:#f92672">.</span>email<span style="color:#f92672">,</span> p<span style="color:#f92672">.</span>screen_name<span style="color:#f92672">)</span>
-      user <span style="color:#66d9ef">&lt;-</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>find<span style="color:#f92672">(</span>id<span style="color:#f92672">)</span>
-    <span style="color:#f92672">}</span> <span style="color:#66d9ef">yield</span> user<span style="color:#f92672">)</span> map <span style="color:#f92672">{</span>
-      <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Some</span><span style="color:#f92672">(</span>user<span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">Created</span><span style="color:#f92672">(</span>user<span style="color:#f92672">)</span>
-      <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">NotFound</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Exception</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Record Not Found&#34;</span><span style="color:#f92672">))</span>
-    <span style="color:#f92672">}</span>
-  <span style="color:#f92672">}</span>
-
-  <span style="color:#66d9ef">val</span> userService <span style="color:#66d9ef">=</span> <span style="color:#f92672">(</span>listUser <span style="color:#66d9ef">:</span><span style="color:#66d9ef">+:</span> <span style="color:#66d9ef">showUser</span> <span style="color:#66d9ef">:+:</span> <span style="color:#66d9ef">createUser</span><span style="color:#f92672">).</span>toService
-
-  <span style="color:#66d9ef">def</span> main<span style="color:#f92672">(</span>args<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Array</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Unit</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
-    <span style="color:#a6e22e">Await</span><span style="color:#f92672">.</span>ready<span style="color:#f92672">(</span><span style="color:#a6e22e">Http</span><span style="color:#f92672">.</span>serve<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;:8080&#34;</span><span style="color:#f92672">,</span> userService<span style="color:#f92672">))</span>
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h2 id="動かしてみよう">動かしてみよう</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#66d9ef">package</span> jp.dakatsuka.finch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> argonaut.Argonaut._
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> argonaut.CodecJson
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> com.twitter.finagle.exp.mysql._
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> com.twitter.util.Future
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">(</span>id<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Long</span><span style="color:#f92672">,</span> email<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> screen_name<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">User</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">val</span> userCodec<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">CodecJson</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span>
+</span></span><span style="display:flex;"><span>    casecodec3<span style="color:#f92672">(</span><span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>apply<span style="color:#f92672">,</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>unapply<span style="color:#f92672">)(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;screen_name&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> all<span style="color:#f92672">()(</span><span style="color:#66d9ef">implicit</span> client<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Client</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Future</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Seq</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]]</span> <span style="color:#66d9ef">=</span>
+</span></span><span style="display:flex;"><span>    client<span style="color:#f92672">.</span>select<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;SELECT * FROM users&#34;</span><span style="color:#f92672">)(</span>convertToEntity<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> find<span style="color:#f92672">(</span>id<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Long</span><span style="color:#f92672">)(</span><span style="color:#66d9ef">implicit</span> client<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Client</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Future</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Option</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]]</span> <span style="color:#66d9ef">=</span>
+</span></span><span style="display:flex;"><span>    client<span style="color:#f92672">.</span>prepare<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;SELECT * FROM users WHERE id = ?&#34;</span><span style="color:#f92672">)(</span>id<span style="color:#f92672">)</span> map <span style="color:#f92672">{</span> result <span style="color:#66d9ef">=&gt;</span>
+</span></span><span style="display:flex;"><span>      result<span style="color:#f92672">.</span>asInstanceOf<span style="color:#f92672">[</span><span style="color:#66d9ef">ResultSet</span><span style="color:#f92672">].</span>rows<span style="color:#f92672">.</span>map<span style="color:#f92672">(</span>convertToEntity<span style="color:#f92672">).</span>headOption
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> create<span style="color:#f92672">(</span>email<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> screen_name<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)(</span><span style="color:#66d9ef">implicit</span> client<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Client</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Future</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Long</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span>
+</span></span><span style="display:flex;"><span>    client<span style="color:#f92672">.</span>prepare<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;INSERT INTO users (email, screen_name) VALUES(?, ?)&#34;</span><span style="color:#f92672">)(</span>email<span style="color:#f92672">,</span> screen_name<span style="color:#f92672">)</span> map <span style="color:#f92672">{</span> result <span style="color:#66d9ef">=&gt;</span>
+</span></span><span style="display:flex;"><span>      result<span style="color:#f92672">.</span>asInstanceOf<span style="color:#f92672">[</span><span style="color:#66d9ef">OK</span><span style="color:#f92672">].</span>insertId
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> convertToEntity<span style="color:#f92672">(</span>row<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Row</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">User</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> <span style="color:#a6e22e">LongValue</span><span style="color:#f92672">(</span>id<span style="color:#f92672">)</span>            <span style="color:#66d9ef">=</span> row<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">).</span>get
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> <span style="color:#a6e22e">StringValue</span><span style="color:#f92672">(</span>email<span style="color:#f92672">)</span>       <span style="color:#66d9ef">=</span> row<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">).</span>get
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> <span style="color:#a6e22e">StringValue</span><span style="color:#f92672">(</span>screen_name<span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> row<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;screen_name&#34;</span><span style="color:#f92672">).</span>get
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">User</span><span style="color:#f92672">(</span>id<span style="color:#f92672">,</span> email<span style="color:#f92672">,</span> screen_name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#66d9ef">package</span> jp.dakatsuka.finch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> com.twitter.finagle.Http
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> com.twitter.finagle.exp.Mysql
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> com.twitter.util.Await
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> io.finch._
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> io.finch.argonaut._
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">val</span> client <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Mysql</span><span style="color:#f92672">.</span>client
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">.</span>withCredentials<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;user&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;password&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">.</span>withDatabase<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;database&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">.</span>newRichClient<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;127.0.0.1:3306&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserParams</span><span style="color:#f92672">(</span>email<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> screen_name<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">val</span> userParams<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">RequestReader</span><span style="color:#f92672">[</span><span style="color:#66d9ef">UserParams</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">for</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    email <span style="color:#66d9ef">&lt;-</span> param<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;email&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    screen_name <span style="color:#66d9ef">&lt;-</span> param<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;screen_name&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span> <span style="color:#66d9ef">yield</span> <span style="color:#a6e22e">UserParams</span><span style="color:#f92672">(</span>email<span style="color:#f92672">,</span> screen_name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">val</span> listUser<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Endpoint</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Seq</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]]</span> <span style="color:#66d9ef">=</span> get<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;users&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Ok</span><span style="color:#f92672">(</span><span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>all<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">val</span> showUser<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Endpoint</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> get<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;users&#34;</span> <span style="color:#f92672">/</span> long<span style="color:#f92672">)</span> <span style="color:#f92672">{</span> id<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Long</span> <span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>find<span style="color:#f92672">(</span>id<span style="color:#f92672">).</span>map <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Some</span><span style="color:#f92672">(</span>user<span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">Ok</span><span style="color:#f92672">(</span>user<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">NotFound</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Exception</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Record Not Found&#34;</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">val</span> createUser<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Endpoint</span><span style="color:#f92672">[</span><span style="color:#66d9ef">User</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> post<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;users&#34;</span> <span style="color:#f92672">?</span> userParams<span style="color:#f92672">)</span> <span style="color:#f92672">{</span> p<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">UserParams</span> <span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      id   <span style="color:#66d9ef">&lt;-</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>create<span style="color:#f92672">(</span>p<span style="color:#f92672">.</span>email<span style="color:#f92672">,</span> p<span style="color:#f92672">.</span>screen_name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      user <span style="color:#66d9ef">&lt;-</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">.</span>find<span style="color:#f92672">(</span>id<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span> <span style="color:#66d9ef">yield</span> user<span style="color:#f92672">)</span> map <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Some</span><span style="color:#f92672">(</span>user<span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">Created</span><span style="color:#f92672">(</span>user<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">NotFound</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Exception</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Record Not Found&#34;</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">val</span> userService <span style="color:#66d9ef">=</span> <span style="color:#f92672">(</span>listUser <span style="color:#66d9ef">:</span><span style="color:#66d9ef">+:</span> <span style="color:#66d9ef">showUser</span> <span style="color:#66d9ef">:+:</span> <span style="color:#66d9ef">createUser</span><span style="color:#f92672">).</span>toService
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> main<span style="color:#f92672">(</span>args<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Array</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Unit</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Await</span><span style="color:#f92672">.</span>ready<span style="color:#f92672">(</span><span style="color:#a6e22e">Http</span><span style="color:#f92672">.</span>serve<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;:8080&#34;</span><span style="color:#f92672">,</span> userService<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h2 id="動かしてみよう">動かしてみよう<a hidden class="anchor" aria-hidden="true" href="#動かしてみよう">#</a></h2>
 <p>いつものコマンドでサーバが起動します。</p>
-<pre><code>$ sbt run
+<pre tabindex="0"><code>$ sbt run
 [info] Set current project to finchtest (in build file:/path/to/project/)
 [info] Compiling 1 Scala source to /path/to/project/target/scala-2.11/classes...
 [info] Running jp.dakatsuka.finch.Main
 12 05, 2015 11:30:49 午後 com.twitter.finagle.Init$$anonfun$1 apply$mcV$sp
 情報: Finagle version 6.30.0 (rev=745578b931893c432e51da623287144e548cc489) built at 20151015-163818
 </code></pre><p>curlでリクエストを送ってみましょう。</p>
-<pre><code>$ curl http://localhost:8080/users
+<pre tabindex="0"><code>$ curl http://localhost:8080/users
 []
 
 $ curl http://localhost:8080/users/1
 Record Not Found
 
 $ curl -X POST http://localhost:8080/users
-Required param 'email' not present in the request.
+Required param &#39;email&#39; not present in the request.
 
-$ curl -X POST -d &quot;email=user1@example.com&quot; http://localhost:8080/users
-Required param 'screen_name' not present in the request.
+$ curl -X POST -d &#34;email=user1@example.com&#34; http://localhost:8080/users
+Required param &#39;screen_name&#39; not present in the request.
 
-$ curl -X POST -d &quot;email=user1@example.com&quot; -d &quot;screen_name=user1&quot; http://localhost:8080/users
-{&quot;id&quot;:1,&quot;email&quot;:&quot;user1@example.com&quot;,&quot;screen_name&quot;:&quot;user1&quot;}
+$ curl -X POST -d &#34;email=user1@example.com&#34; -d &#34;screen_name=user1&#34; http://localhost:8080/users
+{&#34;id&#34;:1,&#34;email&#34;:&#34;user1@example.com&#34;,&#34;screen_name&#34;:&#34;user1&#34;}
 
-$ curl -X POST -d &quot;email=user2@example.com&quot; -d &quot;screen_name=user2&quot; http://localhost:8080/users
-{&quot;id&quot;:2,&quot;email&quot;:&quot;user2@example.com&quot;,&quot;screen_name&quot;:&quot;user2&quot;}
+$ curl -X POST -d &#34;email=user2@example.com&#34; -d &#34;screen_name=user2&#34; http://localhost:8080/users
+{&#34;id&#34;:2,&#34;email&#34;:&#34;user2@example.com&#34;,&#34;screen_name&#34;:&#34;user2&#34;}
 
 $ curl http://localhost:8080/users
-[{&quot;id&quot;:1,&quot;email&quot;:&quot;user1@example.com&quot;,&quot;screen_name&quot;:&quot;user1&quot;},{&quot;id&quot;:2,&quot;email&quot;:&quot;user2@example.com&quot;,&quot;screen_name&quot;:&quot;user2&quot;}]
+[{&#34;id&#34;:1,&#34;email&#34;:&#34;user1@example.com&#34;,&#34;screen_name&#34;:&#34;user1&#34;},{&#34;id&#34;:2,&#34;email&#34;:&#34;user2@example.com&#34;,&#34;screen_name&#34;:&#34;user2&#34;}]
 
 $ curl http://localhost:8080/users/1
-{&quot;id&quot;:1,&quot;email&quot;:&quot;user1@example.com&quot;,&quot;screen_name&quot;:&quot;user1&quot;}
+{&#34;id&#34;:1,&#34;email&#34;:&#34;user1@example.com&#34;,&#34;screen_name&#34;:&#34;user1&#34;}
 </code></pre><p>期待通りの動きですね 😏</p>
-<h2 id="まとめ">まとめ</h2>
+<h2 id="まとめ">まとめ<a hidden class="anchor" aria-hidden="true" href="#まとめ">#</a></h2>
 <p>Finchはいかがでしたか？</p>
 <p>Finagleのエコシステムの上に乗っているので、Finagleに慣れている人がサクッとREST APIを実装するには良い選択肢だと思います。finagle-*なライブラリも当然使えます。Finagle使ったことない人にも、静的型付けの恩恵を受けながらSinatraライクに開発出来るというのは魅力的に映るかもしれませんね。</p>
 <p>個人的にはエンドポイントの戻り値が型で保証出来るのが高ポイントです！</p>
 <p>ちなみに、似たようなフレームワークとして<a href="https://twitter.github.io/finagle/">Finagle</a>, <a href="http://doc.akka.io/docs/akka-stream-and-http-experimental/2.0-M2/scala/http/">Akka HTTP</a>, <a href="http://www.scalatra.org/">Scalatra</a>, <a href="http://http4s.org/">http4s</a>などがあります。http4sは<a href="https://blog.dakatsuka.jp/2015/11/14/http4s.html">ScalaのHTTPインターフェース http4s 超入門</a>で雑に紹介しているので、興味ある方はどうぞ。</p>
-<section class="footnotes" role="doc-endnotes">
+<div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn:1" role="doc-endnote">
-<p>Scalaライブラリにはよくあることなので頑張って貢献したい… <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<li id="fn:1">
+<p>Scalaライブラリにはよくあることなので頑張って貢献したい…&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section>
+</div>
 
 
-
-
-      
-        <div class="blog-tags">
-          
-            <a href="https://blog.dakatsuka.jp/tags/scala.html">Scala</a
-            >&nbsp;
-          
-            <a href="https://blog.dakatsuka.jp/tags/finagle.html">Finagle</a
-            >&nbsp;
-          
-            <a href="https://blog.dakatsuka.jp/tags/finch.html">Finch</a
-            >&nbsp;
-          
-        </div>
-      
-    </article>
-    
-    
-      
-
-    
   </div>
 
-    <footer>
-  
-  <div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://blog.dakatsuka.jp/tags/scala.html">Scala</a></li>
+      <li><a href="https://blog.dakatsuka.jp/tags/finagle.html">Finagle</a></li>
+      <li><a href="https://blog.dakatsuka.jp/tags/finch.html">Finch</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
     
-      <a href="https://twitter.com/d_akatsuka" name="twitter"
-        ><em class="fab fa-twitter"></em
-      ></a>
-    
-      <a href="https://github.com/dakatsuka" name="github"
-        ><em class="fab fa-github"></em
-      ></a>
-    
-  </div>
-
-
-  <div class="container">
-    <p class="credits copyright">
-      <a href="https://blog.dakatsuka.jp/about">Dai Akatsuka</a>
-      &nbsp;&copy;
-      2021
-      
-        &nbsp;/&nbsp;
-        <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a>
-      
-      &nbsp;&ndash;&nbsp;
-      <em class="fas fa-moon" id="dark-mode-toggle"></em>
-    </p>
-
-    <p class="credits theme-by">
-       <a href="https://gohugo.io">Hugo</a>&nbsp;
-      
-      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
-    </p>
-  </div>
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
 </footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
 
-  </body>
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
 </html>

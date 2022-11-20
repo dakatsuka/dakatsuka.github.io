@@ -4,13 +4,10 @@
     <title>MongoDB on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/mongodb.html</link>
     <description>Recent content in MongoDB on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Wed, 07 Mar 2012 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/mongodb/index.xml" rel="self" type="application/rss+xml" />
@@ -21,24 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2012/03/07/sharding-mongoose.html</guid>
       <description>MongooseでSchemaを定義する時に、Shard keyの情報を渡してあげる事で insert, update, remove等の処理がTargetedオペレーショ</description>
-      <content:encoded>&lt;p&gt;MongooseでSchemaを定義する時に、Shard keyの情報を渡してあげる事で insert, update, remove等の処理がTargetedオペレーションで実行されるようになります。便利ですね。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mongoose&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;mongoose&amp;#39;&lt;/span&gt;)
-  , &lt;span style=&#34;color:#a6e22e&#34;&gt;Schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mongoose&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Schema&lt;/span&gt;
-  , &lt;span style=&#34;color:#a6e22e&#34;&gt;ObjectId&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Schema&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;ObjectId&lt;/span&gt;;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Footprint&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Schema&lt;/span&gt;({
-  &lt;span style=&#34;color:#a6e22e&#34;&gt;user_id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; { &lt;span style=&#34;color:#a6e22e&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ObjectID&lt;/span&gt; },
-  &lt;span style=&#34;color:#a6e22e&#34;&gt;visitor_id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; { &lt;span style=&#34;color:#a6e22e&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ObjectID&lt;/span&gt; },
-  &lt;span style=&#34;color:#a6e22e&#34;&gt;seconds&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; { &lt;span style=&#34;color:#a6e22e&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; Number, &lt;span style=&#34;color:#66d9ef&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Date()).&lt;span style=&#34;color:#a6e22e&#34;&gt;getSeconds&lt;/span&gt;() },
-  &lt;span style=&#34;color:#a6e22e&#34;&gt;created_at&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; { &lt;span style=&#34;color:#a6e22e&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; Date, &lt;span style=&#34;color:#66d9ef&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; Date.&lt;span style=&#34;color:#a6e22e&#34;&gt;now&lt;/span&gt; }
-}, {
-  &lt;span style=&#34;color:#a6e22e&#34;&gt;shardkey&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; {
-    &lt;span style=&#34;color:#a6e22e&#34;&gt;user_id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,
-    &lt;span style=&#34;color:#a6e22e&#34;&gt;seconds&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-  }
-});
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;※ シャーディングの設定自体は予めMongoDB側で済ませておく必要があります。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -48,100 +27,6 @@
       
       <guid>https://blog.dakatsuka.jp/2010/10/31/streaming-api-to-mongodb.html</guid>
       <description>TwitterのストリーミングAPIを利用する場合、かなりのデータ量が流れてくるので、リアルタイムに解析・集計などを行うと処理が追いつかない</description>
-      <content:encoded>&lt;p&gt;TwitterのストリーミングAPIを利用する場合、かなりのデータ量が流れてくるので、リアルタイムに解析・集計などを行うと処理が追いつかない可能性が出てきます。&lt;/p&gt;
-&lt;p&gt;そこで、流れてきたデータをいったんどこかに保存しておいて後からバッチ処理で解析をしていく事になると思います。今回はその保存先にMongoDBをチョイスします。&lt;/p&gt;
-&lt;h2 id=&#34;なぜmongodbなのか&#34;&gt;なぜMongoDBなのか&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;RDBMSに比べて高速&lt;/li&gt;
-&lt;li&gt;BSON形式で保存するので、JSONの階層構造をそのまま維持して保存可能&lt;/li&gt;
-&lt;li&gt;NoSQLながらGROUP BYライクな集計処理が可能&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;ということで、試しにストリーミングAPIのsampleから流れてくるデータをMongoDBに保存するスクリプトを書いてみました。このスクリプトを動かすには、別途MongoDB本体と「json」「bson_ext」「mongo」の3つのgemが必要になります。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# coding: utf-8&lt;/span&gt;
- 
-&lt;span style=&#34;color:#75715e&#34;&gt;# This program is free software. It comes without any warranty, to&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;# the extent permitted by applicable law. You can redistribute it&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;# and/or modify it under the terms of the Do What The Fuck You Want&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;# To Public License, Version 2, as published by Sam Hocevar. See&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;# http://sam.zoy.org/wtfpl/COPYING for more details.&lt;/span&gt;
- 
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rubygems&amp;#39;&lt;/span&gt;
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;net/https&amp;#39;&lt;/span&gt;
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;openssl&amp;#39;&lt;/span&gt;
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;uri&amp;#39;&lt;/span&gt;
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;json&amp;#39;&lt;/span&gt;
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;mongo&amp;#39;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;USERNAME&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;PASSWORD&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
- 
-con    &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Mongo&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Connection&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new
-db     &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; con&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;db(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;twitter&amp;#39;&lt;/span&gt;)
-tweets &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; db&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;collection(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;tweets&amp;#39;&lt;/span&gt;)
- 
-uri &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;URI&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;parse(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;https://stream.twitter.com/1/statuses/sample.json&amp;#39;&lt;/span&gt;)
-https &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Net&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;HTTP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new(uri&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;host, uri&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;port)
-https&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;use_ssl &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
-https&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;verify_mode &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;OpenSSL&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;SSL&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;VERIFY_NONE&lt;/span&gt;
-https&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;verify_depth &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;
- 
-https&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;start &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;h&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
-  request &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Net&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;HTTP&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Get&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new(uri&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;request_uri)
-  request&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;basic_auth(&lt;span style=&#34;color:#66d9ef&#34;&gt;USERNAME&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;PASSWORD&lt;/span&gt;)
- 
-  h&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;request(request) &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;response&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
-    response&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read_body &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;chunk&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;
-      parsed &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;JSON&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;parse(chunk) &lt;span style=&#34;color:#66d9ef&#34;&gt;rescue&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;next&lt;/span&gt;
-      tweets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;insert(parsed)
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;実際に動かしてみた結果&#34;&gt;実際に動かしてみた結果&lt;/h2&gt;
-&lt;p&gt;上記スクリプトを15分程度動かしてみて、MongoDBのshellから色々クエリを投げてみました。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ mongo twitter
-MongoDB shell version: 1.6.3
-connecting to: twitter
- 
-// 件数を取得する
-&amp;gt; db.tweets.find().count()
-2093
- 
-// 日本語のツイートの件数を取得する（もしかしたら日本語で登録しているユーザーかな？）
-&amp;gt; db.tweets.find({&amp;quot;user.lang&amp;quot;: &amp;quot;ja&amp;quot;}).count()
-568
- 
-// タイムゾーンを指定して件数を取得する
-&amp;gt; db.tweets.find({&amp;quot;user.time_zone&amp;quot; : &amp;quot;Tokyo&amp;quot;}).count()
-363
-&amp;gt; db.tweets.find({&amp;quot;user.time_zone&amp;quot; : &amp;quot;Osaka&amp;quot;}).count()
-38
- 
-// Twitterクライアントを指定して検索
-&amp;gt; db.tweets.find({&amp;quot;source&amp;quot; : /TweetDeck/i}).count()
-72
-&amp;gt; db.tweets.find({&amp;quot;source&amp;quot; : /Twitter for iPhone/i}).count()
-99
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;さらにMongoDB shellではJavaScriptが使用出来るので、ちょっとコードを書くだけでTwitterクライアントのランキングを作成することも出来ます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;count_source&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;order&lt;/span&gt;) {
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;db&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;tweets&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;group&lt;/span&gt;({
-    &lt;span style=&#34;color:#a6e22e&#34;&gt;key&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;     { &lt;span style=&#34;color:#a6e22e&#34;&gt;source&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt; },
-    &lt;span style=&#34;color:#a6e22e&#34;&gt;reduce&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;obj&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;prev&lt;/span&gt;) { &lt;span style=&#34;color:#a6e22e&#34;&gt;prev&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;; },
-    &lt;span style=&#34;color:#a6e22e&#34;&gt;initial&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; { &lt;span style=&#34;color:#a6e22e&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; },
-  });
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;order&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;asc&amp;#34;&lt;/span&gt;) {
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;result&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;sort&lt;/span&gt;( &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;b&lt;/span&gt;) { &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;count&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;b&lt;/span&gt;[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;count&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;?&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;; } );
-  } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;order&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;desc&amp;#34;&lt;/span&gt;) {
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;result&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;sort&lt;/span&gt;( &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;b&lt;/span&gt;) { &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;count&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;b&lt;/span&gt;[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;count&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;?&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;; } );
-  }
-}
- 
-&lt;span style=&#34;color:#75715e&#34;&gt;// ランキングを昇順に並び替え
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;count_source&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;asc&amp;#34;&lt;/span&gt;)
- 
-&lt;span style=&#34;color:#75715e&#34;&gt;// ランキングを降順に並び替え
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;count_source&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;desc&amp;#34;&lt;/span&gt;)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;これを応用すればランキングサイトなども簡単に作れそうですね。まぁ、その前にタイムアウトした場合の再接続処理とか、デーモン化とかやるべき事がたくさんありそうですが。。。&lt;/p&gt;
-</content:encoded>
     </item>
     
   </channel>

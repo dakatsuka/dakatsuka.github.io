@@ -1,438 +1,504 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8" />
+<html lang="ja" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
 <title>ついカッとなってPHPでMaybeモナドを実装した | dakatsuka&#39;s blog</title>
+<meta name="keywords" content="PHP">
+<meta name="description" content="PHPを仕事で使っているとis_nullとかissetとかemptyとか===とかの存在にイライラしてくる訳ですよ。そこでなんちゃってMay">
+<meta name="author" content="Dai Akatsuka">
+<link rel="canonical" href="https://blog.dakatsuka.jp/2013/09/03/php-maybe-monad.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.bc1149f4a72aa4858d3a9f71462f75e5884ffe8073ea9d6d5761d5663d651e20.css" integrity="sha256-vBFJ9KcqpIWNOp9xRi915YhP/oBz6p1tV2HVZj1lHiA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
 
-  
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-45923728-1');
-  </script>
-  
+            .list {
+                background: var(--theme);
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  href="https://blog.dakatsuka.jp/index.xml"
-  title="dakatsuka&#39;s blog"
-/>
-
-<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
-<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
-<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
-<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
-<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
-<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
-<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
-<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-<link rel="manifest" href="/manifest.json" />
-<meta name="msapplication-TileColor" content="#ffffff" />
-<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-<meta name="theme-color" content="#ffffff" />
-
-<meta property="og:title" content="ついカッとなってPHPでMaybeモナドを実装した" />
+    </style>
+</noscript>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-45923728-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script><meta property="og:title" content="ついカッとなってPHPでMaybeモナドを実装した" />
 <meta property="og:description" content="PHPを仕事で使っているとis_nullとかissetとかemptyとか===とかの存在にイライラしてくる訳ですよ。そこでなんちゃってMay" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2013/09/03/php-maybe-monad.html" />
-<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/>
+<meta property="og:url" content="https://blog.dakatsuka.jp/2013/09/03/php-maybe-monad.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2013-09-03T00:00:00+00:00" />
 <meta property="article:modified_time" content="2013-09-03T00:00:00+00:00" />
 
-
 <meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
+
+<meta name="twitter:title" content="ついカッとなってPHPでMaybeモナドを実装した"/>
+<meta name="twitter:description" content="PHPを仕事で使っているとis_nullとかissetとかemptyとか===とかの存在にイライラしてくる訳ですよ。そこでなんちゃってMay"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
 
-<link rel="stylesheet" href="https://blog.dakatsuka.jp/fontawesome/css/all.min.css" />
-<link
-  id="dark-mode-theme"
-  rel="stylesheet"
-  href="https://blog.dakatsuka.jp/css/dark.css"
-/>
 
-<script>
-  var darkTheme = document.getElementById('dark-mode-theme')
-  var storedTheme = localStorage.getItem('dark-mode-storage')
-  if (storedTheme === 'dark') {
-    darkTheme.disabled = false
-  } else if (storedTheme === 'light') {
-    darkTheme.disabled = true
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "ついカッとなってPHPでMaybeモナドを実装した",
+      "item": "https://blog.dakatsuka.jp/2013/09/03/php-maybe-monad.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ついカッとなってPHPでMaybeモナドを実装した",
+  "name": "ついカッとなってPHPでMaybeモナドを実装した",
+  "description": "PHPを仕事で使っているとis_nullとかissetとかemptyとか===とかの存在にイライラしてくる訳ですよ。そこでなんちゃってMay",
+  "keywords": [
+    "PHP"
+  ],
+  "articleBody": "PHPを仕事で使っているとis_nullとかissetとかemptyとか===とかの存在にイライラしてくる訳ですよ。そこでなんちゃってMaybeモナドの登場です。\nなんちゃってモナドなので実用性は怪しいですが、以下のように使えます（注意：ネタ記事なので真に受けないように）\n\u003c?php public function testLookupFunction() { $lookup = function($key) { return function(array $d) use($key) { return isset($d[$key]) ? Maybe::ret($d[$key]) : Maybe::ret(); }; }; $dictionary = ['a' =\u003e ['b' =\u003e ['c' =\u003e 10]]]; $result1 = Maybe::ret($dictionary) [$lookup('a')] [$lookup('b')] [$lookup('c')]; $result2 = Maybe::ret($dictionary) [$lookup('a')] [$lookup('Z')] [$lookup('c')]; $this-\u003eassertInstanceOf('Just', $result1); $this-\u003eassertInstanceOf('Nothing', $result2); $this-\u003eassertEquals(10, $result1-\u003eget()); $this-\u003eassertEquals(10, $result1-\u003egetOrElse(30)); $this-\u003eassertNull($result2-\u003eget()); $this-\u003eassertEquals(30, $result2-\u003egetOrElse(30)); } モナド則（ちょっと自信無いかも）コードからPHPっぽさが消えた気が…\n\u003c?php /** * return a \u003e\u003e= f ≡ f a */ public function testMonadLaw1() { $f = function($a) { return Maybe::ret($a * 3); }; $l = Maybe::ret(5) [$f]; $r = $f(5); $this-\u003eassertEquals($l, $r); } /** * m \u003e\u003e= return ≡ m */ public function testMonadLaw2() { $m = Maybe::ret(5); $l = $m [function($x) { return Maybe::ret($x); }]; $this-\u003eassertEquals($l, $m); } /** * (m \u003e\u003e= f) \u003e\u003e= g ≡ m \u003e\u003e= (\\x -\u003e f x \u003e\u003e= g) */ public function testMonadLaw3() { $f = function($a) { return Maybe::ret($a * 3); }; $g = function($a) { return Maybe::ret($a * 5); }; $m = Maybe::ret(7); $l = $m [$f] [$g]; $r = $m [function($x) use($f, $g) { return $f($x) [$g]; }]; $this-\u003eassertEquals($l, $r); } 実装 まずはMonadクラスを定義します。PHPは演算子のオーバーロードや新たな演算子を定義出来ないので、\u003e\u003e=はoffsetGetメソッドを書き換えて配列のブラケットで代用することにします。ブラケットの中にfunction {}って書けるので超キモイですね。\n\u003c?php abstract class Monad implements \\ArrayAccess { abstract public function bind(callable $f); public function offsetExists($offset) { throw new \\BadMethodCallException(); } public function offsetGet($offset) { return $this-\u003ebind($offset); } public function offsetSet($offset, $value) { throw new \\BadMethodCallException(); } public function offsetUnset($offset) { throw new \\BadMethodCallException(); } } 次はMaybe、Just、Nothingクラスを定義します。NothingはNothingしか存在しないのでシングルトンにしてみました。また、ScalaのOption型で便利だったいくつかのメソッドを実装しています。\n\u003c?php abstract class Maybe extends Monad { protected $value; public static function ret($value = null) { if (is_null($value)) { return Nothing::ret(); } else { return Just::ret($value); } } public function __construct($value) { $this-\u003evalue = $value; } public function bind(callable $f) { if ($this instanceof Just \u0026\u0026 is_callable($f)) { return $f($this-\u003evalue); } else { return $this; } } abstract public function get(); abstract public function getOrElse($default); abstract public function getOrCall(callable $fn); abstract public function getOrThrow(\\Exception $ex); abstract public function isEmpty(); abstract public function isDefined(); } final class Just extends Maybe { public static function ret($value = null) { return new Just($value); } public function get() { return $this-\u003evalue; } public function getOrElse($default) { return $this-\u003eget(); } public function getOrCall(callable $fn) { return $this-\u003eget(); } public function getOrThrow(\\Exception $ex) { return $this-\u003eget(); } public function isEmpty() { return false; } public function isDefined() { return true; } } final class Nothing extends Maybe { private static $instance; public function __construct($value = null) { if (static::$instance) { throw new \\InvalidArgumentException(); } } public static function ret($value = null) { if (is_null(static::$instance)) { return static::$instance = new static(); } else { return static::$instance; } } public function get() { return null; } public function getOrElse($default) { return $default; } public function getOrCall(callable $fn) { return $fn(); } public function getOrThrow(\\Exception $ex) { throw $ex; } public function isEmpty() { return true; } public function isDefined() { return false; } } Enjoy functional PHP!\n",
+  "wordCount" : "871",
+  "inLanguage": "ja",
+  "datePublished": "2013-09-03T00:00:00Z",
+  "dateModified": "2013-09-03T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Dai Akatsuka"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.dakatsuka.jp/2013/09/03/php-maybe-monad.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "dakatsuka's blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.dakatsuka.jp/favicon.ico"
+    }
   }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
 </script>
 
-<script src="https://blog.dakatsuka.jp/js/bundle.js"></script>
-<script src="https://blog.dakatsuka.jp/js/instantpage.min.js" type="module" defer></script>
-
-  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
-
-<meta name="generator" content="Hugo 0.80.0-DEV" />
-
-
-  </head>
-  <body>
-    
-  
-
-
-
-
-  <header>
-    <nav class="navbar">
-  <div class="nav">
-    
-      <a href="https://blog.dakatsuka.jp/" class="nav-logo">
-        <img
-          src="https://blog.dakatsuka.jp/images/logo.png"
-          width="80"
-          height="80"
-          alt="logo"
-        />
-      </a>
-    
-
-    <ul class="nav-links">
-      
-        
-          <li>
-            <a href="/about.html" id="About"
-              ><em class="fas fa-user fa-lg"></em
-            ></a>
-          </li>
-          
-      
-        
-          <li>
-            <a href="/tags.html" id="Tags"
-              ><em class="fas fa-tag fa-lg"></em
-            ></a>
-          </li>
-          
-      
-        
-          <li>
-            <a href="/archives.html" id="Archives"
-              ><em class="fas fa-archive fa-lg"></em
-            ></a>
-          </li>
-          
-      
-    </ul>
-  </div>
-</nav>
-
-    <div class="intro-header">
-      <div class="container">
-        <div class="post-heading">
-          
-            <h1>
-              ついカッとなってPHPでMaybeモナドを実装した
-            </h1>
-          
-          
-            <span class="meta-post">
-  <em class="fa fa-calendar-alt"></em
-  >&nbsp;Sep 3, 2013
-  
-</span>
-
-          
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.dakatsuka.jp/" accesskey="h" title="dakatsuka&#39;s blog (Alt + H)">dakatsuka&#39;s blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
         </div>
-      </div>
-    </div>
-  </header>
-  
+        <ul id="menu">
+            <li>
+                <a href="https://blog.dakatsuka.jp/about.html" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.dakatsuka.jp/archives.html" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.dakatsuka.jp/tags.html" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
 
+<article class="post-single">
+  <header class="post-header">
     
-  <div class="container" role="main">
-    <article class="article" class="blog-post">
-      
-  <p>PHPを仕事で使っているとis_nullとかissetとかemptyとか===とかの存在にイライラしてくる訳ですよ。そこでなんちゃってMaybeモナドの登場です。</p>
+    <h1 class="post-title">
+      ついカッとなってPHPでMaybeモナドを実装した
+    </h1>
+    <div class="post-meta"><span title='2013-09-03 00:00:00 +0000 UTC'>2013/9/3</span>&nbsp;·&nbsp;Dai Akatsuka
+
+</div>
+  </header> 
+  <div class="post-content"><p>PHPを仕事で使っているとis_nullとかissetとかemptyとか===とかの存在にイライラしてくる訳ですよ。そこでなんちゃってMaybeモナドの登場です。</p>
 <p>なんちゃってモナドなので実用性は怪しいですが、以下のように使えます（注意：ネタ記事なので真に受けないように）</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">testLookupFunction</span>()
-{
-    $lookup <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>($key) {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span>(<span style="color:#66d9ef">array</span> $d) <span style="color:#66d9ef">use</span>($key) {
-            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">isset</span>($d[$key]) <span style="color:#f92672">?</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($d[$key]) <span style="color:#f92672">:</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>();
-        };
-    };
- 
-    $dictionary <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#f92672">=&gt;</span> [<span style="color:#e6db74">&#39;b&#39;</span> <span style="color:#f92672">=&gt;</span> [<span style="color:#e6db74">&#39;c&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">10</span>]]];
- 
-    $result1 <span style="color:#f92672">=</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($dictionary) [$lookup(<span style="color:#e6db74">&#39;a&#39;</span>)] [$lookup(<span style="color:#e6db74">&#39;b&#39;</span>)] [$lookup(<span style="color:#e6db74">&#39;c&#39;</span>)];
-    $result2 <span style="color:#f92672">=</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($dictionary) [$lookup(<span style="color:#e6db74">&#39;a&#39;</span>)] [$lookup(<span style="color:#e6db74">&#39;Z&#39;</span>)] [$lookup(<span style="color:#e6db74">&#39;c&#39;</span>)];
- 
-    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertInstanceOf</span>(<span style="color:#e6db74">&#39;Just&#39;</span>, $result1);
-    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertInstanceOf</span>(<span style="color:#e6db74">&#39;Nothing&#39;</span>, $result2);
-    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertEquals</span>(<span style="color:#ae81ff">10</span>, $result1<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>());
-    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertEquals</span>(<span style="color:#ae81ff">10</span>, $result1<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getOrElse</span>(<span style="color:#ae81ff">30</span>));
-    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertNull</span>($result2<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>());
-    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertEquals</span>(<span style="color:#ae81ff">30</span>, $result2<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getOrElse</span>(<span style="color:#ae81ff">30</span>));
-}
-</code></pre></div><p>モナド則（ちょっと自信無いかも）コードからPHPっぽさが消えた気が…</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-
-<span style="color:#e6db74">/**
-</span><span style="color:#e6db74"> * return a &gt;&gt;= f ≡ f a
-</span><span style="color:#e6db74"> */</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">testMonadLaw1</span>()
-{
-    $f <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>($a) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($a <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>); };
-    $l <span style="color:#f92672">=</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>(<span style="color:#ae81ff">5</span>) [$f];
-    $r <span style="color:#f92672">=</span> $f(<span style="color:#ae81ff">5</span>);
- 
-    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertEquals</span>($l, $r);
-}
- 
-<span style="color:#e6db74">/**
-</span><span style="color:#e6db74"> * m &gt;&gt;= return ≡ m
-</span><span style="color:#e6db74"> */</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">testMonadLaw2</span>()
-{
-    $m <span style="color:#f92672">=</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>(<span style="color:#ae81ff">5</span>);
-    $l <span style="color:#f92672">=</span> $m [<span style="color:#66d9ef">function</span>($x) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($x); }];
- 
-    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertEquals</span>($l, $m);
-}
- 
-<span style="color:#e6db74">/**
-</span><span style="color:#e6db74"> * (m &gt;&gt;= f) &gt;&gt;= g ≡ m &gt;&gt;= (\x -&gt; f x &gt;&gt;= g)
-</span><span style="color:#e6db74"> */</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">testMonadLaw3</span>()
-{
-    $f <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>($a) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($a <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>); };
-    $g <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>($a) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($a <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>); };
-    $m <span style="color:#f92672">=</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>(<span style="color:#ae81ff">7</span>);
-    $l <span style="color:#f92672">=</span> $m [$f] [$g];
-    $r <span style="color:#f92672">=</span> $m [<span style="color:#66d9ef">function</span>($x) <span style="color:#66d9ef">use</span>($f, $g) { <span style="color:#66d9ef">return</span> $f($x) [$g]; }];
- 
-    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertEquals</span>($l, $r);
-}
-</code></pre></div><h2 id="実装">実装</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">testLookupFunction</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    $lookup <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>($key) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span>(<span style="color:#66d9ef">array</span> $d) <span style="color:#66d9ef">use</span>($key) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">isset</span>($d[$key]) <span style="color:#f92672">?</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($d[$key]) <span style="color:#f92672">:</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>();
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    $dictionary <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#f92672">=&gt;</span> [<span style="color:#e6db74">&#39;b&#39;</span> <span style="color:#f92672">=&gt;</span> [<span style="color:#e6db74">&#39;c&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">10</span>]]];
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    $result1 <span style="color:#f92672">=</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($dictionary) [$lookup(<span style="color:#e6db74">&#39;a&#39;</span>)] [$lookup(<span style="color:#e6db74">&#39;b&#39;</span>)] [$lookup(<span style="color:#e6db74">&#39;c&#39;</span>)];
+</span></span><span style="display:flex;"><span>    $result2 <span style="color:#f92672">=</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($dictionary) [$lookup(<span style="color:#e6db74">&#39;a&#39;</span>)] [$lookup(<span style="color:#e6db74">&#39;Z&#39;</span>)] [$lookup(<span style="color:#e6db74">&#39;c&#39;</span>)];
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertInstanceOf</span>(<span style="color:#e6db74">&#39;Just&#39;</span>, $result1);
+</span></span><span style="display:flex;"><span>    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertInstanceOf</span>(<span style="color:#e6db74">&#39;Nothing&#39;</span>, $result2);
+</span></span><span style="display:flex;"><span>    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertEquals</span>(<span style="color:#ae81ff">10</span>, $result1<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>());
+</span></span><span style="display:flex;"><span>    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertEquals</span>(<span style="color:#ae81ff">10</span>, $result1<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getOrElse</span>(<span style="color:#ae81ff">30</span>));
+</span></span><span style="display:flex;"><span>    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertNull</span>($result2<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>());
+</span></span><span style="display:flex;"><span>    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertEquals</span>(<span style="color:#ae81ff">30</span>, $result2<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getOrElse</span>(<span style="color:#ae81ff">30</span>));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>モナド則（ちょっと自信無いかも）コードからPHPっぽさが消えた気が…</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * return a &gt;&gt;= f ≡ f a
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">testMonadLaw1</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    $f <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>($a) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($a <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>); };
+</span></span><span style="display:flex;"><span>    $l <span style="color:#f92672">=</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>(<span style="color:#ae81ff">5</span>) [$f];
+</span></span><span style="display:flex;"><span>    $r <span style="color:#f92672">=</span> $f(<span style="color:#ae81ff">5</span>);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertEquals</span>($l, $r);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * m &gt;&gt;= return ≡ m
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">testMonadLaw2</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    $m <span style="color:#f92672">=</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>(<span style="color:#ae81ff">5</span>);
+</span></span><span style="display:flex;"><span>    $l <span style="color:#f92672">=</span> $m [<span style="color:#66d9ef">function</span>($x) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($x); }];
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertEquals</span>($l, $m);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * (m &gt;&gt;= f) &gt;&gt;= g ≡ m &gt;&gt;= (\x -&gt; f x &gt;&gt;= g)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">testMonadLaw3</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    $f <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>($a) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($a <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>); };
+</span></span><span style="display:flex;"><span>    $g <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>($a) { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($a <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>); };
+</span></span><span style="display:flex;"><span>    $m <span style="color:#f92672">=</span> <span style="color:#a6e22e">Maybe</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>(<span style="color:#ae81ff">7</span>);
+</span></span><span style="display:flex;"><span>    $l <span style="color:#f92672">=</span> $m [$f] [$g];
+</span></span><span style="display:flex;"><span>    $r <span style="color:#f92672">=</span> $m [<span style="color:#66d9ef">function</span>($x) <span style="color:#66d9ef">use</span>($f, $g) { <span style="color:#66d9ef">return</span> $f($x) [$g]; }];
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assertEquals</span>($l, $r);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="実装">実装<a hidden class="anchor" aria-hidden="true" href="#実装">#</a></h2>
 <p>まずはMonadクラスを定義します。PHPは演算子のオーバーロードや新たな演算子を定義出来ないので、&gt;&gt;=はoffsetGetメソッドを書き換えて配列のブラケットで代用することにします。ブラケットの中にfunction {}って書けるので超キモイですね。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-
-<span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Monad</span> <span style="color:#66d9ef">implements</span> <span style="color:#a6e22e">\ArrayAccess</span>
-{
-    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">bind</span>(<span style="color:#a6e22e">callable</span> $f);
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">offsetExists</span>($offset)
-    {
-        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\BadMethodCallException</span>();
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">offsetGet</span>($offset)
-    {
-        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">bind</span>($offset);
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">offsetSet</span>($offset, $value)
-    {
-        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\BadMethodCallException</span>();
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">offsetUnset</span>($offset)
-    {
-        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\BadMethodCallException</span>();
-    }
-}
-</code></pre></div><p>次はMaybe、Just、Nothingクラスを定義します。NothingはNothingしか存在しないのでシングルトンにしてみました。また、ScalaのOption型で便利だったいくつかのメソッドを実装しています。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-
-<span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Maybe</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Monad</span>
-{
-    <span style="color:#66d9ef">protected</span> $value;
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">ret</span>($value <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>)
-    {
-        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">is_null</span>($value)) {
-            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Nothing</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>();
-        } <span style="color:#66d9ef">else</span> {
-            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Just</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($value);
-        }
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct($value)
-    {
-        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> $value;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">bind</span>(<span style="color:#a6e22e">callable</span> $f)
-    {
-        <span style="color:#66d9ef">if</span> ($this <span style="color:#a6e22e">instanceof</span> <span style="color:#a6e22e">Just</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">is_callable</span>($f)) {
-            <span style="color:#66d9ef">return</span> $f($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">value</span>);
-        } <span style="color:#66d9ef">else</span> {
-            <span style="color:#66d9ef">return</span> $this;
-        }
-    }
- 
-    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">get</span>();
-    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrElse</span>($default);
-    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrCall</span>(<span style="color:#a6e22e">callable</span> $fn);
-    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrThrow</span>(<span style="color:#a6e22e">\Exception</span> $ex);
-    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isEmpty</span>();
-    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isDefined</span>();
-}
- 
-<span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Just</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Maybe</span>
-{
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">ret</span>($value <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>)
-    {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Just</span>($value);
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">get</span>()
-    {
-        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">value</span>;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrElse</span>($default)
-    {
-        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>();
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrCall</span>(<span style="color:#a6e22e">callable</span> $fn)
-    {
-        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>();
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrThrow</span>(<span style="color:#a6e22e">\Exception</span> $ex)
-    {
-        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>();
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isEmpty</span>()
-    {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isDefined</span>()
-    {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
-    }
-}
- 
-<span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Nothing</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Maybe</span>
-{
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> $instance;
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct($value <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>)
-    {
-        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">static</span><span style="color:#f92672">::</span>$instance) {
-            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\InvalidArgumentException</span>();
-        }
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">ret</span>($value <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>)
-    {
-        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">is_null</span>(<span style="color:#66d9ef">static</span><span style="color:#f92672">::</span>$instance)) {
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">static</span><span style="color:#f92672">::</span>$instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">static</span>();
-        } <span style="color:#66d9ef">else</span> {
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">static</span><span style="color:#f92672">::</span>$instance;
-        }
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">get</span>()
-    {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrElse</span>($default)
-    {
-        <span style="color:#66d9ef">return</span> $default;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrCall</span>(<span style="color:#a6e22e">callable</span> $fn)
-    {
-        <span style="color:#66d9ef">return</span> $fn();
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrThrow</span>(<span style="color:#a6e22e">\Exception</span> $ex)
-    {
-        <span style="color:#66d9ef">throw</span> $ex;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isEmpty</span>()
-    {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
-    }
- 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isDefined</span>()
-    {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-    }
-}
-</code></pre></div><p><!-- raw HTML omitted -->Enjoy functional PHP!<!-- raw HTML omitted --></p>
-
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Monad</span> <span style="color:#66d9ef">implements</span> <span style="color:#a6e22e">\ArrayAccess</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">bind</span>(<span style="color:#a6e22e">callable</span> $f);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">offsetExists</span>($offset)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\BadMethodCallException</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">offsetGet</span>($offset)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">bind</span>($offset);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">offsetSet</span>($offset, $value)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\BadMethodCallException</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">offsetUnset</span>($offset)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\BadMethodCallException</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>次はMaybe、Just、Nothingクラスを定義します。NothingはNothingしか存在しないのでシングルトンにしてみました。また、ScalaのOption型で便利だったいくつかのメソッドを実装しています。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Maybe</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Monad</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> $value;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">ret</span>($value <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">is_null</span>($value)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Nothing</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>();
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Just</span><span style="color:#f92672">::</span><span style="color:#a6e22e">ret</span>($value);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct($value)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> $value;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">bind</span>(<span style="color:#a6e22e">callable</span> $f)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ($this <span style="color:#a6e22e">instanceof</span> <span style="color:#a6e22e">Just</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">is_callable</span>($f)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> $f($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">value</span>);
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> $this;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">get</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrElse</span>($default);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrCall</span>(<span style="color:#a6e22e">callable</span> $fn);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrThrow</span>(<span style="color:#a6e22e">\Exception</span> $ex);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isEmpty</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isDefined</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Just</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Maybe</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">ret</span>($value <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Just</span>($value);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">get</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">value</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrElse</span>($default)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrCall</span>(<span style="color:#a6e22e">callable</span> $fn)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrThrow</span>(<span style="color:#a6e22e">\Exception</span> $ex)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isEmpty</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isDefined</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Nothing</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Maybe</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> $instance;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct($value <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">static</span><span style="color:#f92672">::</span>$instance) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\InvalidArgumentException</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">ret</span>($value <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">is_null</span>(<span style="color:#66d9ef">static</span><span style="color:#f92672">::</span>$instance)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">static</span><span style="color:#f92672">::</span>$instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">static</span>();
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">static</span><span style="color:#f92672">::</span>$instance;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">get</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrElse</span>($default)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $default;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrCall</span>(<span style="color:#a6e22e">callable</span> $fn)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $fn();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getOrThrow</span>(<span style="color:#a6e22e">\Exception</span> $ex)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> $ex;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isEmpty</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isDefined</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Enjoy functional PHP!<!-- raw HTML omitted --></p>
 
 
-      
-        <div class="blog-tags">
-          
-            <a href="https://blog.dakatsuka.jp/tags/php.html">PHP</a
-            >&nbsp;
-          
-        </div>
-      
-    </article>
-    
-    
-      
-
-    
   </div>
 
-    <footer>
-  
-  <div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://blog.dakatsuka.jp/tags/php.html">PHP</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
     
-      <a href="https://twitter.com/d_akatsuka" name="twitter"
-        ><em class="fab fa-twitter"></em
-      ></a>
-    
-      <a href="https://github.com/dakatsuka" name="github"
-        ><em class="fab fa-github"></em
-      ></a>
-    
-  </div>
-
-
-  <div class="container">
-    <p class="credits copyright">
-      <a href="https://blog.dakatsuka.jp/about">Dai Akatsuka</a>
-      &nbsp;&copy;
-      2021
-      
-        &nbsp;/&nbsp;
-        <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a>
-      
-      &nbsp;&ndash;&nbsp;
-      <em class="fas fa-moon" id="dark-mode-toggle"></em>
-    </p>
-
-    <p class="credits theme-by">
-       <a href="https://gohugo.io">Hugo</a>&nbsp;
-      
-      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
-    </p>
-  </div>
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
 </footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
 
-  </body>
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
 </html>

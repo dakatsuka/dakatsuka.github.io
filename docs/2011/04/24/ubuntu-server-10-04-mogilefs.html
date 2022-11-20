@@ -1,166 +1,207 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8" />
+<html lang="ja" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
 <title>Ubuntu Server 10.04に分散ファイルシステム MogileFSを入れてみた | dakatsuka&#39;s blog</title>
+<meta name="keywords" content="Ubuntu, MogileFS">
+<meta name="description" content="Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。 MogileFS には次のような特徴があります">
+<meta name="author" content="Dai Akatsuka">
+<link rel="canonical" href="https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.bc1149f4a72aa4858d3a9f71462f75e5884ffe8073ea9d6d5761d5663d651e20.css" integrity="sha256-vBFJ9KcqpIWNOp9xRi915YhP/oBz6p1tV2HVZj1lHiA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
 
-  
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-45923728-1');
-  </script>
-  
+            .list {
+                background: var(--theme);
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  href="https://blog.dakatsuka.jp/index.xml"
-  title="dakatsuka&#39;s blog"
-/>
-
-<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
-<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
-<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
-<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
-<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
-<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
-<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
-<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-<link rel="manifest" href="/manifest.json" />
-<meta name="msapplication-TileColor" content="#ffffff" />
-<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-<meta name="theme-color" content="#ffffff" />
-
-<meta property="og:title" content="Ubuntu Server 10.04に分散ファイルシステム MogileFSを入れてみた" />
+    </style>
+</noscript>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-45923728-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script><meta property="og:title" content="Ubuntu Server 10.04に分散ファイルシステム MogileFSを入れてみた" />
 <meta property="og:description" content="Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。 MogileFS には次のような特徴があります" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html" />
-<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/>
+<meta property="og:url" content="https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2011-04-24T00:00:00+00:00" />
 <meta property="article:modified_time" content="2011-04-24T00:00:00+00:00" />
 
-
 <meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
+
+<meta name="twitter:title" content="Ubuntu Server 10.04に分散ファイルシステム MogileFSを入れてみた"/>
+<meta name="twitter:description" content="Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。 MogileFS には次のような特徴があります"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
 
-<link rel="stylesheet" href="https://blog.dakatsuka.jp/fontawesome/css/all.min.css" />
-<link
-  id="dark-mode-theme"
-  rel="stylesheet"
-  href="https://blog.dakatsuka.jp/css/dark.css"
-/>
 
-<script>
-  var darkTheme = document.getElementById('dark-mode-theme')
-  var storedTheme = localStorage.getItem('dark-mode-storage')
-  if (storedTheme === 'dark') {
-    darkTheme.disabled = false
-  } else if (storedTheme === 'light') {
-    darkTheme.disabled = true
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Ubuntu Server 10.04に分散ファイルシステム MogileFSを入れてみた",
+      "item": "https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Ubuntu Server 10.04に分散ファイルシステム MogileFSを入れてみた",
+  "name": "Ubuntu Server 10.04に分散ファイルシステム MogileFSを入れてみた",
+  "description": "Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。 MogileFS には次のような特徴があります",
+  "keywords": [
+    "Ubuntu", "MogileFS"
+  ],
+  "articleBody": "Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。\nMogileFS には次のような特徴があります。\nPerl で実装されている HTTPを利用（NFSとか使わなくてOK） 自動フェイルオーバー 自動レプリケーション そこそこ実績がある（たしかはてなでも使われていたはず） 以下参考にさせて頂いたサイトです。\n分散ファイルシステム MogileFS について : Tech Talk Blog – Six Apart MogileFS のインストールと初期設定 : Tech Talk Blog – Six Apart MogileFSで構築する高速スケーラブルな分散ファイルシステム – builder PerlbalでMogileFSを更に高速化、効率化する – builder OSS分散ファイルシステムMogileFS で組む素敵システム 動作環境 Ubuntu Server 10.04 LTS / 64bit MySQL 5.1 Perl 5.10.1 MogileFSが依存しているライブラリなどを入れる あらかじめGCC、MySQLをインストールしておきます。\nsudo apt-get install build-essential mysql-server-5.1 libmysqlclient16-dev 次にMogileFSのインストールに必要なライブラリをCPANでインストールします。\n$ sudo cpan cpan[1]\u003e install YAML capn[2]\u003e install Net::Netmask cpan[3]\u003e install Danga::Socket cpan[4]\u003e install IO::AIO cpan[5]\u003e install IO::WrapTie cpan[6]\u003e install DBI cpan[7]\u003e install DBD::mysql cpan[8]\u003e install Perlbal MogileFSのインストール MogileFS-Clientのソースをダウンロード、展開、インストールします。\n$ cd /usr/local/src $ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Client-1.14.tar.gz $ sudo tar zxvf sudo tar zxvf MogileFS-Client-1.14.tar.gz $ cd MogileFS-Client-1.14/ $ sudo perl Makefile.PL $ sudo make $ sudo make install MogileFS-Utilsのソースをダウンロード、展開、インストールします。\n$ cd /usr/local/src $ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Utils-2.19.tar.gz $ sudo tar zxvf MogileFS-Utils-2.19.tar.gz $ cd MogileFS-Utils-2.19/ $ sudo perl Makefile.PL $ sudo make $ sudo make install MogileFS-Serverのソースをダウンロード、展開、インストールします。\n$ cd /usr/local/src $ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Server-2.46.tar.gz $ sudo tar zxvf MogileFS-Server-2.46.tar.gz $ cd MogileFS-Server-2.46/ $ sudo perl Makefile.PL $ sudo make $ sudo make install MogileFSの初期設定 DBにスキーマを作成します。一発でDB、ユーザーを作成してくれるコマンドがあるので利用します。\nmogdbsetup --dbrootuser=root --dbrootpass=hogehoge --dbuser=mogilefs --dbpass=mogilefs --yes Trackerの設定（mogilefsd） デフォルトだと /etc/mogilefs/mogilefsd.conf を読みに行きます。特に変更する必要も無いのでデフォルトのままいきます。変更したい場合は -c で指定出来ます。\n$ sudo mkdir /etc/mogilefs /etc/mogilefs/mogilefsd.conf はこのページを参考にして次のようにしました。\ndaemonize = 1 db_dsn = DBI:mysql:mogilefs:host=127.0.0.1 db_user = mogilefs db_pass = mogilefs conf_port = 7001 listener_jobs = 10 Trackerは root ユーザーでは実行出来ませんので 専用のユーザーを作ってあげる必要があります。\nsudo useradd -s /bin/false mogilefs sudo -u mogilefs mogilefsd psコマンドで起動しているか確認。\n$ ps ax | grep mogilefsd 11160 ? S 0:00 mogilefsd 11161 ? S 0:00 mogilefsd [replicate] 11162 ? S 0:00 mogilefsd [delete] 11163 ? S 0:00 mogilefsd [queryworker] 11164 ? S 0:00 mogilefsd [queryworker] 11165 ? S 0:00 mogilefsd [queryworker] 11166 ? S 0:00 mogilefsd [queryworker] 11167 ? S 0:00 mogilefsd [queryworker] 11168 ? S 0:00 mogilefsd [queryworker] 11169 ? S 0:00 mogilefsd [queryworker] 11170 ? S 0:00 mogilefsd [queryworker] 11171 ? S 0:00 mogilefsd [queryworker] 11172 ? S 0:00 mogilefsd [queryworker] 11173 ? S 0:00 mogilefsd [monitor] 11174 ? S 0:00 mogilefsd [reaper] 11175 ? S 0:00 mogilefsd [job_master] 11176 ? SN 0:00 mogilefsd [fsck] Storage nodeの設定（mogstored） デフォルトだと /etc/mogilefs/mogstored.conf を読みに行きます。Trackerと同様、変更したい場合は -c で指定出来ます。\nhttplisten = 0.0.0.0:7500 mgmtlisten = 0.0.0.0:7501 docroot = /var/mogdata /etc/mogilefs/mogstored.conf で指定したdocrootのディレクトリを作成します。\nsudo mkdir /var/mogdata Trackerとは違いStorage nodeは root ユーザーで起動させます。\n$ sudo mogstored -d $ ps ax | grep mogstored 11209 ? Ss 0:00 mogstored 11210 ? S 0:00 mogstored [diskusage] 11211 ? S 0:00 mogstored [iostat] Storage node の登録 上記インストール・初期設定が終われば、あとはmogadmコマンドを使用して設定していくことが出来ます。\nTrackerが正常に動作しているか確認。\n$ mogadm check Checking trackers... 127.0.0.1:7001 ... OK Checking hosts... No devices found on tracker(s). TrackerはOKと出ていますが、Checking hosts…ではNo devicesと出てしまっていますので、mogadm host add で Storage node を登録します。\n$ mogadm host add localhost --port=7500 $ mogadm check Checking trackers... 127.0.0.1:7001 ... OK Checking hosts... [ 1] localhost ... skipping; status = down No devices found on tracker(s). Deviceの登録 $ mogadm device add localhost 1 $ mogadm device add localhost 2 $ sudo mkdir /var/mogdata/{dev1,dev2} $ mogadm device list localhost [1]: down used(G) free(G) total(G) dev1: down 0.000 0.000 0.000 dev2: down 0.000 0.000 0.000 downとなっているので有効にしてあげます。\n$ mogadm host mark localhost alive $ mogadm check Checking trackers... 127.0.0.1:7001 ... OK Checking hosts... [ 1] localhost ... OK Checking devices... host device size(G) used(G) free(G) use% ob state I/O% ---- ------------ ---------- ---------- ---------- ------ ---------- ----- [ 1] dev1 7.109 1.066 6.042 15.00% writeable 0.0 [ 1] dev2 7.109 1.066 6.042 15.00% writeable 0.0 ---- ------------ ---------- ---------- ---------- ------ total: 14.217 2.132 12.085 15.00% これでようやくMogileFSが使用可能になりました！\nMogileFSのクライアントはPerl以外でも出ていますので、分散ストレージとして色々使い道があるのではないでしょうか。私の会社ではRailsアプリの画像ストレージとして利用しています。\n",
+  "wordCount" : "1648",
+  "inLanguage": "ja",
+  "datePublished": "2011-04-24T00:00:00Z",
+  "dateModified": "2011-04-24T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Dai Akatsuka"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "dakatsuka's blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.dakatsuka.jp/favicon.ico"
+    }
   }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
 </script>
 
-<script src="https://blog.dakatsuka.jp/js/bundle.js"></script>
-<script src="https://blog.dakatsuka.jp/js/instantpage.min.js" type="module" defer></script>
-
-  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
-
-<meta name="generator" content="Hugo 0.80.0-DEV" />
-
-
-  </head>
-  <body>
-    
-  
-
-
-
-
-  <header>
-    <nav class="navbar">
-  <div class="nav">
-    
-      <a href="https://blog.dakatsuka.jp/" class="nav-logo">
-        <img
-          src="https://blog.dakatsuka.jp/images/logo.png"
-          width="80"
-          height="80"
-          alt="logo"
-        />
-      </a>
-    
-
-    <ul class="nav-links">
-      
-        
-          <li>
-            <a href="/about.html" id="About"
-              ><em class="fas fa-user fa-lg"></em
-            ></a>
-          </li>
-          
-      
-        
-          <li>
-            <a href="/tags.html" id="Tags"
-              ><em class="fas fa-tag fa-lg"></em
-            ></a>
-          </li>
-          
-      
-        
-          <li>
-            <a href="/archives.html" id="Archives"
-              ><em class="fas fa-archive fa-lg"></em
-            ></a>
-          </li>
-          
-      
-    </ul>
-  </div>
-</nav>
-
-    <div class="intro-header">
-      <div class="container">
-        <div class="post-heading">
-          
-            <h1>
-              Ubuntu Server 10.04に分散ファイルシステム MogileFSを入れてみた
-            </h1>
-          
-          
-            <span class="meta-post">
-  <em class="fa fa-calendar-alt"></em
-  >&nbsp;Apr 24, 2011
-  
-</span>
-
-          
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.dakatsuka.jp/" accesskey="h" title="dakatsuka&#39;s blog (Alt + H)">dakatsuka&#39;s blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
         </div>
-      </div>
-    </div>
-  </header>
-  
+        <ul id="menu">
+            <li>
+                <a href="https://blog.dakatsuka.jp/about.html" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.dakatsuka.jp/archives.html" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.dakatsuka.jp/tags.html" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
 
+<article class="post-single">
+  <header class="post-header">
     
-  <div class="container" role="main">
-    <article class="article" class="blog-post">
-      
-  <p>Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。</p>
+    <h1 class="post-title">
+      Ubuntu Server 10.04に分散ファイルシステム MogileFSを入れてみた
+    </h1>
+    <div class="post-meta"><span title='2011-04-24 00:00:00 +0000 UTC'>2011/4/24</span>&nbsp;·&nbsp;Dai Akatsuka
+
+</div>
+  </header> 
+  <div class="post-content"><p>Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。</p>
 <p>MogileFS には次のような特徴があります。</p>
 <ul>
 <li>Perl で実装されている</li>
@@ -177,201 +218,224 @@
 <li><a href="http://builder.japan.zdnet.com/virtualization/sp_open-source-software-moonlinx-2009/20391968/">PerlbalでMogileFSを更に高速化、効率化する – builder</a></li>
 <li><a href="http://www.slideshare.net/kazuhisa/090214ldd-mogilefs">OSS分散ファイルシステムMogileFS で組む素敵システム</a></li>
 </ul>
-<h2 id="動作環境">動作環境</h2>
+<h2 id="動作環境">動作環境<a hidden class="anchor" aria-hidden="true" href="#動作環境">#</a></h2>
 <ul>
 <li>Ubuntu Server 10.04 LTS / 64bit</li>
 <li>MySQL 5.1</li>
 <li>Perl 5.10.1</li>
 </ul>
-<h2 id="mogilefsが依存しているライブラリなどを入れる">MogileFSが依存しているライブラリなどを入れる</h2>
+<h2 id="mogilefsが依存しているライブラリなどを入れる">MogileFSが依存しているライブラリなどを入れる<a hidden class="anchor" aria-hidden="true" href="#mogilefsが依存しているライブラリなどを入れる">#</a></h2>
 <p>あらかじめGCC、MySQLをインストールしておきます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">sudo apt-get install build-essential mysql-server-5.1 libmysqlclient16-dev
-</code></pre></div><p>次にMogileFSのインストールに必要なライブラリをCPANでインストールします。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ sudo cpan
-cpan<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>&gt; install YAML
-capn<span style="color:#f92672">[</span>2<span style="color:#f92672">]</span>&gt; install Net::Netmask
-cpan<span style="color:#f92672">[</span>3<span style="color:#f92672">]</span>&gt; install Danga::Socket
-cpan<span style="color:#f92672">[</span>4<span style="color:#f92672">]</span>&gt; install IO::AIO
-cpan<span style="color:#f92672">[</span>5<span style="color:#f92672">]</span>&gt; install IO::WrapTie
-cpan<span style="color:#f92672">[</span>6<span style="color:#f92672">]</span>&gt; install DBI
-cpan<span style="color:#f92672">[</span>7<span style="color:#f92672">]</span>&gt; install DBD::mysql
-cpan<span style="color:#f92672">[</span>8<span style="color:#f92672">]</span>&gt; install Perlbal
-</code></pre></div><h2 id="mogilefsのインストール">MogileFSのインストール</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo apt-get install build-essential mysql-server-5.1 libmysqlclient16-dev
+</span></span></code></pre></div><p>次にMogileFSのインストールに必要なライブラリをCPANでインストールします。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ sudo cpan
+</span></span><span style="display:flex;"><span>cpan<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>&gt; install YAML
+</span></span><span style="display:flex;"><span>capn<span style="color:#f92672">[</span>2<span style="color:#f92672">]</span>&gt; install Net::Netmask
+</span></span><span style="display:flex;"><span>cpan<span style="color:#f92672">[</span>3<span style="color:#f92672">]</span>&gt; install Danga::Socket
+</span></span><span style="display:flex;"><span>cpan<span style="color:#f92672">[</span>4<span style="color:#f92672">]</span>&gt; install IO::AIO
+</span></span><span style="display:flex;"><span>cpan<span style="color:#f92672">[</span>5<span style="color:#f92672">]</span>&gt; install IO::WrapTie
+</span></span><span style="display:flex;"><span>cpan<span style="color:#f92672">[</span>6<span style="color:#f92672">]</span>&gt; install DBI
+</span></span><span style="display:flex;"><span>cpan<span style="color:#f92672">[</span>7<span style="color:#f92672">]</span>&gt; install DBD::mysql
+</span></span><span style="display:flex;"><span>cpan<span style="color:#f92672">[</span>8<span style="color:#f92672">]</span>&gt; install Perlbal
+</span></span></code></pre></div><h2 id="mogilefsのインストール">MogileFSのインストール<a hidden class="anchor" aria-hidden="true" href="#mogilefsのインストール">#</a></h2>
 <p>MogileFS-Clientのソースをダウンロード、展開、インストールします。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ cd /usr/local/src
-$ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Client-1.14.tar.gz
-$ sudo tar zxvf sudo tar zxvf MogileFS-Client-1.14.tar.gz
-$ cd MogileFS-Client-1.14/
-$ sudo perl Makefile.PL
-$ sudo make
-$ sudo make install
-</code></pre></div><p>MogileFS-Utilsのソースをダウンロード、展開、インストールします。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ cd /usr/local/src
-$ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Utils-2.19.tar.gz
-$ sudo tar zxvf MogileFS-Utils-2.19.tar.gz
-$ cd MogileFS-Utils-2.19/
-$ sudo perl Makefile.PL
-$ sudo make
-$ sudo make install
-</code></pre></div><p>MogileFS-Serverのソースをダウンロード、展開、インストールします。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ cd /usr/local/src
-$ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Server-2.46.tar.gz
-$ sudo tar zxvf MogileFS-Server-2.46.tar.gz
-$ cd MogileFS-Server-2.46/
-$ sudo perl Makefile.PL
-$ sudo make
-$ sudo make install
-</code></pre></div><h2 id="mogilefsの初期設定">MogileFSの初期設定</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ cd /usr/local/src
+</span></span><span style="display:flex;"><span>$ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Client-1.14.tar.gz
+</span></span><span style="display:flex;"><span>$ sudo tar zxvf sudo tar zxvf MogileFS-Client-1.14.tar.gz
+</span></span><span style="display:flex;"><span>$ cd MogileFS-Client-1.14/
+</span></span><span style="display:flex;"><span>$ sudo perl Makefile.PL
+</span></span><span style="display:flex;"><span>$ sudo make
+</span></span><span style="display:flex;"><span>$ sudo make install
+</span></span></code></pre></div><p>MogileFS-Utilsのソースをダウンロード、展開、インストールします。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ cd /usr/local/src
+</span></span><span style="display:flex;"><span>$ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Utils-2.19.tar.gz
+</span></span><span style="display:flex;"><span>$ sudo tar zxvf MogileFS-Utils-2.19.tar.gz
+</span></span><span style="display:flex;"><span>$ cd MogileFS-Utils-2.19/
+</span></span><span style="display:flex;"><span>$ sudo perl Makefile.PL
+</span></span><span style="display:flex;"><span>$ sudo make
+</span></span><span style="display:flex;"><span>$ sudo make install
+</span></span></code></pre></div><p>MogileFS-Serverのソースをダウンロード、展開、インストールします。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ cd /usr/local/src
+</span></span><span style="display:flex;"><span>$ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Server-2.46.tar.gz
+</span></span><span style="display:flex;"><span>$ sudo tar zxvf MogileFS-Server-2.46.tar.gz
+</span></span><span style="display:flex;"><span>$ cd MogileFS-Server-2.46/
+</span></span><span style="display:flex;"><span>$ sudo perl Makefile.PL
+</span></span><span style="display:flex;"><span>$ sudo make
+</span></span><span style="display:flex;"><span>$ sudo make install
+</span></span></code></pre></div><h2 id="mogilefsの初期設定">MogileFSの初期設定<a hidden class="anchor" aria-hidden="true" href="#mogilefsの初期設定">#</a></h2>
 <p>DBにスキーマを作成します。一発でDB、ユーザーを作成してくれるコマンドがあるので利用します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">mogdbsetup --dbrootuser<span style="color:#f92672">=</span>root --dbrootpass<span style="color:#f92672">=</span>hogehoge --dbuser<span style="color:#f92672">=</span>mogilefs --dbpass<span style="color:#f92672">=</span>mogilefs --yes
-</code></pre></div><h3 id="trackerの設定mogilefsd">Trackerの設定（mogilefsd）</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mogdbsetup --dbrootuser<span style="color:#f92672">=</span>root --dbrootpass<span style="color:#f92672">=</span>hogehoge --dbuser<span style="color:#f92672">=</span>mogilefs --dbpass<span style="color:#f92672">=</span>mogilefs --yes
+</span></span></code></pre></div><h3 id="trackerの設定mogilefsd">Trackerの設定（mogilefsd）<a hidden class="anchor" aria-hidden="true" href="#trackerの設定mogilefsd">#</a></h3>
 <p>デフォルトだと /etc/mogilefs/mogilefsd.conf を読みに行きます。特に変更する必要も無いのでデフォルトのままいきます。変更したい場合は -c で指定出来ます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ sudo mkdir /etc/mogilefs
-</code></pre></div><p>/etc/mogilefs/mogilefsd.conf は<a href="http://www.sixapart.jp/techtalk/2006/10/dev_mogilefs_install.html">このページを参考</a>にして次のようにしました。</p>
-<pre><code class="language-conf" data-lang="conf">daemonize = 1
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ sudo mkdir /etc/mogilefs
+</span></span></code></pre></div><p>/etc/mogilefs/mogilefsd.conf は<a href="http://www.sixapart.jp/techtalk/2006/10/dev_mogilefs_install.html">このページを参考</a>にして次のようにしました。</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">daemonize = 1
 db_dsn = DBI:mysql:mogilefs:host=127.0.0.1
 db_user = mogilefs
 db_pass = mogilefs
 conf_port = 7001
 listener_jobs = 10
 </code></pre><p>Trackerは root ユーザーでは実行出来ませんので 専用のユーザーを作ってあげる必要があります。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">sudo useradd -s /bin/false mogilefs
-sudo -u mogilefs mogilefsd
-</code></pre></div><p>psコマンドで起動しているか確認。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ ps ax | grep mogilefsd
-<span style="color:#ae81ff">11160</span> ?        S      0:00 mogilefsd
-<span style="color:#ae81ff">11161</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>replicate<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11162</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>delete<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11163</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11164</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11165</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11166</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11167</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11168</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11169</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11170</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11171</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11172</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11173</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>monitor<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11174</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>reaper<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11175</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>job_master<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11176</span> ?        SN     0:00 mogilefsd <span style="color:#f92672">[</span>fsck<span style="color:#f92672">]</span>
-</code></pre></div><h3 id="storage-nodeの設定mogstored">Storage nodeの設定（mogstored）</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo useradd -s /bin/false mogilefs
+</span></span><span style="display:flex;"><span>sudo -u mogilefs mogilefsd
+</span></span></code></pre></div><p>psコマンドで起動しているか確認。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ ps ax | grep mogilefsd
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11160</span> ?        S      0:00 mogilefsd
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11161</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>replicate<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11162</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>delete<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11163</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11164</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11165</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11166</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11167</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11168</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11169</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11170</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11171</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11172</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>queryworker<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11173</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>monitor<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11174</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>reaper<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11175</span> ?        S      0:00 mogilefsd <span style="color:#f92672">[</span>job_master<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11176</span> ?        SN     0:00 mogilefsd <span style="color:#f92672">[</span>fsck<span style="color:#f92672">]</span>
+</span></span></code></pre></div><h3 id="storage-nodeの設定mogstored">Storage nodeの設定（mogstored）<a hidden class="anchor" aria-hidden="true" href="#storage-nodeの設定mogstored">#</a></h3>
 <p>デフォルトだと /etc/mogilefs/mogstored.conf を読みに行きます。Trackerと同様、変更したい場合は -c で指定出来ます。</p>
-<pre><code class="language-conf" data-lang="conf">httplisten = 0.0.0.0:7500
+<pre tabindex="0"><code class="language-conf" data-lang="conf">httplisten = 0.0.0.0:7500
 mgmtlisten = 0.0.0.0:7501
 docroot = /var/mogdata
 </code></pre><p>/etc/mogilefs/mogstored.conf で指定したdocrootのディレクトリを作成します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">sudo mkdir /var/mogdata
-</code></pre></div><p>Trackerとは違いStorage nodeは root ユーザーで起動させます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ sudo mogstored -d
-$ ps ax | grep mogstored
-<span style="color:#ae81ff">11209</span> ?        Ss     0:00 mogstored
-<span style="color:#ae81ff">11210</span> ?        S      0:00 mogstored <span style="color:#f92672">[</span>diskusage<span style="color:#f92672">]</span>
-<span style="color:#ae81ff">11211</span> ?        S      0:00 mogstored <span style="color:#f92672">[</span>iostat<span style="color:#f92672">]</span>
-</code></pre></div><h2 id="storage-node-の登録">Storage node の登録</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo mkdir /var/mogdata
+</span></span></code></pre></div><p>Trackerとは違いStorage nodeは root ユーザーで起動させます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ sudo mogstored -d
+</span></span><span style="display:flex;"><span>$ ps ax | grep mogstored
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11209</span> ?        Ss     0:00 mogstored
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11210</span> ?        S      0:00 mogstored <span style="color:#f92672">[</span>diskusage<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11211</span> ?        S      0:00 mogstored <span style="color:#f92672">[</span>iostat<span style="color:#f92672">]</span>
+</span></span></code></pre></div><h2 id="storage-node-の登録">Storage node の登録<a hidden class="anchor" aria-hidden="true" href="#storage-node-の登録">#</a></h2>
 <p>上記インストール・初期設定が終われば、あとはmogadmコマンドを使用して設定していくことが出来ます。</p>
 <p>Trackerが正常に動作しているか確認。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ mogadm check
-Checking trackers...
-  127.0.0.1:7001 ... OK
- 
-Checking hosts...
-No devices found on tracker<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>.
-</code></pre></div><p>TrackerはOKと出ていますが、Checking hosts…ではNo devicesと出てしまっていますので、mogadm host add で Storage node を登録します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ mogadm host add localhost --port<span style="color:#f92672">=</span><span style="color:#ae81ff">7500</span>
-$ mogadm check
-Checking trackers...
-  127.0.0.1:7001 ... OK
- 
-Checking hosts...
-  <span style="color:#f92672">[</span> 1<span style="color:#f92672">]</span> localhost ... skipping; status <span style="color:#f92672">=</span> down
-No devices found on tracker<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>.
-</code></pre></div><h2 id="deviceの登録">Deviceの登録</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ mogadm device add localhost <span style="color:#ae81ff">1</span>
-$ mogadm device add localhost <span style="color:#ae81ff">2</span>
-$ sudo mkdir /var/mogdata/<span style="color:#f92672">{</span>dev1,dev2<span style="color:#f92672">}</span>
-$ mogadm device list
-localhost <span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>: down
-                   used<span style="color:#f92672">(</span>G<span style="color:#f92672">)</span> free<span style="color:#f92672">(</span>G<span style="color:#f92672">)</span> total<span style="color:#f92672">(</span>G<span style="color:#f92672">)</span>
-  dev1: down       0.000   0.000   0.000  
-  dev2: down       0.000   0.000   0.000
-</code></pre></div><p>downとなっているので有効にしてあげます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ mogadm host mark localhost alive
-$ mogadm check
-Checking trackers...
-  127.0.0.1:7001 ... OK
- 
-Checking hosts...
-  <span style="color:#f92672">[</span> 1<span style="color:#f92672">]</span> localhost ... OK
- 
-Checking devices...
-  host device         size<span style="color:#f92672">(</span>G<span style="color:#f92672">)</span>    used<span style="color:#f92672">(</span>G<span style="color:#f92672">)</span>    free<span style="color:#f92672">(</span>G<span style="color:#f92672">)</span>   use%   ob state   I/O%
-  ---- ------------ ---------- ---------- ---------- ------ ---------- -----
-  <span style="color:#f92672">[</span> 1<span style="color:#f92672">]</span> dev1             7.109      1.066      6.042  15.00%  writeable   0.0
-  <span style="color:#f92672">[</span> 1<span style="color:#f92672">]</span> dev2             7.109      1.066      6.042  15.00%  writeable   0.0
-  ---- ------------ ---------- ---------- ---------- ------
-             total:    14.217      2.132     12.085  15.00%
-</code></pre></div><p>これでようやくMogileFSが使用可能になりました！</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ mogadm check
+</span></span><span style="display:flex;"><span>Checking trackers...
+</span></span><span style="display:flex;"><span>  127.0.0.1:7001 ... OK
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Checking hosts...
+</span></span><span style="display:flex;"><span>No devices found on tracker<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>.
+</span></span></code></pre></div><p>TrackerはOKと出ていますが、Checking hosts…ではNo devicesと出てしまっていますので、mogadm host add で Storage node を登録します。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ mogadm host add localhost --port<span style="color:#f92672">=</span><span style="color:#ae81ff">7500</span>
+</span></span><span style="display:flex;"><span>$ mogadm check
+</span></span><span style="display:flex;"><span>Checking trackers...
+</span></span><span style="display:flex;"><span>  127.0.0.1:7001 ... OK
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Checking hosts...
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">[</span> 1<span style="color:#f92672">]</span> localhost ... skipping; status <span style="color:#f92672">=</span> down
+</span></span><span style="display:flex;"><span>No devices found on tracker<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>.
+</span></span></code></pre></div><h2 id="deviceの登録">Deviceの登録<a hidden class="anchor" aria-hidden="true" href="#deviceの登録">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ mogadm device add localhost <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>$ mogadm device add localhost <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>$ sudo mkdir /var/mogdata/<span style="color:#f92672">{</span>dev1,dev2<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>$ mogadm device list
+</span></span><span style="display:flex;"><span>localhost <span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>: down
+</span></span><span style="display:flex;"><span>                   used<span style="color:#f92672">(</span>G<span style="color:#f92672">)</span> free<span style="color:#f92672">(</span>G<span style="color:#f92672">)</span> total<span style="color:#f92672">(</span>G<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  dev1: down       0.000   0.000   0.000  
+</span></span><span style="display:flex;"><span>  dev2: down       0.000   0.000   0.000
+</span></span></code></pre></div><p>downとなっているので有効にしてあげます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ mogadm host mark localhost alive
+</span></span><span style="display:flex;"><span>$ mogadm check
+</span></span><span style="display:flex;"><span>Checking trackers...
+</span></span><span style="display:flex;"><span>  127.0.0.1:7001 ... OK
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Checking hosts...
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">[</span> 1<span style="color:#f92672">]</span> localhost ... OK
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Checking devices...
+</span></span><span style="display:flex;"><span>  host device         size<span style="color:#f92672">(</span>G<span style="color:#f92672">)</span>    used<span style="color:#f92672">(</span>G<span style="color:#f92672">)</span>    free<span style="color:#f92672">(</span>G<span style="color:#f92672">)</span>   use%   ob state   I/O%
+</span></span><span style="display:flex;"><span>  ---- ------------ ---------- ---------- ---------- ------ ---------- -----
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">[</span> 1<span style="color:#f92672">]</span> dev1             7.109      1.066      6.042  15.00%  writeable   0.0
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">[</span> 1<span style="color:#f92672">]</span> dev2             7.109      1.066      6.042  15.00%  writeable   0.0
+</span></span><span style="display:flex;"><span>  ---- ------------ ---------- ---------- ---------- ------
+</span></span><span style="display:flex;"><span>             total:    14.217      2.132     12.085  15.00%
+</span></span></code></pre></div><p>これでようやくMogileFSが使用可能になりました！</p>
 <p>MogileFSのクライアントはPerl以外でも出ていますので、分散ストレージとして色々使い道があるのではないでしょうか。私の会社ではRailsアプリの画像ストレージとして利用しています。</p>
 
 
-
-
-      
-        <div class="blog-tags">
-          
-            <a href="https://blog.dakatsuka.jp/tags/ubuntu.html">Ubuntu</a
-            >&nbsp;
-          
-            <a href="https://blog.dakatsuka.jp/tags/mogilefs.html">MogileFS</a
-            >&nbsp;
-          
-        </div>
-      
-    </article>
-    
-    
-      
-
-    
   </div>
 
-    <footer>
-  
-  <div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://blog.dakatsuka.jp/tags/ubuntu.html">Ubuntu</a></li>
+      <li><a href="https://blog.dakatsuka.jp/tags/mogilefs.html">MogileFS</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
     
-      <a href="https://twitter.com/d_akatsuka" name="twitter"
-        ><em class="fab fa-twitter"></em
-      ></a>
-    
-      <a href="https://github.com/dakatsuka" name="github"
-        ><em class="fab fa-github"></em
-      ></a>
-    
-  </div>
-
-
-  <div class="container">
-    <p class="credits copyright">
-      <a href="https://blog.dakatsuka.jp/about">Dai Akatsuka</a>
-      &nbsp;&copy;
-      2021
-      
-        &nbsp;/&nbsp;
-        <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a>
-      
-      &nbsp;&ndash;&nbsp;
-      <em class="fas fa-moon" id="dark-mode-toggle"></em>
-    </p>
-
-    <p class="credits theme-by">
-       <a href="https://gohugo.io">Hugo</a>&nbsp;
-      
-      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
-    </p>
-  </div>
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
 </footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
 
-  </body>
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
 </html>

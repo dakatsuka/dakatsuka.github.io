@@ -4,13 +4,10 @@
     <title>Backbone.js on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/backbone.js.html</link>
     <description>Recent content in Backbone.js on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Thu, 13 Sep 2012 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/backbone.js/index.xml" rel="self" type="application/rss+xml" />
@@ -21,59 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2012/09/13/rails-backbone-intro.html</guid>
       <description>最近Backbone.jsを触っています。Backbone.jsをRailsで使いたいならパッケージで導入してしまうのが一番簡単でしょう。 G</description>
-      <content:encoded>&lt;p&gt;最近Backbone.jsを触っています。Backbone.jsをRailsで使いたいならパッケージで導入してしまうのが一番簡単でしょう。&lt;/p&gt;
-&lt;p&gt;Gemfileにrails-backboneを追加して&lt;code&gt;bundle install&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;source &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;https://rubygems.org&amp;#39;&lt;/span&gt;
- 
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rails&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;3.2.8&amp;#39;&lt;/span&gt;
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;mysql2&amp;#39;&lt;/span&gt;
- 
-group &lt;span style=&#34;color:#e6db74&#34;&gt;:assets&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;jquery-rails&amp;#39;&lt;/span&gt;
-gem &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rails-backbone&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# &amp;lt;- 追加&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Backbone.jsを組み込みます。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ bundle exec rails g backbone:install
-      insert  app/assets/javascripts/application.js
-      create  app/assets/javascripts/backbone/routers
-      create  app/assets/javascripts/backbone/routers/.gitkeep
-      create  app/assets/javascripts/backbone/models
-      create  app/assets/javascripts/backbone/models/.gitkeep
-      create  app/assets/javascripts/backbone/views
-      create  app/assets/javascripts/backbone/views/.gitkeep
-      create  app/assets/javascripts/backbone/templates
-      create  app/assets/javascripts/backbone/templates/.gitkeep
-      create  app/assets/javascripts/backbone/app.js.coffee
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;app/assets/javascript/application.js は以下のように変更されます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require jquery
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require jquery_ujs
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require underscore
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require backbone
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require backbone_rails_sync
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require backbone_datalink
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require backbone/app
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//= require_tree .
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;この下から2行目、ファイルでは app/assets/javascript/backbone/app.js.coffee が各モデル・ビュー・テンプレートなどを読み込むようになっています（ファイル名はRailsアプリと同じ名前になります）&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-coffee&#34; data-lang=&#34;coffee&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#= require_self
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#= require_tree ./templates
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#= require_tree ./models
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#= require_tree ./views
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#= require_tree ./routers
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt; 
-window.App =
-  Models: {}
-  Collections: {}
-  Routers: {}
-  Views: {}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;rails-backboneのお作法は（scaffoldで生成されたコードをみる限り）モデル・ビュー・ルーターをディレクトリに分けて管理するようです。そしてその構造がそのまま名前空間になります。&lt;/p&gt;
-&lt;p&gt;例えばUserモデルなら app/assets/javascript/backbone/models/user.js.coffee にファイルを作り、下記のようなコードを書いていきます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-coffee&#34; data-lang=&#34;coffee&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;App&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Models&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Backbone&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Model&lt;/span&gt;
-  url: &lt;span style=&#34;color:#a6e22e&#34;&gt;-&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/api/users/&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@id&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;アプリ名が長いと若干タイプが面倒かなーって印象ですが、まぁ app/* と同じ感覚で作れるのでRails慣れしてる人は違和感なく使えそうです。&lt;/p&gt;
-</content:encoded>
     </item>
     
   </channel>

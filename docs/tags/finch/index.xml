@@ -4,13 +4,10 @@
     <title>Finch on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/finch.html</link>
     <description>Recent content in Finch on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Tue, 15 Dec 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/finch/index.xml" rel="self" type="application/rss+xml" />
@@ -21,82 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html</guid>
       <description>下準備としてパッケージオブジェクトあたりに以下のおまじないを書いておく1 この時点ですでに面倒だ！ import com.twitter.util.Future import scalaz._ import Scalaz._ implicit def FutureFunctor: Functor[Future] = new Functor[Future] { def map[A, B](f: Future[A])(map: A =&amp;gt; B): Future[B]</description>
-      <content:encoded>&lt;p&gt;下準備としてパッケージオブジェクトあたりに以下のおまじないを書いておく&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; この時点ですでに面倒だ！&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; com.twitter.util.Future
-&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; scalaz._
-&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; Scalaz._
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;implicit&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FutureFunctor&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Functor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Future&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Functor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Future&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; map&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;A&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;B&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;](&lt;/span&gt;f&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Future&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;A&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;])(&lt;/span&gt;map&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;A&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; B&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Future&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;B&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; f&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;map&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;_&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;implicit&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FutureMonad&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Monad&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Future&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Monad&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Future&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; point&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;A&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;](&lt;/span&gt;a&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; A&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Future&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;value&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; bind&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;A&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;B&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;](&lt;/span&gt;f&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Future&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;A&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;])(&lt;/span&gt;fmap&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;A&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Future&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;B&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;])&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; f&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;flatMap&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;fmap&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;_&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ReaderTFuture&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;A&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;B&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ReaderT&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Future&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;A&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;B&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;object&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ReaderTFuture&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;KleisliInstances&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;KleisliFunctions&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; apply&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;A&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;B&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;](&lt;/span&gt;f&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;A&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Future&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;B&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;])&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ReaderTFuture&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;A&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;B&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; kleisli&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;f&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://blog.dakatsuka.jp/2015/12/07/finch.html&#34;&gt;Finch + MySQLでREST APIサーバを構築する&lt;/a&gt;で書いたUserがimplicit parameterを使ってClientを受け取っているので、これをReaderTに置き換えてみた。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; com.twitter.finagle.exp.mysql._
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;id&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Long&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; email&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; screen_name&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;object&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; find&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;id&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Long&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ReaderTFuture&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Client&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;Option&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ReaderTFuture&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt; client &lt;span style=&#34;color:#66d9ef&#34;&gt;=&amp;gt;&lt;/span&gt;
-    client&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;prepare&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;SELECT * FROM users WHERE id = ?&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)(&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; map &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt; result &lt;span style=&#34;color:#66d9ef&#34;&gt;=&amp;gt;&lt;/span&gt;
-      result&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;asInstanceOf&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;ResultSet&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;].&lt;/span&gt;rows&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;convertToEntity&lt;span style=&#34;color:#f92672&#34;&gt;).&lt;/span&gt;headOption
-    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; create&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;email&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; screen_name&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ReaderTFuture&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Client&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;Long&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ReaderTFuture&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt; client &lt;span style=&#34;color:#66d9ef&#34;&gt;=&amp;gt;&lt;/span&gt;
-    client&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;prepare&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;INSERT INTO users (email, screen_name) VALUES(?, ?)&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)(&lt;/span&gt;email&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; screen_name&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; map &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt; result &lt;span style=&#34;color:#66d9ef&#34;&gt;=&amp;gt;&lt;/span&gt;
-      result&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;asInstanceOf&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;OK&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;].&lt;/span&gt;insertId
-    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; convertToEntity&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;row&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Row&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LongValue&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; row&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;).&lt;/span&gt;get
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;StringValue&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;email&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;       &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; row&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;email&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;).&lt;/span&gt;get
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;StringValue&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;screen_name&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; row&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;screen_name&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;).&lt;/span&gt;get
-
-    &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; email&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; screen_name&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;こんな感じで使うことができる。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; client &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Mysql&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;client
-  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;withCredentials&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;user&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;password&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;withDatabase&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;database&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;newRichClient&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;127.0.0.1:3306&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-  id   &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;create&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;user1@example.com&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;user1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-  user &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;yield&lt;/span&gt; user &lt;span style=&#34;color:#66d9ef&#34;&gt;match&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Some&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;v&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Created&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;v&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;NotFound&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Exception&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;xxxxx&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;}).&lt;/span&gt;run&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;client&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上記のように&lt;code&gt;.run&lt;/code&gt;でまとめて渡すことも出来るし&lt;code&gt;val user = User.find(id)(client)&lt;/code&gt;と直接渡すことも出来るので、使いやすいほうを選べば良さそう。&lt;/p&gt;
-&lt;h3 id=&#34;参考文献&#34;&gt;参考文献&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://eed3si9n.com/learning-scalaz/ja/Monad-transformers.html&#34;&gt;独習 Scalaz — モナド変換子&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://tlync.hateblo.jp/entry/2013/12/12/023135&#34;&gt;Scala における Repository の実装パターンを考える -模索篇- - sandbox&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://tlync.hateblo.jp/entry/2014/09/19/181608&#34;&gt;Scala で IO コンテキストの共有を implicit 以外で解決する方法 (0) - sandbox&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://qiita.com/pab_tech/items/1c0bdbc8a61949891f1f&#34;&gt;Scalaにおける最適なDependency Injectionの方法を考察する 〜なぜドワンゴアカウントシステムの生産性は高いのか〜 - Qiita&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://adtech.cyberagent.io/scalablog/2015/01/16/readermonad4di/&#34;&gt;【Scala Days 2014】The Reader Monad for Dependency Injection を解説してみた | Scala Tech Blog&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
-&lt;p&gt;FutureをFunctorとMonadの型クラスのインスタンスにしておく必要がある。ReaderTではなくReader使う場合は不要。 &lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/section&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -106,40 +27,6 @@
       
       <guid>https://blog.dakatsuka.jp/2015/12/13/finch-endpoint-test.html</guid>
       <description>Finchはエンドポイントを作るときに戻り値を型で縛れるので、正常系のレスポンスに関してはコンパイラを信用して大丈夫だろう。ただし、ステータ</description>
-      <content:encoded>&lt;p&gt;Finchはエンドポイントを作るときに戻り値を型で縛れるので、正常系のレスポンスに関してはコンパイラを信用して大丈夫だろう。ただし、ステータスコードまでは検証出来ないので、リクエストパラメータによってステータスコードが変わる場合などはしっかりとテストを書いておきたい。&lt;/p&gt;
-&lt;p&gt;FinchのEndpoint型はtoService関数で&lt;code&gt;com.twitter.finagle.Service&lt;/code&gt;型に変わり、これにRequestを渡せばResponse型が返ってくるらしい。REPLで確認してみた。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;scala&amp;gt; import io.finch._
-import io.finch._
-
-scala&amp;gt; import com.twitter.finagle.http._
-import com.twitter.finagle.http._
-
-scala&amp;gt; import com.twitter.util.Await
-import com.twitter.util.Await
-
-scala&amp;gt; val endpoint: Endpoint[String] = get(&amp;quot;foo&amp;quot; / string) { s: String =&amp;gt; Ok(s) }
-endpoint: io.finch.Endpoint[String] = GET /foo/:string
-
-scala&amp;gt; val service = endpoint.toService
-service: com.twitter.finagle.Service[com.twitter.finagle.http.Request,com.twitter.finagle.http.Response] = &amp;lt;function1&amp;gt;
-
-scala&amp;gt; service(Request(&amp;quot;/foo/bar&amp;quot;))
-res0: com.twitter.util.Future[com.twitter.finagle.http.Response] = Promise@886121853(state=Done(Return(Response(&amp;quot;HTTP/1.1 Status(200)&amp;quot;))))
-
-scala&amp;gt; val response = Await.result(service(Request(&amp;quot;/foo/bar&amp;quot;)))
-response: com.twitter.finagle.http.Response = Response(&amp;quot;HTTP/1.1 Status(200)&amp;quot;)
-
-scala&amp;gt; response.status
-res1: com.twitter.finagle.http.Status = Status(200)
-
-scala&amp;gt; response.contentString
-res2: String = bar
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ちゃんと返ってきた。問題なさそう。&lt;/p&gt;
-&lt;h3 id=&#34;参考文献&#34;&gt;参考文献&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/finagle/finch/blob/4bf3de4/core/src/test/scala/io/finch/EndToEndSpec.scala&#34;&gt;finch/EndToEndSpec.scala · finagle/finch&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -149,168 +36,6 @@ res2: String = bar
       
       <guid>https://blog.dakatsuka.jp/2015/12/07/finch.html</guid>
       <description>これはScala Advent Calendar 2015（Adventar版）7日目です。6日目はHiroyuki-NagataさんのScalatraとnon-bloc</description>
-      <content:encoded>&lt;p&gt;これは&lt;a href=&#34;http://www.adventar.org/calendars/904&#34;&gt;Scala Advent Calendar 2015（Adventar版）&lt;/a&gt;7日目です。6日目はHiroyuki-Nagataさんの&lt;a href=&#34;http://nantonaku-shiawase.hatenablog.com/entry/2015/12/06/003259&#34;&gt;Scalatraとnon-blocking APIについてメモ - なんとな～くしあわせ？の日記&lt;/a&gt;でした。&lt;/p&gt;
-&lt;p&gt;さて、7日目は&lt;a href=&#34;https://github.com/finagle/finch&#34;&gt;Finch&lt;/a&gt;というFinagleラッパーを紹介しようと思います。よくあるSinatraライクなマイクロフレームワークのひとつです。Hello Wordをブラウザに出力してはい終わりというのも味気ないので、MySQLに接続してレコードを取り出したり登録出来るところまで持っていきます。&lt;/p&gt;
-&lt;h2 id=&#34;はじめに&#34;&gt;はじめに&lt;/h2&gt;
-&lt;p&gt;今回は以下のエンドポイントを作ることにします（更新と削除は面倒になったので無し！ごめんなさい）&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;GET  /users
-GET  /users/:id
-POST /users
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;コードを書く前にMySQLにテーブルを作っておきましょう。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;CREATE&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;TABLE&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;`&lt;/span&gt;users&lt;span style=&#34;color:#f92672&#34;&gt;`&lt;/span&gt; (
-  &lt;span style=&#34;color:#f92672&#34;&gt;`&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;`&lt;/span&gt;          BIGINT       &lt;span style=&#34;color:#66d9ef&#34;&gt;NOT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;NULL&lt;/span&gt; AUTO_INCREMENT,
-  &lt;span style=&#34;color:#f92672&#34;&gt;`&lt;/span&gt;email&lt;span style=&#34;color:#f92672&#34;&gt;`&lt;/span&gt;       VARCHAR(&lt;span style=&#34;color:#ae81ff&#34;&gt;255&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;NOT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;NULL&lt;/span&gt;,
-  &lt;span style=&#34;color:#f92672&#34;&gt;`&lt;/span&gt;screen_name&lt;span style=&#34;color:#f92672&#34;&gt;`&lt;/span&gt; VARCHAR(&lt;span style=&#34;color:#ae81ff&#34;&gt;255&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;NOT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;NULL&lt;/span&gt;,
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;PRIMARY&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;KEY&lt;/span&gt; (&lt;span style=&#34;color:#f92672&#34;&gt;`&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;`&lt;/span&gt;)
-) ENGINE&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;InnoDB;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;依存関係&#34;&gt;依存関係&lt;/h2&gt;
-&lt;p&gt;開発版の0.9.2-SNAPSHOTを利用します。またMySQLに繋ぐためにfinagle-mysqlも入れます。&lt;/p&gt;
-&lt;p&gt;build.sbtは下記のようになります。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;name &lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;finchtest&amp;#34;&lt;/span&gt;
-
-version &lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;0.1.0&amp;#34;&lt;/span&gt;
-
-scalaVersion &lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.11.7&amp;#34;&lt;/span&gt;
-
-resolvers &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Resolver&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sonatypeRepo&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;snapshots&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-
-libraryDependencies &lt;span style=&#34;color:#f92672&#34;&gt;++=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
-  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;com.twitter&amp;#34;&lt;/span&gt;         &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;finagle-mysql&amp;#34;&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;6.30.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
-  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;com.github.finagle&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;finch-core&amp;#34;&lt;/span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;0.9.2-SNAPSHOT&amp;#34;&lt;/span&gt; changing&lt;span style=&#34;color:#f92672&#34;&gt;(),&lt;/span&gt;
-  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;com.github.finagle&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;finch-argonaut&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;0.9.2-SNAPSHOT&amp;#34;&lt;/span&gt; changing&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;実装&#34;&gt;実装&lt;/h2&gt;
-&lt;p&gt;日本語の情報がほとんどないことや公式のドキュメントがやや分かりづらいことを除けば&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;Finch自体の使いかたはそんなに難しくないです。Finchよりもfinagle-mysqlの使いかたを調べるのに苦労したのは内緒です。&lt;/p&gt;
-&lt;p&gt;今回はDBのCRUD操作をする&lt;code&gt;User.scala&lt;/code&gt;と&lt;code&gt;Main.scala&lt;/code&gt;の2ファイル書きました。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;package&lt;/span&gt; jp.dakatsuka.finch
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; argonaut.Argonaut._
-&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; argonaut.CodecJson
-&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; com.twitter.finagle.exp.mysql._
-&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; com.twitter.util.Future
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;id&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Long&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; email&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; screen_name&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;object&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;implicit&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; userCodec&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;CodecJson&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt;
-    casecodec3&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;apply&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;unapply&lt;span style=&#34;color:#f92672&#34;&gt;)(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;email&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;screen_name&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; all&lt;span style=&#34;color:#f92672&#34;&gt;()(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;implicit&lt;/span&gt; client&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Client&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Future&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt;
-    client&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;select&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;SELECT * FROM users&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)(&lt;/span&gt;convertToEntity&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; find&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;id&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Long&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;implicit&lt;/span&gt; client&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Client&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Future&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Option&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt;
-    client&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;prepare&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;SELECT * FROM users WHERE id = ?&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)(&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; map &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt; result &lt;span style=&#34;color:#66d9ef&#34;&gt;=&amp;gt;&lt;/span&gt;
-      result&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;asInstanceOf&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;ResultSet&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;].&lt;/span&gt;rows&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;convertToEntity&lt;span style=&#34;color:#f92672&#34;&gt;).&lt;/span&gt;headOption
-    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; create&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;email&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; screen_name&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;implicit&lt;/span&gt; client&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Client&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Future&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Long&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt;
-    client&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;prepare&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;INSERT INTO users (email, screen_name) VALUES(?, ?)&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)(&lt;/span&gt;email&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; screen_name&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; map &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt; result &lt;span style=&#34;color:#66d9ef&#34;&gt;=&amp;gt;&lt;/span&gt;
-      result&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;asInstanceOf&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;OK&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;].&lt;/span&gt;insertId
-    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; convertToEntity&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;row&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Row&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LongValue&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; row&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;).&lt;/span&gt;get
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;StringValue&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;email&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;       &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; row&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;email&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;).&lt;/span&gt;get
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;StringValue&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;screen_name&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; row&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;screen_name&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;).&lt;/span&gt;get
-
-    &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; email&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; screen_name&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-scala&#34; data-lang=&#34;scala&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;package&lt;/span&gt; jp.dakatsuka.finch
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; com.twitter.finagle.Http
-&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; com.twitter.finagle.exp.Mysql
-&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; com.twitter.util.Await
-&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; io.finch._
-&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; io.finch.argonaut._
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;object&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Main&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;implicit&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; client &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Mysql&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;client
-    &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;withCredentials&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;user&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;password&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;withDatabase&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;database&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;newRichClient&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;127.0.0.1:3306&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;UserParams&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;email&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; screen_name&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; userParams&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;RequestReader&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;UserParams&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-    email &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;lt;-&lt;/span&gt; param&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;email&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-    screen_name &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;lt;-&lt;/span&gt; param&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;screen_name&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;yield&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;UserParams&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;email&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; screen_name&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; listUser&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Endpoint&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; get&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;users&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#a6e22e&#34;&gt;Ok&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;all&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; showUser&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Endpoint&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; get&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;users&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; long&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt; id&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Long&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;).&lt;/span&gt;map &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Some&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;user&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Ok&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;user&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;NotFound&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Exception&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Record Not Found&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; createUser&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Endpoint&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; post&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;users&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;?&lt;/span&gt; userParams&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt; p&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;UserParams&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-      id   &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;create&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;p&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;email&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; p&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;screen_name&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-      user &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;id&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;yield&lt;/span&gt; user&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; map &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Some&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;user&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Created&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;user&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;NotFound&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Exception&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Record Not Found&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; userService &lt;span style=&#34;color:#66d9ef&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;listUser &lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;+:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;showUser&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;:+:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;createUser&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;).&lt;/span&gt;toService
-
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; main&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;args&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Array&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;])&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Unit&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#a6e22e&#34;&gt;Await&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ready&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Http&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;serve&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;:8080&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; userService&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;動かしてみよう&#34;&gt;動かしてみよう&lt;/h2&gt;
-&lt;p&gt;いつものコマンドでサーバが起動します。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sbt run
-[info] Set current project to finchtest (in build file:/path/to/project/)
-[info] Compiling 1 Scala source to /path/to/project/target/scala-2.11/classes...
-[info] Running jp.dakatsuka.finch.Main
-12 05, 2015 11:30:49 午後 com.twitter.finagle.Init$$anonfun$1 apply$mcV$sp
-情報: Finagle version 6.30.0 (rev=745578b931893c432e51da623287144e548cc489) built at 20151015-163818
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;curlでリクエストを送ってみましょう。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ curl http://localhost:8080/users
-[]
-
-$ curl http://localhost:8080/users/1
-Record Not Found
-
-$ curl -X POST http://localhost:8080/users
-Required param &#39;email&#39; not present in the request.
-
-$ curl -X POST -d &amp;quot;email=user1@example.com&amp;quot; http://localhost:8080/users
-Required param &#39;screen_name&#39; not present in the request.
-
-$ curl -X POST -d &amp;quot;email=user1@example.com&amp;quot; -d &amp;quot;screen_name=user1&amp;quot; http://localhost:8080/users
-{&amp;quot;id&amp;quot;:1,&amp;quot;email&amp;quot;:&amp;quot;user1@example.com&amp;quot;,&amp;quot;screen_name&amp;quot;:&amp;quot;user1&amp;quot;}
-
-$ curl -X POST -d &amp;quot;email=user2@example.com&amp;quot; -d &amp;quot;screen_name=user2&amp;quot; http://localhost:8080/users
-{&amp;quot;id&amp;quot;:2,&amp;quot;email&amp;quot;:&amp;quot;user2@example.com&amp;quot;,&amp;quot;screen_name&amp;quot;:&amp;quot;user2&amp;quot;}
-
-$ curl http://localhost:8080/users
-[{&amp;quot;id&amp;quot;:1,&amp;quot;email&amp;quot;:&amp;quot;user1@example.com&amp;quot;,&amp;quot;screen_name&amp;quot;:&amp;quot;user1&amp;quot;},{&amp;quot;id&amp;quot;:2,&amp;quot;email&amp;quot;:&amp;quot;user2@example.com&amp;quot;,&amp;quot;screen_name&amp;quot;:&amp;quot;user2&amp;quot;}]
-
-$ curl http://localhost:8080/users/1
-{&amp;quot;id&amp;quot;:1,&amp;quot;email&amp;quot;:&amp;quot;user1@example.com&amp;quot;,&amp;quot;screen_name&amp;quot;:&amp;quot;user1&amp;quot;}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;期待通りの動きですね 😏&lt;/p&gt;
-&lt;h2 id=&#34;まとめ&#34;&gt;まとめ&lt;/h2&gt;
-&lt;p&gt;Finchはいかがでしたか？&lt;/p&gt;
-&lt;p&gt;Finagleのエコシステムの上に乗っているので、Finagleに慣れている人がサクッとREST APIを実装するには良い選択肢だと思います。finagle-*なライブラリも当然使えます。Finagle使ったことない人にも、静的型付けの恩恵を受けながらSinatraライクに開発出来るというのは魅力的に映るかもしれませんね。&lt;/p&gt;
-&lt;p&gt;個人的にはエンドポイントの戻り値が型で保証出来るのが高ポイントです！&lt;/p&gt;
-&lt;p&gt;ちなみに、似たようなフレームワークとして&lt;a href=&#34;https://twitter.github.io/finagle/&#34;&gt;Finagle&lt;/a&gt;, &lt;a href=&#34;http://doc.akka.io/docs/akka-stream-and-http-experimental/2.0-M2/scala/http/&#34;&gt;Akka HTTP&lt;/a&gt;, &lt;a href=&#34;http://www.scalatra.org/&#34;&gt;Scalatra&lt;/a&gt;, &lt;a href=&#34;http://http4s.org/&#34;&gt;http4s&lt;/a&gt;などがあります。http4sは&lt;a href=&#34;https://blog.dakatsuka.jp/2015/11/14/http4s.html&#34;&gt;ScalaのHTTPインターフェース http4s 超入門&lt;/a&gt;で雑に紹介しているので、興味ある方はどうぞ。&lt;/p&gt;
-&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
-&lt;p&gt;Scalaライブラリにはよくあることなので頑張って貢献したい… &lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/section&gt;
-</content:encoded>
     </item>
     
   </channel>

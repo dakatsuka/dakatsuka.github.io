@@ -4,13 +4,10 @@
     <title>Monolog on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/monolog.html</link>
     <description>Recent content in Monolog on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Fri, 18 Oct 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/monolog/index.xml" rel="self" type="application/rss+xml" />
@@ -21,62 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2013/10/18/monolog-fluentd.html</guid>
       <description>Symfony2にも採用されているMonologは、HandlerやFormatterを差し替えることでログの出力先やフォーマットを自由に変</description>
-      <content:encoded>&lt;p&gt;Symfony2にも採用されているMonologは、HandlerやFormatterを差し替えることでログの出力先やフォーマットを自由に変更することが出来ます。PSR3に準拠しているライブラリですので、今後デファクトスタンダードになっていく気がします。&lt;/p&gt;
-&lt;p&gt;デフォルトだとStreamHandlerを使って出力されますが、Handlerを自作してFluentdに出力されるように変更してみます。バックエンドにはfluent-logger-phpを利用しました。&lt;/p&gt;
-&lt;p&gt;MonologのHandlerはAbstractProcessingHandlerを継承して作ります。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\Handler&lt;/span&gt;;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Fluent\Logger\FluentLogger&lt;/span&gt;;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Monolog\Handler\AbstractProcessingHandler&lt;/span&gt;;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Monolog\Logger&lt;/span&gt;;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FluentHandler&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AbstractProcessingHandler&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $logger;
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; __construct(
-        $logger &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;,
-        $host   &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FluentLogger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;DEFAULT_ADDRESS&lt;/span&gt;,
-        $port   &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FluentLogger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;DEFAULT_LISTEN_PORT&lt;/span&gt;,
-        $level  &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Logger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;DEBUG&lt;/span&gt;,
-        $bubble &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
-    )
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;parent&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;__construct&lt;/span&gt;($level, $bubble);
- 
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;is_null&lt;/span&gt;($logger)) {
-            $logger &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FluentLogger&lt;/span&gt;($host, $port);
-        }
- 
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;logger&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $logger;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;write&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;array&lt;/span&gt; $record)
-    {
-        $tag  &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $record[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;channel&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt; $record[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;message&amp;#39;&lt;/span&gt;];
-        $data &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $record[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;context&amp;#39;&lt;/span&gt;];
-        $data[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;level&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Logger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getLevelName&lt;/span&gt;($record[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;level&amp;#39;&lt;/span&gt;]);
- 
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;post&lt;/span&gt;($tag, $data);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使い方&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\Handler\FluentHandler&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Monolog\Logger&lt;/span&gt;;
- 
-$logger &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Logger&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;test&amp;#39;&lt;/span&gt;);
-$logger&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;pushHandler&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FluentHandler&lt;/span&gt;());
- 
-$logger&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;debug&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;example.monolog&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;array&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;foo&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;bar&amp;#39;&lt;/span&gt;));
-$logger&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;info&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;example.fluentd&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;array&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;fizz&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;buzz&amp;#39;&lt;/span&gt;));
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;利用しやすいようにGitHubとPackagistに公開しておきました。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/dakatsuka/MonologFluentHandler&#34;&gt;dakatsuka/MonologFluentHandler&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://packagist.org/packages/dakatsuka/monolog-fluent-handler&#34;&gt;dakatsuka/monolog-fluent-handler&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
     </item>
     
   </channel>

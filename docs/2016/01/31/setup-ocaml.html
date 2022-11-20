@@ -1,186 +1,221 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8" />
+<html lang="ja" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
 <title>OCamlの開発環境を整えた | dakatsuka&#39;s blog</title>
+<meta name="keywords" content="OCaml">
+<meta name="description" content="本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で">
+<meta name="author" content="Dai Akatsuka">
+<link rel="canonical" href="https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.bc1149f4a72aa4858d3a9f71462f75e5884ffe8073ea9d6d5761d5663d651e20.css" integrity="sha256-vBFJ9KcqpIWNOp9xRi915YhP/oBz6p1tV2HVZj1lHiA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
 
-  
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45923728-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-45923728-1');
-  </script>
-  
+            .list {
+                background: var(--theme);
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  href="https://blog.dakatsuka.jp/index.xml"
-  title="dakatsuka&#39;s blog"
-/>
-
-<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
-<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
-<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
-<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
-<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
-<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
-<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
-<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-<link rel="manifest" href="/manifest.json" />
-<meta name="msapplication-TileColor" content="#ffffff" />
-<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-<meta name="theme-color" content="#ffffff" />
-
-<meta property="og:title" content="OCamlの開発環境を整えた" />
+    </style>
+</noscript>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-45923728-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script><meta property="og:title" content="OCamlの開発環境を整えた" />
 <meta property="og:description" content="本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html" />
-<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/>
+<meta property="og:url" content="https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2016-01-31T00:00:00+00:00" />
 <meta property="article:modified_time" content="2016-01-31T00:00:00+00:00" />
 
-
 <meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
+
+<meta name="twitter:title" content="OCamlの開発環境を整えた"/>
+<meta name="twitter:description" content="本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
 
-<link rel="stylesheet" href="https://blog.dakatsuka.jp/fontawesome/css/all.min.css" />
-<link
-  id="dark-mode-theme"
-  rel="stylesheet"
-  href="https://blog.dakatsuka.jp/css/dark.css"
-/>
 
-<script>
-  var darkTheme = document.getElementById('dark-mode-theme')
-  var storedTheme = localStorage.getItem('dark-mode-storage')
-  if (storedTheme === 'dark') {
-    darkTheme.disabled = false
-  } else if (storedTheme === 'light') {
-    darkTheme.disabled = true
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "OCamlの開発環境を整えた",
+      "item": "https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "OCamlの開発環境を整えた",
+  "name": "OCamlの開発環境を整えた",
+  "description": "本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で",
+  "keywords": [
+    "OCaml"
+  ],
+  "articleBody": "本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で開発環境を整えてみた。\nまずシステムにOcamlとOPAMをインストールする。2016年1月時点ではOCaml 4.02.3が入った。\n$ sudo add-apt-repository ppa:avsm/ppa $ sudo apt-get update $ sudo apt-get install ocaml ocaml-native-compilers camlp4-extra opam m4 git mercurial darcs バージョンを確認。\n$ ocaml -version The OCaml toplevel, version 4.02.3 $ opam --version 1.2.2 OPAMを使うためには初期化が必要。このコマンドを実行すると ~/.opam が作られる。\n$ opam init 初期化が終わると下記メッセージが出てくるので指示に従う。\n1. To configure OPAM in the current shell session, you need to run: eval `opam config env` 2. To correctly configure OPAM for subsequent use, add the following line to your profile file (for instance ~/.profile): . /home/vagrant/.opam/opam-init/init.sh \u003e /dev/null 2\u003e /dev/null || true 3. To avoid issues related to non-system installations of `ocamlfind` add the following lines to ~/.ocamlinit (create it if necessary): let () = try Topdirs.dir_directory (Sys.getenv \"OCAML_TOPLEVEL_PATH\") with Not_found -\u003e () ;; システムワイドにインストールされたOcaml環境はクリーンに保っておきたいので、開発用に新しい環境を用意しよう。opam switchコマンドで環境の作成や切り替えなどが行える。OPAMはパッケージ管理と環境管理がセットになったものと思っておけば良いだろう 1\n$ opam switch install dev --alias-of 4.02.3 OCamlのソースコードをダウンロードしてきてコンパイルまでやってくれる。少し時間がかかるが、昨今のPCなら数分程度で終わるはず。\n=-=- Installing compiler 4.02.3 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= [default.comp] http://caml.inria.fr/pub/distrib/ocaml-4.02/ocaml-4.02.3.tar.gz downloaded Now compiling OCaml. This may take a while, please bear with us... Done. =-=- Gathering sources =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= =-=- Processing actions -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ∗ installed base-bigarray.base ∗ installed base-ocamlbuild.base ∗ installed base-threads.base ∗ installed base-unix.base Done. # To setup the new switch in the current shell, you need to run: eval `opam config env` evalして環境を適用する。ocamlコマンドやopamコマンドのパスが変わっていることが確認できる。\n$ eval `opam config env` $ which ocaml /home/vagrant/.opam/dev/bin/ocaml VimやEmacsなどのエディタで補完を有効にするためにmerlinというライブラリを入れる。\n$ opam install merlin .vimrc に下記コードを追加すれば .merlin ファイルの存在するプロジェクトではオムニ補完が働くようになる。このファイルに依存するパッケージやモジュールを指定しないと駄目なのでちょっと面倒くさい。\nsyntax on filetype plugin on let g:opamshare = substitute(system('opam config var share'),'\\n$','','''') execute \"set rtp+=\" . g:opamshare . \"/merlin/vim\" あとはutopやoasisなどをOPAMでインストールしておけば開発に取り掛かれると思う。なお、utopで日本語の扱いが残念なので~/.ocamlinitファイルを作って下記コードを書いておくと良い。\nlet printer ppf = Format.fprintf ppf \"\\\"%s\\\"\";; #install_printer printer RubyでいうところのGem + Bundler + rbenvがひとつのコマンドに集約された感じ ↩︎\n",
+  "wordCount" : "969",
+  "inLanguage": "ja",
+  "datePublished": "2016-01-31T00:00:00Z",
+  "dateModified": "2016-01-31T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Dai Akatsuka"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "dakatsuka's blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blog.dakatsuka.jp/favicon.ico"
+    }
   }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
 </script>
 
-<script src="https://blog.dakatsuka.jp/js/bundle.js"></script>
-<script src="https://blog.dakatsuka.jp/js/instantpage.min.js" type="module" defer></script>
-
-  <link rel="stylesheet" href="https://blog.dakatsuka.jp/css/override.css" />
-
-<meta name="generator" content="Hugo 0.80.0-DEV" />
-
-
-  </head>
-  <body>
-    
-  
-
-
-
-
-  <header>
-    <nav class="navbar">
-  <div class="nav">
-    
-      <a href="https://blog.dakatsuka.jp/" class="nav-logo">
-        <img
-          src="https://blog.dakatsuka.jp/images/logo.png"
-          width="80"
-          height="80"
-          alt="logo"
-        />
-      </a>
-    
-
-    <ul class="nav-links">
-      
-        
-          <li>
-            <a href="/about.html" id="About"
-              ><em class="fas fa-user fa-lg"></em
-            ></a>
-          </li>
-          
-      
-        
-          <li>
-            <a href="/tags.html" id="Tags"
-              ><em class="fas fa-tag fa-lg"></em
-            ></a>
-          </li>
-          
-      
-        
-          <li>
-            <a href="/archives.html" id="Archives"
-              ><em class="fas fa-archive fa-lg"></em
-            ></a>
-          </li>
-          
-      
-    </ul>
-  </div>
-</nav>
-
-    <div class="intro-header">
-      <div class="container">
-        <div class="post-heading">
-          
-            <h1>
-              OCamlの開発環境を整えた
-            </h1>
-          
-          
-            <span class="meta-post">
-  <em class="fa fa-calendar-alt"></em
-  >&nbsp;Jan 31, 2016
-  
-    &nbsp;&nbsp;&nbsp;<em class="fa fa-folder-open"></em>&nbsp;
-    
-      <a href="https://blog.dakatsuka.jp/categories/programming.html">Programming</a
-      >&nbsp;
-    
-  
-</span>
-
-          
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://blog.dakatsuka.jp/" accesskey="h" title="dakatsuka&#39;s blog (Alt + H)">dakatsuka&#39;s blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
         </div>
-      </div>
-    </div>
-  </header>
-  
+        <ul id="menu">
+            <li>
+                <a href="https://blog.dakatsuka.jp/about.html" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.dakatsuka.jp/archives.html" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://blog.dakatsuka.jp/tags.html" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
 
+<article class="post-single">
+  <header class="post-header">
     
-  <div class="container" role="main">
-    <article class="article" class="blog-post">
-      
-  <p>本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で開発環境を整えてみた。</p>
+    <h1 class="post-title">
+      OCamlの開発環境を整えた
+    </h1>
+    <div class="post-meta"><span title='2016-01-31 00:00:00 +0000 UTC'>2016/1/31</span>&nbsp;·&nbsp;Dai Akatsuka
+
+</div>
+  </header> 
+  <div class="post-content"><p>本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で開発環境を整えてみた。</p>
 <p>まずシステムにOcamlとOPAMをインストールする。2016年1月時点ではOCaml 4.02.3が入った。</p>
-<pre><code>$ sudo add-apt-repository ppa:avsm/ppa
+<pre tabindex="0"><code>$ sudo add-apt-repository ppa:avsm/ppa
 $ sudo apt-get update
 $ sudo apt-get install ocaml ocaml-native-compilers camlp4-extra opam m4 git mercurial darcs
 </code></pre><p>バージョンを確認。</p>
-<pre><code>$ ocaml -version
+<pre tabindex="0"><code>$ ocaml -version
 The OCaml toplevel, version 4.02.3
 
 $ opam --version
 1.2.2
 </code></pre><p>OPAMを使うためには初期化が必要。このコマンドを実行すると <code>~/.opam</code> が作られる。</p>
-<pre><code>$ opam init
+<pre tabindex="0"><code>$ opam init
 </code></pre><p>初期化が終わると下記メッセージが出てくるので指示に従う。</p>
-<pre><code>1. To configure OPAM in the current shell session, you need to run:
+<pre tabindex="0"><code>1. To configure OPAM in the current shell session, you need to run:
 
       eval `opam config env`
 
@@ -193,13 +228,13 @@ $ opam --version
    add the following lines to ~/.ocamlinit (create it if necessary):
 
       let () =
-        try Topdirs.dir_directory (Sys.getenv &quot;OCAML_TOPLEVEL_PATH&quot;)
+        try Topdirs.dir_directory (Sys.getenv &#34;OCAML_TOPLEVEL_PATH&#34;)
         with Not_found -&gt; ()
       ;;
 </code></pre><p>システムワイドにインストールされたOcaml環境はクリーンに保っておきたいので、開発用に新しい環境を用意しよう。<code>opam switch</code>コマンドで環境の作成や切り替えなどが行える。OPAMはパッケージ管理と環境管理がセットになったものと思っておけば良いだろう <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
-<pre><code>$ opam switch install dev --alias-of 4.02.3
+<pre tabindex="0"><code>$ opam switch install dev --alias-of 4.02.3
 </code></pre><p>OCamlのソースコードをダウンロードしてきてコンパイルまでやってくれる。少し時間がかかるが、昨今のPCなら数分程度で終わるはず。</p>
-<pre><code>=-=- Installing compiler 4.02.3 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+<pre tabindex="0"><code>=-=- Installing compiler 4.02.3 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 [default.comp] http://caml.inria.fr/pub/distrib/ocaml-4.02/ocaml-4.02.3.tar.gz downloaded
 Now compiling OCaml. This may take a while, please bear with us...
 Done.
@@ -215,83 +250,108 @@ Done.
 # To setup the new switch in the current shell, you need to run:
 eval `opam config env`
 </code></pre><p>evalして環境を適用する。ocamlコマンドやopamコマンドのパスが変わっていることが確認できる。</p>
-<pre><code>$ eval `opam config env`
+<pre tabindex="0"><code>$ eval `opam config env`
 $ which ocaml
 /home/vagrant/.opam/dev/bin/ocaml
 </code></pre><p>VimやEmacsなどのエディタで補完を有効にするためにmerlinというライブラリを入れる。</p>
-<pre><code>$ opam install merlin
+<pre tabindex="0"><code>$ opam install merlin
 </code></pre><p><code>.vimrc</code> に下記コードを追加すれば <code>.merlin</code> ファイルの存在するプロジェクトではオムニ補完が働くようになる。このファイルに依存するパッケージやモジュールを指定しないと駄目なのでちょっと面倒くさい。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#a6e22e">syntax</span> <span style="color:#a6e22e">on</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">filetype</span> <span style="color:#a6e22e">plugin</span> <span style="color:#a6e22e">on</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">g</span>:<span style="color:#a6e22e">opamshare</span> = <span style="color:#a6e22e">substitute</span>(<span style="color:#a6e22e">system</span>(<span style="color:#e6db74">&#39;opam config var share&#39;</span>),<span style="color:#e6db74">&#39;\n$&#39;</span>,<span style="color:#e6db74">&#39;&#39;</span>,<span style="color:#e6db74">&#39;&#39;&#39;&#39;</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">execute</span> <span style="color:#e6db74">&#34;set rtp+=&#34;</span> . <span style="color:#a6e22e">g</span>:<span style="color:#a6e22e">opamshare</span> . <span style="color:#e6db74">&#34;/merlin/vim&#34;</span><span style="color:#960050;background-color:#1e0010">
-</span></code></pre></div><p>あとはutopやoasisなどをOPAMでインストールしておけば開発に取り掛かれると思う。なお、utopで日本語の扱いが残念なので<code>~/.ocamlinit</code>ファイルを作って下記コードを書いておくと良い。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ocaml" data-lang="ocaml"><span style="color:#66d9ef">let</span> printer ppf <span style="color:#f92672">=</span> Format.fprintf ppf <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">%s</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">;;</span>
-<span style="color:#f92672">#</span>install_printer printer
-</code></pre></div><section class="footnotes" role="doc-endnotes">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#a6e22e">syntax</span> <span style="color:#a6e22e">on</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">filetype</span> <span style="color:#a6e22e">plugin</span> <span style="color:#a6e22e">on</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">g</span>:<span style="color:#a6e22e">opamshare</span> = <span style="color:#a6e22e">substitute</span>(<span style="color:#a6e22e">system</span>(<span style="color:#e6db74">&#39;opam config var share&#39;</span>),<span style="color:#e6db74">&#39;\n$&#39;</span>,<span style="color:#e6db74">&#39;&#39;</span>,<span style="color:#e6db74">&#39;&#39;&#39;&#39;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">execute</span> <span style="color:#e6db74">&#34;set rtp+=&#34;</span> . <span style="color:#a6e22e">g</span>:<span style="color:#a6e22e">opamshare</span> . <span style="color:#e6db74">&#34;/merlin/vim&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>あとはutopやoasisなどをOPAMでインストールしておけば開発に取り掛かれると思う。なお、utopで日本語の扱いが残念なので<code>~/.ocamlinit</code>ファイルを作って下記コードを書いておくと良い。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ocaml" data-lang="ocaml"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> printer ppf <span style="color:#f92672">=</span> Format.fprintf ppf <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">%s</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">#</span>install_printer printer
+</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn:1" role="doc-endnote">
-<p>RubyでいうところのGem + Bundler + rbenvがひとつのコマンドに集約された感じ <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<li id="fn:1">
+<p>RubyでいうところのGem + Bundler + rbenvがひとつのコマンドに集約された感じ&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section>
+</div>
 
 
-
-
-      
-        <div class="blog-tags">
-          
-            <a href="https://blog.dakatsuka.jp/tags/ocaml.html">OCaml</a
-            >&nbsp;
-          
-        </div>
-      
-    </article>
-    
-    
-      
-
-    
   </div>
 
-    <footer>
-  
-  <div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://blog.dakatsuka.jp/tags/ocaml.html">OCaml</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
     
-      <a href="https://twitter.com/d_akatsuka" name="twitter"
-        ><em class="fab fa-twitter"></em
-      ></a>
-    
-      <a href="https://github.com/dakatsuka" name="github"
-        ><em class="fab fa-github"></em
-      ></a>
-    
-  </div>
-
-
-  <div class="container">
-    <p class="credits copyright">
-      <a href="https://blog.dakatsuka.jp/about">Dai Akatsuka</a>
-      &nbsp;&copy;
-      2021
-      
-        &nbsp;/&nbsp;
-        <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a>
-      
-      &nbsp;&ndash;&nbsp;
-      <em class="fas fa-moon" id="dark-mode-toggle"></em>
-    </p>
-
-    <p class="credits theme-by">
-       <a href="https://gohugo.io">Hugo</a>&nbsp;
-      
-      <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
-    </p>
-  </div>
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
 </footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
 
-  </body>
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
 </html>

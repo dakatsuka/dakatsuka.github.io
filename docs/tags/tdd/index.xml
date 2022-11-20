@@ -4,13 +4,10 @@
     <title>TDD on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/tdd.html</link>
     <description>Recent content in TDD on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Mon, 26 Sep 2011 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/tdd/index.xml" rel="self" type="application/rss+xml" />
@@ -21,37 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2011/09/26/vows-setup-teardown.html</guid>
       <description>Vowsの場合、前処理はtopic内で行い、後処理はteardownを使用します。RSpecの after(:all) の動作に近い感じです。 vows .describe(&amp;#34;Hoge&amp;#34;) .addBatch &amp;#39;a instance&amp;#39;: # 前処理 topic: -&amp;gt;</description>
-      <content:encoded>&lt;p&gt;Vowsの場合、前処理はtopic内で行い、後処理はteardownを使用します。RSpecの after(:all) の動作に近い感じです。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-coffee&#34; data-lang=&#34;coffee&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;vows&lt;/span&gt;
-  .&lt;span style=&#34;color:#a6e22e&#34;&gt;describe&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hoge&amp;#34;&lt;/span&gt;)
-  .&lt;span style=&#34;color:#a6e22e&#34;&gt;addBatch&lt;/span&gt;
-    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;a instance&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;
-      &lt;span style=&#34;color:#75715e&#34;&gt;# 前処理
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      topic: &lt;span style=&#34;color:#a6e22e&#34;&gt;-&amp;gt;&lt;/span&gt;
- 
-      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;should hogehoge&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;(topic) -&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#a6e22e&#34;&gt;assert&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;ok&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;topic&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;hogehoge&lt;/span&gt;
- 
-      &lt;span style=&#34;color:#75715e&#34;&gt;# 後処理
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      teardown: &lt;span style=&#34;color:#a6e22e&#34;&gt;(topic) -&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;また、別のアプローチでaddBatchを利用する事も出来そうです。addBatchは順に実行されるので、前処理・後処理というよりは、一番最初・最後に実施したいテストなどがある場合に有効かもしれません。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-coffee&#34; data-lang=&#34;coffee&#34;&gt;suite = &lt;span style=&#34;color:#a6e22e&#34;&gt;vows&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;describe&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hoge&amp;#34;&lt;/span&gt;)
-&lt;span style=&#34;color:#a6e22e&#34;&gt;suite&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;addBatch&lt;/span&gt;
-  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;first test&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;
-    topic: &lt;span style=&#34;color:#a6e22e&#34;&gt;-&amp;gt;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#a6e22e&#34;&gt;suite&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;addBatch&lt;/span&gt;
-  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;second test&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;
-    topic: &lt;span style=&#34;color:#a6e22e&#34;&gt;-&amp;gt;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#a6e22e&#34;&gt;suite&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;addBatch&lt;/span&gt;
-  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;last test&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;
-    topic: &lt;span style=&#34;color:#a6e22e&#34;&gt;-&amp;gt;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#a6e22e&#34;&gt;suite&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;module&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;del&gt;※ addBatch は、バッチごとにグローバルスコープが独立していますので、グローバルスコープに影響が出る処理（console.log をモック化する時など）に最適かも。&lt;/del&gt;&lt;/p&gt;
-&lt;p&gt;どうもそうでは無いようです…&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -61,190 +27,6 @@
       
       <guid>https://blog.dakatsuka.jp/2011/09/21/nodejs-tdd.html</guid>
       <description>Node.jsで使えるTDD, BDDフレームワークはいくつかあるのですが（nodeunit, Jasmine, etc）コールバック・イベント周りのテストのし</description>
-      <content:encoded>&lt;p&gt;Node.jsで使えるTDD, BDDフレームワークはいくつかあるのですが（nodeunit, Jasmine, etc）コールバック・イベント周りのテストのしやすさとCoffeeScriptが利用出来る &lt;a href=&#34;http://vowsjs.org/&#34;&gt;Vows&lt;/a&gt; が非常に熱い感じです。&lt;/p&gt;
-&lt;p&gt;特にテストコードをCoffeeScriptで（別途コンパイルせずに）そのまま記述出来るのは、テストコードの可読性を考えると大きなメリットだと思います。&lt;/p&gt;
-&lt;h2 id=&#34;vowsのインストール&#34;&gt;Vowsのインストール&lt;/h2&gt;
-&lt;p&gt;VowsはNode Package Manager（npm）でインストールする事が出来ます。vowsコマンドを有効にするためにカレントディレクトリの node_modules の他にグローバルにも入れておきましょう。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;npm install vows
-npm install -g vows
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;vowsを使った開発手順&#34;&gt;Vowsを使った開発手順&lt;/h2&gt;
-&lt;p&gt;サンプルとして自分のフルネームを返す事しか出来ないPersonクラスを実装してみます。まずはVowsでテストを書きます。今回は単機能なので下記コードを一気に書きました。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-coffee&#34; data-lang=&#34;coffee&#34;&gt;vows   = &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;vows&amp;#39;&lt;/span&gt;)
-assert = &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;assert&amp;#39;&lt;/span&gt;)
-Person = &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;./person&amp;#39;&lt;/span&gt;)
- 
-&lt;span style=&#34;color:#a6e22e&#34;&gt;vows&lt;/span&gt;
-  .&lt;span style=&#34;color:#a6e22e&#34;&gt;describe&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Person&amp;#39;&lt;/span&gt;)
-  .&lt;span style=&#34;color:#a6e22e&#34;&gt;addBatch&lt;/span&gt;
- 
-    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;a instance&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;
-      topic: &lt;span style=&#34;color:#a6e22e&#34;&gt;-&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Person&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Nobita&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Nobi&amp;#34;&lt;/span&gt;)
- 
-      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;should return full name&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;(topic) -&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#a6e22e&#34;&gt;assert&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;equal&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;topic&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;name&lt;/span&gt;(), &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Nobita Nobi&amp;#34;&lt;/span&gt;
- 
-  .&lt;span style=&#34;color:#a6e22e&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;module&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;この状態でテストを実行してみます。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ vows test-person.coffee --spec
- 
-node.js:205
-        throw e; // process.nextTick error, or &#39;error&#39; event on first tick
-              ^Error: Cannot find module &#39;./person&#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;そもそもテストの対象となるファイルが存在しないのでエラーになりますね。&lt;/p&gt;
-&lt;p&gt;次に person.coffee を作成します。ひとまず Person クラスを定義します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-coffee&#34; data-lang=&#34;coffee&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Person&lt;/span&gt;
- 
-module.exports = &lt;span style=&#34;color:#a6e22e&#34;&gt;Person&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;再度テストを実行してみます。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ vows test-person.coffee --spec
- 
-♢ Person
- 
-  a instance
-    ✗ should return full name
-    TypeError: Object &amp;lt;Person&amp;gt; has no method &#39;name&#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;エラーが出ました。nameメソッドが無いと怒っていますので作りましょう。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-coffee&#34; data-lang=&#34;coffee&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Person&lt;/span&gt;
-  name: &lt;span style=&#34;color:#a6e22e&#34;&gt;-&amp;gt;&lt;/span&gt;
- 
-module.exports = &lt;span style=&#34;color:#a6e22e&#34;&gt;Person&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;nameメソッドを定義したら再度テストを実行してみます。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ vows test-person.coffee --spec
- 
-♢ Person
- 
-  a instance
-    ✗ should return full name
-      » expected &#39;Nobita Nobi&#39;,
-        got      undefined (==) // vows.js:93
- 
-✗ Broken » 1 broken (0.004s)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ようやくテストが動作しました。が、nameメソッドには何も実装していないので勿論テストは通りません。後はテストが通るまでせっせとコードを書いていきましょう。&lt;/p&gt;
-&lt;p&gt;せっせと書いたコードはこちら。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-coffee&#34; data-lang=&#34;coffee&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Person&lt;/span&gt;
-  constructor: &lt;span style=&#34;color:#a6e22e&#34;&gt;(firstName, lastName) -&amp;gt;&lt;/span&gt;
-    @firstName = &lt;span style=&#34;color:#a6e22e&#34;&gt;firstName&lt;/span&gt;
-    @lastName  = &lt;span style=&#34;color:#a6e22e&#34;&gt;lastName&lt;/span&gt;
- 
-  name: &lt;span style=&#34;color:#a6e22e&#34;&gt;-&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@firstName&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@lastName&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
- 
-module.exports = &lt;span style=&#34;color:#a6e22e&#34;&gt;Person&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;テストを実行します。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ vows test-person.coffee --spec
- 
-♢ Person
- 
-  a instance
-    ✓ should return full name
- 
-✓ OK » 1 honored (0.002s)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;無事にグリーンになりました！&lt;/p&gt;
-&lt;p&gt;ところで、こんなしょぼいコードでもリファクタリングの余地が残されています。CoffeeScriptはコンストラクタの引数をそのままインスタンスのプロパティに割り当てる構文があるので、それに書き換えてみます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;  class Person
-&lt;span style=&#34;color:#a6e22e&#34;&gt;+   constructor: (@firstName, @lastName) -&amp;gt;
-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-     @firstName = firstName
-&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-     @lastName  = lastName
-&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt; 
-    name: -&amp;gt;
-      &amp;#34;#{@firstName} #{@lastName}&amp;#34;
- 
-  module.exports = Person
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;テストを実行。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ vows test-person.coffee --spec
- 
-♢ Person
- 
-  a instance
-    ✓ should return full name
- 
-✓ OK » 1 honored (0.002s)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;うむ。&lt;/p&gt;
-&lt;h2 id=&#34;vowsでモックスタブを使うには&#34;&gt;Vowsでモック・スタブを使うには&lt;/h2&gt;
-&lt;p&gt;Vowsでモック・スタブを使いたい場合は Sinon.JS を利用しましょう。Sinon.JS は Node Package Manager（npm）で入れる事が出来ます。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;npm install sinon
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;下記はモックを使った例。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-coffee&#34; data-lang=&#34;coffee&#34;&gt;vows   = &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;vows&amp;#39;&lt;/span&gt;)
-sinon  = &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;sinon&amp;#39;&lt;/span&gt;)
-assert = &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;assert&amp;#39;&lt;/span&gt;)
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Twitter&lt;/span&gt;
-  tweet: &lt;span style=&#34;color:#a6e22e&#34;&gt;(message) -&amp;gt;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Person&lt;/span&gt;
-  constructor: &lt;span style=&#34;color:#a6e22e&#34;&gt;(@twitter) -&amp;gt;&lt;/span&gt;
- 
-  tweet: &lt;span style=&#34;color:#a6e22e&#34;&gt;(message) -&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#a6e22e&#34;&gt;@twitter&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;tweet&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;message&lt;/span&gt;)
- 
-&lt;span style=&#34;color:#a6e22e&#34;&gt;vows&lt;/span&gt;
-  .&lt;span style=&#34;color:#a6e22e&#34;&gt;describe&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Person&amp;#39;&lt;/span&gt;)
-  .&lt;span style=&#34;color:#a6e22e&#34;&gt;addBatch&lt;/span&gt;
- 
-    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;when tweet message&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;
-      topic: &lt;span style=&#34;color:#a6e22e&#34;&gt;-&amp;gt;&lt;/span&gt;
-        twitter = &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Twitter&lt;/span&gt;()
-        twitterMock = &lt;span style=&#34;color:#a6e22e&#34;&gt;sinon&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;mock&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;twitter&lt;/span&gt;)
-        &lt;span style=&#34;color:#a6e22e&#34;&gt;twitterMock&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;expects&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;tweet&amp;#34;&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;once&lt;/span&gt;().&lt;span style=&#34;color:#a6e22e&#34;&gt;withArgs&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;)
- 
-        person = &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Person&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;twitter&lt;/span&gt;)
-        &lt;span style=&#34;color:#a6e22e&#34;&gt;person&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;tweet&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;)
- 
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;twitterMock&lt;/span&gt;
- 
-      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;should call twitter.tweet&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;(topic) -&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#a6e22e&#34;&gt;topic&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;verify&lt;/span&gt;()
- 
-  .&lt;span style=&#34;color:#a6e22e&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;module&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;vowsで非同期イベントのテストを行うには&#34;&gt;Vowsで非同期イベントのテストを行うには&lt;/h2&gt;
-&lt;p&gt;Vowsで非同期イベントのテストを行う場合、this.callbackとpromiseの2種類が用意されています。私は後者のプロミスのほうをよく利用していますので、ここではプロミスを使ったサンプルを掲載しておきます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-coffee&#34; data-lang=&#34;coffee&#34;&gt;vows   = &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;vows&amp;#39;&lt;/span&gt;)
-assert = &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;assert&amp;#39;&lt;/span&gt;)
-http   = &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;http&amp;#39;&lt;/span&gt;)
- 
-&lt;span style=&#34;color:#a6e22e&#34;&gt;vows&lt;/span&gt;
-  .&lt;span style=&#34;color:#a6e22e&#34;&gt;describe&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;http&amp;#39;&lt;/span&gt;)
-  .&lt;span style=&#34;color:#a6e22e&#34;&gt;addBatch&lt;/span&gt;
- 
-    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;GET google.co.jp&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;
-      topic: &lt;span style=&#34;color:#a6e22e&#34;&gt;-&amp;gt;&lt;/span&gt;
-        promise = &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;events&amp;#39;&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;EventEmitter&lt;/span&gt;)()
-        options =
-          host: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;www.google.co.jp&amp;#39;&lt;/span&gt;,
-          port: &lt;span style=&#34;color:#ae81ff&#34;&gt;80&lt;/span&gt;,
-          path: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;,
-          method: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;GET&amp;#39;&lt;/span&gt;,
-          headers:
-            &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Content-length&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
- 
-        req = &lt;span style=&#34;color:#a6e22e&#34;&gt;http&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;request&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;options&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;(res) -&amp;gt;&lt;/span&gt;
-          &lt;span style=&#34;color:#a6e22e&#34;&gt;res&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;setEncoding&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;utf8&amp;#39;&lt;/span&gt;)
-          &lt;span style=&#34;color:#a6e22e&#34;&gt;res&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;on&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;data&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;(chunk) -&amp;gt;&lt;/span&gt;
-            &lt;span style=&#34;color:#a6e22e&#34;&gt;promise&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;emit&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;success&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;chunk&lt;/span&gt;
- 
-        &lt;span style=&#34;color:#a6e22e&#34;&gt;req&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;end&lt;/span&gt;()
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;promise&lt;/span&gt;
- 
- 
-      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;should be received&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;(topic) -&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#a6e22e&#34;&gt;assert&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;ok&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;topic&lt;/span&gt;
- 
-  .&lt;span style=&#34;color:#a6e22e&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;module&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上記コードを見れば分かると思いますが、プロミスとはトピックの戻り値をEventEmitterにして、successイベントが発生すると各テストを実行していく仕組みです。うまくイベントが発生しなかった場合はcallback not firedというエラーが起きてテストに失敗します。&lt;/p&gt;
-&lt;p&gt;（非同期周りのテストはまた別の機会に…）&lt;/p&gt;
-&lt;h2 id=&#34;まとめ&#34;&gt;まとめ&lt;/h2&gt;
-&lt;p&gt;駆け足でVowsを紹介してみましたが如何でしょうか？Node.jsでのテストは面倒くさいという印象が強いですが（自分だけですかね…）JavaScriptは色々な書き方が出来て、油断するとコードが大変な事になったりするので是非テストは書いていきたいですね。&lt;/p&gt;
-&lt;p&gt;VowsはCoffeeScriptで書けるので、いちいちテストコードでhogehoge(function() { &amp;hellip; });とか書いてられない人にもお勧めです！&lt;/p&gt;
-&lt;h2 id=&#34;参考サイト&#34;&gt;参考サイト&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://vowsjs.org/&#34;&gt;Vows « Asynchronous BDD for Node&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://sinonjs.org/&#34;&gt;Sinon.JS – Versatile standalone test spies, stubs and mocks for JavaScript&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://d.hatena.ne.jp/koichik/20100918#1284804000&#34;&gt;Node.js 用のテスティングフレームワーク Vows&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://d.hatena.ne.jp/koichik/20100919#1284886800&#34;&gt;Node.js 用のテスティングフレームワーク Vows その 2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://d.hatena.ne.jp/koichik/20100920#1284937200&#34;&gt;Node.js 用のテスティングフレームワーク Vows その 3&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
     </item>
     
   </channel>

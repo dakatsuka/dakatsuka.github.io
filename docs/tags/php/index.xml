@@ -4,13 +4,10 @@
     <title>PHP on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/php.html</link>
     <description>Recent content in PHP on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Thu, 28 Aug 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/php/index.xml" rel="self" type="application/rss+xml" />
@@ -21,41 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2014/08/28/symfony2-subdomain.html</guid>
       <description>Symfony2では特定のBundleをサブドメインに切り出すことができる。正しくはBundle毎に任意のドメインを割り当てることができる。</description>
-      <content:encoded>&lt;p&gt;Symfony2では特定のBundleをサブドメインに切り出すことができる。正しくはBundle毎に任意のドメインを割り当てることができる。もちろん開発用のビルトインサーバでも使うことが可能。&lt;/p&gt;
-&lt;p&gt;将来的にサブドメインを使う想定があるならば、事前にBundleは分割しておくと良い。&lt;/p&gt;
-&lt;h2 id=&#34;example&#34;&gt;Example&lt;/h2&gt;
-&lt;p&gt;AcmeWebBundleは &lt;code&gt;www.example.com&lt;/code&gt; へ、AcmeSmartphoneBundleは &lt;code&gt;sp.example.com&lt;/code&gt; に割り当てるようにする。&lt;/p&gt;
-&lt;p&gt;まずapp/config/parameters.yml にドメインを書いておく。パラメータ名は自由に決められるが、今回は下記のようにした。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;parameters&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;acme.www.host&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;www.example.com&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;acme.smartphone.host&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;sp.example.com&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;app/config/routing.ymlでルーティングを下記のように設定する。通常のルーティングの設定にhost項目を増やすだけなので簡単ですね。どちらもprefixは &lt;code&gt;/&lt;/code&gt; にしておくこと。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;acme_web&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;resource&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;@AcmeWebBundle/Controller&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;type&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;annotation&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;prefix&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;/&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;host&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%acme.www.host%&amp;#34;&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;acme_smartphone&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;resource&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;@AcmeSmartphoneBundle/Controller&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;type&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;annotation&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;prefix&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;/&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;host&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%acme.smartphone.host%&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;これでAcmeWebBundleとAcmeSmartphoneBundle内のコントローラには指定したドメイン以外ではアクセス出来なくなる。また Twig の path 関数もよしなにやってくれる。ローカルで動作確認をしたい場合は/etc/hostsやDNSを書き換えて127.0.0.1に向けよう。&lt;/p&gt;
-&lt;p&gt;ただしローカル開発環境ではサブドメインではなくhttp://localhost:8000/sp/ でアクセス出来るようにしておくと開発しやすいケースもあると思うので、その場合は routing_dev.yml を次のようにする。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;_main&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;resource&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;routing.yml&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;acme_web&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;resource&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;@AcmeWebBundle/Controller&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;type&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;annotation&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;prefix&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;/&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;acme_smartphone&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;resource&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;@AcmeSmartphoneBundle/Controller&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;type&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;annotation&lt;/span&gt;
-    &lt;span style=&#34;color:#f92672&#34;&gt;prefix&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;/sp&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -65,23 +27,6 @@
       
       <guid>https://blog.dakatsuka.jp/2014/04/03/symfony2-travis-ci.html</guid>
       <description>.travis.ymlを下記のようにした。TravisはComposerもPHPUnitもパスが通った状態になっているため、ダウンロードする</description>
-      <content:encoded>&lt;p&gt;.travis.ymlを下記のようにした。TravisはComposerもPHPUnitもパスが通った状態になっているため、ダウンロードするスクリプトをわざわざ書く必要はない。&lt;/p&gt;
-&lt;p&gt;CIの結果をHipChatに通知したい場合はnotificationsで設定するだけで良い。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;language&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;php&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;php&lt;/span&gt;:
-  - &lt;span style=&#34;color:#ae81ff&#34;&gt;5.5&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;before_script&lt;/span&gt;:
-  - &lt;span style=&#34;color:#ae81ff&#34;&gt;composer install --dev&lt;/span&gt;
-  - &lt;span style=&#34;color:#ae81ff&#34;&gt;php app/console doctrine:database:create --env=test&lt;/span&gt;
-  - &lt;span style=&#34;color:#ae81ff&#34;&gt;php app/console doctrine:schema:create --env=test&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;script&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;phpunit -c app&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;notifications&lt;/span&gt;:
-  &lt;span style=&#34;color:#f92672&#34;&gt;hipchat&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;secret_token@room_name&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -91,64 +36,6 @@
       
       <guid>https://blog.dakatsuka.jp/2013/12/19/resolve-target-entity.html</guid>
       <description>Doctrine2のOneToManyやManyToManyのtargetEntityにはAbstract classやInterfaceを指</description>
-      <content:encoded>&lt;p&gt;Doctrine2の&lt;code&gt;OneToMany&lt;/code&gt;や&lt;code&gt;ManyToMany&lt;/code&gt;の&lt;code&gt;targetEntity&lt;/code&gt;にはAbstract classやInterfaceを指定することができる。&lt;a href=&#34;http://symfony.com/doc/current/cookbook/doctrine/resolve_target_entity.html&#34;&gt;普通にリファレンスには書いてある&lt;/a&gt;のだが、日本語の情報は無さそうだったので紹介。&lt;/p&gt;
-&lt;p&gt;CoreBundle:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\CoreBundle\Entity&lt;/span&gt;;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Doctrine\ORM\Mapping&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ORM&lt;/span&gt;;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\BlogBundle\Model\Article&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;BaseArticle&lt;/span&gt;;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\BlogBundle\Model\Comment&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;BaseComment&lt;/span&gt;;
-
-&lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * @ORM\Entity
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * @ORM\Table(name=&amp;#34;articles&amp;#34;)
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; */&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Article&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;BaseArticle&lt;/span&gt;
-{}
-
-&lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * @ORM\Entity
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * @ORM\Table(name=&amp;#34;comments&amp;#34;)
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; */&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Comment&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;BaseComment&lt;/span&gt;
-{}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;BlogBundle:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\BlogBundle\Model&lt;/span&gt;;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Doctrine\ORM\Mapping&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ORM&lt;/span&gt;;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Doctrine\Common\Collections\ArrayCollection&lt;/span&gt;;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ArticleInterface&lt;/span&gt; {}
-&lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;CommentInterface&lt;/span&gt; {}
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Article&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ArticleInterface&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @ORM\OneToMany(targetEntity=&amp;#34;Acme\BlogBundle\Model\CommentInterface&amp;#34;, mappedBy=&amp;#34;article&amp;#34;)
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @var ArrayCollection
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     */&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $comments;
-}
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Comment&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;CommentInterface&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @ORM\ManyToOne(targetEntity=&amp;#34;Acme\BlogBundle\Model\ArticleInterface&amp;#34;)
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @ORM\JoinColumn(name=&amp;#34;article_id&amp;#34;, referencedColumnName=&amp;#34;id&amp;#34;)
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @var ArticleInterface
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     */&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $article;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;app/config/config.yml でInterface（またはAbstract class）と実装したクラスをマッピングする:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;doctrine&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;orm&lt;/span&gt;:
-        &lt;span style=&#34;color:#f92672&#34;&gt;resolve_target_entities&lt;/span&gt;:
-            &lt;span style=&#34;color:#f92672&#34;&gt;Acme\BlogBundle\Model\ArticleInterface&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;Acme\CoreBundle\Entity\Article&lt;/span&gt;
-            &lt;span style=&#34;color:#f92672&#34;&gt;Acme\BlogBundle\Model\CommentInterface&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;Acme\CoreBundle\Entity\Comment&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使いこなせば抽象度の高い汎用的なBundleを作ることができそうですね。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -158,18 +45,6 @@
       
       <guid>https://blog.dakatsuka.jp/2013/12/07/install-php55-on-mavericks.html</guid>
       <description>MavericksにHomebrewを使ってPHP 5.5をインストールしようと思ったら次のようなエラーが出てきた。 configure: error: freetype.h not found. 対処法はHome</description>
-      <content:encoded>&lt;p&gt;MavericksにHomebrewを使ってPHP 5.5をインストールしようと思ったら次のようなエラーが出てきた。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;configure: error: freetype.h not found.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;対処法はHomebrewを更新してfreetypeを消せば良いようだ。同じMavericksでもMBAのほうではエラーが出なかったので、多分バグが混じったバージョンを踏んでしまったんだと思う。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ brew update
-$ brew upgrade
-$ brew unpin freetype &amp;amp;&amp;amp; brew unlink freetype &amp;amp;&amp;amp; brew rm freetype
-$ brew install php55
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;参考&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/josegonzalez/homebrew-php/issues/885&#34;&gt;error freetype.h not found installing php53 · Issue #885 · josegonzalez/homebrew-php&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -179,68 +54,6 @@ $ brew install php55
       
       <guid>https://blog.dakatsuka.jp/2013/12/05/symfony2-functional-test.html</guid>
       <description>前置き Symfony2を構成するサービスはほぼDIコンテナの上に乗っているので、ドメインとデータベース、フレームワークがそれぞれ疎結合になっ</description>
-      <content:encoded>&lt;h2 id=&#34;前置き&#34;&gt;前置き&lt;/h2&gt;
-&lt;p&gt;Symfony2を構成するサービスはほぼDIコンテナの上に乗っているので、ドメインとデータベース、フレームワークがそれぞれ疎結合になっています。そのため、ドメインのテストを行う際はフレームワークの読み込みやデータベースに接続する必要はありません。依存部分はモックに置き換えてしまえば良いわけです。&lt;/p&gt;
-&lt;p&gt;とはいえ、コントローラやサービスは実際にデータベースに接続してテストを行っておきたいのが人情。モックで置き換えているユニットテストだと動いたけど、結合してみたら動かない…なんてよくある話ですから。&lt;/p&gt;
-&lt;p&gt;そしてSymfony2にはWebTestCaseというテスト用のクラスが用意されていて（中身はPHPUnitです）、これを継承したクラスを作ることでSymfony2が読み込まれた状態でテストをすることが可能になります。主にリクエストやルーティング、ビューのテストに使用するのが目的のようですが、ドメインの結合テストにも使うことが出来ます。&lt;/p&gt;
-&lt;h2 id=&#34;テストデータの投入&#34;&gt;テストデータの投入&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/doctrine/data-fixtures&#34;&gt;Doctrine Data Fixtures Extension&lt;/a&gt;というライブラリを使えば初期データをデータベースに投入することが出来ます。ただ、これは好みの問題かもしれませんが、自分はあまり使い勝手が良いとは思えませんでした。ただデータを投入するだけなら良いのですが、テストで使おうと思うとEntityを毎回findしてこないといけなくて辛い感じがします。&lt;code&gt;getOrder()&lt;/code&gt;メソッドで読み込み順を数値で設定するのもどうなの的な。&lt;/p&gt;
-&lt;p&gt;なので私は&lt;a href=&#34;https://github.com/dakatsuka/BlueprintBundle&#34;&gt;BlueprintBundle&lt;/a&gt;という代替ライブラリを作ってそちらを使っています。データベースに保存した上でエンティティを取得出来るので中々便利に使えています。自画自賛。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-
-&lt;span style=&#34;color:#a6e22e&#34;&gt;Blueprint&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;register&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;post&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Acme\BlogBundle\Entity\Post&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;($post, $blueprint) {
-    $post&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;setTitle&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Title&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt; $blueprint&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;sequence&lt;/span&gt;());
-    $post&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;setBody&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;BodyBodyBody&amp;#39;&lt;/span&gt;);
-});
-
-$blueprint &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$container&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;dakatsuka.blueprint&amp;#39;&lt;/span&gt;);
-
-$post1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $blueprint&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;create&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;post&amp;#39;&lt;/span&gt;);
-$post2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $blueprint&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;create&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;post&amp;#39;&lt;/span&gt;);
-$post3 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $blueprint&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;build&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;post&amp;#39;&lt;/span&gt;); &lt;span style=&#34;color:#75715e&#34;&gt;// DBには保存しない
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;データベースのお掃除&#34;&gt;データベースのお掃除&lt;/h2&gt;
-&lt;p&gt;ひとつ前のテストケースの影響を受けないようにするために、テスト毎にデータベースを掃除する必要があります。前述のDoctrine Data Fixtures Extensionの&lt;code&gt;ORMPurger&lt;/code&gt;クラスを使うことで実現出来ます。&lt;/p&gt;
-&lt;p&gt;ちなみに&lt;code&gt;ORMPurger&lt;/code&gt;は2種類のモードがあって&lt;code&gt;PURGE_MODE_DELETE&lt;/code&gt;か&lt;code&gt;PURGE_MODE_TRUNCATE&lt;/code&gt;を選ぶことができます。トランザクションで制御したい場合は、&lt;code&gt;ORMPurger&lt;/code&gt;は使わずにsetUpでトランザクションを開始してtearDownでロールバックする必要があります。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FunctionalTest&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;WebTestCase&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @var \Symfony\Component\HttpKernel\Kernel
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     */&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $kernel;
-
-    &lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @var \Symfony\Component\DependencyInjection\Container
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     */&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $container;
-
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;setUp&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;parent&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;setUp&lt;/span&gt;();
-
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$kernel &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createKernel&lt;/span&gt;();
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$kernel&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;boot&lt;/span&gt;();
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$container &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$kernel&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getContainer&lt;/span&gt;();
-
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$container&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;doctrine&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getManager&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;default&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;beginTransaction&lt;/span&gt;();
-    }
-
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;tearDown&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;parent&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;tearDown&lt;/span&gt;();
-
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$container&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;doctrine&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getManager&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;default&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;rollback&lt;/span&gt;();
-
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;foreach&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$container&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;doctrine&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getConnections&lt;/span&gt;() &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; $connection) {
-            $connection&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;close&lt;/span&gt;();
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;テストの数が多くなってくるとDELETEもTRUNCATEも遅くてつらいので、私はトランザクションを使ってテストケース毎にロールバックする方法を取っています。今のところ特に困ったことにはなっていませんので、テストが遅くて困ってる人は試してみる価値はあると思います。&lt;/p&gt;
-&lt;h2 id=&#34;最後&#34;&gt;最後&lt;/h2&gt;
-&lt;p&gt;Symfony2、あまり情報がなくて自分の方法が正しいのか不安になることが多々。間違っていたりもっと良い方法があったら是非教えてください！&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -250,62 +63,6 @@ $post3 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $blueprint&lt;sp
       
       <guid>https://blog.dakatsuka.jp/2013/10/18/monolog-fluentd.html</guid>
       <description>Symfony2にも採用されているMonologは、HandlerやFormatterを差し替えることでログの出力先やフォーマットを自由に変</description>
-      <content:encoded>&lt;p&gt;Symfony2にも採用されているMonologは、HandlerやFormatterを差し替えることでログの出力先やフォーマットを自由に変更することが出来ます。PSR3に準拠しているライブラリですので、今後デファクトスタンダードになっていく気がします。&lt;/p&gt;
-&lt;p&gt;デフォルトだとStreamHandlerを使って出力されますが、Handlerを自作してFluentdに出力されるように変更してみます。バックエンドにはfluent-logger-phpを利用しました。&lt;/p&gt;
-&lt;p&gt;MonologのHandlerはAbstractProcessingHandlerを継承して作ります。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\Handler&lt;/span&gt;;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Fluent\Logger\FluentLogger&lt;/span&gt;;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Monolog\Handler\AbstractProcessingHandler&lt;/span&gt;;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Monolog\Logger&lt;/span&gt;;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FluentHandler&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AbstractProcessingHandler&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $logger;
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; __construct(
-        $logger &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;,
-        $host   &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FluentLogger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;DEFAULT_ADDRESS&lt;/span&gt;,
-        $port   &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FluentLogger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;DEFAULT_LISTEN_PORT&lt;/span&gt;,
-        $level  &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Logger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;DEBUG&lt;/span&gt;,
-        $bubble &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
-    )
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;parent&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;__construct&lt;/span&gt;($level, $bubble);
- 
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;is_null&lt;/span&gt;($logger)) {
-            $logger &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FluentLogger&lt;/span&gt;($host, $port);
-        }
- 
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;logger&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $logger;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;write&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;array&lt;/span&gt; $record)
-    {
-        $tag  &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $record[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;channel&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt; $record[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;message&amp;#39;&lt;/span&gt;];
-        $data &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $record[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;context&amp;#39;&lt;/span&gt;];
-        $data[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;level&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Logger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getLevelName&lt;/span&gt;($record[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;level&amp;#39;&lt;/span&gt;]);
- 
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;post&lt;/span&gt;($tag, $data);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使い方&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\Handler\FluentHandler&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Monolog\Logger&lt;/span&gt;;
- 
-$logger &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Logger&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;test&amp;#39;&lt;/span&gt;);
-$logger&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;pushHandler&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FluentHandler&lt;/span&gt;());
- 
-$logger&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;debug&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;example.monolog&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;array&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;foo&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;bar&amp;#39;&lt;/span&gt;));
-$logger&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;info&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;example.fluentd&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;array&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;fizz&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;buzz&amp;#39;&lt;/span&gt;));
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;利用しやすいようにGitHubとPackagistに公開しておきました。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/dakatsuka/MonologFluentHandler&#34;&gt;dakatsuka/MonologFluentHandler&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://packagist.org/packages/dakatsuka/monolog-fluent-handler&#34;&gt;dakatsuka/monolog-fluent-handler&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -315,225 +72,6 @@ $logger&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span 
       
       <guid>https://blog.dakatsuka.jp/2013/09/03/php-maybe-monad.html</guid>
       <description>PHPを仕事で使っているとis_nullとかissetとかemptyとか===とかの存在にイライラしてくる訳ですよ。そこでなんちゃってMay</description>
-      <content:encoded>&lt;p&gt;PHPを仕事で使っているとis_nullとかissetとかemptyとか===とかの存在にイライラしてくる訳ですよ。そこでなんちゃってMaybeモナドの登場です。&lt;/p&gt;
-&lt;p&gt;なんちゃってモナドなので実用性は怪しいですが、以下のように使えます（注意：ネタ記事なので真に受けないように）&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;testLookupFunction&lt;/span&gt;()
-{
-    $lookup &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;($key) {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;array&lt;/span&gt; $d) &lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt;($key) {
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;isset&lt;/span&gt;($d[$key]) &lt;span style=&#34;color:#f92672&#34;&gt;?&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Maybe&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;($d[$key]) &lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Maybe&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;();
-        };
-    };
- 
-    $dictionary &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;b&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;c&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;]]];
- 
-    $result1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Maybe&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;($dictionary) [$lookup(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;)] [$lookup(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;b&amp;#39;&lt;/span&gt;)] [$lookup(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;c&amp;#39;&lt;/span&gt;)];
-    $result2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Maybe&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;($dictionary) [$lookup(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;)] [$lookup(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Z&amp;#39;&lt;/span&gt;)] [$lookup(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;c&amp;#39;&lt;/span&gt;)];
- 
-    $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;assertInstanceOf&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Just&amp;#39;&lt;/span&gt;, $result1);
-    $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;assertInstanceOf&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Nothing&amp;#39;&lt;/span&gt;, $result2);
-    $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;assertEquals&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;, $result1&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;());
-    $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;assertEquals&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;, $result1&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getOrElse&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;30&lt;/span&gt;));
-    $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;assertNull&lt;/span&gt;($result2&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;());
-    $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;assertEquals&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;30&lt;/span&gt;, $result2&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getOrElse&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;30&lt;/span&gt;));
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;モナド則（ちょっと自信無いかも）コードからPHPっぽさが消えた気が…&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-
-&lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * return a &amp;gt;&amp;gt;= f ≡ f a
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; */&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;testMonadLaw1&lt;/span&gt;()
-{
-    $f &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;($a) { &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Maybe&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;($a &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;); };
-    $l &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Maybe&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;) [$f];
-    $r &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $f(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;);
- 
-    $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;assertEquals&lt;/span&gt;($l, $r);
-}
- 
-&lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * m &amp;gt;&amp;gt;= return ≡ m
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; */&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;testMonadLaw2&lt;/span&gt;()
-{
-    $m &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Maybe&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;);
-    $l &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $m [&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;($x) { &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Maybe&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;($x); }];
- 
-    $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;assertEquals&lt;/span&gt;($l, $m);
-}
- 
-&lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * (m &amp;gt;&amp;gt;= f) &amp;gt;&amp;gt;= g ≡ m &amp;gt;&amp;gt;= (\x -&amp;gt; f x &amp;gt;&amp;gt;= g)
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; */&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;testMonadLaw3&lt;/span&gt;()
-{
-    $f &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;($a) { &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Maybe&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;($a &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;); };
-    $g &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;($a) { &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Maybe&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;($a &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;); };
-    $m &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Maybe&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;);
-    $l &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $m [$f] [$g];
-    $r &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $m [&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;($x) &lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt;($f, $g) { &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $f($x) [$g]; }];
- 
-    $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;assertEquals&lt;/span&gt;($l, $r);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;実装&#34;&gt;実装&lt;/h2&gt;
-&lt;p&gt;まずはMonadクラスを定義します。PHPは演算子のオーバーロードや新たな演算子を定義出来ないので、&amp;gt;&amp;gt;=はoffsetGetメソッドを書き換えて配列のブラケットで代用することにします。ブラケットの中にfunction {}って書けるので超キモイですね。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Monad&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;\ArrayAccess&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;bind&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;callable&lt;/span&gt; $f);
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;offsetExists&lt;/span&gt;($offset)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;\BadMethodCallException&lt;/span&gt;();
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;offsetGet&lt;/span&gt;($offset)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;bind&lt;/span&gt;($offset);
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;offsetSet&lt;/span&gt;($offset, $value)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;\BadMethodCallException&lt;/span&gt;();
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;offsetUnset&lt;/span&gt;($offset)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;\BadMethodCallException&lt;/span&gt;();
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;次はMaybe、Just、Nothingクラスを定義します。NothingはNothingしか存在しないのでシングルトンにしてみました。また、ScalaのOption型で便利だったいくつかのメソッドを実装しています。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Maybe&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Monad&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $value;
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;($value &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;is_null&lt;/span&gt;($value)) {
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Nothing&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;();
-        } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Just&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;($value);
-        }
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; __construct($value)
-    {
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $value;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;bind&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;callable&lt;/span&gt; $f)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; ($this &lt;span style=&#34;color:#a6e22e&#34;&gt;instanceof&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Just&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;is_callable&lt;/span&gt;($f)) {
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $f($this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;);
-        } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $this;
-        }
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;();
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;getOrElse&lt;/span&gt;($default);
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;getOrCall&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;callable&lt;/span&gt; $fn);
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;getOrThrow&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;\Exception&lt;/span&gt; $ex);
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;isEmpty&lt;/span&gt;();
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;isDefined&lt;/span&gt;();
-}
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Just&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Maybe&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;($value &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Just&lt;/span&gt;($value);
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt;;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;getOrElse&lt;/span&gt;($default)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;();
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;getOrCall&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;callable&lt;/span&gt; $fn)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;();
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;getOrThrow&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;\Exception&lt;/span&gt; $ex)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;();
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;isEmpty&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;isDefined&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;;
-    }
-}
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Nothing&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Maybe&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; $instance;
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; __construct($value &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$instance) {
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;\InvalidArgumentException&lt;/span&gt;();
-        }
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ret&lt;/span&gt;($value &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;is_null&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$instance)) {
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$instance &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;();
-        } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;$instance;
-        }
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;get&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;getOrElse&lt;/span&gt;($default)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $default;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;getOrCall&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;callable&lt;/span&gt; $fn)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $fn();
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;getOrThrow&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;\Exception&lt;/span&gt; $ex)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;throw&lt;/span&gt; $ex;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;isEmpty&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;isDefined&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;Enjoy functional PHP!&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -543,173 +81,6 @@ $logger&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span 
       
       <guid>https://blog.dakatsuka.jp/2013/09/02/php-infinite-list.html</guid>
       <description>PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。 &amp;lt;?php class Stream implements \Iterator { private $position; private $offset; private $limit; public function __construct($offset, $limit = null) { $this-&amp;gt;position = $offset;</description>
-      <content:encoded>&lt;p&gt;PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Stream&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;\Iterator&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; $position;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; $offset;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; $limit;
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; __construct($offset, $limit &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;)
-    {
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;position&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $offset;
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;offset&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $offset;
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;limit&lt;/span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $limit;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;current&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;position&lt;/span&gt;;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;next&lt;/span&gt;()
-    {
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;position&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;valid&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; ($this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;limit&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;position&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;limit&lt;/span&gt;) {
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;;
-        }
- 
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;key&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;position&lt;/span&gt;;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;rewind&lt;/span&gt;()
-    {
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;position&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;offset&lt;/span&gt;;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;take&lt;/span&gt;($n)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;\LimitIterator&lt;/span&gt;($this, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, $n);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;無限ループさせる。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-$stream &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Stream&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;);
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;foreach&lt;/span&gt; ($stream &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; $i) {
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;echo&lt;/span&gt; $i &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;;   
-}
-
-&lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;// 0
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 1
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 2
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 3
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 4
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// .
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// .
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;範囲指定してみる。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-$stream &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Stream&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;55&lt;/span&gt;);
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;foreach&lt;/span&gt; ($stream &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; $i) {
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;echo&lt;/span&gt; $i &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;;
-}
- 
-&lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;// 50
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 51
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 52
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 53
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 54
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 54
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;LimitIteratorを使えば無限リストから必要な数だけ取り出すことが出来ます。今回はtakeメソッドでラップしました。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-$stream &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Stream&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;);
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;foreach&lt;/span&gt; ($stream&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;take&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; $i) {
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;echo&lt;/span&gt; $i &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;;
-}
- 
-&lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;// 0
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 1
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 2
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 3
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 4
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;しかしこれだけだとあまり使い道がないので、せめてmap機能は欲しい気がしますね。イテレータオブジェクトにはarray_系の関数が使えませんので、LazyMapIteratorを作ってみます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LazyMapIterator&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;\Iterator&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $iterator;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $callback;
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; __construct(&lt;span style=&#34;color:#a6e22e&#34;&gt;\Iterator&lt;/span&gt; $iterator, &lt;span style=&#34;color:#a6e22e&#34;&gt;callable&lt;/span&gt; $callback)
-    {
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;iterator&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $iterator;
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;callback&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $callback;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;getIterator&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;iterator&lt;/span&gt;;
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;current&lt;/span&gt;(){
-        $f &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;callback&lt;/span&gt;;
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $f($this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;iterator&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;current&lt;/span&gt;());
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;next&lt;/span&gt;()
-    {
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;iterator&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;next&lt;/span&gt;();
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;key&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;iterator&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;key&lt;/span&gt;();
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;valid&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;iterator&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;valid&lt;/span&gt;();
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;rewind&lt;/span&gt;()
-    {
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;iterator&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;rewind&lt;/span&gt;();
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Streamクラスにmapメソッドを生やします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;map&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;callable&lt;/span&gt; $f)
-{
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LazyMapIterator&lt;/span&gt;($this, $f);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;mapメソッドを使ってみます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-$stream &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Stream&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;);
-$result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $stream&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;map&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;($i) {
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $i &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;;
-});
- 
-&lt;span style=&#34;color:#a6e22e&#34;&gt;var_dump&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;iterator_to_array&lt;/span&gt;($result));
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;array&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;) {
-  [&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;)
-  [&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;)
-  [&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;30&lt;/span&gt;)
-  [&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;40&lt;/span&gt;)
-  [&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color:#a6e22e&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt;)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ちなみにPHPはSPLで色々なイテレータが用意されていますので、PHPの残念な配列操作にイラついている方は是非覗いてみてください（CallbackFilterIteratorを使えばfilter機能もすぐ実装できます）&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -719,73 +90,6 @@ $result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $stream&lt;span
       
       <guid>https://blog.dakatsuka.jp/2013/08/13/doctrine-enum-bundle.html</guid>
       <description>DoctrineEnumBundleというBundleを導入することによって、Doctrine2でMySQLのENUM型を扱うことができます</description>
-      <content:encoded>&lt;p&gt;&lt;a href=&#34;https://github.com/fre5h/DoctrineEnumBundle&#34;&gt;DoctrineEnumBundle&lt;/a&gt;というBundleを導入することによって、Doctrine2でMySQLのENUM型を扱うことができます。&lt;/p&gt;
-&lt;h2 id=&#34;インストール&#34;&gt;インストール&lt;/h2&gt;
-&lt;p&gt;composer.jsonにfresh/doctrine-enum-bundleを追加します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
-    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;require&amp;#34;&lt;/span&gt;: {
-        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;php&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;gt;=5.3.3&amp;#34;&lt;/span&gt;,
-        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;symfony/symfony&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.3.*&amp;#34;&lt;/span&gt;,
-        &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;........&lt;/span&gt;
-        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;fresh/doctrine-enum-bundle&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dev-master&amp;#34;&lt;/span&gt;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;composer.phar installを実行します。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ php composer.phar install
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;app/AppKernel.phpにDoctrineEnumBundleを追加します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;registerBundles&lt;/span&gt;()
-{
-    $bundles &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Fresh\Bundle\DoctrineEnumBundle\FreshDoctrineEnumBundle&lt;/span&gt;()
-    ];
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;使い方&#34;&gt;使い方&lt;/h2&gt;
-&lt;p&gt;まずEnumTypeクラスを作成します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\DemoBundle\EnumType&lt;/span&gt;;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Fresh\Bundle\DoctrineEnumBundle\DBAL\Types\AbstractEnumType&lt;/span&gt;;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;GenderType&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AbstractEnumType&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;MALE&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;male&amp;#39;&lt;/span&gt;;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;FEMALE&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;female&amp;#39;&lt;/span&gt;;
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; $name &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;GenderType&amp;#39;&lt;/span&gt;;
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; $choices &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [
-        &lt;span style=&#34;color:#a6e22e&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;MALE&lt;/span&gt;   &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;男性&amp;#39;&lt;/span&gt;,
-        &lt;span style=&#34;color:#a6e22e&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;FEMALE&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;女性&amp;#39;&lt;/span&gt;
-    ];
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;app/config/config.yml で上で作ったEnumTypeをDBALに登録します。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;doctrine&lt;/span&gt;:
-    &lt;span style=&#34;color:#f92672&#34;&gt;dbal&lt;/span&gt;:
-        &lt;span style=&#34;color:#f92672&#34;&gt;mapping_types&lt;/span&gt;:
-            &lt;span style=&#34;color:#f92672&#34;&gt;enum&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;string&lt;/span&gt;
-        &lt;span style=&#34;color:#f92672&#34;&gt;types&lt;/span&gt;:
-            &lt;span style=&#34;color:#f92672&#34;&gt;GenderType&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;Acme\DemoBundle\EnumType\GenderType&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;あとはENUM型にしたいメンバ変数に対してアノテーションでマッピングし、app/console doctrine:schema:updateを実行すればENUM型のカラムが作られます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Acme\DemoBundle\Entity&lt;/span&gt;;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Doctrine\ORM\Mapping&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ORM&lt;/span&gt;;
- 
-&lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * @ORM\Table
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; * @ORM\Entity
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; */&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#e6db74&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     * @ORM\Column(name=&amp;#34;gender&amp;#34;, type=&amp;#34;GenderType&amp;#34;)
-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;     */&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; $gender;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -795,46 +99,6 @@ $result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; $stream&lt;span
       
       <guid>https://blog.dakatsuka.jp/2013/08/12/php-mcrypt-is-too-slow.html</guid>
       <description>DES-ECBの暗号・復号を10万回繰り返すベンチマークを取ってみたらmcrypt関数が遅すぎて涙が出てきました。PHPのことなのでもっと速</description>
-      <content:encoded>&lt;p&gt;DES-ECBの暗号・復号を10万回繰り返すベンチマークを取ってみたらmcrypt関数が遅すぎて涙が出てきました。PHPのことなのでもっと速くなる書き方があると淡い期待をしているのですが、何か良い方法無いですかね(´・ω・`)&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
- 
-$message &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;abcdefgh&amp;#39;&lt;/span&gt;;
-$key &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;abcdefgh&amp;#39;&lt;/span&gt;;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; ($i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; $i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;100000&lt;/span&gt;; $i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;) {
-    $encryptedMessage &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mcrypt_encrypt&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;MCRYPT_DES&lt;/span&gt;, $key, $message, &lt;span style=&#34;color:#a6e22e&#34;&gt;MCRYPT_MODE_ECB&lt;/span&gt;);
-    $decryptedMessage &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mcrypt_decrypt&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;MCRYPT_DES&lt;/span&gt;, $key, $encryptedMessage, &lt;span style=&#34;color:#a6e22e&#34;&gt;MCRYPT_MODE_ECB&lt;/span&gt;);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;実行してみる。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ php -v
-PHP 5.4.13 (cli) (built: Apr 17 2013 12:40:07)
-Copyright (c) 1997-2013 The PHP Group
-Zend Engine v2.4.0, Copyright (c) 1998-2013 Zend Technologies
-    with Xdebug v2.2.1, Copyright (c) 2002-2012, by Derick Rethans
- 
-$ time php ./bench.php
-php ./bench.php  24.26s user 0.73s system 99% cpu 25.000 total
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;24秒…&lt;/p&gt;
-&lt;p&gt;同じ処理をPythonで書いてみました。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; Crypto.Cipher.DES
- 
-message &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;abcdefgh&amp;#34;&lt;/span&gt;
-key &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;abcdefgh&amp;#34;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(&lt;span style=&#34;color:#ae81ff&#34;&gt;100000&lt;/span&gt;):
-  cipher &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Crypto&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Cipher&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DES&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new(key, Crypto&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Cipher&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DES&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;MODE_ECB)
-  encrypted_message &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cipher&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;encrypt(message)
-  decrypted_message &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cipher&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;decrypt(encrypted_message)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;実行してみると&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ python --version
-Python 2.7.2
- 
-$ time python ./bench.py
-python ./bench.py  0.92s user 0.01s system 99% cpu 0.930 total
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1秒かかってませんね。。。RubyでOpenSSL::Cipherを使った場合もPythonとほぼ同速だったのでmcryptが異様に遅いのでしょうか？&lt;/p&gt;
-&lt;h2 id=&#34;追記&#34;&gt;追記&lt;/h2&gt;
-&lt;p&gt;&lt;!-- raw HTML omitted --&gt;mcrypt関数ではなくOpenSSL関数 openssl_encrypt openssl_decrypt を使えば爆速になることがわかりました。PHP 5.3.0から使えるようなので特に理由がなければOpenSSLを使ったほうが良さそうです。&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -844,63 +108,6 @@ python ./bench.py  0.92s user 0.01s system 99% cpu 0.930 total
       
       <guid>https://blog.dakatsuka.jp/2013/03/10/php54-trait-readonly-array.html</guid>
       <description>traitを使って何か作ってみようと思い立ち、読み取り専用の配列を実装してみました。配列として扱いたい（例えばforeachで回したいとか）</description>
-      <content:encoded>&lt;p&gt;traitを使って何か作ってみようと思い立ち、読み取り専用の配列を実装してみました。配列として扱いたい（例えばforeachで回したいとか）けど外側からの変更は受け付けたくないというシチュエーションで使えます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;trait&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ReadOnlyArray&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; $items &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [];
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;offsetGet&lt;/span&gt;($key)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;array_key_exists&lt;/span&gt;($key, $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;items&lt;/span&gt;)) {
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;OutOfRangeException&lt;/span&gt;();
-        }
- 
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;items&lt;/span&gt;[$key];
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;offsetSet&lt;/span&gt;($key, $value)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;BadMethodCallException&lt;/span&gt;();
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;offsetExists&lt;/span&gt;($key)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;isset&lt;/span&gt;($this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;items&lt;/span&gt;[$key]);
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;offsetUnset&lt;/span&gt;($key)
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;BadMethodCallException&lt;/span&gt;();
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;getIterator&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ArrayIterator&lt;/span&gt;($this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;items&lt;/span&gt;);
-    }
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;count&lt;/span&gt;()
-    {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;count&lt;/span&gt;($this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;items&lt;/span&gt;);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使い方は以下の通り。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;php&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ExampleArray&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ArrayAccess&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;IteratorAggregate&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;Countable&lt;/span&gt;
-{
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;use&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ReadOnlyArray&lt;/span&gt;;
- 
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; __construct()
-    {
-        $this&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;items&lt;/span&gt;[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;foo&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;bar&amp;#34;&lt;/span&gt;;
-    }
-}
- 
-$example &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ExampleArray&lt;/span&gt;();
-$example[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;foo&amp;#34;&lt;/span&gt;];         &lt;span style=&#34;color:#75715e&#34;&gt;// =&amp;gt; &amp;#34;bar&amp;#34;
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;$example[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;foo&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;buu&amp;#34;&lt;/span&gt;; &lt;span style=&#34;color:#75715e&#34;&gt;// =&amp;gt; BadMethodCallException
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;$example&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;count&lt;/span&gt;();       &lt;span style=&#34;color:#75715e&#34;&gt;// =&amp;gt; 1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded>
     </item>
     
     <item>
@@ -910,23 +117,6 @@ $example[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;foo&amp;#34;&lt;/spa
       
       <guid>https://blog.dakatsuka.jp/2007/05/24/qr.html</guid>
       <description>必要なパッケージやインストールの仕方をメモしておきます。モジュールの使用方法やDebian以外の環境の人は、こちらの記事（讃容日記）を見たほ</description>
-      <content:encoded>&lt;p&gt;必要なパッケージやインストールの仕方をメモしておきます。モジュールの使用方法やDebian以外の環境の人は、&lt;a href=&#34;http://d.hatena.ne.jp/rsky/20070427/1177680276&#34;&gt;こちらの記事（讃容日記）&lt;/a&gt;を見たほうが良いでしょう。&lt;/p&gt;
-&lt;h2 id=&#34;インストール&#34;&gt;インストール&lt;/h2&gt;
-&lt;p&gt;まず必要なパッケージを導入します。ここではaptitudeを使ってますがapt-getでも問題ありません。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;sudo aptitude install php4-gd php4-dev graphviz-dev
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;PHP5を使ってる場合は4を5に変えるだけです。&lt;/p&gt;
-&lt;p&gt;手順はこんな感じです。1行ずつコピペしていけばOKです。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;wget http://www.opendogs.org/pub/php_qr-0.1.0.tgz
-tar zxvf php_qr-0.1.0.tgz
-cd php_qr-0.1.0
-mkdir -p ext/gd
-ln -s /usr/include/graphviz ext/gd/libgd
-phpize
-./configure --enable-qr --enable-qr-gd
-make
-sudo make install
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;sudoを使ってない人はsu -でrootになってからmake installしましょう。&lt;/p&gt;
-</content:encoded>
     </item>
     
   </channel>

@@ -4,13 +4,10 @@
     <title>Git on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/git.html</link>
     <description>Recent content in Git on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Wed, 25 May 2011 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/git/index.xml" rel="self" type="application/rss+xml" />
@@ -21,54 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2011/05/25/cap-subdirectory.html</guid>
       <description>複数のRailsアプリが１つのリポジトリに同居しているような状態で Capistrano を使ってデプロイしたい場合、そのままでは動作しないので少々手を加える必要</description>
-      <content:encoded>&lt;p&gt;複数のRailsアプリが１つのリポジトリに同居しているような状態で Capistrano を使ってデプロイしたい場合、そのままでは動作しないので少々手を加える必要があります。&lt;/p&gt;
-&lt;p&gt;下記のようにRailsアプリがサブディレクトリにある場合を想定しています。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;repogitory/
-      ├── admin
-      ├── mobile
-      ├── share
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;capfileを書き換える&#34;&gt;Capfileを書き換える&lt;/h2&gt;
-&lt;p&gt;通常の手順通り、Rails.root 直下に Capfile を設置し config/deploy.rb にレシピを書いていくのですが、上記のようにリポジトリ直下 = Rails.root では無い場合、Capfile を少し変更する必要があります。&lt;/p&gt;
-&lt;p&gt;Stackoverflow の &lt;a href=&#34;http://stackoverflow.com/questions/29168/deploying-a-git-subdirectory-in-capistrano&#34;&gt;Deploying a Git subdirectory in Capistrano&lt;/a&gt; を参考に（というかほぼそのままですが）Capfile を以下のようにします。オリジナルと違う箇所はcpのオプションです。オリジナルのほうはシンボリックリンクをシンボリックリンクとしてコピーしますが、このコードは実体ファイルをコピーします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;capistrano/recipes/deploy/strategy/remote_cache&amp;#39;&lt;/span&gt;
- 
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;RemoteCacheSubdir&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Capistrano&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Deploy&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;Strategy&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;RemoteCache&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;repository_cache_subdir&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:deploy_subdir&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;then&lt;/span&gt;
-      &lt;span style=&#34;color:#66d9ef&#34;&gt;File&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(repository_cache, configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:deploy_subdir&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;)
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
-      repository_cache
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;copy_repository_cache&lt;/span&gt;
-    logger&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;trace &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;copying the cached version to &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:release_path&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; copy_exclude&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;empty? 
-      run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;cp -RpL &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;repository_cache_subdir&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:release_path&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; &amp;amp;&amp;amp; &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;mark&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
-      exclusions &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; copy_exclude&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map { &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;--exclude=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;e&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; }&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;)
-      run &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;rsync -lrpt &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;exclusions&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;repository_cache_subdir&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;/* &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;configuration&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:release_path&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; &amp;amp;&amp;amp; &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;#{&lt;/span&gt;mark&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-  &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
- 
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:strategy&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;RemoteCacheSubdir&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;new(self)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Capfile を書き換えたら deploy.rb を次のようにすれば指定したサブディレクトリだけをデプロイする事が出来ます。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;capistrano/ext/multistage&amp;#39;&lt;/span&gt;
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;bundler/capistrano&amp;#39;&lt;/span&gt;
-require &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;erb&amp;#39;&lt;/span&gt;
- 
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:application&lt;/span&gt;,   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;app&amp;#34;&lt;/span&gt;
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:scm&lt;/span&gt;,           &lt;span style=&#34;color:#e6db74&#34;&gt;:git&lt;/span&gt;
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:repository&lt;/span&gt;,    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;git://domain.com/path/to/repository.git&amp;#34;&lt;/span&gt;
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:deploy_subdir&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/path/to/app&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# require https://gist.github.com/970910 to Capfile&lt;/span&gt;
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:deploy_via&lt;/span&gt;,    &lt;span style=&#34;color:#e6db74&#34;&gt;:copy&lt;/span&gt;
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:use_sudo&lt;/span&gt;,      &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;
-set &lt;span style=&#34;color:#e6db74&#34;&gt;:bundle_without&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:development&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:test&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;そもそも&#34;&gt;そもそも&lt;/h2&gt;
-&lt;p&gt;何故このような構成になってるかというと、admin、mobileでモデルとライブラリを共通化したくなった為です。共通ファイルを share に放り込み、各Railsアプリからはシンボリックリンクで参照する形にしています。最初は Git の submodule を考えたのですがどうもしっくり来なかったんですよね。。。&lt;/p&gt;
-</content:encoded>
     </item>
     
     <item>
@@ -78,63 +27,6 @@ set &lt;span style=&#34;color:#e6db74&#34;&gt;:bundle_without&lt;/span&gt;, &lt;
       
       <guid>https://blog.dakatsuka.jp/2011/05/24/git-flow.html</guid>
       <description>私の所属している会社では、2年程前にバージョン管理システムをSubversionからGitに移行し、現在まで開発フローを試行錯誤してきました</description>
-      <content:encoded>&lt;p&gt;私の所属している会社では、2年程前にバージョン管理システムをSubversionからGitに移行し、現在まで開発フローを試行錯誤してきました。ようやく形になってきたということで、守秘義務に接触しない程度に紹介＆考察していきたいと思います。&lt;/p&gt;
-&lt;p&gt;形になってきたとはいえ、まだまだ試行錯誤中ですので色々なツッコミは大歓迎です。&lt;/p&gt;
-&lt;h2 id=&#34;現在の開発フローの俯瞰図&#34;&gt;現在の開発フローの俯瞰図&lt;/h2&gt;
-&lt;p&gt;現在の開発フローを俯瞰してみると大体下記図のような感じになっています。途中で図を書くのが面倒になった都合上、Jenkinsさんが１人しか居ませんが、実際はmasterブランチの他にreleaseブランチも監視してもらっています。&lt;/p&gt;
-&lt;p&gt;以降この図を元に話を進めていきたと思います。&lt;/p&gt;
-&lt;figure&gt;
-    &lt;img src=&#34;https://blog.dakatsuka.jp/media/2011-05-24-git-flow/git-flow.png&#34;/&gt; 
-&lt;/figure&gt;
-
-&lt;h2 id=&#34;gitoriousを利用して自由に開発&#34;&gt;Gitoriousを利用して自由に開発&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://gitorious.org/&#34;&gt;Gitorious&lt;/a&gt;というGitHubに似たサービスがあります。この&lt;a href=&#34;http://gitorious.org/gitorious&#34;&gt;Gitoriousはオープンソースとしても公開されています&lt;/a&gt;ので社内に設置して利用する事が出来ます。&lt;/p&gt;
-&lt;p&gt;見た目はGitHubとだいぶ違いますが利用方法は似通っていて、まずプロジェクトの中央リポジトリが存在し、それを各人がフォークして開発をしていくスタイルになります。GitHubのPull request（GitoriousではMerge requestと呼ぶ）と同等の機能もあるので、俯瞰図にも書いてある通り非常にGitHubを利用した開発に近くなっていると思います。&lt;/p&gt;
-&lt;h2 id=&#34;gitoriousを利用するメリットデメリット&#34;&gt;Gitoriousを利用するメリット・デメリット&lt;/h2&gt;
-&lt;p&gt;このGitoriousを利用した開発フローのメリットとしては以下が挙げられます。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;必ずフォークしてから開発するので、仮に滅茶苦茶な実装をコミットしても周りに影響が無い。&lt;/li&gt;
-&lt;li&gt;周りに影響が無いので、Git初心者の社員にも心置きなくGitを弄り倒してもらう事が出来る。&lt;/li&gt;
-&lt;li&gt;Pull request で変更内容がDiffで見れるので、コードレビューするのが楽になる。&lt;/li&gt;
-&lt;li&gt;Pull request は独立したブランチになっているので、開発者はダメ出しされた後にPull requestに対して再度push出来る。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;まぁ、GitHubを利用した場合と同じようなメリットですね。逆にデメリットとしては以下が挙がってきます。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;管理者が休んだりサボったりするとあっという間にPull requestが溜まってしまう。&lt;/li&gt;
-&lt;li&gt;管理者、開発者共にGitの知識がかなり要求される。&lt;/li&gt;
-&lt;li&gt;push, pull, merge, rebaseのルールを決めておかないとコンフリクト地獄に陥る可能性が大。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;マスターブランチの運用と新規開発時のフロー&#34;&gt;マスターブランチの運用と新規開発時のフロー&lt;/h2&gt;
-&lt;p&gt;マスターブランチは開発の先端として扱っています。開発途中なのでバグが含まれている可能性がありますが、毎日・もしくはプッシュ後にナイトリー環境にデプロイしています。常に最新のコードをデプロイしておくことは重要で、バグの早期発見は勿論ですが、「プロジェクトの動いている感」を偉い方々に見てもらう狙いもあります（うちは自社企画が多いので…）&lt;/p&gt;
-&lt;p&gt;新規開発を担当する開発者は、mainlineのマスターブランチとローカルリポジトリのマスターブランチをPullで同期を取りつつ、作業毎にトピックブランチを切って開発を行っています。&lt;/p&gt;
-&lt;p&gt;開発が終わったらトピックブランチをリモートリポジトリにpushして、そのブランチをPull requestします。一連の流れをコマンドで表すと次の通りになります。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ git checkout master
-$ git pull mainline master
-$ git checkout -b feature-hoge
- 
-     --commit--
- 
-$ git pull --rebase mainline master
-$ git push origin feature-hoge
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;管理者がPull requestを取り込む際は次のようにします。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ git checkout master
-$ git checkout -b merge-request/198
-$ git pull git://xxxxx/project_name/mainline.git refs/merge-request/198
-$ git rebase master
-$ git checkout master
-$ git merge merge-request/198 --no-ff
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;マスターブランチにマージする時に–no-ffオプションを付けることで下記コマンドで取り込んだトピックブランチ一覧を表示する事が出来ます。開発が活発な初期段階では大量にPull requestが飛んでくるのでどのトピックブランチまでマージ出来たか判断するのに有効です。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ git log --oneline --abbrev-commit --merges master
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;リリースブランチの運用とメンテナンスフロー&#34;&gt;リリースブランチの運用とメンテナンスフロー&lt;/h2&gt;
-&lt;p&gt;リリースブランチはあるタイミングでマスターブランチから作成されます。このリリースブランチをプロダクション環境にデプロイし、サイト運用中に出た不具合の修正や次期リリースまでの繋ぎ機能の開発をこのブランチで行っていきます。&lt;/p&gt;
-&lt;p&gt;うちはサイトの性質上、且つ社内事情的にリリースの間隔がかなり空いてしまう場合が多いので、マスターブランチが次期リリースに向けての開発用、リリースブランチが現行安定版の保守用という感じにしています。&lt;/p&gt;
-&lt;p&gt;基本的なフローはマスターブランチの運用と同じで、開発者がトピックブランチをPull requestし、管理者が取り込む流れになります。マスターブランチでも直っていないバグ修正は、cherry-pickでマスターブランチに取り込む事もあります。&lt;/p&gt;
-&lt;h2 id=&#34;今後の課題&#34;&gt;今後の課題&lt;/h2&gt;
-&lt;p&gt;若干諦めてはいるのですが、マスターブランチとリリースブランチの内容が完全に違うモノになっていった時にcherry-pickすら厳しくなったらどうしようかな・・・と思ってたりします。まぁ、そんなになるまでリリースを温存しておくなって話なんですけどね…。社風の改革は開発フローを変えるより大変です。&lt;/p&gt;
-&lt;p&gt;あとこのフローとRedmineを使ったTiDDをどうシームレスに連携していくかが現在最大の課題となっています。例えばコミットログにcloses #1って記述したコミットをcherry-pickで各ブランチに取り込むと、二重に処理が走ったりなど…。この辺りはまだ手探りですね。&lt;/p&gt;
-&lt;h2 id=&#34;まとめ&#34;&gt;まとめ&lt;/h2&gt;
-&lt;p&gt;Gitは非常に柔軟なバージョン管理システムだと思います。ここで紹介した開発フロー以外にも様々なフローがありますので、参考にしながら開発現場にあったやり方を見つけていくと良いんじゃないでしょうか。&lt;/p&gt;
-</content:encoded>
     </item>
     
   </channel>

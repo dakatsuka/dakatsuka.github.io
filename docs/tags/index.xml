@@ -4,13 +4,10 @@
     <title>Tags on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags.html</link>
     <description>Recent content in Tags on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Mon, 11 Jan 2021 19:20:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/index.xml" rel="self" type="application/rss+xml" />
@@ -21,7 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/ocaml.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -31,7 +27,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/hugo.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -41,7 +36,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/akka.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -51,7 +45,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/scala.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -61,7 +54,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/asset.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -71,7 +63,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/diary.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -81,7 +72,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/finagle.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -91,7 +81,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/finch.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -101,7 +90,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/scalaz.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -111,7 +99,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/lua.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -121,7 +108,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/https.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -131,7 +117,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/http4s.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -141,7 +126,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/rails.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -151,7 +135,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/ruby.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -161,7 +144,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/ci.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -171,7 +153,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/elasticsearch.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -181,7 +162,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/play.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -191,7 +171,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/sbt.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -201,7 +180,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/python.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -211,7 +189,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/aws.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -221,7 +198,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/slack.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -231,7 +207,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/php.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -241,7 +216,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/symfony2.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -251,7 +225,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/di.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -261,7 +234,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/vagrant.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -271,7 +243,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/javascript.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -281,7 +252,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/work.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -291,7 +261,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/blog.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -301,7 +270,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/bdd.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -311,7 +279,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/middleman.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -321,7 +288,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/monolog.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -331,7 +297,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/backbone.js.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -341,7 +306,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/node.js.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -351,7 +315,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/rabbitmq.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -361,7 +324,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/ubuntu.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -371,7 +333,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/mongodb.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -381,7 +342,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/chef.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -391,7 +351,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/capistrano.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -401,7 +360,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/tdd.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -411,7 +369,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/actionscript.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -421,7 +378,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/git.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -431,7 +387,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/mogilefs.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -441,7 +396,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/vim.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -451,7 +405,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/fedora.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -461,7 +414,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/linux.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -471,7 +423,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/subversion.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
     <item>
@@ -481,7 +432,6 @@
       
       <guid>https://blog.dakatsuka.jp/tags/http/2.html</guid>
       <description></description>
-      <content:encoded></content:encoded>
     </item>
     
   </channel>

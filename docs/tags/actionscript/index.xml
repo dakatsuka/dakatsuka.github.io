@@ -4,13 +4,10 @@
     <title>ActionScript on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/actionscript.html</link>
     <description>Recent content in ActionScript on dakatsuka&#39;s blog</description>
-    
     <image>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <title>dakatsuka&#39;s blog</title>
-      <link>https://blog.dakatsuka.jp/</link>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
     </image>
-    
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Thu, 14 Jul 2011 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/actionscript/index.xml" rel="self" type="application/rss+xml" />
@@ -21,27 +18,6 @@
       
       <guid>https://blog.dakatsuka.jp/2011/07/14/red5.html</guid>
       <description>とある事情でさくらのVPSにRed5（ストリーミングサーバ）を入れたので、その時のメモをブログに残しておきます。なお、さくらのVPSで動かし</description>
-      <content:encoded>&lt;p&gt;とある事情でさくらのVPSにRed5（ストリーミングサーバ）を入れたので、その時のメモをブログに残しておきます。なお、さくらのVPSで動かしているOSはUbuntu 10.04です。&lt;/p&gt;
-&lt;p&gt;※ Red5とはRTMPを使ったオープンソースのストリーミングサーバですが、詳しい説明は割愛します。&lt;/p&gt;
-&lt;p&gt;Red5はSun Javaで動かした方が良いらしいので、まずsun-java6をインストールします。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo apt-get install python-software-properties
-sudo add-apt-repository &#39;deb http://archive.canonical.com/ lucid partner&#39;
-sudo apt-get update
-sudo apt-get install sun-java6-jre sun-java6-jdk ant java-common java-package
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Subversionをインストールします。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo apt-get install subversion
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Red5のソースをSubversionでチェックアウトしてきます。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;cd /usr/localbin # Red5を入れるディレクトリを指定（お好きな場所に）
-sudo svn co http://red5.googlecode.com/svn/java/server/trunk red5
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Red5をビルドします。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;cd ./red5
-sudo ant prepare
-sudo ant dist
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Red5を起動。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;cd ./dist
-sudo nohup sh red5.sh &amp;amp;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;http://hostname:5080/ にアクセスして Red5 の画面が出てれば起動成功です。&lt;/p&gt;
-</content:encoded>
     </item>
     
   </channel>

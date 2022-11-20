@@ -1,3 +1,4 @@
-[submodule "themes/harbor"]
-	path = themes/harbor
-	url = https://github.com/matsuyoshi30/harbor.git
+
+[submodule "themes/PaperMod"]
+	path = themes/PaperMod
+	url = https://github.com/adityatelange/hugo-PaperMod.git
