@@ -24,7 +24,6 @@ Social:
 
 params:
   env: production
-  author: "Dai Akatsuka"
   DateFormat: "2006/1/2"
   images:
     - "images/card.png"
