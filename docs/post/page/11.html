@@ -8,9 +8,9 @@
 <title>Posts | dakatsuka&#39;s blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="Posts - dakatsuka&#39;s blog">
-<meta name="author" content="Dai Akatsuka">
+<meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/post.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.bc1149f4a72aa4858d3a9f71462f75e5884ffe8073ea9d6d5761d5663d651e20.css" integrity="sha256-vBFJ9KcqpIWNOp9xRi915YhP/oBz6p1tV2HVZj1lHiA=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
@@ -162,13 +162,25 @@ if (!doNotTrack) {
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Symfony2(Doctrine2)でENUMを使うならDoctrineEnumBundleが便利
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>DoctrineEnumBundleというBundleを導入することによって、Doctrine2でMySQLのENUM型を扱うことができます...</p>
+  </div>
+  <footer class="entry-footer"><span title='2013-08-13 00:00:00 +0000 UTC'>2013/8/13</span></footer>
+  <a class="entry-link" aria-label="post link to Symfony2(Doctrine2)でENUMを使うならDoctrineEnumBundleが便利" href="https://blog.dakatsuka.jp/2013/08/13/doctrine-enum-bundle.html"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>PHPのmcrypt関数が遅すぎて辛い
     </h2>
   </header>
   <div class="entry-content">
     <p>DES-ECBの暗号・復号を10万回繰り返すベンチマークを取ってみたらmcrypt関数が遅すぎて涙が出てきました。PHPのことなのでもっと速...</p>
   </div>
-  <footer class="entry-footer"><span title='2013-08-12 00:00:00 +0000 UTC'>2013/8/12</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
+  <footer class="entry-footer"><span title='2013-08-12 00:00:00 +0000 UTC'>2013/8/12</span></footer>
   <a class="entry-link" aria-label="post link to PHPのmcrypt関数が遅すぎて辛い" href="https://blog.dakatsuka.jp/2013/08/12/php-mcrypt-is-too-slow.html"></a>
 </article>
 
@@ -180,7 +192,7 @@ if (!doNotTrack) {
   <div class="entry-content">
     <p>traitを使って何か作ってみようと思い立ち、読み取り専用の配列を実装してみました。配列として扱いたい（例えばforeachで回したいとか）...</p>
   </div>
-  <footer class="entry-footer"><span title='2013-03-10 00:00:00 +0000 UTC'>2013/3/10</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
+  <footer class="entry-footer"><span title='2013-03-10 00:00:00 +0000 UTC'>2013/3/10</span></footer>
   <a class="entry-link" aria-label="post link to PHP 5.4のトレイトで読み取り専用配列を実装してみる" href="https://blog.dakatsuka.jp/2013/03/10/php54-trait-readonly-array.html"></a>
 </article>
 
@@ -192,7 +204,7 @@ if (!doNotTrack) {
   <div class="entry-content">
     <p>最近Backbone.jsを触っています。Backbone.jsをRailsで使いたいならパッケージで導入してしまうのが一番簡単でしょう。 G...</p>
   </div>
-  <footer class="entry-footer"><span title='2012-09-13 00:00:00 +0000 UTC'>2012/9/13</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
+  <footer class="entry-footer"><span title='2012-09-13 00:00:00 +0000 UTC'>2012/9/13</span></footer>
   <a class="entry-link" aria-label="post link to Rails3にBackbone.jsを導入する" href="https://blog.dakatsuka.jp/2012/09/13/rails-backbone-intro.html"></a>
 </article>
 
@@ -204,34 +216,22 @@ if (!doNotTrack) {
   <div class="entry-content">
     <p>昨年辺りから開発を進めているNodeアプリが大変残念なパフォーマンスだったので、DTraceでプロファイリングしてボトルネックを探してみる作...</p>
   </div>
-  <footer class="entry-footer"><span title='2012-07-17 00:00:00 +0000 UTC'>2012/7/17</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
+  <footer class="entry-footer"><span title='2012-07-17 00:00:00 +0000 UTC'>2012/7/17</span></footer>
   <a class="entry-link" aria-label="post link to OpenIndiana (Solaris) のDTraceでNode.jsをプロファイリングする" href="https://blog.dakatsuka.jp/2012/07/17/dtrace-nodejs.html"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Rails3 &#43; unicornからRabbitMQに接続するには
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>ruby-amqpはEventMachineに依存しているので、unicorn上のRailsアプリからRabbitMQに接続する場合は少し手...</p>
-  </div>
-  <footer class="entry-footer"><span title='2012-05-14 00:00:00 +0000 UTC'>2012/5/14</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
-  <a class="entry-link" aria-label="post link to Rails3 &#43; unicornからRabbitMQに接続するには" href="https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="https://blog.dakatsuka.jp/post/page/10.html">
-      «&nbsp;前のページ&nbsp;
+      «&nbsp;前へ&nbsp;
     </a>
-    <a class="next" href="https://blog.dakatsuka.jp/post/page/12.html">次のページ&nbsp;&nbsp;»
+    <a class="next" href="https://blog.dakatsuka.jp/post/page/12.html">次へ&nbsp;&nbsp;»
     </a>
   </nav>
 </footer>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
+    <span>&copy; 2023 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

@@ -8,9 +8,9 @@
 <title>Posts | dakatsuka&#39;s blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="Posts - dakatsuka&#39;s blog">
-<meta name="author" content="Dai Akatsuka">
+<meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/post.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.bc1149f4a72aa4858d3a9f71462f75e5884ffe8073ea9d6d5761d5663d651e20.css" integrity="sha256-vBFJ9KcqpIWNOp9xRi915YhP/oBz6p1tV2HVZj1lHiA=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
@@ -162,13 +162,25 @@ if (!doNotTrack) {
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Symfony2でサブドメインに対応したサイトを作る
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Symfony2では特定のBundleをサブドメインに切り出すことができる。正しくはBundle毎に任意のドメインを割り当てることができる。...</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-08-28 00:00:00 +0000 UTC'>2014/8/28</span></footer>
+  <a class="entry-link" aria-label="post link to Symfony2でサブドメインに対応したサイトを作る" href="https://blog.dakatsuka.jp/2014/08/28/symfony2-subdomain.html"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Play framework を CircleCI でテストする
     </h2>
   </header>
   <div class="entry-content">
     <p>Play framework 2.3 (Scala版）で開発しているアプリをTravis ProでCIしていたのだけど、ビルド時間がネックになってきたのでインスタンス性能が高...</p>
   </div>
-  <footer class="entry-footer"><span title='2014-08-24 00:00:00 +0000 UTC'>2014/8/24</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
+  <footer class="entry-footer"><span title='2014-08-24 00:00:00 +0000 UTC'>2014/8/24</span></footer>
   <a class="entry-link" aria-label="post link to Play framework を CircleCI でテストする" href="https://blog.dakatsuka.jp/2014/08/24/play2-on-circleci.html"></a>
 </article>
 
@@ -180,7 +192,7 @@ if (!doNotTrack) {
   <div class="entry-content">
     <p>Play2でDIをどうしようか悩んでいたところscaldiというライブラリが目に止まった。Playに組み込むためのライブラリをあるし、公式サ...</p>
   </div>
-  <footer class="entry-footer"><span title='2014-08-01 00:00:00 +0000 UTC'>2014/8/1</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
+  <footer class="entry-footer"><span title='2014-08-01 00:00:00 +0000 UTC'>2014/8/1</span></footer>
   <a class="entry-link" aria-label="post link to Play framework 2.3.x と Scaldi で Dependency Injection" href="https://blog.dakatsuka.jp/2014/08/01/play2-scaldi.html"></a>
 </article>
 
@@ -192,7 +204,7 @@ if (!doNotTrack) {
   <div class="entry-content">
     <p>前提条件 Vagrant BoxがファイルシステムにLVM &#43; ext3/4を使っていること。今回はVagrantbox.esで配布されているDebian Whe...</p>
   </div>
-  <footer class="entry-footer"><span title='2014-04-24 00:00:00 +0000 UTC'>2014/4/24</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
+  <footer class="entry-footer"><span title='2014-04-24 00:00:00 +0000 UTC'>2014/4/24</span></footer>
   <a class="entry-link" aria-label="post link to Vagrant VMのディスクサイズを後から拡張する方法" href="https://blog.dakatsuka.jp/2014/04/24/vagrant-hdd-resize.html"></a>
 </article>
 
@@ -204,34 +216,22 @@ if (!doNotTrack) {
   <div class="entry-content">
     <p>.travis.ymlを下記のようにした。TravisはComposerもPHPUnitもパスが通った状態になっているため、ダウンロードする...</p>
   </div>
-  <footer class="entry-footer"><span title='2014-04-03 00:00:00 +0000 UTC'>2014/4/3</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
+  <footer class="entry-footer"><span title='2014-04-03 00:00:00 +0000 UTC'>2014/4/3</span></footer>
   <a class="entry-link" aria-label="post link to Symfony2アプリをTravisでCIする" href="https://blog.dakatsuka.jp/2014/04/03/symfony2-travis-ci.html"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Rails &#43; Jasmineでテスト実行時のタイムゾーンを変更する
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>あまりタイムゾーンに依存するテストって宜しくないと思いますが。。。とはいえ特定のタイムゾーンで固定しておきたい事もあるので調べてみた。 Pha...</p>
-  </div>
-  <footer class="entry-footer"><span title='2014-03-03 00:00:00 +0000 UTC'>2014/3/3</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
-  <a class="entry-link" aria-label="post link to Rails &#43; Jasmineでテスト実行時のタイムゾーンを変更する" href="https://blog.dakatsuka.jp/2014/03/03/rails-jasmine-timezone.html"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="https://blog.dakatsuka.jp/post/page/6.html">
-      «&nbsp;前のページ&nbsp;
+      «&nbsp;前へ&nbsp;
     </a>
-    <a class="next" href="https://blog.dakatsuka.jp/post/page/8.html">次のページ&nbsp;&nbsp;»
+    <a class="next" href="https://blog.dakatsuka.jp/post/page/8.html">次へ&nbsp;&nbsp;»
     </a>
   </nav>
 </footer>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
+    <span>&copy; 2023 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

@@ -3,24 +3,30 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.dakatsuka.jp/categories.html</loc>
-    <lastmod>2021-01-11T19:20:00+09:00</lastmod>
+    <lastmod>2023-05-06T17:30:00+09:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/</loc>
-    <lastmod>2021-01-11T19:20:00+09:00</lastmod>
+    <lastmod>2023-05-06T17:30:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/kotlin.html</loc>
+    <lastmod>2023-05-06T17:30:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/2023/05/06/kotlin-src-test.html</loc>
+    <lastmod>2023-05-06T17:30:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/post.html</loc>
+    <lastmod>2023-05-06T17:30:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/categories/programming.html</loc>
+    <lastmod>2023-05-06T17:30:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags.html</loc>
+    <lastmod>2023-05-06T17:30:00+09:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/tags/ocaml.html</loc>
     <lastmod>2021-01-11T19:20:00+09:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/2021/01/11/ocaml-binding-operators.html</loc>
-    <lastmod>2021-01-11T19:20:00+09:00</lastmod>
-  </url><url>
-    <loc>https://blog.dakatsuka.jp/post.html</loc>
-    <lastmod>2021-01-11T19:20:00+09:00</lastmod>
-  </url><url>
-    <loc>https://blog.dakatsuka.jp/categories/programming.html</loc>
-    <lastmod>2021-01-11T19:20:00+09:00</lastmod>
-  </url><url>
-    <loc>https://blog.dakatsuka.jp/tags.html</loc>
     <lastmod>2021-01-11T19:20:00+09:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/tags/hugo.html</loc>

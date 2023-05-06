@@ -8,9 +8,9 @@
 <title>Posts | dakatsuka&#39;s blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="Posts - dakatsuka&#39;s blog">
-<meta name="author" content="Dai Akatsuka">
+<meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/post.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.bc1149f4a72aa4858d3a9f71462f75e5884ffe8073ea9d6d5761d5663d651e20.css" integrity="sha256-vBFJ9KcqpIWNOp9xRi915YhP/oBz6p1tV2HVZj1lHiA=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
@@ -162,13 +162,25 @@ if (!doNotTrack) {
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Rails &#43; Jasmineでテスト実行時のタイムゾーンを変更する
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>あまりタイムゾーンに依存するテストって宜しくないと思いますが。。。とはいえ特定のタイムゾーンで固定しておきたい事もあるので調べてみた。 Pha...</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-03-03 00:00:00 +0000 UTC'>2014/3/3</span></footer>
+  <a class="entry-link" aria-label="post link to Rails &#43; Jasmineでテスト実行時のタイムゾーンを変更する" href="https://blog.dakatsuka.jp/2014/03/03/rails-jasmine-timezone.html"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>MongoMapperでER図っぽいものを生成するgemを作った
     </h2>
   </header>
   <div class="entry-content">
     <p>モデルの数がそれなりにあるプロジェクトに途中から参加すると、モデル同士の関連を把握するのに結構苦労するので、ER図の存在が重要になってくる。...</p>
   </div>
-  <footer class="entry-footer"><span title='2014-02-13 00:00:00 +0000 UTC'>2014/2/13</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
+  <footer class="entry-footer"><span title='2014-02-13 00:00:00 +0000 UTC'>2014/2/13</span></footer>
   <a class="entry-link" aria-label="post link to MongoMapperでER図っぽいものを生成するgemを作った" href="https://blog.dakatsuka.jp/2014/02/13/mongo-mapper-diagram.html"></a>
 </article>
 
@@ -180,7 +192,7 @@ if (!doNotTrack) {
   <div class="entry-content">
     <p>サインアップフォームなどでユーザー名が取得可能かどうかAjaxで問い合わせるアレです。 愚直に実装するとkeyupイベントをキャッチして$.a...</p>
   </div>
-  <footer class="entry-footer"><span title='2013-12-24 00:00:00 +0000 UTC'>2013/12/24</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
+  <footer class="entry-footer"><span title='2013-12-24 00:00:00 +0000 UTC'>2013/12/24</span></footer>
   <a class="entry-link" aria-label="post link to テキストフィールドへの入力を検出して数秒おきにサーバに送信する" href="https://blog.dakatsuka.jp/2013/12/24/autocheck-js.html"></a>
 </article>
 
@@ -192,7 +204,7 @@ if (!doNotTrack) {
   <div class="entry-content">
     <p>Doctrine2のOneToManyやManyToManyのtargetEntityにはAbstract classやInterfaceを指...</p>
   </div>
-  <footer class="entry-footer"><span title='2013-12-19 00:00:00 +0000 UTC'>2013/12/19</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
+  <footer class="entry-footer"><span title='2013-12-19 00:00:00 +0000 UTC'>2013/12/19</span></footer>
   <a class="entry-link" aria-label="post link to Symfony2ではRelationshipsにAbstract classやInterfaceが指定できる" href="https://blog.dakatsuka.jp/2013/12/19/resolve-target-entity.html"></a>
 </article>
 
@@ -204,34 +216,22 @@ if (!doNotTrack) {
   <div class="entry-content">
     <p>無職から個人事業主にジョブチェンジしました。 自分でサービスの開発もしていきたいですが、当面は傭兵としてサーバサイドプログラミングやインフラ構...</p>
   </div>
-  <footer class="entry-footer"><span title='2013-12-16 00:00:00 +0000 UTC'>2013/12/16</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
+  <footer class="entry-footer"><span title='2013-12-16 00:00:00 +0000 UTC'>2013/12/16</span></footer>
   <a class="entry-link" aria-label="post link to 個人事業主になりました" href="https://blog.dakatsuka.jp/2013/12/16/freelance.html"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>HomebrewでPHP5.5を入れようと思ったら手間取った話
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>MavericksにHomebrewを使ってPHP 5.5をインストールしようと思ったら次のようなエラーが出てきた。 configure: error: freetype.h not found. 対処法はHome...</p>
-  </div>
-  <footer class="entry-footer"><span title='2013-12-07 00:00:00 +0000 UTC'>2013/12/7</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
-  <a class="entry-link" aria-label="post link to HomebrewでPHP5.5を入れようと思ったら手間取った話" href="https://blog.dakatsuka.jp/2013/12/07/install-php55-on-mavericks.html"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="https://blog.dakatsuka.jp/post/page/7.html">
-      «&nbsp;前のページ&nbsp;
+      «&nbsp;前へ&nbsp;
     </a>
-    <a class="next" href="https://blog.dakatsuka.jp/post/page/9.html">次のページ&nbsp;&nbsp;»
+    <a class="next" href="https://blog.dakatsuka.jp/post/page/9.html">次へ&nbsp;&nbsp;»
     </a>
   </nav>
 </footer>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
+    <span>&copy; 2023 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
