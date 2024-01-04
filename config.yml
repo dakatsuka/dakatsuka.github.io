@@ -8,6 +8,7 @@ hasCJKLanguage: true
 enableInlineShortcodes: true
 footnoteReturnLinkContents: "^"
 uglyurls: true
+enableEmoji: true
 
 publishDir: "docs"
 

@@ -11,7 +11,16 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 06 May 2023 17:30:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 04 Jan 2024 22:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Random</title>
+      <link>https://blog.dakatsuka.jp/tags/random.html</link>
+      <pubDate>Thu, 04 Jan 2024 22:00:00 +0900</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/random.html</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Kotlin</title>
       <link>https://blog.dakatsuka.jp/tags/kotlin.html</link>
@@ -63,15 +72,6 @@
       <pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blog.dakatsuka.jp/tags/asset.html</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Diary</title>
-      <link>https://blog.dakatsuka.jp/tags/diary.html</link>
-      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://blog.dakatsuka.jp/tags/diary.html</guid>
       <description></description>
     </item>
     

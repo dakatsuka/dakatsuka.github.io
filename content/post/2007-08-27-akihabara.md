@@ -2,7 +2,7 @@
 title: 秋葉原に行ってきました
 slug: akihabara
 date: 2007-08-27
-tags: [Diary]
+tags: [Random]
 ---
 
 以下購入したものリスト。今週末あたりにDebian突っ込んでファイルサーバにする予定です。

@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>2015年振り返り | dakatsuka&#39;s blog</title>
-<meta name="keywords" content="Diary">
+<meta name="keywords" content="Random">
 <meta name="description" content="仕事全般 2013年にA社を退職したあと、しばらくフリーランスをやっていたのだけど、紆余曲折あって2014年の途中から古巣に戻って、現場でコー">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2015/12/30/lookback.html">
@@ -104,7 +104,7 @@ if (!doNotTrack) {
   "name": "2015年振り返り",
   "description": "仕事全般 2013年にA社を退職したあと、しばらくフリーランスをやっていたのだけど、紆余曲折あって2014年の途中から古巣に戻って、現場でコー",
   "keywords": [
-    "Diary"
+    "Random"
   ],
   "articleBody": "仕事全般 2013年にA社を退職したあと、しばらくフリーランスをやっていたのだけど、紆余曲折あって2014年の途中から古巣に戻って、現場でコードも書きつつ経営にもコミットしてました。良いこともあったし盛大に失敗したこともあったけど、そこそこ充実してた1年だった気がする。\n毎日コードを書く…というのは残念ながら無理だった。が、自分が書かなくても仕事がまわる状況になってきたという意味では正しいかたちなのかもしれない。\n来年はもう少しプライベートでコードを書く機会を増やしたい。\nScala 仕事面では、去年から開発が続いているScalaプロジェクトが2本あり、無事にローンチすることができた。安定して運用もできている。どちらもスマートフォン向けゲームのバックエンドだったので、ひたすらJSONを返すAPIの実装だった。\n自分は開発初期の基盤設計や開発方針・環境整備・テスト周りを整えるなどの作業が中心で、実際の実装はチームに任せっきりだった。一部設計がイケてなくて迷惑を掛けたかもしれない。\n開発方針は、関数型の側面はあまり出さずPlay + ScalikeJDBCでDDDという方針にした。混乱もなく概ねうまくいったと思っているが、リポジトリに実装したメソッドの戻り型がほとんどTry[A]になっていて、引きずられるようにサービスレイヤーもTryだらけになっていた気がする。これで良いのかと若干の不安は残る。\nなお、開発後期はずっとコンパイルの遅さとテストの遅さに悩まされる日々だった 1\nプライベートではScalaz, Finagle, Finch, http4sなどを弄って遊んでいた。http4sにはしょうもないPRを送ったりするなどしていた。来年も引き続きScalaは使っていきたい。\nPython Pythonで直接何かを開発していた訳ではないが、Scalaの仕事をしているときに、sbtのタスクがあまりにも使いにくくてInvokeというPython製ツールで代用していた。Invokeで書いたタスクはのちにFabricに全面移行したけど、今年は間接的にPythonをよく読み書きした気がする。ああ、AnsibleもPythonだった。\nRuby APIや管理画面の開発に使った。もうRuby（とRuby on Rails）は長いこと使っているのだけど、限られた時間のなかですぐ形にして出すという要求には強いなと改めて思った 2\nあとRakeが何だかんだいって便利。\nRubyは来年も変わらず手に馴染むツールとして使ってると思う。\nGolang 社内でも使われている言語なので把握くらいはしておこうと思いつつ、全然できていない。\nHaskell すごいH本を読みながら細々と家でコード書いたりしている。モナ◯や型クラスなどの概念はScalaで把握していたのでそこで躓くことは無さそう。ただ独特の構文に慣れるには書く頻度を増やさないとダメだ。\nOCaml Haskellをやりつつ最近はOCamlに浮気している。Real World OCaml読んで年越し予定。まだかじった程度だけど悪くなさそう。\nC++ 自分がC++を書くことが当面無さそう。ただ仕事でC++プロジェクトに少しだけ関わる雰囲気が出てきたので、ビルド周りなどを調べてた。Bazel良さそう。\nAnsible 今年はよくAnsibleのYAMLを書いていた気がする。慣れていない初期は書いては実行し、失敗し、の繰り返しで正直嫌いになりかけた。\n社内のプロジェクトは全てCircleCIから自動的にプロビジョニングするようになっていたけど、CircleCIからの多段SSHがとても不安定で、一部プロジェクトではCircleCIからAnsibleを実行するのは止めたようだ（直近関わっているプロジェクトでは多段SSHでプロビジョニングしているが安定はしてる。ただし遅い）\nまぁ文句ばかり言ってるがChefよりは使いやすいと思っているので、きっと来年も使っていると思う。\nDocker 本番環境で運用してみたいと思いつつ、出来ずにいる。\n開発に必要なミドルウェアの提供やテスト環境の再現をするために一部プロジェクトで利用してる程度になって留まってしまっている。来年はもう少し活用の幅を広げたいなぁ。\nElectron 眺めていただけ。フロントエンドの技術には置いて行かれている感がある。やばい\n健康 概ね健康体を維持できているが、昔より疲労を覚えることが多くなってきた。単に運動不足だろって気もするが、なるほどこれが老いか。\nあと天皇誕生日にウイルス性胃腸炎という一足早いステキなクリスマスプレゼントを頂いた。おかげで今年の最終出社日が22日になってしまい、年末年始の休日数だけは過去最高になった気がする。\n学問 関数型言語を本格的に触り始めた影響で、数学や論理学を再勉強しはじめている。あまり捗っていないけど、これからも少しずつ勉強していくと思う。\n結局CircleCIを捨てて、AWSにc4.2xlargeインスタンスを借りてDroneを動かす感じにしてしまった。 ↩︎\n4人で半年くらいかけて1サービスがローンチできた ↩︎\n",
   "wordCount" : "2074",
@@ -256,14 +256,14 @@ if (!doNotTrack) {
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://blog.dakatsuka.jp/tags/diary.html">Diary</a></li>
+      <li><a href="https://blog.dakatsuka.jp/tags/random.html">Random</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2023 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
+    <span>&copy; 2024 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

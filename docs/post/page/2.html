@@ -162,6 +162,18 @@ if (!doNotTrack) {
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Akka HTTPのDirective0の使い勝手が良くないのでどうにかする話
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>まずDirective0とDirective1の型定義を見て欲しい。 type Directive0 = Directive[Unit] type Directive1[T] = Directive[Tuple1[T]] Directive0がDirective1[Unit]で...</p>
+  </div>
+  <footer class="entry-footer"><span title='2017-02-04 00:00:00 +0000 UTC'>2017/2/4</span>&nbsp;·&nbsp;Dai Akatsuka</footer>
+  <a class="entry-link" aria-label="post link to Akka HTTPのDirective0の使い勝手が良くないのでどうにかする話" href="https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>2016年12月末の資産分配
     </h2>
   </header>
@@ -207,18 +219,6 @@ if (!doNotTrack) {
   <footer class="entry-footer"><span title='2016-02-22 00:00:00 +0000 UTC'>2016/2/22</span></footer>
   <a class="entry-link" aria-label="post link to OCamlでLuhnアルゴリズムを書いてみる" href="https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html"></a>
 </article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>OCamlの開発環境を整えた
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で...</p>
-  </div>
-  <footer class="entry-footer"><span title='2016-01-31 00:00:00 +0000 UTC'>2016/1/31</span></footer>
-  <a class="entry-link" aria-label="post link to OCamlの開発環境を整えた" href="https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html"></a>
-</article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="https://blog.dakatsuka.jp/post.html">
@@ -231,7 +231,7 @@ if (!doNotTrack) {
     </main>
     
 <footer class="footer">
-    <span>&copy; 2023 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
+    <span>&copy; 2024 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

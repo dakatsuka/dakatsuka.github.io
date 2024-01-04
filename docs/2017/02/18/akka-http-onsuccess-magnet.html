@@ -7,7 +7,7 @@
 <meta name="robots" content="index, follow">
 <title>The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす | dakatsuka&#39;s blog</title>
 <meta name="keywords" content="Scala, Akka">
-<meta name="description" content="onSuccessはThe Magnet Patternで実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと">
+<meta name="description" content="Akka HTTPの onSuccess ディレクティブは The Magnet Pattern によって実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
@@ -68,7 +68,7 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script><meta property="og:title" content="The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす" />
-<meta property="og:description" content="onSuccessはThe Magnet Patternで実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと" />
+<meta property="og:description" content="Akka HTTPの onSuccess ディレクティブは The Magnet Pattern によって実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2017-02-18T00:00:00+00:00" />
@@ -78,7 +78,7 @@ if (!doNotTrack) {
 <meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
 
 <meta name="twitter:title" content="The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす"/>
-<meta name="twitter:description" content="onSuccessはThe Magnet Patternで実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと"/>
+<meta name="twitter:description" content="Akka HTTPの onSuccess ディレクティブは The Magnet Pattern によって実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
 
 
@@ -102,12 +102,12 @@ if (!doNotTrack) {
   "@type": "BlogPosting",
   "headline": "The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす",
   "name": "The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす",
-  "description": "onSuccessはThe Magnet Patternで実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと",
+  "description": "Akka HTTPの onSuccess ディレクティブは The Magnet Pattern によって実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと",
   "keywords": [
     "Scala", "Akka"
   ],
-  "articleBody": "onSuccessはThe Magnet Patternで実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと何でも受け取ることができる。型がM[Future[A]]になっているオブジェクトをそのままonSuccessに渡したくなった時のために覚えておくと良いかもしれない。\n例えば、次のコードでDirective[Tuple1[Future[A]]]に対応することが可能。\nimplicit def directiveIncludingFuture[T](futureDirective: Directive[Tuple1[Future[T]]])(implicit tupler: Tupler[T]): OnSuccessMagnet { type Out = tupler.Out } = { new OnSuccessMagnet { type Out = tupler.Out val directive: Directive[Out] = futureDirective.flatMap { future =\u003e Directive[tupler.Out] { inner =\u003e ctx =\u003e import ctx.executionContext future.fast.flatMap(t =\u003e inner(tupler(t))(ctx)) }(tupler.OutIsTuple) }(tupler.OutIsTuple) } } Directive[Tuple1[Future[A]]]なんてそう滅多に出てこないでしょ…と思いきや複数のDirective1から取得した値を非同期で処理するというシチュエーションはそれなりにあるかもしれない。\nこんな感じのやつ。\nval result = for { value1 \u003c- directive1 value2 \u003c- directive2 } yield hogeAsyncRepository.findBy(value1, value2) // resultの型は Directive[Tuple1[Future[Option[A]]]] になる onSuccess(result) { case Some(_) =\u003e complete(OK) case None =\u003e complete(NotFound) } ",
-  "wordCount" : "400",
+  "articleBody": "Akka HTTPの onSuccess ディレクティブは The Magnet Pattern によって実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと何でも受け取ることができる。型がM[Future[A]]になっているオブジェクトをそのままonSuccessに渡したくなった時のために覚えておくと良いかもしれない。\n例えば、次のコードでDirective[Tuple1[Future[A]]]に対応することが可能。\nimplicit def directiveIncludingFuture[T](futureDirective: Directive[Tuple1[Future[T]]])(implicit tupler: Tupler[T]): OnSuccessMagnet { type Out = tupler.Out } = { new OnSuccessMagnet { type Out = tupler.Out val directive: Directive[Out] = futureDirective.flatMap { future =\u003e Directive[tupler.Out] { inner =\u003e ctx =\u003e import ctx.executionContext future.fast.flatMap(t =\u003e inner(tupler(t))(ctx)) }(tupler.OutIsTuple) }(tupler.OutIsTuple) } } Directive[Tuple1[Future[A]]]なんてそう滅多に出てこないでしょ…と思うかもしれないが、複数の Directive1 から取得した値を非同期で処理するというシチュエーションはそれなりにあるかもしれない。\nこんな感じのやつ。\nval result = for { value1 \u003c- directive1 value2 \u003c- directive2 } yield hogeAsyncRepository.findBy(value1, value2) // resultの型は Directive[Tuple1[Future[Option[A]]]] になる onSuccess(result) { case Some(_) =\u003e complete(OK) case None =\u003e complete(NotFound) } ",
+  "wordCount" : "397",
   "inLanguage": "ja",
   "datePublished": "2017-02-18T00:00:00Z",
   "dateModified": "2017-02-18T00:00:00Z",
@@ -197,7 +197,7 @@ if (!doNotTrack) {
 
 </div>
   </header> 
-  <div class="post-content"><p><code>onSuccess</code>は<a href="http://spray.io/blog/2012-12-13-the-magnet-pattern/">The Magnet Pattern</a>で実装されているので<code>OnSuccessMagnet</code>型クラスのインスタンスさえ定義してしまえば割りと何でも受け取ることができる。型が<code>M[Future[A]]</code>になっているオブジェクトをそのまま<code>onSuccess</code>に渡したくなった時のために覚えておくと良いかもしれない。</p>
+  <div class="post-content"><p>Akka HTTPの onSuccess ディレクティブは <a href="http://spray.io/blog/2012-12-13-the-magnet-pattern/">The Magnet Pattern</a> によって実装されているので<code>OnSuccessMagnet</code>型クラスのインスタンスさえ定義してしまえば割りと何でも受け取ることができる。型が<code>M[Future[A]]</code>になっているオブジェクトをそのまま<code>onSuccess</code>に渡したくなった時のために覚えておくと良いかもしれない。</p>
 <p>例えば、次のコードで<code>Directive[Tuple1[Future[A]]]</code>に対応することが可能。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">def</span> directiveIncludingFuture<span style="color:#f92672">[</span><span style="color:#66d9ef">T</span><span style="color:#f92672">](</span>futureDirective<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Directive</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Tuple1</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Future</span><span style="color:#f92672">[</span><span style="color:#66d9ef">T</span><span style="color:#f92672">]]])(</span><span style="color:#66d9ef">implicit</span> tupler<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Tupler</span><span style="color:#f92672">[</span><span style="color:#66d9ef">T</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">OnSuccessMagnet</span> <span style="color:#f92672">{</span> <span style="color:#66d9ef">type</span> <span style="color:#66d9ef">Out</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">tupler.Out</span> <span style="color:#f92672">}</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">OnSuccessMagnet</span> <span style="color:#f92672">{</span>
@@ -210,7 +210,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">}(</span>tupler<span style="color:#f92672">.</span><span style="color:#a6e22e">OutIsTuple</span><span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><p><code>Directive[Tuple1[Future[A]]]</code>なんてそう滅多に出てこないでしょ…と思いきや複数の<code>Directive1</code>から取得した値を非同期で処理するというシチュエーションはそれなりにあるかもしれない。</p>
+</span></span></code></pre></div><p><code>Directive[Tuple1[Future[A]]]</code>なんてそう滅多に出てこないでしょ…と思うかもしれないが、複数の Directive1 から取得した値を非同期で処理するというシチュエーションはそれなりにあるかもしれない。</p>
 <p>こんな感じのやつ。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> result <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">for</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>  value1 <span style="color:#66d9ef">&lt;-</span> directive1
@@ -235,7 +235,7 @@ if (!doNotTrack) {
     </main>
     
 <footer class="footer">
-    <span>&copy; 2023 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
+    <span>&copy; 2024 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

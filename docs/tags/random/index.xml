@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Random on dakatsuka&#39;s blog</title>
+    <link>https://blog.dakatsuka.jp/tags/random.html</link>
+    <description>Recent content in Random on dakatsuka&#39;s blog</description>
+    <image>
+      <title>dakatsuka&#39;s blog</title>
+      <url>https://blog.dakatsuka.jp/images/card.png</url>
+      <link>https://blog.dakatsuka.jp/images/card.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Thu, 04 Jan 2024 22:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/random/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2023年の振り返り</title>
+      <link>https://blog.dakatsuka.jp/2024/01/04/wrap-up-2023.html</link>
+      <pubDate>Thu, 04 Jan 2024 22:00:00 +0900</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2024/01/04/wrap-up-2023.html</guid>
+      <description>2023年は病に振り回された年だった。 8月、ついにといって良いのかは分からないがコロナに感染。猛烈に喉が痛くなり、5日間ほど発熱で寝込んでし</description>
+    </item>
+    
+    <item>
+      <title>2016年に買ってよかったもの</title>
+      <link>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</guid>
+      <description>あけましておめでとうございます。去年のうちに書くのをすっかり忘れていましたが、流行り？に乗って買ってよかったものをまとめておきます。あまり人</description>
+    </item>
+    
+    <item>
+      <title>2015年振り返り</title>
+      <link>https://blog.dakatsuka.jp/2015/12/30/lookback.html</link>
+      <pubDate>Wed, 30 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/12/30/lookback.html</guid>
+      <description>仕事全般 2013年にA社を退職したあと、しばらくフリーランスをやっていたのだけど、紆余曲折あって2014年の途中から古巣に戻って、現場でコー</description>
+    </item>
+    
+    <item>
+      <title>2007年頃に書いていた技術ブログのエントリをリカバリーした</title>
+      <link>https://blog.dakatsuka.jp/2015/11/21/2007.html</link>
+      <pubDate>Sat, 21 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/11/21/2007.html</guid>
+      <description>その昔 http://d.hatena.ne.jp/CLA という技術ブログを書いていた。なぜ消したのか最早記憶にはないが、特に隠す内容のものでも無さそうだったので、このブログにインポートする</description>
+    </item>
+    
+    <item>
+      <title>退社後の軽い運動</title>
+      <link>https://blog.dakatsuka.jp/2015/11/15/diary.html</link>
+      <pubDate>Sun, 15 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2015/11/15/diary.html</guid>
+      <description>この2年間で6キロくらい太った。食べる量は変わっていないので単純に運動不足だと思う。まぁストレスも多少影響しているかも。 最近は退社後に、西新</description>
+    </item>
+    
+    <item>
+      <title>秋葉原に行ってきました</title>
+      <link>https://blog.dakatsuka.jp/2007/08/27/akihabara.html</link>
+      <pubDate>Mon, 27 Aug 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/08/27/akihabara.html</guid>
+      <description>以下購入したものリスト。今週末あたりにDebian突っ込んでファイルサーバにする予定です。 Intel Core2Quad Q6600 Intel DG33FBC crucial 1GB PC2-6400 UnBuffered x2 3ware 9500S-4LP ST3750640AS(750G SATA300 7200) x4 Owltech M12 SS-600HM Antec P182</description>
+    </item>
+    
+    <item>
+      <title>2連休</title>
+      <link>https://blog.dakatsuka.jp/2007/04/20/holidays.html</link>
+      <pubDate>Fri, 20 Apr 2007 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2007/04/20/holidays.html</guid>
+      <description>Ubuntu 7.04とCentOS5をKVMで動かして色々と遊んでみようと思います。</description>
+    </item>
+    
+  </channel>
+</rss>

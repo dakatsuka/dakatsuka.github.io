@@ -11,7 +11,16 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 06 May 2023 17:30:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 04 Jan 2024 22:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2023年の振り返り</title>
+      <link>https://blog.dakatsuka.jp/2024/01/04/wrap-up-2023.html</link>
+      <pubDate>Thu, 04 Jan 2024 22:00:00 +0900</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2024/01/04/wrap-up-2023.html</guid>
+      <description>2023年は病に振り回された年だった。 8月、ついにといって良いのかは分からないがコロナに感染。猛烈に喉が痛くなり、5日間ほど発熱で寝込んでし</description>
+    </item>
+    
     <item>
       <title>Kotlin &#43; Gradleで別パッケージの src/test/resources を参照する方法</title>
       <link>https://blog.dakatsuka.jp/2023/05/06/kotlin-src-test.html</link>
@@ -45,7 +54,7 @@
       <pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</guid>
-      <description>onSuccessはThe Magnet Patternで実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと</description>
+      <description>Akka HTTPの onSuccess ディレクティブは The Magnet Pattern によって実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと</description>
     </item>
     
     <item>
