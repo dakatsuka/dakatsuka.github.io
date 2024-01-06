@@ -2,19 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://blog.dakatsuka.jp/</loc>
+    <lastmod>2024-01-06T20:00:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/2024/01/06/grpc-gem.html</loc>
+    <lastmod>2024-01-06T20:00:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/post.html</loc>
+    <lastmod>2024-01-06T20:00:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/ruby.html</loc>
+    <lastmod>2024-01-06T20:00:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags.html</loc>
+    <lastmod>2024-01-06T20:00:00+09:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/2024/01/04/wrap-up-2023.html</loc>
     <lastmod>2024-01-04T22:00:00+09:00</lastmod>
   </url><url>
-    <loc>https://blog.dakatsuka.jp/</loc>
-    <lastmod>2024-01-04T22:00:00+09:00</lastmod>
-  </url><url>
-    <loc>https://blog.dakatsuka.jp/post.html</loc>
-    <lastmod>2024-01-04T22:00:00+09:00</lastmod>
-  </url><url>
     <loc>https://blog.dakatsuka.jp/tags/random.html</loc>
-    <lastmod>2024-01-04T22:00:00+09:00</lastmod>
-  </url><url>
-    <loc>https://blog.dakatsuka.jp/tags.html</loc>
     <lastmod>2024-01-04T22:00:00+09:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/categories.html</loc>
@@ -123,9 +129,6 @@
     <lastmod>2015-11-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/tags/rails.html</loc>
-    <lastmod>2015-11-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.dakatsuka.jp/tags/ruby.html</loc>
     <lastmod>2015-11-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/2015/11/15/diary.html</loc>

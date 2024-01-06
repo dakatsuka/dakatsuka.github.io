@@ -11,7 +11,16 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 04 Jan 2024 22:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 06 Jan 2024 20:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>gRPC 1.60.0がRuby 3.3.0 x86_64環境だとビルドできない</title>
+      <link>https://blog.dakatsuka.jp/2024/01/06/grpc-gem.html</link>
+      <pubDate>Sat, 06 Jan 2024 20:00:00 +0900</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2024/01/06/grpc-gem.html</guid>
+      <description>bundle install of grpc-1.60.0-x86_64-linux reports that it is incompatible with Ruby 3.3.0 during GitHub CI #35396 手元のM3 Macだと問題なくbundle installできたのでx86_64特有の問題っぽい。すでにIssu</description>
+    </item>
+    
     <item>
       <title>2023年の振り返り</title>
       <link>https://blog.dakatsuka.jp/2024/01/04/wrap-up-2023.html</link>

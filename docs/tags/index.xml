@@ -11,7 +11,16 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 04 Jan 2024 22:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 06 Jan 2024 20:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ruby</title>
+      <link>https://blog.dakatsuka.jp/tags/ruby.html</link>
+      <pubDate>Sat, 06 Jan 2024 20:00:00 +0900</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/ruby.html</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Random</title>
       <link>https://blog.dakatsuka.jp/tags/random.html</link>
@@ -135,15 +144,6 @@
       <pubDate>Wed, 18 Nov 2015 00:00:00 +0000</pubDate>
       
       <guid>https://blog.dakatsuka.jp/tags/rails.html</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Ruby</title>
-      <link>https://blog.dakatsuka.jp/tags/ruby.html</link>
-      <pubDate>Wed, 18 Nov 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://blog.dakatsuka.jp/tags/ruby.html</guid>
       <description></description>
     </item>
     
