@@ -3,18 +3,24 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.dakatsuka.jp/</loc>
-    <lastmod>2024-01-06T20:00:00+09:00</lastmod>
+    <lastmod>2024-01-16T22:00:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/2024/01/16/dream.html</loc>
+    <lastmod>2024-01-16T22:00:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/ocaml.html</loc>
+    <lastmod>2024-01-16T22:00:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/post.html</loc>
+    <lastmod>2024-01-16T22:00:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags.html</loc>
+    <lastmod>2024-01-16T22:00:00+09:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/2024/01/06/grpc-gem.html</loc>
     <lastmod>2024-01-06T20:00:00+09:00</lastmod>
   </url><url>
-    <loc>https://blog.dakatsuka.jp/post.html</loc>
-    <lastmod>2024-01-06T20:00:00+09:00</lastmod>
-  </url><url>
     <loc>https://blog.dakatsuka.jp/tags/ruby.html</loc>
-    <lastmod>2024-01-06T20:00:00+09:00</lastmod>
-  </url><url>
-    <loc>https://blog.dakatsuka.jp/tags.html</loc>
     <lastmod>2024-01-06T20:00:00+09:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/2024/01/04/wrap-up-2023.html</loc>
@@ -34,9 +40,6 @@
   </url><url>
     <loc>https://blog.dakatsuka.jp/categories/programming.html</loc>
     <lastmod>2023-05-06T17:30:00+09:00</lastmod>
-  </url><url>
-    <loc>https://blog.dakatsuka.jp/tags/ocaml.html</loc>
-    <lastmod>2021-01-11T19:20:00+09:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/2021/01/11/ocaml-binding-operators.html</loc>
     <lastmod>2021-01-11T19:20:00+09:00</lastmod>

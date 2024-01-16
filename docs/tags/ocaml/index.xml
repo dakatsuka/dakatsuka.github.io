@@ -11,7 +11,16 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Mon, 11 Jan 2021 19:20:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/ocaml/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 Jan 2024 22:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/ocaml/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dreamのコードが良い感じ</title>
+      <link>https://blog.dakatsuka.jp/2024/01/16/dream.html</link>
+      <pubDate>Tue, 16 Jan 2024 22:00:00 +0900</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/2024/01/16/dream.html</guid>
+      <description>ここ数日DreamというOcamlのWebフレームワークのコードを読んでいる。 ファーストクラスモジュールやファンクター、パラメーター満載のモ</description>
+    </item>
+    
     <item>
       <title>OCaml 4.08.0から使えるBinding operatorsが便利だった</title>
       <link>https://blog.dakatsuka.jp/2021/01/11/ocaml-binding-operators.html</link>

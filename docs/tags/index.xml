@@ -11,7 +11,16 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 06 Jan 2024 20:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 Jan 2024 22:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OCaml</title>
+      <link>https://blog.dakatsuka.jp/tags/ocaml.html</link>
+      <pubDate>Tue, 16 Jan 2024 22:00:00 +0900</pubDate>
+      
+      <guid>https://blog.dakatsuka.jp/tags/ocaml.html</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Ruby</title>
       <link>https://blog.dakatsuka.jp/tags/ruby.html</link>
@@ -36,15 +45,6 @@
       <pubDate>Sat, 06 May 2023 17:30:00 +0900</pubDate>
       
       <guid>https://blog.dakatsuka.jp/tags/kotlin.html</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>OCaml</title>
-      <link>https://blog.dakatsuka.jp/tags/ocaml.html</link>
-      <pubDate>Mon, 11 Jan 2021 19:20:00 +0900</pubDate>
-      
-      <guid>https://blog.dakatsuka.jp/tags/ocaml.html</guid>
       <description></description>
     </item>
     
