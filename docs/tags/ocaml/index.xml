@@ -11,51 +11,42 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 20 Mar 2024 22:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/ocaml/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Mar 2024 22:00:00 +0900</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/ocaml/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OCamlでモノイド</title>
       <link>https://blog.dakatsuka.jp/2024/03/20/ocaml-monoid.html</link>
       <pubDate>Wed, 20 Mar 2024 22:00:00 +0900</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2024/03/20/ocaml-monoid.html</guid>
       <description>OCamlには型クラスはないが、ファンクターでそれっぽい雰囲気のものは作れそうだなと思ったので試してみた。 まずはモノイドを表すモジュール型を</description>
     </item>
-    
     <item>
       <title>Dreamのコードが良い感じ</title>
       <link>https://blog.dakatsuka.jp/2024/01/16/dream.html</link>
       <pubDate>Tue, 16 Jan 2024 22:00:00 +0900</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2024/01/16/dream.html</guid>
       <description>ここ数日DreamというOcamlのWebフレームワークのコードを読んでいる。 ファーストクラスモジュールやファンクター、パラメーター満載のモ</description>
     </item>
-    
     <item>
       <title>OCaml 4.08.0から使えるBinding operatorsが便利だった</title>
       <link>https://blog.dakatsuka.jp/2021/01/11/ocaml-binding-operators.html</link>
       <pubDate>Mon, 11 Jan 2021 19:20:00 +0900</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2021/01/11/ocaml-binding-operators.html</guid>
       <description>OCaml 4.08.0 で Binding operators 1 という機能が導入されていました。これでOCamlでもHaskellのdo記法やScalaのfor式に近いかたちでモナディックな計</description>
     </item>
-    
     <item>
       <title>OCamlでLuhnアルゴリズムを書いてみる</title>
       <link>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</link>
       <pubDate>Mon, 22 Feb 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2016/02/22/ocaml-luhn.html</guid>
       <description>OCamlに慣れるために何か書こうと思ったけど、あまりいいネタが思い浮かばなかったのでLuhnアルゴリズムを書いてみた。クレジットカードの番</description>
     </item>
-    
     <item>
       <title>OCamlの開発環境を整えた</title>
       <link>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</link>
       <pubDate>Sun, 31 Jan 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2016/01/31/setup-ocaml.html</guid>
       <description>本当はローカルのMac OS X上に開発環境を構築したのだけど、メモを取り忘れていたので、改めてVagrantで起動したUbuntu 15.10上で</description>
     </item>
-    
   </channel>
 </rss>

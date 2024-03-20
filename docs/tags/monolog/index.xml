@@ -11,15 +11,14 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Fri, 18 Oct 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/monolog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Oct 2013 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/monolog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Monologのログ出力先をFluentdに変更してみた</title>
       <link>https://blog.dakatsuka.jp/2013/10/18/monolog-fluentd.html</link>
       <pubDate>Fri, 18 Oct 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2013/10/18/monolog-fluentd.html</guid>
       <description>Symfony2にも採用されているMonologは、HandlerやFormatterを差し替えることでログの出力先やフォーマットを自由に変</description>
     </item>
-    
   </channel>
 </rss>

@@ -11,15 +11,14 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 05 Sep 2007 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/fedora/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 05 Sep 2007 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/fedora/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Intel G33チップ搭載のPCにFedora8をインストールするには</title>
       <link>https://blog.dakatsuka.jp/2007/09/05/fedora8.html</link>
       <pubDate>Wed, 05 Sep 2007 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2007/09/05/fedora8.html</guid>
       <description>そのままDVDを突っ込んでもACPIのチェックでコケてインストーラが起動しないので、起動オプションでACPIを無効にします。 最初の「Welc</description>
     </item>
-    
   </channel>
 </rss>

@@ -11,15 +11,14 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 06 May 2023 17:30:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/kotlin/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 06 May 2023 17:30:00 +0900</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/kotlin/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Kotlin &#43; Gradleで別パッケージの src/test/resources を参照する方法</title>
       <link>https://blog.dakatsuka.jp/2023/05/06/kotlin-src-test.html</link>
       <pubDate>Sat, 06 May 2023 17:30:00 +0900</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2023/05/06/kotlin-src-test.html</guid>
       <description>Kotlinでテストを書くときに、別パッケージの src/test/resources を参照したいケースがある。たとえばインフラストラクチャ層のテストリソースを別のサブプロジェ</description>
     </item>
-    
   </channel>
 </rss>

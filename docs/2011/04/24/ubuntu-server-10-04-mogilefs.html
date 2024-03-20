@@ -10,15 +10,15 @@
 <meta name="description" content="Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。 MogileFS には次のような特徴があります">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,7 +56,7 @@
 
     </style>
 </noscript>
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,13 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="Ubuntu Server 10.04に分散ファイルシステム MogileFSを入れてみた" />
 <meta property="og:description" content="Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。 MogileFS には次のような特徴があります" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2011/04/24/ubuntu-server-10-04-mogilefs.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="article:section" content="post" />
 <meta property="article:published_time" content="2011-04-24T00:00:00+00:00" />
 <meta property="article:modified_time" content="2011-04-24T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
 <meta name="twitter:title" content="Ubuntu Server 10.04に分散ファイルシステム MogileFSを入れてみた"/>
 <meta name="twitter:description" content="Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。 MogileFS には次のような特徴があります"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -87,6 +88,12 @@ if (!doNotTrack) {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.dakatsuka.jp/post.html"
+    }
     {
       "@type": "ListItem",
       "position":  1 ,
@@ -109,7 +116,7 @@ if (!doNotTrack) {
   "articleBody": "Ubuntu Server 10.04 に 分散ファイルシステム「MogileFS」をインストール＆初期設定をして動作するところまで書いてみます。\nMogileFS には次のような特徴があります。\nPerl で実装されている HTTPを利用（NFSとか使わなくてOK） 自動フェイルオーバー 自動レプリケーション そこそこ実績がある（たしかはてなでも使われていたはず） 以下参考にさせて頂いたサイトです。\n分散ファイルシステム MogileFS について : Tech Talk Blog – Six Apart MogileFS のインストールと初期設定 : Tech Talk Blog – Six Apart MogileFSで構築する高速スケーラブルな分散ファイルシステム – builder PerlbalでMogileFSを更に高速化、効率化する – builder OSS分散ファイルシステムMogileFS で組む素敵システム 動作環境 Ubuntu Server 10.04 LTS / 64bit MySQL 5.1 Perl 5.10.1 MogileFSが依存しているライブラリなどを入れる あらかじめGCC、MySQLをインストールしておきます。\nsudo apt-get install build-essential mysql-server-5.1 libmysqlclient16-dev 次にMogileFSのインストールに必要なライブラリをCPANでインストールします。\n$ sudo cpan cpan[1]\u003e install YAML capn[2]\u003e install Net::Netmask cpan[3]\u003e install Danga::Socket cpan[4]\u003e install IO::AIO cpan[5]\u003e install IO::WrapTie cpan[6]\u003e install DBI cpan[7]\u003e install DBD::mysql cpan[8]\u003e install Perlbal MogileFSのインストール MogileFS-Clientのソースをダウンロード、展開、インストールします。\n$ cd /usr/local/src $ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Client-1.14.tar.gz $ sudo tar zxvf sudo tar zxvf MogileFS-Client-1.14.tar.gz $ cd MogileFS-Client-1.14/ $ sudo perl Makefile.PL $ sudo make $ sudo make install MogileFS-Utilsのソースをダウンロード、展開、インストールします。\n$ cd /usr/local/src $ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Utils-2.19.tar.gz $ sudo tar zxvf MogileFS-Utils-2.19.tar.gz $ cd MogileFS-Utils-2.19/ $ sudo perl Makefile.PL $ sudo make $ sudo make install MogileFS-Serverのソースをダウンロード、展開、インストールします。\n$ cd /usr/local/src $ sudo wget http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/MogileFS-Server-2.46.tar.gz $ sudo tar zxvf MogileFS-Server-2.46.tar.gz $ cd MogileFS-Server-2.46/ $ sudo perl Makefile.PL $ sudo make $ sudo make install MogileFSの初期設定 DBにスキーマを作成します。一発でDB、ユーザーを作成してくれるコマンドがあるので利用します。\nmogdbsetup --dbrootuser=root --dbrootpass=hogehoge --dbuser=mogilefs --dbpass=mogilefs --yes Trackerの設定（mogilefsd） デフォルトだと /etc/mogilefs/mogilefsd.conf を読みに行きます。特に変更する必要も無いのでデフォルトのままいきます。変更したい場合は -c で指定出来ます。\n$ sudo mkdir /etc/mogilefs /etc/mogilefs/mogilefsd.conf はこのページを参考にして次のようにしました。\ndaemonize = 1 db_dsn = DBI:mysql:mogilefs:host=127.0.0.1 db_user = mogilefs db_pass = mogilefs conf_port = 7001 listener_jobs = 10 Trackerは root ユーザーでは実行出来ませんので 専用のユーザーを作ってあげる必要があります。\nsudo useradd -s /bin/false mogilefs sudo -u mogilefs mogilefsd psコマンドで起動しているか確認。\n$ ps ax | grep mogilefsd 11160 ? S 0:00 mogilefsd 11161 ? S 0:00 mogilefsd [replicate] 11162 ? S 0:00 mogilefsd [delete] 11163 ? S 0:00 mogilefsd [queryworker] 11164 ? S 0:00 mogilefsd [queryworker] 11165 ? S 0:00 mogilefsd [queryworker] 11166 ? S 0:00 mogilefsd [queryworker] 11167 ? S 0:00 mogilefsd [queryworker] 11168 ? S 0:00 mogilefsd [queryworker] 11169 ? S 0:00 mogilefsd [queryworker] 11170 ? S 0:00 mogilefsd [queryworker] 11171 ? S 0:00 mogilefsd [queryworker] 11172 ? S 0:00 mogilefsd [queryworker] 11173 ? S 0:00 mogilefsd [monitor] 11174 ? S 0:00 mogilefsd [reaper] 11175 ? S 0:00 mogilefsd [job_master] 11176 ? SN 0:00 mogilefsd [fsck] Storage nodeの設定（mogstored） デフォルトだと /etc/mogilefs/mogstored.conf を読みに行きます。Trackerと同様、変更したい場合は -c で指定出来ます。\nhttplisten = 0.0.0.0:7500 mgmtlisten = 0.0.0.0:7501 docroot = /var/mogdata /etc/mogilefs/mogstored.conf で指定したdocrootのディレクトリを作成します。\nsudo mkdir /var/mogdata Trackerとは違いStorage nodeは root ユーザーで起動させます。\n$ sudo mogstored -d $ ps ax | grep mogstored 11209 ? Ss 0:00 mogstored 11210 ? S 0:00 mogstored [diskusage] 11211 ? S 0:00 mogstored [iostat] Storage node の登録 上記インストール・初期設定が終われば、あとはmogadmコマンドを使用して設定していくことが出来ます。\nTrackerが正常に動作しているか確認。\n$ mogadm check Checking trackers... 127.0.0.1:7001 ... OK Checking hosts... No devices found on tracker(s). TrackerはOKと出ていますが、Checking hosts…ではNo devicesと出てしまっていますので、mogadm host add で Storage node を登録します。\n$ mogadm host add localhost --port=7500 $ mogadm check Checking trackers... 127.0.0.1:7001 ... OK Checking hosts... [ 1] localhost ... skipping; status = down No devices found on tracker(s). Deviceの登録 $ mogadm device add localhost 1 $ mogadm device add localhost 2 $ sudo mkdir /var/mogdata/{dev1,dev2} $ mogadm device list localhost [1]: down used(G) free(G) total(G) dev1: down 0.000 0.000 0.000 dev2: down 0.000 0.000 0.000 downとなっているので有効にしてあげます。\n$ mogadm host mark localhost alive $ mogadm check Checking trackers... 127.0.0.1:7001 ... OK Checking hosts... [ 1] localhost ... OK Checking devices... host device size(G) used(G) free(G) use% ob state I/O% ---- ------------ ---------- ---------- ---------- ------ ---------- ----- [ 1] dev1 7.109 1.066 6.042 15.00% writeable 0.0 [ 1] dev2 7.109 1.066 6.042 15.00% writeable 0.0 ---- ------------ ---------- ---------- ---------- ------ total: 14.217 2.132 12.085 15.00% これでようやくMogileFSが使用可能になりました！\nMogileFSのクライアントはPerl以外でも出ていますので、分散ストレージとして色々使い道があるのではないでしょうか。私の会社ではRailsアプリの画像ストレージとして利用しています。\n",
   "wordCount" : "1648",
   "inLanguage": "ja",
-  "datePublished": "2011-04-24T00:00:00Z",
+  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2011-04-24T00:00:00Z",
   "dateModified": "2011-04-24T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -190,7 +197,7 @@ if (!doNotTrack) {
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       Ubuntu Server 10.04に分散ファイルシステム MogileFSを入れてみた
     </h1>
     <div class="post-meta"><span title='2011-04-24 00:00:00 +0000 UTC'>2011/4/24</span>

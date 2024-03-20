@@ -11,24 +11,21 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Mon, 16 Dec 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/work/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 16 Dec 2013 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/work/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>個人事業主になりました</title>
       <link>https://blog.dakatsuka.jp/2013/12/16/freelance.html</link>
       <pubDate>Mon, 16 Dec 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2013/12/16/freelance.html</guid>
       <description>無職から個人事業主にジョブチェンジしました。 自分でサービスの開発もしていきたいですが、当面は傭兵としてサーバサイドプログラミングやインフラ構</description>
     </item>
-    
     <item>
       <title>株式会社オルトプラスを退職しました</title>
       <link>https://blog.dakatsuka.jp/2013/11/26/resignation.html</link>
       <pubDate>Tue, 26 Nov 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2013/11/26/resignation.html</guid>
       <description>Facebookのほうでは2週間程前に告知していたのですが、2013年11月22日付けで株式会社オルトプラスを退職することとなりました。先週</description>
     </item>
-    
   </channel>
 </rss>

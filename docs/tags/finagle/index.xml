@@ -11,33 +11,28 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Tue, 15 Dec 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/finagle/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 15 Dec 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/finagle/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>finagle-mysqlのClient (IO Context) をReaderTで受け取る</title>
       <link>https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html</link>
       <pubDate>Tue, 15 Dec 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html</guid>
       <description>下準備としてパッケージオブジェクトあたりに以下のおまじないを書いておく1 この時点ですでに面倒だ！ import com.twitter.util.Future import scalaz._ import Scalaz._ implicit def FutureFunctor: Functor[Future] = new Functor[Future] { def map[A, B](f: Future[A])(map: A =&amp;gt; B): Future[B]</description>
     </item>
-    
     <item>
       <title>FinchのEndpointのテスト方法を調べた</title>
       <link>https://blog.dakatsuka.jp/2015/12/13/finch-endpoint-test.html</link>
       <pubDate>Sun, 13 Dec 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/12/13/finch-endpoint-test.html</guid>
       <description>Finchはエンドポイントを作るときに戻り値を型で縛れるので、正常系のレスポンスに関してはコンパイラを信用して大丈夫だろう。ただし、ステータ</description>
     </item>
-    
     <item>
       <title>Finch &#43; MySQLでREST APIサーバを構築する</title>
       <link>https://blog.dakatsuka.jp/2015/12/07/finch.html</link>
       <pubDate>Mon, 07 Dec 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/12/07/finch.html</guid>
       <description>これはScala Advent Calendar 2015（Adventar版）7日目です。6日目はHiroyuki-NagataさんのScalatraとnon-bloc</description>
     </item>
-    
   </channel>
 </rss>

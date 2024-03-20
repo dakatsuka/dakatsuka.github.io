@@ -11,51 +11,42 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 28 Aug 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/symfony2/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 28 Aug 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/symfony2/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Symfony2でサブドメインに対応したサイトを作る</title>
       <link>https://blog.dakatsuka.jp/2014/08/28/symfony2-subdomain.html</link>
       <pubDate>Thu, 28 Aug 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2014/08/28/symfony2-subdomain.html</guid>
       <description>Symfony2では特定のBundleをサブドメインに切り出すことができる。正しくはBundle毎に任意のドメインを割り当てることができる。</description>
     </item>
-    
     <item>
       <title>Symfony2アプリをTravisでCIする</title>
       <link>https://blog.dakatsuka.jp/2014/04/03/symfony2-travis-ci.html</link>
       <pubDate>Thu, 03 Apr 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2014/04/03/symfony2-travis-ci.html</guid>
       <description>.travis.ymlを下記のようにした。TravisはComposerもPHPUnitもパスが通った状態になっているため、ダウンロードする</description>
     </item>
-    
     <item>
       <title>Symfony2ではRelationshipsにAbstract classやInterfaceが指定できる</title>
       <link>https://blog.dakatsuka.jp/2013/12/19/resolve-target-entity.html</link>
       <pubDate>Thu, 19 Dec 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2013/12/19/resolve-target-entity.html</guid>
       <description>Doctrine2のOneToManyやManyToManyのtargetEntityにはAbstract classやInterfaceを指</description>
     </item>
-    
     <item>
       <title>Symfony2でFunctional Testを快適に行うには</title>
       <link>https://blog.dakatsuka.jp/2013/12/05/symfony2-functional-test.html</link>
       <pubDate>Thu, 05 Dec 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2013/12/05/symfony2-functional-test.html</guid>
       <description>前置き Symfony2を構成するサービスはほぼDIコンテナの上に乗っているので、ドメインとデータベース、フレームワークがそれぞれ疎結合になっ</description>
     </item>
-    
     <item>
       <title>Symfony2(Doctrine2)でENUMを使うならDoctrineEnumBundleが便利</title>
       <link>https://blog.dakatsuka.jp/2013/08/13/doctrine-enum-bundle.html</link>
       <pubDate>Tue, 13 Aug 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2013/08/13/doctrine-enum-bundle.html</guid>
       <description>DoctrineEnumBundleというBundleを導入することによって、Doctrine2でMySQLのENUM型を扱うことができます</description>
     </item>
-    
   </channel>
 </rss>

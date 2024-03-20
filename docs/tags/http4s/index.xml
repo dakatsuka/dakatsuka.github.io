@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>http4s on dakatsuka&#39;s blog</title>
+    <title>Http4s on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/http4s.html</link>
-    <description>Recent content in http4s on dakatsuka&#39;s blog</description>
+    <description>Recent content in Http4s on dakatsuka&#39;s blog</description>
     <image>
       <title>dakatsuka&#39;s blog</title>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
@@ -11,24 +11,21 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sun, 22 Nov 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/http4s/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 22 Nov 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/http4s/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>http4sでHTTPSを有効にする</title>
       <link>https://blog.dakatsuka.jp/2015/11/22/http4s-with-ssl.html</link>
       <pubDate>Sun, 22 Nov 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/11/22/http4s-with-ssl.html</guid>
       <description>SSLSupportパッケージをインポートしてBlazeBuilderの.withSSLにKeyStoreの情報を渡せばHTTPSが有効にな</description>
     </item>
-    
     <item>
       <title>ScalaのHTTPインターフェース http4s 超入門</title>
       <link>https://blog.dakatsuka.jp/2015/11/14/http4s.html</link>
       <pubDate>Sat, 14 Nov 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/11/14/http4s.html</guid>
       <description>What&amp;rsquo;s http4s RackやWSGIのScala版といったところ。公式サイトの説明も次のように書いてある。 http4s is a minimal, idiomatic Scala interface for HTTP. http4s is Scala&amp;rsquo;s answer to Ruby&amp;rsquo;s Rack, Python&amp;rsquo;s WSGI, Haskell&amp;rsquo;s WAI, and Java&amp;rsquo;s Servlets. ま</description>
     </item>
-    
   </channel>
 </rss>

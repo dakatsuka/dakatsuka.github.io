@@ -10,15 +10,15 @@
 <meta name="description" content="PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。 &lt;?php class Stream implements \Iterator { private $position; private $offset; private $limit; public function __construct($offset, $limit = null) { $this-&gt;position = $offset;">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2013/09/02/php-infinite-list.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2013/09/02/php-infinite-list.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,7 +56,7 @@
 
     </style>
 </noscript>
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,13 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="PHPで無限リストを作る" />
 <meta property="og:description" content="PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。 &lt;?php class Stream implements \Iterator { private $position; private $offset; private $limit; public function __construct($offset, $limit = null) { $this-&gt;position = $offset;" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2013/09/02/php-infinite-list.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2013/09/02/php-infinite-list.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="article:section" content="post" />
 <meta property="article:published_time" content="2013-09-02T00:00:00+00:00" />
 <meta property="article:modified_time" content="2013-09-02T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
 <meta name="twitter:title" content="PHPで無限リストを作る"/>
 <meta name="twitter:description" content="PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。 &lt;?php class Stream implements \Iterator { private $position; private $offset; private $limit; public function __construct($offset, $limit = null) { $this-&gt;position = $offset;"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -87,6 +88,12 @@ if (!doNotTrack) {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.dakatsuka.jp/post.html"
+    }
     {
       "@type": "ListItem",
       "position":  1 ,
@@ -109,7 +116,7 @@ if (!doNotTrack) {
   "articleBody": "PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。\n\u003c?php class Stream implements \\Iterator { private $position; private $offset; private $limit; public function __construct($offset, $limit = null) { $this-\u003eposition = $offset; $this-\u003eoffset = $offset; $this-\u003elimit = $limit; } public function current() { return $this-\u003eposition; } public function next() { $this-\u003eposition++; } public function valid() { if ($this-\u003elimit \u0026\u0026 $this-\u003eposition \u003e $this-\u003elimit) { return false; } return true; } public function key() { return $this-\u003eposition; } public function rewind() { $this-\u003eposition = $this-\u003eoffset; } public function take($n) { return new \\LimitIterator($this, 0, $n); } } 無限ループさせる。\n\u003c?php $stream = new Stream(0); foreach ($stream as $i) { echo $i . \"\\n\"; } =\u003e // 0 // 1 // 2 // 3 // 4 // . // . 範囲指定してみる。\n\u003c?php $stream = new Stream(50, 55); foreach ($stream as $i) { echo $i . \"\\n\"; } =\u003e // 50 // 51 // 52 // 53 // 54 // 54 LimitIteratorを使えば無限リストから必要な数だけ取り出すことが出来ます。今回はtakeメソッドでラップしました。\n\u003c?php $stream = new Stream(0); foreach ($stream-\u003etake(5) as $i) { echo $i . \"\\n\"; } =\u003e // 0 // 1 // 2 // 3 // 4 しかしこれだけだとあまり使い道がないので、せめてmap機能は欲しい気がしますね。イテレータオブジェクトにはarray_系の関数が使えませんので、LazyMapIteratorを作ってみます。\n\u003c?php class LazyMapIterator implements \\Iterator { protected $iterator; protected $callback; public function __construct(\\Iterator $iterator, callable $callback) { $this-\u003eiterator = $iterator; $this-\u003ecallback = $callback; } public function getIterator() { return $this-\u003eiterator; } public function current(){ $f = $this-\u003ecallback; return $f($this-\u003eiterator-\u003ecurrent()); } public function next() { $this-\u003eiterator-\u003enext(); } public function key() { return $this-\u003eiterator-\u003ekey(); } public function valid() { return $this-\u003eiterator-\u003evalid(); } public function rewind() { $this-\u003eiterator-\u003erewind(); } } Streamクラスにmapメソッドを生やします。\n\u003c?php public function map(callable $f) { return new LazyMapIterator($this, $f); } mapメソッドを使ってみます。\n\u003c?php $stream = new Stream(1, 5); $result = $stream-\u003emap(function($i) { return $i * 10; }); var_dump(iterator_to_array($result)); array(5) { [1] =\u003e int(10) [2] =\u003e int(20) [3] =\u003e int(30) [4] =\u003e int(40) [5] =\u003e int(50) } ちなみにPHPはSPLで色々なイテレータが用意されていますので、PHPの残念な配列操作にイラついている方は是非覗いてみてください（CallbackFilterIteratorを使えばfilter機能もすぐ実装できます）\n",
   "wordCount" : "653",
   "inLanguage": "ja",
-  "datePublished": "2013-09-02T00:00:00Z",
+  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2013-09-02T00:00:00Z",
   "dateModified": "2013-09-02T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -190,7 +197,7 @@ if (!doNotTrack) {
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       PHPで無限リストを作る
     </h1>
     <div class="post-meta"><span title='2013-09-02 00:00:00 +0000 UTC'>2013/9/2</span>

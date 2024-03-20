@@ -10,15 +10,15 @@
 <meta name="description" content="私の所属している会社では、2年程前にバージョン管理システムをSubversionからGitに移行し、現在まで開発フローを試行錯誤してきました">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2011/05/24/git-flow.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2011/05/24/git-flow.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,7 +56,7 @@
 
     </style>
 </noscript>
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,13 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="Gitを使った開発・運用フローの紹介" />
 <meta property="og:description" content="私の所属している会社では、2年程前にバージョン管理システムをSubversionからGitに移行し、現在まで開発フローを試行錯誤してきました" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2011/05/24/git-flow.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2011/05/24/git-flow.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="article:section" content="post" />
 <meta property="article:published_time" content="2011-05-24T00:00:00+00:00" />
 <meta property="article:modified_time" content="2011-05-24T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
 <meta name="twitter:title" content="Gitを使った開発・運用フローの紹介"/>
 <meta name="twitter:description" content="私の所属している会社では、2年程前にバージョン管理システムをSubversionからGitに移行し、現在まで開発フローを試行錯誤してきました"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -87,6 +88,12 @@ if (!doNotTrack) {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.dakatsuka.jp/post.html"
+    }
     {
       "@type": "ListItem",
       "position":  1 ,
@@ -109,7 +116,7 @@ if (!doNotTrack) {
   "articleBody": "私の所属している会社では、2年程前にバージョン管理システムをSubversionからGitに移行し、現在まで開発フローを試行錯誤してきました。ようやく形になってきたということで、守秘義務に接触しない程度に紹介＆考察していきたいと思います。\n形になってきたとはいえ、まだまだ試行錯誤中ですので色々なツッコミは大歓迎です。\n現在の開発フローの俯瞰図 現在の開発フローを俯瞰してみると大体下記図のような感じになっています。途中で図を書くのが面倒になった都合上、Jenkinsさんが１人しか居ませんが、実際はmasterブランチの他にreleaseブランチも監視してもらっています。\n以降この図を元に話を進めていきたと思います。\nGitoriousを利用して自由に開発 GitoriousというGitHubに似たサービスがあります。このGitoriousはオープンソースとしても公開されていますので社内に設置して利用する事が出来ます。\n見た目はGitHubとだいぶ違いますが利用方法は似通っていて、まずプロジェクトの中央リポジトリが存在し、それを各人がフォークして開発をしていくスタイルになります。GitHubのPull request（GitoriousではMerge requestと呼ぶ）と同等の機能もあるので、俯瞰図にも書いてある通り非常にGitHubを利用した開発に近くなっていると思います。\nGitoriousを利用するメリット・デメリット このGitoriousを利用した開発フローのメリットとしては以下が挙げられます。\n必ずフォークしてから開発するので、仮に滅茶苦茶な実装をコミットしても周りに影響が無い。 周りに影響が無いので、Git初心者の社員にも心置きなくGitを弄り倒してもらう事が出来る。 Pull request で変更内容がDiffで見れるので、コードレビューするのが楽になる。 Pull request は独立したブランチになっているので、開発者はダメ出しされた後にPull requestに対して再度push出来る。 まぁ、GitHubを利用した場合と同じようなメリットですね。逆にデメリットとしては以下が挙がってきます。\n管理者が休んだりサボったりするとあっという間にPull requestが溜まってしまう。 管理者、開発者共にGitの知識がかなり要求される。 push, pull, merge, rebaseのルールを決めておかないとコンフリクト地獄に陥る可能性が大。 マスターブランチの運用と新規開発時のフロー マスターブランチは開発の先端として扱っています。開発途中なのでバグが含まれている可能性がありますが、毎日・もしくはプッシュ後にナイトリー環境にデプロイしています。常に最新のコードをデプロイしておくことは重要で、バグの早期発見は勿論ですが、「プロジェクトの動いている感」を偉い方々に見てもらう狙いもあります（うちは自社企画が多いので…）\n新規開発を担当する開発者は、mainlineのマスターブランチとローカルリポジトリのマスターブランチをPullで同期を取りつつ、作業毎にトピックブランチを切って開発を行っています。\n開発が終わったらトピックブランチをリモートリポジトリにpushして、そのブランチをPull requestします。一連の流れをコマンドで表すと次の通りになります。\n$ git checkout master $ git pull mainline master $ git checkout -b feature-hoge --commit-- $ git pull --rebase mainline master $ git push origin feature-hoge 管理者がPull requestを取り込む際は次のようにします。\n$ git checkout master $ git checkout -b merge-request/198 $ git pull git://xxxxx/project_name/mainline.git refs/merge-request/198 $ git rebase master $ git checkout master $ git merge merge-request/198 --no-ff マスターブランチにマージする時に–no-ffオプションを付けることで下記コマンドで取り込んだトピックブランチ一覧を表示する事が出来ます。開発が活発な初期段階では大量にPull requestが飛んでくるのでどのトピックブランチまでマージ出来たか判断するのに有効です。\n$ git log --oneline --abbrev-commit --merges master リリースブランチの運用とメンテナンスフロー リリースブランチはあるタイミングでマスターブランチから作成されます。このリリースブランチをプロダクション環境にデプロイし、サイト運用中に出た不具合の修正や次期リリースまでの繋ぎ機能の開発をこのブランチで行っていきます。\nうちはサイトの性質上、且つ社内事情的にリリースの間隔がかなり空いてしまう場合が多いので、マスターブランチが次期リリースに向けての開発用、リリースブランチが現行安定版の保守用という感じにしています。\n基本的なフローはマスターブランチの運用と同じで、開発者がトピックブランチをPull requestし、管理者が取り込む流れになります。マスターブランチでも直っていないバグ修正は、cherry-pickでマスターブランチに取り込む事もあります。\n今後の課題 若干諦めてはいるのですが、マスターブランチとリリースブランチの内容が完全に違うモノになっていった時にcherry-pickすら厳しくなったらどうしようかな・・・と思ってたりします。まぁ、そんなになるまでリリースを温存しておくなって話なんですけどね…。社風の改革は開発フローを変えるより大変です。\nあとこのフローとRedmineを使ったTiDDをどうシームレスに連携していくかが現在最大の課題となっています。例えばコミットログにcloses #1って記述したコミットをcherry-pickで各ブランチに取り込むと、二重に処理が走ったりなど…。この辺りはまだ手探りですね。\nまとめ Gitは非常に柔軟なバージョン管理システムだと思います。ここで紹介した開発フロー以外にも様々なフローがありますので、参考にしながら開発現場にあったやり方を見つけていくと良いんじゃないでしょうか。\n",
   "wordCount" : "2309",
   "inLanguage": "ja",
-  "datePublished": "2011-05-24T00:00:00Z",
+  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2011-05-24T00:00:00Z",
   "dateModified": "2011-05-24T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -190,7 +197,7 @@ if (!doNotTrack) {
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       Gitを使った開発・運用フローの紹介
     </h1>
     <div class="post-meta"><span title='2011-05-24 00:00:00 +0000 UTC'>2011/5/24</span>

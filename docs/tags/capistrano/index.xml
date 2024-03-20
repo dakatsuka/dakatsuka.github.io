@@ -11,24 +11,21 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 13 Oct 2011 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/capistrano/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Oct 2011 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/capistrano/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Node.js アプリをデプロイして Upstart で起動させる Capistrano レシピを書いた</title>
       <link>https://blog.dakatsuka.jp/2011/10/13/node-cap-upstart.html</link>
       <pubDate>Thu, 13 Oct 2011 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2011/10/13/node-cap-upstart.html</guid>
       <description>Node.js アプリをデプロイする場合、Heroku などの PaaS を使っているとすごく簡単なのですが、デプロイ先が VPS や専用サーバの場合、何かしらのツールを使っ</description>
     </item>
-    
     <item>
       <title>複数のRailsアプリが同居しているGitリポジトリをデプロイする方法</title>
       <link>https://blog.dakatsuka.jp/2011/05/25/cap-subdirectory.html</link>
       <pubDate>Wed, 25 May 2011 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2011/05/25/cap-subdirectory.html</guid>
       <description>複数のRailsアプリが１つのリポジトリに同居しているような状態で Capistrano を使ってデプロイしたい場合、そのままでは動作しないので少々手を加える必要</description>
     </item>
-    
   </channel>
 </rss>

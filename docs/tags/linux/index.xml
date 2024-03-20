@@ -11,96 +11,77 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 05 Sep 2007 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 05 Sep 2007 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Intel G33チップ搭載のPCにFedora8をインストールするには</title>
       <link>https://blog.dakatsuka.jp/2007/09/05/fedora8.html</link>
       <pubDate>Wed, 05 Sep 2007 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2007/09/05/fedora8.html</guid>
       <description>そのままDVDを突っ込んでもACPIのチェックでコケてインストーラが起動しないので、起動オプションでACPIを無効にします。 最初の「Welc</description>
     </item>
-    
     <item>
       <title>NVIDIA &#43; Berylでウインドウの中身が真っ黒になる</title>
       <link>https://blog.dakatsuka.jp/2007/06/13/nvidia-beryl.html</link>
       <pubDate>Wed, 13 Jun 2007 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2007/06/13/nvidia-beryl.html</guid>
       <description>たくさんウインドウを表示したり、既存のウインドウをリサイズしたりするとこの現象が起こるようです。 この現象を回避するには、Berylマネージャ</description>
     </item>
-    
     <item>
       <title>ICH6 AC97で音を出す</title>
       <link>https://blog.dakatsuka.jp/2007/04/29/ich-ac97.html</link>
       <pubDate>Sun, 29 Apr 2007 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2007/04/29/ich-ac97.html</guid>
       <description>私の使っているノートPC（LaVie G Type J）は、デフォルトのままだと音が出てくれませんorz。どうやら915GM ExpressのICH6でこ</description>
     </item>
-    
     <item>
       <title>Ubuntu FeistyにWineとIEを無理矢理インストール</title>
       <link>https://blog.dakatsuka.jp/2007/04/22/install-wine-with-ie-on-ubuntu-feisty.html</link>
       <pubDate>Sun, 22 Apr 2007 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2007/04/22/install-wine-with-ie-on-ubuntu-feisty.html</guid>
       <description>64bit環境だと apt-get install wine で導入出来なかったので &amp;ndash;force-architecture オプションで無理矢理入れる方法。 Wineをインストール i386用のdebパッケージを落として</description>
     </item>
-    
     <item>
       <title>64bit環境のUbuntu FeistyでJDをビルド</title>
       <link>https://blog.dakatsuka.jp/2007/04/21/build-jd-on-ubuntu-feisty.html</link>
       <pubDate>Sat, 21 Apr 2007 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2007/04/21/build-jd-on-ubuntu-feisty.html</guid>
       <description>Feistyの日本語ローカライズ版が出ました。しかしAMD64への対応はもうちょっとかかるみたいなので、気が短い私はリリースまでの間JD（2</description>
     </item>
-    
     <item>
       <title>FeistyでIPAモナーフォントを使う</title>
       <link>https://blog.dakatsuka.jp/2007/04/08/feisty-ipamona.html</link>
       <pubDate>Sun, 08 Apr 2007 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2007/04/08/feisty-ipamona.html</guid>
       <description>日本語ローカライズ版が出るまでの繋ぎとして。 $ cd /tmp $ wget http://www.geocities.jp/ipa_mona/opfc-ModuleHP-1.1.1_withIPAMonaFonts-1.0.5.tar.gz $ tar zxvf opfc-ModuleHP-1.1.1_withIPAMonaFonts-1.0.5.tar.gz $ cd opfc-*/fonts $ sudo mkdir /usr/share/fonts/truetype/ttf-ipamona $ sudo cp *.ttf /usr/share/fonts/truetype/ttf-ipamona これで次回ログイン時からデフォルトのフォントがIPA</description>
     </item>
-    
     <item>
       <title>Firefox上でのAnthyの挙動がおかしすぎる件</title>
       <link>https://blog.dakatsuka.jp/2007/04/07/anthy.html</link>
       <pubDate>Sat, 07 Apr 2007 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2007/04/07/anthy.html</guid>
       <description>変換キーを押すと漢字に変換されず空白が挿入されてしまう謎現象が頻繁に起きています。調べてみるとscim-bridge-client-gtkを</description>
     </item>
-    
     <item>
       <title>Nautilusの右クリックメニューをカスタマイズ</title>
       <link>https://blog.dakatsuka.jp/2007/04/06/nautilus.html</link>
       <pubDate>Fri, 06 Apr 2007 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2007/04/06/nautilus.html</guid>
       <description>Xfce4.4のファイルマネージャであるThunarやKDEのKonquerorには「ターミナルで開く」みたいなメニューがあるんですが、何故</description>
     </item>
-    
     <item>
       <title>SubversionとGUI差分ツール（Meld）を組み合わせてみる</title>
       <link>https://blog.dakatsuka.jp/2007/04/05/meld.html</link>
       <pubDate>Thu, 05 Apr 2007 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2007/04/05/meld.html</guid>
       <description>MeldとはGUIで差分表示が出来るツールです。Shift_JIS、EUC-JP、UTF-8等の文字コードに対応し、インターフェースも日本語</description>
     </item>
-    
     <item>
       <title>Ubuntu Feistyのインストール</title>
       <link>https://blog.dakatsuka.jp/2007/04/04/ubuntu-feisty.html</link>
       <pubDate>Wed, 04 Apr 2007 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2007/04/04/ubuntu-feisty.html</guid>
       <description>サブで使用しているノートPC（NEC LaVie G Type J）にUbuntu 7.04βを入れたのでそのメモ。 マシンスペックはこんな感じです。二世代ほど前のB</description>
     </item>
-    
   </channel>
 </rss>

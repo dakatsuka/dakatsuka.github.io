@@ -11,33 +11,28 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Mon, 03 Mar 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 03 Mar 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Rails &#43; Jasmineでテスト実行時のタイムゾーンを変更する</title>
       <link>https://blog.dakatsuka.jp/2014/03/03/rails-jasmine-timezone.html</link>
       <pubDate>Mon, 03 Mar 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2014/03/03/rails-jasmine-timezone.html</guid>
       <description>あまりタイムゾーンに依存するテストって宜しくないと思いますが。。。とはいえ特定のタイムゾーンで固定しておきたい事もあるので調べてみた。 Pha</description>
     </item>
-    
     <item>
       <title>テキストフィールドへの入力を検出して数秒おきにサーバに送信する</title>
       <link>https://blog.dakatsuka.jp/2013/12/24/autocheck-js.html</link>
       <pubDate>Tue, 24 Dec 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2013/12/24/autocheck-js.html</guid>
       <description>サインアップフォームなどでユーザー名が取得可能かどうかAjaxで問い合わせるアレです。 愚直に実装するとkeyupイベントをキャッチして$.a</description>
     </item>
-    
     <item>
       <title>Rails3にBackbone.jsを導入する</title>
       <link>https://blog.dakatsuka.jp/2012/09/13/rails-backbone-intro.html</link>
       <pubDate>Thu, 13 Sep 2012 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2012/09/13/rails-backbone-intro.html</guid>
       <description>最近Backbone.jsを触っています。Backbone.jsをRailsで使いたいならパッケージで導入してしまうのが一番簡単でしょう。 G</description>
     </item>
-    
   </channel>
 </rss>

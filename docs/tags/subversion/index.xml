@@ -11,15 +11,14 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 05 Apr 2007 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/subversion/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 05 Apr 2007 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/subversion/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SubversionとGUI差分ツール（Meld）を組み合わせてみる</title>
       <link>https://blog.dakatsuka.jp/2007/04/05/meld.html</link>
       <pubDate>Thu, 05 Apr 2007 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2007/04/05/meld.html</guid>
       <description>MeldとはGUIで差分表示が出来るツールです。Shift_JIS、EUC-JP、UTF-8等の文字コードに対応し、インターフェースも日本語</description>
     </item>
-    
   </channel>
 </rss>

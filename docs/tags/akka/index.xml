@@ -11,33 +11,28 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 18 Feb 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/akka/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 18 Feb 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/akka/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす</title>
       <link>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</link>
       <pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</guid>
       <description>Akka HTTPの onSuccess ディレクティブは The Magnet Pattern によって実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと</description>
     </item>
-    
     <item>
       <title>Akka HTTPのDirective0の使い勝手が良くないのでどうにかする話</title>
       <link>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</link>
       <pubDate>Sat, 04 Feb 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</guid>
       <description>まずDirective0とDirective1の型定義を見て欲しい。 type Directive0 = Directive[Unit] type Directive1[T] = Directive[Tuple1[T]] Directive0がDirective1[Unit]で</description>
     </item>
-    
     <item>
       <title>Akka HTTPで認証機能を手軽に実装する方法</title>
       <link>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</link>
       <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</guid>
       <description>これはScala Advent Calendar 2016の5日目です。埋まっていなかったので1日遅れでしれっと書くよ。 Akka HTTPには AuthenticationDirective という認証のためのディレクティブが</description>
     </item>
-    
   </channel>
 </rss>

@@ -11,33 +11,28 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 22 Aug 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/ci/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 22 Aug 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/ci/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CircleCIでElasticsearchを使うならDockerがよさそう</title>
       <link>https://blog.dakatsuka.jp/2015/08/22/elasticsearch-on-circleci.html</link>
       <pubDate>Sat, 22 Aug 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/08/22/elasticsearch-on-circleci.html</guid>
       <description>CircleCIでElasticsearchの最新版とKuromojiを使うならDockerが便利だった。circle.ymlでwgetして</description>
     </item>
-    
     <item>
       <title>CircleCIでPackerを使う</title>
       <link>https://blog.dakatsuka.jp/2015/01/28/use-packer-on-circleci.html</link>
       <pubDate>Wed, 28 Jan 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/01/28/use-packer-on-circleci.html</guid>
       <description>コンテナ起動後にLinux版Packerをダウンロードして、パスの通っている場所に配置すれば動く。毎回Packerをダウンロードするのは無駄</description>
     </item>
-    
     <item>
       <title>Play framework を CircleCI でテストする</title>
       <link>https://blog.dakatsuka.jp/2014/08/24/play2-on-circleci.html</link>
       <pubDate>Sun, 24 Aug 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2014/08/24/play2-on-circleci.html</guid>
       <description>Play framework 2.3 (Scala版）で開発しているアプリをTravis ProでCIしていたのだけど、ビルド時間がネックになってきたのでインスタンス性能が高</description>
     </item>
-    
   </channel>
 </rss>

@@ -10,15 +10,15 @@
 <meta name="description" content="ruby-amqpはEventMachineに依存しているので、unicorn上のRailsアプリからRabbitMQに接続する場合は少し手">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,7 +56,7 @@
 
     </style>
 </noscript>
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,13 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="Rails3 &#43; unicornからRabbitMQに接続するには" />
 <meta property="og:description" content="ruby-amqpはEventMachineに依存しているので、unicorn上のRailsアプリからRabbitMQに接続する場合は少し手" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="article:section" content="post" />
 <meta property="article:published_time" content="2012-05-14T00:00:00+00:00" />
 <meta property="article:modified_time" content="2012-05-14T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
 <meta name="twitter:title" content="Rails3 &#43; unicornからRabbitMQに接続するには"/>
 <meta name="twitter:description" content="ruby-amqpはEventMachineに依存しているので、unicorn上のRailsアプリからRabbitMQに接続する場合は少し手"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -87,6 +88,12 @@ if (!doNotTrack) {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.dakatsuka.jp/post.html"
+    }
     {
       "@type": "ListItem",
       "position":  1 ,
@@ -109,7 +116,7 @@ if (!doNotTrack) {
   "articleBody": "ruby-amqpはEventMachineに依存しているので、unicorn上のRailsアプリからRabbitMQに接続する場合は少し手間がかかります。EventMachineで実装されているThinなどはそのまま動くようですが。。。\n下記コードをconfig/unicorn.rbに追記します。\nENV[\"UNICORN\"] = \"true\" after_fork do |server, worker| AMQPManager.start end config/amqp.ymlを用意します。\ndevelopment: uri: \"amqp://localhost\" 開発環境（WebRickなど）からもRabbitMQに接続出来るようにします。\n# config/initializers/amqp.rb require 'amqp/utilities/event_loop_helper' require 'amqp/integration/rails' module AMQPManager def self.start AMQP::Utilities::EventLoopHelper.run AMQP::Integration::Rails.start do |connection| connection.on_error do |ch, connection_close| raise connection_close.reply_text end connection.on_tcp_connection_loss do |conn, settings| conn.reconnect(false, 2) end connection.on_tcp_connection_failure do |conn, settings| conn.reconnect(false, 2) end channel = AMQP::Channel.new(connection, AMQP::Channel.next_channel_id, :auto_recovery =\u003e true) channel.on_error do |ch, channel_close| raise channel_close.reply_text end AMQP.channel = channel end end end AMQPManager.start unless ENV[\"UNICORN\"] コントローラからパブリッシュする場合は下記のようにします。\n# coding: utf-8 class AmqpController \u003c ApplicationController def publish AMQP::Utilities::EventLoopHelper.run do AMQP.channel.default_exchange.publish(\"Hello World!!!!!\", routing_key: \"queue.name\") end head :created end end ",
   "wordCount" : "329",
   "inLanguage": "ja",
-  "datePublished": "2012-05-14T00:00:00Z",
+  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2012-05-14T00:00:00Z",
   "dateModified": "2012-05-14T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -190,7 +197,7 @@ if (!doNotTrack) {
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       Rails3 &#43; unicornからRabbitMQに接続するには
     </h1>
     <div class="post-meta"><span title='2012-05-14 00:00:00 +0000 UTC'>2012/5/14</span>

@@ -10,15 +10,15 @@
 <meta name="description" content="Symfony2にも採用されているMonologは、HandlerやFormatterを差し替えることでログの出力先やフォーマットを自由に変">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2013/10/18/monolog-fluentd.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2013/10/18/monolog-fluentd.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,7 +56,7 @@
 
     </style>
 </noscript>
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,13 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="Monologのログ出力先をFluentdに変更してみた" />
 <meta property="og:description" content="Symfony2にも採用されているMonologは、HandlerやFormatterを差し替えることでログの出力先やフォーマットを自由に変" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2013/10/18/monolog-fluentd.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2013/10/18/monolog-fluentd.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="article:section" content="post" />
 <meta property="article:published_time" content="2013-10-18T00:00:00+00:00" />
 <meta property="article:modified_time" content="2013-10-18T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
 <meta name="twitter:title" content="Monologのログ出力先をFluentdに変更してみた"/>
 <meta name="twitter:description" content="Symfony2にも採用されているMonologは、HandlerやFormatterを差し替えることでログの出力先やフォーマットを自由に変"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -87,6 +88,12 @@ if (!doNotTrack) {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.dakatsuka.jp/post.html"
+    }
     {
       "@type": "ListItem",
       "position":  1 ,
@@ -109,7 +116,7 @@ if (!doNotTrack) {
   "articleBody": "Symfony2にも採用されているMonologは、HandlerやFormatterを差し替えることでログの出力先やフォーマットを自由に変更することが出来ます。PSR3に準拠しているライブラリですので、今後デファクトスタンダードになっていく気がします。\nデフォルトだとStreamHandlerを使って出力されますが、Handlerを自作してFluentdに出力されるように変更してみます。バックエンドにはfluent-logger-phpを利用しました。\nMonologのHandlerはAbstractProcessingHandlerを継承して作ります。\n\u003c?php namespace Acme\\Handler; use Fluent\\Logger\\FluentLogger; use Monolog\\Handler\\AbstractProcessingHandler; use Monolog\\Logger; class FluentHandler extends AbstractProcessingHandler { protected $logger; public function __construct( $logger = null, $host = FluentLogger::DEFAULT_ADDRESS, $port = FluentLogger::DEFAULT_LISTEN_PORT, $level = Logger::DEBUG, $bubble = true ) { parent::__construct($level, $bubble); if (is_null($logger)) { $logger = new FluentLogger($host, $port); } $this-\u003elogger = $logger; } public function write(array $record) { $tag = $record['channel'] . '.' . $record['message']; $data = $record['context']; $data['level'] = Logger::getLevelName($record['level']); $this-\u003elogger-\u003epost($tag, $data); } } 使い方\n\u003c?php use Acme\\Handler\\FluentHandler use Monolog\\Logger; $logger = new Logger('test'); $logger-\u003epushHandler(new FluentHandler()); $logger-\u003edebug('example.monolog', array('foo' =\u003e 'bar')); $logger-\u003einfo('example.fluentd', array('fizz' =\u003e 'buzz')); 利用しやすいようにGitHubとPackagistに公開しておきました。\ndakatsuka/MonologFluentHandler dakatsuka/monolog-fluent-handler ",
   "wordCount" : "412",
   "inLanguage": "ja",
-  "datePublished": "2013-10-18T00:00:00Z",
+  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2013-10-18T00:00:00Z",
   "dateModified": "2013-10-18T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -190,7 +197,7 @@ if (!doNotTrack) {
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       Monologのログ出力先をFluentdに変更してみた
     </h1>
     <div class="post-meta"><span title='2013-10-18 00:00:00 +0000 UTC'>2013/10/18</span>

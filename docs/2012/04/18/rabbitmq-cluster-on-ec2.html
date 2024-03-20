@@ -10,15 +10,15 @@
 <meta name="description" content="EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。 RabbitMQ">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,7 +56,7 @@
 
     </style>
 </noscript>
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,13 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="Ubuntu on EC2でRabbitMQクラスタを構築する手順" />
 <meta property="og:description" content="EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。 RabbitMQ" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="article:section" content="post" />
 <meta property="article:published_time" content="2012-04-18T00:00:00+00:00" />
 <meta property="article:modified_time" content="2012-04-18T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
 <meta name="twitter:title" content="Ubuntu on EC2でRabbitMQクラスタを構築する手順"/>
 <meta name="twitter:description" content="EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。 RabbitMQ"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -87,6 +88,12 @@ if (!doNotTrack) {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.dakatsuka.jp/post.html"
+    }
     {
       "@type": "ListItem",
       "position":  1 ,
@@ -109,7 +116,7 @@ if (!doNotTrack) {
   "articleBody": "EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。\nRabbitMQをインストール オフィシャルで配布されているパッケージを使うのがお手軽です。\ncd /tmp wget wget http://www.rabbitmq.com/releases/rabbitmq-server/v2.8.1/rabbitmq-server_2.8.1-1_all.deb sudo apt-get install erlang-nox sudo dpkg -i rabbitmq-server_2.8.1-1_all.deb 下記コマンドでエラーが出なければ、正常にRabbitMQが起動しています。\nsudo rabbitmqctl status RabbitMQの初期設定 RabbitMQはデフォルトでノード名がインストールしたサーバのhostname -sになっています。このノード名を変更するには /etc/rabbitmq/rabbitmq-env.conf でNODENAMEを指定すれば良いのですが、何故かNODENAMEにはFQDNが使えません。\nこのままだと、別のRabbitMQサーバをクラスタに追加する時にノード名の不一致が起き、正常に追加出来ないという罠が待っています。まぁ、/etc/hosts に全サーバのホスト名を書いていけば問題無いのですが、EC2だとインスタンスの再起動でIPとホスト名が変わったりするので、あまり現実的ではありませんね。極力ドメイン名で処理したいところです。\nそこで /etc/rabbitmq/rabbitmq-env.conf でFQDNが使えるようにRabbitMQ本体に若干手を加えます。といってもオプションを書き換えるだけです。\n書き換える前にサーバを停止しておきます。\nsudo /etc/init.d/rabbitmq-server stop /usr/lib/rabbitmq/lib/rabbitmq_server-2.8.1/sbin/rabbitmq-server\n--- rabbitmq-Server2012-04-18 16:17:39.168100001 +0900 +++ rabbitmq-Server2012-04-18 16:17:13.304100001 +0900 @@ -102,7 +102,7 @@ exec erl \\ ${RABBITMQ_EBIN_PATH} \\ ${RABBITMQ_START_RABBIT} \\ - -sname ${RABBITMQ_NODENAME} \\ + -name ${RABBITMQ_NODENAME} \\ -boot ${RABBITMQ_BOOT_FILE} \\ ${RABBITMQ_CONFIG_ARG} \\ +W w \\ /usr/lib/rabbitmq/lib/rabbitmq_server-2.8.1/sbin/rabbitmqctl\n--- rabbitmqctl2012-04-18 16:12:54.016100001 +0900 +++ rabbitmqctl2012-04-18 16:12:32.828100000 +0900 @@ -31,7 +31,7 @@ -noinput \\ -hidden \\ ${RABBITMQ_CTL_ERL_ARGS} \\ - -sname rabbitmqctl$$ \\ + -name rabbitmqctl$$ \\ -s rabbit_control \\ -nodename $RABBITMQ_NODENAME \\ -extra \"$@\" /etc/rabbitmq/rabbitmq-env.conf は下記のようにします。\nNODENAME=rabbit@rabbit1.foo.bar.internal これでRabbitMQを再度起動させてエラーが出なければ設定完了です。\nクラスタ化する rabbit1.foo.bar.internal と rabbit2.foobar.internal に対して、上記手順に則ってRabbitMQをインストールしたと仮定します。\nrabbit1を初期化する\nrabbit1% sudo rabbitmqctl stop_app rabbit1% sudo rabbitmqctl reset rabbit1上でrabbit2をクラスタに参加させる\nrabbit1% sudo rabbitmqctl cluster rabbit2.foo.bar.internal rabbit1% sudo rabbitmqctl start_app クラスタに追加されているか確認する\nrabbit1% sudo rabbitmqctl cluster_status Cluster status of node 'rabbit@rabbit1.foo.bar.internal' ... [{nodes,[{disc,['rabbit@rabbit2.foo.bar.internal']}, {ram,['rabbit@rabbit1.foo.bar.internal']}]}, {running_nodes,['rabbit@rabbit2.foo.bar.internal', 'rabbit@rabbit1.foo.bar.internal']}] ...done. 追加されてますね。rabbit2からも確認してみます。\nrabbit2% sudo rabbitmqctl cluster_status Cluster status of node 'rabbit@rabbit2.foo.bar.internal' ... [{nodes,[{disc,['rabbit@rabbit2.foo.bar.internal']}, {ram,['rabbit@rabbit1.foo.bar.internal']}]}, {running_nodes,['rabbit@rabbit1.foo.bar.internal', 'rabbit@rabbit2.foo.bar.internal']}] ...done. これでrabbit1, rabbit2どちらに接続してもキューをpublish, subscribeすることが出来ます。クラスタ化自体はそこまで難しくないと思います。\n詳しくはオフィシャルドキュメントに全部書いてあるので、そちらを参照してください。\n",
   "wordCount" : "953",
   "inLanguage": "ja",
-  "datePublished": "2012-04-18T00:00:00Z",
+  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2012-04-18T00:00:00Z",
   "dateModified": "2012-04-18T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -190,7 +197,7 @@ if (!doNotTrack) {
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       Ubuntu on EC2でRabbitMQクラスタを構築する手順
     </h1>
     <div class="post-meta"><span title='2012-04-18 00:00:00 +0000 UTC'>2012/4/18</span>

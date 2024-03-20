@@ -10,15 +10,15 @@
 <meta name="description" content="前置き Symfony2を構成するサービスはほぼDIコンテナの上に乗っているので、ドメインとデータベース、フレームワークがそれぞれ疎結合になっ">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2013/12/05/symfony2-functional-test.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2013/12/05/symfony2-functional-test.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,7 +56,7 @@
 
     </style>
 </noscript>
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,13 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="Symfony2でFunctional Testを快適に行うには" />
 <meta property="og:description" content="前置き Symfony2を構成するサービスはほぼDIコンテナの上に乗っているので、ドメインとデータベース、フレームワークがそれぞれ疎結合になっ" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2013/12/05/symfony2-functional-test.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2013/12/05/symfony2-functional-test.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="article:section" content="post" />
 <meta property="article:published_time" content="2013-12-05T00:00:00+00:00" />
 <meta property="article:modified_time" content="2013-12-05T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
 <meta name="twitter:title" content="Symfony2でFunctional Testを快適に行うには"/>
 <meta name="twitter:description" content="前置き Symfony2を構成するサービスはほぼDIコンテナの上に乗っているので、ドメインとデータベース、フレームワークがそれぞれ疎結合になっ"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -87,6 +88,12 @@ if (!doNotTrack) {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.dakatsuka.jp/post.html"
+    }
     {
       "@type": "ListItem",
       "position":  1 ,
@@ -109,7 +116,7 @@ if (!doNotTrack) {
   "articleBody": "前置き Symfony2を構成するサービスはほぼDIコンテナの上に乗っているので、ドメインとデータベース、フレームワークがそれぞれ疎結合になっています。そのため、ドメインのテストを行う際はフレームワークの読み込みやデータベースに接続する必要はありません。依存部分はモックに置き換えてしまえば良いわけです。\nとはいえ、コントローラやサービスは実際にデータベースに接続してテストを行っておきたいのが人情。モックで置き換えているユニットテストだと動いたけど、結合してみたら動かない…なんてよくある話ですから。\nそしてSymfony2にはWebTestCaseというテスト用のクラスが用意されていて（中身はPHPUnitです）、これを継承したクラスを作ることでSymfony2が読み込まれた状態でテストをすることが可能になります。主にリクエストやルーティング、ビューのテストに使用するのが目的のようですが、ドメインの結合テストにも使うことが出来ます。\nテストデータの投入 Doctrine Data Fixtures Extensionというライブラリを使えば初期データをデータベースに投入することが出来ます。ただ、これは好みの問題かもしれませんが、自分はあまり使い勝手が良いとは思えませんでした。ただデータを投入するだけなら良いのですが、テストで使おうと思うとEntityを毎回findしてこないといけなくて辛い感じがします。getOrder()メソッドで読み込み順を数値で設定するのもどうなの的な。\nなので私はBlueprintBundleという代替ライブラリを作ってそちらを使っています。データベースに保存した上でエンティティを取得出来るので中々便利に使えています。自画自賛。\n\u003c?php Blueprint::register('post', 'Acme\\BlogBundle\\Entity\\Post', function($post, $blueprint) { $post-\u003esetTitle('Title' . $blueprint-\u003esequence()); $post-\u003esetBody('BodyBodyBody'); }); $blueprint = static::$container-\u003eget('dakatsuka.blueprint'); $post1 = $blueprint-\u003ecreate('post'); $post2 = $blueprint-\u003ecreate('post'); $post3 = $blueprint-\u003ebuild('post'); // DBには保存しない データベースのお掃除 ひとつ前のテストケースの影響を受けないようにするために、テスト毎にデータベースを掃除する必要があります。前述のDoctrine Data Fixtures ExtensionのORMPurgerクラスを使うことで実現出来ます。\nちなみにORMPurgerは2種類のモードがあってPURGE_MODE_DELETEかPURGE_MODE_TRUNCATEを選ぶことができます。トランザクションで制御したい場合は、ORMPurgerは使わずにsetUpでトランザクションを開始してtearDownでロールバックする必要があります。\n\u003c?php abstract class FunctionalTest extends WebTestCase { /** * @var \\Symfony\\Component\\HttpKernel\\Kernel */ static protected $kernel; /** * @var \\Symfony\\Component\\DependencyInjection\\Container */ static protected $container; protected function setUp() { parent::setUp(); static::$kernel = static::createKernel(); static::$kernel-\u003eboot(); static::$container = static::$kernel-\u003egetContainer(); static::$container-\u003eget('doctrine')-\u003egetManager('default')-\u003ebeginTransaction(); } protected function tearDown() { parent::tearDown(); static::$container-\u003eget('doctrine')-\u003egetManager('default')-\u003erollback(); foreach (static::$container-\u003eget('doctrine')-\u003egetConnections() as $connection) { $connection-\u003eclose(); } } } テストの数が多くなってくるとDELETEもTRUNCATEも遅くてつらいので、私はトランザクションを使ってテストケース毎にロールバックする方法を取っています。今のところ特に困ったことにはなっていませんので、テストが遅くて困ってる人は試してみる価値はあると思います。\n最後 Symfony2、あまり情報がなくて自分の方法が正しいのか不安になることが多々。間違っていたりもっと良い方法があったら是非教えてください！\n",
   "wordCount" : "1258",
   "inLanguage": "ja",
-  "datePublished": "2013-12-05T00:00:00Z",
+  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2013-12-05T00:00:00Z",
   "dateModified": "2013-12-05T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -190,7 +197,7 @@ if (!doNotTrack) {
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       Symfony2でFunctional Testを快適に行うには
     </h1>
     <div class="post-meta"><span title='2013-12-05 00:00:00 +0000 UTC'>2013/12/5</span>

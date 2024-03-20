@@ -11,42 +11,35 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 27 Nov 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/bdd/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 27 Nov 2013 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/bdd/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Rails4 &#43; RSpec &#43; Guard &#43; SpringでDEPRECATION WARNINGが出たので対処した</title>
       <link>https://blog.dakatsuka.jp/2013/11/27/rails4-rspec-guard-spring.html</link>
       <pubDate>Wed, 27 Nov 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2013/11/27/rails4-rspec-guard-spring.html</guid>
       <description>ちょっと前までのRailsのテスト環境といえば、RSpec + Guardという構成が定番だったように思う。最近はこれにSpringを加えるのが</description>
     </item>
-    
     <item>
       <title>Vowsで前処理・後処理を行うには</title>
       <link>https://blog.dakatsuka.jp/2011/09/26/vows-setup-teardown.html</link>
       <pubDate>Mon, 26 Sep 2011 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2011/09/26/vows-setup-teardown.html</guid>
       <description>Vowsの場合、前処理はtopic内で行い、後処理はteardownを使用します。RSpecの after(:all) の動作に近い感じです。 vows .describe(&amp;#34;Hoge&amp;#34;) .addBatch &amp;#39;a instance&amp;#39;: # 前処理 topic: -&amp;gt;</description>
     </item>
-    
     <item>
       <title>Node.js &#43; Vowsではじめるテスト駆動開発</title>
       <link>https://blog.dakatsuka.jp/2011/09/21/nodejs-tdd.html</link>
       <pubDate>Wed, 21 Sep 2011 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2011/09/21/nodejs-tdd.html</guid>
       <description>Node.jsで使えるTDD, BDDフレームワークはいくつかあるのですが（nodeunit, Jasmine, etc）コールバック・イベント周りのテストのし</description>
     </item>
-    
     <item>
       <title>cucumberで携帯サイトをテストするには</title>
       <link>https://blog.dakatsuka.jp/2010/11/01/mobile-site-in-cucumber.html</link>
       <pubDate>Mon, 01 Nov 2010 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2010/11/01/mobile-site-in-cucumber.html</guid>
       <description>達人出版会から出版された「はじめる！Cucumber」という本を本日購入しました。日本語で丁寧に書かれている良書で、cucumberをこれか</description>
     </item>
-    
   </channel>
 </rss>

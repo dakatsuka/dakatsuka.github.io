@@ -10,15 +10,15 @@
 <meta name="description" content="What&rsquo;s http4s RackやWSGIのScala版といったところ。公式サイトの説明も次のように書いてある。 http4s is a minimal, idiomatic Scala interface for HTTP. http4s is Scala&rsquo;s answer to Ruby&rsquo;s Rack, Python&rsquo;s WSGI, Haskell&rsquo;s WAI, and Java&rsquo;s Servlets. ま">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2015/11/14/http4s.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2015/11/14/http4s.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,7 +56,7 @@
 
     </style>
 </noscript>
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,13 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="ScalaのHTTPインターフェース http4s 超入門" />
 <meta property="og:description" content="What&rsquo;s http4s RackやWSGIのScala版といったところ。公式サイトの説明も次のように書いてある。 http4s is a minimal, idiomatic Scala interface for HTTP. http4s is Scala&rsquo;s answer to Ruby&rsquo;s Rack, Python&rsquo;s WSGI, Haskell&rsquo;s WAI, and Java&rsquo;s Servlets. ま" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2015/11/14/http4s.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2015/11/14/http4s.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="article:section" content="post" />
 <meta property="article:published_time" content="2015-11-14T00:00:00+00:00" />
 <meta property="article:modified_time" content="2015-11-14T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
 <meta name="twitter:title" content="ScalaのHTTPインターフェース http4s 超入門"/>
 <meta name="twitter:description" content="What&rsquo;s http4s RackやWSGIのScala版といったところ。公式サイトの説明も次のように書いてある。 http4s is a minimal, idiomatic Scala interface for HTTP. http4s is Scala&rsquo;s answer to Ruby&rsquo;s Rack, Python&rsquo;s WSGI, Haskell&rsquo;s WAI, and Java&rsquo;s Servlets. ま"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -87,6 +88,12 @@ if (!doNotTrack) {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.dakatsuka.jp/post.html"
+    }
     {
       "@type": "ListItem",
       "position":  1 ,
@@ -109,7 +116,7 @@ if (!doNotTrack) {
   "articleBody": "What’s http4s RackやWSGIのScala版といったところ。公式サイトの説明も次のように書いてある。\nhttp4s is a minimal, idiomatic Scala interface for HTTP. http4s is Scala’s answer to Ruby’s Rack, Python’s WSGI, Haskell’s WAI, and Java’s Servlets.\nまだまだ開発途中でドキュメントなどはあまり整備されていなくて、まともに使おうと思ったらソースコードを読む必要が出てきそう。次期Scalatraのバックエンドになるとかならないとか噂されているけどはてさて？もしかしたらAkkaやFinagleに押されて流行らずに終わる可能性もある。\nちなみにscalaz-streamが使われている。\nInstall 最小構成で使う場合は http4s-server と http4s-blaze-server だけで良い。\nresolvers += \"Scalaz Bintray Repo\" at \"http://dl.bintray.com/scalaz/releases\" libraryDependencies ++= Seq( \"org.http4s\" %% \"http4s-server\" % \"0.10.1\", \"org.http4s\" %% \"http4s-blaze-server\" % \"0.10.1\" ) Specification http4sの仕様に準拠したアプリケーション（http4sではサービスという）として最低限必要なことは次の通り。\norg.http4s.server.HttpService 型であること 以上！めちゃくちゃシンプルですね。HttpServiceの定義を覗いてみるとこう書いてある。\ntype Service[A, B] = Kleisli[Task, A, B] type HttpService = Service[Request, Response] 実際はHttpServiceを作るための関数が HttpService.apply として用意されているのでこれを使っていく。この関数はRequest型を受け取ってTask[Response]型を返すPartialFunctionを引数に取る。\nobject HttpService { def apply(pf: PartialFunction[Request, Task[Response]], default: HttpService = empty): HttpService } Rackなどを触ったことがある人ならピンと来るはず。\nIntroduction アクセスすると画面にHello WorldとQueryStringを表示する簡単なサービスを作ってみる。\n// src/main/scala/jp/dakatsuka/http4stest/Bootstrap.scala package jp.dakatsuka.http4stest import org.http4s.{Status, Response} import org.http4s.server.HttpService import org.http4s.server.blaze.BlazeBuilder object Bootstrap { val service = HttpService { case req =\u003e Response() .withStatus(Status.Ok) .withBody(s\"Hello World!! ${req.queryString}\") } def main(args: Array[String]): Unit = BlazeBuilder .bindHttp(8080) .mountService(service) .run .awaitShutdown() } sbt runを実行してブラウザで http://localhost:8080/?foo=bar\u0026fizz=buzz にアクセス。次のような文字がブラウザ上に表示されるはず。\nHello World!! foo=bar\u0026fizz=buzz Middleware ミドルウェアも簡単につくれる。ミドルウェアは既存のHttpServiceに組み込んで（合成して）使う。試しにX-HTTP4S-MESSAGEというヘッダーを付与するミドルウェアを作ってみる。\n// src/main/scala/jp/dakatsuka/http4stest/MessageMiddleware.scala package jp.dakatsuka.http4stest import org.http4s.Header import org.http4s.server.HttpService object MessageMiddleware { def apply(service: HttpService, message: String): HttpService = HttpService.lift { req =\u003e service.map { res =\u003e res.putHeaders(Header(\"X-HTTP4S-MESSAGE\", message)) }.apply(req) } } 組み込み方はこう。\ndef main(args: Array[String]): Unit = BlazeBuilder .bindHttp(8080) .mountService(MessageMiddleware(service, \"Hello!!!!!\")) .run .awaitShutdown() ちゃんとヘッダーに追加されていることが分かる。\n$ curl --dump-header - http://localhost:8080 HTTP/1.1 200 OK Content-Length: 14 Content-Type: text/plain; charset=UTF-8 X-HTTP4S-MESSAGE: Hello!!!!! Date: Sat, 14 Nov 2015 13:30:32 GMT Hello World!! http4s-dsl http4s-dslというパッケージを追加すればSinatraのようにDSLを使ってルーティングを定義できる。\nbuild.sbtに依存関係を追加する。\nlibraryDependencies ++= Seq( \"org.http4s\" %% \"http4s-server\" % \"0.10.1\", \"org.http4s\" %% \"http4s-dsl\" % \"0.10.1\", \"org.http4s\" %% \"http4s-blaze-server\" % \"0.10.1\" ) DSLを使うと次のように直感的にルーティングできるようになる。ちょっとしたマイクロサービスを作りたいときにはこれで十分な気がする。\nimport org.http4s._ import org.http4s.dsl._ import org.http4s.server.HttpService import jp.dakatsuka.http4stest.model.User val service = HttpService { case GET -\u003e Root =\u003e Ok(\"Document Root\") case GET -\u003e Root / \"users\" =\u003e Ok(User.all) case GET -\u003e Root / \"users\" / LongVar(id) =\u003e User.find(id) match { case Some(user) =\u003e Ok(user) case _ =\u003e NotFound() } case GET -\u003e Root / \"users\" / screen_name =\u003e User.findOneByScreenName(screen_name) match { case Some(user) =\u003e Ok(user) case _ =\u003e NotFound() } case req @ POST -\u003e Root / \"users\" =\u003e req.decode[UrlForm] { data =\u003e val UserParams = for { email \u003c- data.getFirst(\"email\") screen_name \u003c- data.getFirst(\"screen_name\") } yield UserParams(email, screen_name) ??? } } JSON レスポンスを返したい 厳密にはcase classをOkやNotFoundに渡したらJSON文字列に変換してレスポンスを返して欲しい。になる。\nhttp4sは EntityEncoder[T] を定義しておけばどんな型でもレスポンスとして返せるという仕組みがある（逆のEntityDecoderもある）JSONに関しては http4s-argonaut という公式パッケージが用意されているのでそれを利用するのが良いだろう。Argonautが嫌な人はJson4s用のパッケージも用意されているのでそちらを。\nlibraryDependencies ++= Seq( \"org.http4s\" %% \"http4s-server\" % \"0.10.1\", \"org.http4s\" %% \"http4s-dsl\" % \"0.10.1\", \"org.http4s\" %% \"http4s-blaze-server\" % \"0.10.1\", \"org.http4s\" %% \"http4s-argonaut\" % \"0.10.1\" ) // src/main/scala/jp/dakatsuka/http4stest/model/User.scala package jp.dakatsuka.http4s.model import argonaut.Argonaut._ import argonaut.CodecJson import org.http4s.argonaut._ import org.http4s.EntityEncoder case class User(id: Long, email: String, screen_name: String) object User { implicit val userCodec: CodecJson[User] = casecodec3(User.apply, User.unapply)(\"id\", \"email\", \"screen_name\") implicit val userEntityEncoder: EntityEncoder[User] = jsonEncoderOf[User] implicit val usersEntityEncoder: EntityEncoder[List[User]] = jsonEncoderOf[List[User]] def all(): List[User] = ??? def find(id: Long): Option[User] = ??? def findOneByScreenName(screen_name: String): Option[User] = ??? } まとめ 駆け足でhttp4sを紹介してみたけど、個人的にはかなり使い勝手が良いと思う。Akka, Playframeworkのような重厚感もないし http4s-dsl を使えば簡単にAPIの実装も出来るだろう。お手軽感って大事だと思う。ルーティングやレスポンスを型安全に書けるのもポイントが高い。\n懸念点としては最初にも書いたようにライバルが多くて消えてしまうのでは…ってところ。http4sはServletでも動くので頑張って欲しい。\n",
   "wordCount" : "1641",
   "inLanguage": "ja",
-  "datePublished": "2015-11-14T00:00:00Z",
+  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2015-11-14T00:00:00Z",
   "dateModified": "2015-11-14T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -190,7 +197,7 @@ if (!doNotTrack) {
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       ScalaのHTTPインターフェース http4s 超入門
     </h1>
     <div class="post-meta"><span title='2015-11-14 00:00:00 +0000 UTC'>2015/11/14</span>
@@ -363,7 +370,7 @@ Hello World!!
   <footer class="post-footer">
     <ul class="post-tags">
       <li><a href="https://blog.dakatsuka.jp/tags/scala.html">Scala</a></li>
-      <li><a href="https://blog.dakatsuka.jp/tags/http4s.html">http4s</a></li>
+      <li><a href="https://blog.dakatsuka.jp/tags/http4s.html">Http4s</a></li>
     </ul>
   </footer>
 </article>

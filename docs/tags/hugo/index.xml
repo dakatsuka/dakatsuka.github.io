@@ -11,15 +11,14 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 10 Dec 2020 00:00:00 +0900</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 10 Dec 2020 00:00:00 +0900</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Migrate to Hugo</title>
       <link>https://blog.dakatsuka.jp/2020/12/10/hugo.html</link>
       <pubDate>Thu, 10 Dec 2020 00:00:00 +0900</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2020/12/10/hugo.html</guid>
       <description>このブログで使っている静的サイトジェネレーターをMiddlemanからHugoに移行しました。また、良い機会だったのでホスティングサービスも</description>
     </item>
-    
   </channel>
 </rss>

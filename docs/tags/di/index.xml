@@ -11,15 +11,14 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Fri, 01 Aug 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/di/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 01 Aug 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/di/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Play framework 2.3.x と Scaldi で Dependency Injection</title>
       <link>https://blog.dakatsuka.jp/2014/08/01/play2-scaldi.html</link>
       <pubDate>Fri, 01 Aug 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2014/08/01/play2-scaldi.html</guid>
       <description>Play2でDIをどうしようか悩んでいたところscaldiというライブラリが目に止まった。Playに組み込むためのライブラリをあるし、公式サ</description>
     </item>
-    
   </channel>
 </rss>

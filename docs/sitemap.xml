@@ -116,6 +116,9 @@
     <loc>https://blog.dakatsuka.jp/2015/12/07/finch.html</loc>
     <lastmod>2015-12-07T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/http/2.html</loc>
+    <lastmod>2015-12-01T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://blog.dakatsuka.jp/tags/https.html</loc>
     <lastmod>2015-12-01T00:00:00+00:00</lastmod>
   </url><url>
@@ -515,7 +518,5 @@
     <loc>https://blog.dakatsuka.jp/about.html</loc>
   </url><url>
     <loc>https://blog.dakatsuka.jp/archives.html</loc>
-  </url><url>
-    <loc>https://blog.dakatsuka.jp/tags/http/2.html</loc>
   </url>
 </urlset>

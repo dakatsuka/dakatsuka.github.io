@@ -10,15 +10,15 @@
 <meta name="description" content="Akka HTTPの onSuccess ディレクティブは The Magnet Pattern によって実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,7 +56,7 @@
 
     </style>
 </noscript>
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,13 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす" />
 <meta property="og:description" content="Akka HTTPの onSuccess ディレクティブは The Magnet Pattern によって実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="article:section" content="post" />
 <meta property="article:published_time" content="2017-02-18T00:00:00+00:00" />
 <meta property="article:modified_time" content="2017-02-18T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
 <meta name="twitter:title" content="The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす"/>
 <meta name="twitter:description" content="Akka HTTPの onSuccess ディレクティブは The Magnet Pattern によって実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -87,6 +88,12 @@ if (!doNotTrack) {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.dakatsuka.jp/post.html"
+    }
     {
       "@type": "ListItem",
       "position":  1 ,
@@ -109,7 +116,7 @@ if (!doNotTrack) {
   "articleBody": "Akka HTTPの onSuccess ディレクティブは The Magnet Pattern によって実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと何でも受け取ることができる。型がM[Future[A]]になっているオブジェクトをそのままonSuccessに渡したくなった時のために覚えておくと良いかもしれない。\n例えば、次のコードでDirective[Tuple1[Future[A]]]に対応することが可能。\nimplicit def directiveIncludingFuture[T](futureDirective: Directive[Tuple1[Future[T]]])(implicit tupler: Tupler[T]): OnSuccessMagnet { type Out = tupler.Out } = { new OnSuccessMagnet { type Out = tupler.Out val directive: Directive[Out] = futureDirective.flatMap { future =\u003e Directive[tupler.Out] { inner =\u003e ctx =\u003e import ctx.executionContext future.fast.flatMap(t =\u003e inner(tupler(t))(ctx)) }(tupler.OutIsTuple) }(tupler.OutIsTuple) } } Directive[Tuple1[Future[A]]]なんてそう滅多に出てこないでしょ…と思うかもしれないが、複数の Directive1 から取得した値を非同期で処理するというシチュエーションはそれなりにあるかもしれない。\nこんな感じのやつ。\nval result = for { value1 \u003c- directive1 value2 \u003c- directive2 } yield hogeAsyncRepository.findBy(value1, value2) // resultの型は Directive[Tuple1[Future[Option[A]]]] になる onSuccess(result) { case Some(_) =\u003e complete(OK) case None =\u003e complete(NotFound) } ",
   "wordCount" : "397",
   "inLanguage": "ja",
-  "datePublished": "2017-02-18T00:00:00Z",
+  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2017-02-18T00:00:00Z",
   "dateModified": "2017-02-18T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -190,7 +197,7 @@ if (!doNotTrack) {
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす
     </h1>
     <div class="post-meta"><span title='2017-02-18 00:00:00 +0000 UTC'>2017/2/18</span>

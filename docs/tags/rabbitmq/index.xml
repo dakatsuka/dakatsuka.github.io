@@ -11,24 +11,21 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Mon, 14 May 2012 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/rabbitmq/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 14 May 2012 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/rabbitmq/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Rails3 &#43; unicornからRabbitMQに接続するには</title>
       <link>https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html</link>
       <pubDate>Mon, 14 May 2012 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html</guid>
       <description>ruby-amqpはEventMachineに依存しているので、unicorn上のRailsアプリからRabbitMQに接続する場合は少し手</description>
     </item>
-    
     <item>
       <title>Ubuntu on EC2でRabbitMQクラスタを構築する手順</title>
       <link>https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html</link>
       <pubDate>Wed, 18 Apr 2012 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html</guid>
       <description>EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。 RabbitMQ</description>
     </item>
-    
   </channel>
 </rss>

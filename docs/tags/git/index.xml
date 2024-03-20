@@ -11,24 +11,21 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 25 May 2011 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 25 May 2011 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/git/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>複数のRailsアプリが同居しているGitリポジトリをデプロイする方法</title>
       <link>https://blog.dakatsuka.jp/2011/05/25/cap-subdirectory.html</link>
       <pubDate>Wed, 25 May 2011 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2011/05/25/cap-subdirectory.html</guid>
       <description>複数のRailsアプリが１つのリポジトリに同居しているような状態で Capistrano を使ってデプロイしたい場合、そのままでは動作しないので少々手を加える必要</description>
     </item>
-    
     <item>
       <title>Gitを使った開発・運用フローの紹介</title>
       <link>https://blog.dakatsuka.jp/2011/05/24/git-flow.html</link>
       <pubDate>Tue, 24 May 2011 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2011/05/24/git-flow.html</guid>
       <description>私の所属している会社では、2年程前にバージョン管理システムをSubversionからGitに移行し、現在まで開発フローを試行錯誤してきました</description>
     </item>
-    
   </channel>
 </rss>

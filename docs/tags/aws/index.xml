@@ -11,33 +11,28 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 16 May 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 16 May 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/aws/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>sbtでAmazon S3をMavenリポジトリとして扱う方法</title>
       <link>https://blog.dakatsuka.jp/2015/05/16/sbt-publish-to-s3.html</link>
       <pubDate>Sat, 16 May 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/05/16/sbt-publish-to-s3.html</guid>
       <description>fm-sbt-s3-resolverというプラグインを入れることでS3をMaven Repositoryとして扱えるようになります。社内のサー</description>
     </item>
-    
     <item>
       <title>CloudWatchやAuto ScalingのアラームをSlackに通知するようにした</title>
       <link>https://blog.dakatsuka.jp/2015/03/24/amazon-sns-to-slack.html</link>
       <pubDate>Tue, 24 Mar 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/03/24/amazon-sns-to-slack.html</guid>
       <description>CloudWatchやAuto Scalingのアラームは、Amazon SNSのTopicにPublishする仕組みになっていて、通常はこのT</description>
     </item>
-    
     <item>
       <title>Ubuntu on EC2でRabbitMQクラスタを構築する手順</title>
       <link>https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html</link>
       <pubDate>Wed, 18 Apr 2012 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2012/04/18/rabbitmq-cluster-on-ec2.html</guid>
       <description>EC2 で動かしている Ubuntu Server 11.10 に RabbitMQ クラスタを構築したのでその時の手順をブログに残しておきます。ホスト名の設定で若干手こずりました…。 RabbitMQ</description>
     </item>
-    
   </channel>
 </rss>

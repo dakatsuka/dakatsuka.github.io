@@ -11,15 +11,14 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 24 Apr 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/vagrant/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Apr 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/vagrant/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Vagrant VMのディスクサイズを後から拡張する方法</title>
       <link>https://blog.dakatsuka.jp/2014/04/24/vagrant-hdd-resize.html</link>
       <pubDate>Thu, 24 Apr 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2014/04/24/vagrant-hdd-resize.html</guid>
       <description>前提条件 Vagrant BoxがファイルシステムにLVM + ext3/4を使っていること。今回はVagrantbox.esで配布されているDebian Whe</description>
     </item>
-    
   </channel>
 </rss>

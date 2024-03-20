@@ -10,15 +10,15 @@
 <meta name="description" content="これはScala Advent Calendar 2015（Adventar版）7日目です。6日目はHiroyuki-NagataさんのScalatraとnon-bloc">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2015/12/07/finch.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2015/12/07/finch.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,7 +56,7 @@
 
     </style>
 </noscript>
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,13 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="Finch &#43; MySQLでREST APIサーバを構築する" />
 <meta property="og:description" content="これはScala Advent Calendar 2015（Adventar版）7日目です。6日目はHiroyuki-NagataさんのScalatraとnon-bloc" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2015/12/07/finch.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2015/12/07/finch.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="article:section" content="post" />
 <meta property="article:published_time" content="2015-12-07T00:00:00+00:00" />
 <meta property="article:modified_time" content="2015-12-07T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
 <meta name="twitter:title" content="Finch &#43; MySQLでREST APIサーバを構築する"/>
 <meta name="twitter:description" content="これはScala Advent Calendar 2015（Adventar版）7日目です。6日目はHiroyuki-NagataさんのScalatraとnon-bloc"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -87,6 +88,12 @@ if (!doNotTrack) {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.dakatsuka.jp/post.html"
+    }
     {
       "@type": "ListItem",
       "position":  1 ,
@@ -109,7 +116,7 @@ if (!doNotTrack) {
   "articleBody": "これはScala Advent Calendar 2015（Adventar版）7日目です。6日目はHiroyuki-NagataさんのScalatraとnon-blocking APIについてメモ - なんとな～くしあわせ？の日記でした。\nさて、7日目はFinchというFinagleラッパーを紹介しようと思います。よくあるSinatraライクなマイクロフレームワークのひとつです。Hello Wordをブラウザに出力してはい終わりというのも味気ないので、MySQLに接続してレコードを取り出したり登録出来るところまで持っていきます。\nはじめに 今回は以下のエンドポイントを作ることにします（更新と削除は面倒になったので無し！ごめんなさい）\nGET /users GET /users/:id POST /users コードを書く前にMySQLにテーブルを作っておきましょう。\nCREATE TABLE `users` ( `id` BIGINT NOT NULL AUTO_INCREMENT, `email` VARCHAR(255) NOT NULL, `screen_name` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB; 依存関係 開発版の0.9.2-SNAPSHOTを利用します。またMySQLに繋ぐためにfinagle-mysqlも入れます。\nbuild.sbtは下記のようになります。\nname := \"finchtest\" version := \"0.1.0\" scalaVersion := \"2.11.7\" resolvers += Resolver.sonatypeRepo(\"snapshots\") libraryDependencies ++= Seq( \"com.twitter\" %% \"finagle-mysql\" % \"6.30.0\", \"com.github.finagle\" %% \"finch-core\" % \"0.9.2-SNAPSHOT\" changing(), \"com.github.finagle\" %% \"finch-argonaut\" % \"0.9.2-SNAPSHOT\" changing() ) 実装 日本語の情報がほとんどないことや公式のドキュメントがやや分かりづらいことを除けば1Finch自体の使いかたはそんなに難しくないです。Finchよりもfinagle-mysqlの使いかたを調べるのに苦労したのは内緒です。\n今回はDBのCRUD操作をするUser.scalaとMain.scalaの2ファイル書きました。\npackage jp.dakatsuka.finch import argonaut.Argonaut._ import argonaut.CodecJson import com.twitter.finagle.exp.mysql._ import com.twitter.util.Future case class User(id: Long, email: String, screen_name: String) object User { implicit val userCodec: CodecJson[User] = casecodec3(User.apply, User.unapply)(\"id\", \"email\", \"screen_name\") def all()(implicit client: Client): Future[Seq[User]] = client.select(\"SELECT * FROM users\")(convertToEntity) def find(id: Long)(implicit client: Client): Future[Option[User]] = client.prepare(\"SELECT * FROM users WHERE id = ?\")(id) map { result =\u003e result.asInstanceOf[ResultSet].rows.map(convertToEntity).headOption } def create(email: String, screen_name: String)(implicit client: Client): Future[Long] = client.prepare(\"INSERT INTO users (email, screen_name) VALUES(?, ?)\")(email, screen_name) map { result =\u003e result.asInstanceOf[OK].insertId } def convertToEntity(row: Row): User = { val LongValue(id) = row(\"id\").get val StringValue(email) = row(\"email\").get val StringValue(screen_name) = row(\"screen_name\").get User(id, email, screen_name) } } package jp.dakatsuka.finch import com.twitter.finagle.Http import com.twitter.finagle.exp.Mysql import com.twitter.util.Await import io.finch._ import io.finch.argonaut._ object Main { implicit val client = Mysql.client .withCredentials(\"user\", \"password\") .withDatabase(\"database\") .newRichClient(\"127.0.0.1:3306\") case class UserParams(email: String, screen_name: String) val userParams: RequestReader[UserParams] = for { email \u003c- param(\"email\") screen_name \u003c- param(\"screen_name\") } yield UserParams(email, screen_name) val listUser: Endpoint[Seq[User]] = get(\"users\") { Ok(User.all) } val showUser: Endpoint[User] = get(\"users\" / long) { id: Long =\u003e User.find(id).map { case Some(user) =\u003e Ok(user) case _ =\u003e NotFound(new Exception(\"Record Not Found\")) } } val createUser: Endpoint[User] = post(\"users\" ? userParams) { p: UserParams =\u003e (for { id \u003c- User.create(p.email, p.screen_name) user \u003c- User.find(id) } yield user) map { case Some(user) =\u003e Created(user) case _ =\u003e NotFound(new Exception(\"Record Not Found\")) } } val userService = (listUser :+: showUser :+: createUser).toService def main(args: Array[String]): Unit = { Await.ready(Http.serve(\":8080\", userService)) } } 動かしてみよう いつものコマンドでサーバが起動します。\n$ sbt run [info] Set current project to finchtest (in build file:/path/to/project/) [info] Compiling 1 Scala source to /path/to/project/target/scala-2.11/classes... [info] Running jp.dakatsuka.finch.Main 12 05, 2015 11:30:49 午後 com.twitter.finagle.Init$$anonfun$1 apply$mcV$sp 情報: Finagle version 6.30.0 (rev=745578b931893c432e51da623287144e548cc489) built at 20151015-163818 curlでリクエストを送ってみましょう。\n$ curl http://localhost:8080/users [] $ curl http://localhost:8080/users/1 Record Not Found $ curl -X POST http://localhost:8080/users Required param 'email' not present in the request. $ curl -X POST -d \"email=user1@example.com\" http://localhost:8080/users Required param 'screen_name' not present in the request. $ curl -X POST -d \"email=user1@example.com\" -d \"screen_name=user1\" http://localhost:8080/users {\"id\":1,\"email\":\"user1@example.com\",\"screen_name\":\"user1\"} $ curl -X POST -d \"email=user2@example.com\" -d \"screen_name=user2\" http://localhost:8080/users {\"id\":2,\"email\":\"user2@example.com\",\"screen_name\":\"user2\"} $ curl http://localhost:8080/users [{\"id\":1,\"email\":\"user1@example.com\",\"screen_name\":\"user1\"},{\"id\":2,\"email\":\"user2@example.com\",\"screen_name\":\"user2\"}] $ curl http://localhost:8080/users/1 {\"id\":1,\"email\":\"user1@example.com\",\"screen_name\":\"user1\"} 期待通りの動きですね 😏\nまとめ Finchはいかがでしたか？\nFinagleのエコシステムの上に乗っているので、Finagleに慣れている人がサクッとREST APIを実装するには良い選択肢だと思います。finagle-*なライブラリも当然使えます。Finagle使ったことない人にも、静的型付けの恩恵を受けながらSinatraライクに開発出来るというのは魅力的に映るかもしれませんね。\n個人的にはエンドポイントの戻り値が型で保証出来るのが高ポイントです！\nちなみに、似たようなフレームワークとしてFinagle, Akka HTTP, Scalatra, http4sなどがあります。http4sはScalaのHTTPインターフェース http4s 超入門で雑に紹介しているので、興味ある方はどうぞ。\nScalaライブラリにはよくあることなので頑張って貢献したい… ↩︎\n",
   "wordCount" : "1397",
   "inLanguage": "ja",
-  "datePublished": "2015-12-07T00:00:00Z",
+  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2015-12-07T00:00:00Z",
   "dateModified": "2015-12-07T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -190,7 +197,7 @@ if (!doNotTrack) {
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       Finch &#43; MySQLでREST APIサーバを構築する
     </h1>
     <div class="post-meta"><span title='2015-12-07 00:00:00 +0000 UTC'>2015/12/7</span>

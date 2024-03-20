@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>vim on dakatsuka&#39;s blog</title>
+    <title>Vim on dakatsuka&#39;s blog</title>
     <link>https://blog.dakatsuka.jp/tags/vim.html</link>
-    <description>Recent content in vim on dakatsuka&#39;s blog</description>
+    <description>Recent content in Vim on dakatsuka&#39;s blog</description>
     <image>
       <title>dakatsuka&#39;s blog</title>
       <url>https://blog.dakatsuka.jp/images/card.png</url>
@@ -11,15 +11,14 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Fri, 07 Sep 2007 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/vim/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 07 Sep 2007 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/vim/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Vim7でCSSをオムニ補完</title>
       <link>https://blog.dakatsuka.jp/2007/09/07/vim-css.html</link>
       <pubDate>Fri, 07 Sep 2007 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2007/09/07/vim-css.html</guid>
       <description>CSSも標準で対応してるみたい。以下の行を.vimrcに貼り付けるだけ。 autocmd FileType css set omnifunc=csscomplete#CompleteCSS C-x C-oで動作しますが、場合によっては普通に入力したほうが</description>
     </item>
-    
   </channel>
 </rss>

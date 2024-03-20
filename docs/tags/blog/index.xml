@@ -11,24 +11,21 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sun, 01 Dec 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 01 Dec 2013 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ブログのHTMLを全面的に書き直した</title>
       <link>https://blog.dakatsuka.jp/2013/12/01/rewrite-html-for-blog.html</link>
       <pubDate>Sun, 01 Dec 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2013/12/01/rewrite-html-for-blog.html</guid>
       <description>ヘッダーとフッターを除いたコンテンツをmainタグで括ってみたり、RSSで配信される内容はarticleタグにしたり、投稿日をtimeタグに</description>
     </item>
-    
     <item>
       <title>WordPressからMiddlemanに移行してGitHub Pagesで運用することにした</title>
       <link>https://blog.dakatsuka.jp/2013/11/22/change-from-wordpress-to-middleman.html</link>
       <pubDate>Fri, 22 Nov 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2013/11/22/change-from-wordpress-to-middleman.html</guid>
       <description>今まで惰性でWordPressを使い続けてきたが、ふと思い立ってMiddlemanで全面的に作り直すことにした。折角作り直すのだからブログの</description>
     </item>
-    
   </channel>
 </rss>

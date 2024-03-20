@@ -10,15 +10,15 @@
 <meta name="description" content="Node におけるスケールアーキテクチャ考察(Scale 編)というエントリーを読んで、RedisはPub/Sub型通信をサポートしているという事を知">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2011/06/19/nodejs-redis-pubsub.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2011/06/19/nodejs-redis-pubsub.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,7 +56,7 @@
 
     </style>
 </noscript>
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,13 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="Redis の Pub/Sub を使って Node.js &#43; WebSocket のスケールアウトを実現する方法" />
 <meta property="og:description" content="Node におけるスケールアーキテクチャ考察(Scale 編)というエントリーを読んで、RedisはPub/Sub型通信をサポートしているという事を知" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2011/06/19/nodejs-redis-pubsub.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2011/06/19/nodejs-redis-pubsub.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="article:section" content="post" />
 <meta property="article:published_time" content="2011-06-19T00:00:00+00:00" />
 <meta property="article:modified_time" content="2011-06-19T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
 <meta name="twitter:title" content="Redis の Pub/Sub を使って Node.js &#43; WebSocket のスケールアウトを実現する方法"/>
 <meta name="twitter:description" content="Node におけるスケールアーキテクチャ考察(Scale 編)というエントリーを読んで、RedisはPub/Sub型通信をサポートしているという事を知"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -87,6 +88,12 @@ if (!doNotTrack) {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.dakatsuka.jp/post.html"
+    }
     {
       "@type": "ListItem",
       "position":  1 ,
@@ -109,7 +116,7 @@ if (!doNotTrack) {
   "articleBody": "Node におけるスケールアーキテクチャ考察(Scale 編)というエントリーを読んで、RedisはPub/Sub型通信をサポートしているという事を知りました。エントリーでも言及されているように、Pub/Subを使えば Node.js + WebSocket サーバをスケールする際に、中継サーバの役割を果たす事が出来るはずです。\nそんな訳で実際に Node.js と Redis を使って Pub/Sub の実験を行なってみました。ユーザが別々のNode.jsサーバに接続していてもWebSocketを通してメッセージのやり取りを出来るようにします。\nイメージとしてはこんな感じです。\n下準備 Ubuntuの場合は apt-get で1発でインストールする事が出来ます。\n$ sudo apt-get install redis npmでredisモジュールをインストールします。\n$ npm install redis Node.js から Redis の Pub/Sub を使ってみる 試しにPub/Subとはどんなものか試してみましょう。Node.jsのコンソールを起動します。\n$ node コンソールに下記コードを入力します。\nvar sys = require('sys'); var redis = require('redis'); var subscriber = redis.createClient(6379, 'localhost'); subscriber.subscribe('hoge channel'); subscriber.on(\"message\", function(channel, message) { sys.puts(channel + \" :\" + message); }); 別のターミナルで、下記コマンドを実行します。\n$ redis-cli publish \"hoge channel\" \"Hello World!\" Node.js のコンソール画面に 「Hello World!」と表示されるはずです。これがPub/SubのSubにあたります。\nでは、今度はNode.js側からメッセージを送ってみましょう。先ほどのredis-cliを実行したターミナルで下記コマンドを実行します。\n$ redis-cli subscribe \"hoge channel\" Reading messages... (press Ctrl-c to quit) 1. \"subscribe\" 2. \"hoge channel\" 3. (integer) 1 Node.jsのコンソールに下記コードを入力します。\npublisher = redis.createClient(6379, 'localhost'); publisher.publish(\"hoge channel\", \"FooBar\"); Node.js のコンソール画面と redis-cli を実行した画面両方に「FooBar」と表示されますね。これで Redis の Pub/Sub の動きは何となく掴めたかと思います。\nWebSocket を使ったチャットもどきを実装する // This program is free software. It comes without any warranty, to // the extent permitted by applicable law. You can redistribute it // and/or modify it under the terms of the Do What The Fuck You Want // To Public License, Version 2, as published by Sam Hocevar. See // http://sam.zoy.org/wtfpl/COPYING for more details. var sys = require('sys') , opts = require('opts') , ws = require('websocket-server') , redis = require('redis') , server = ws.createServer() , subscriber = redis.createClient(6379, 'localhost') , publisher = redis.createClient(6379, 'localhost'); opts.parse([ { 'short': 'p', 'long': 'port', 'description': 'WebSocket Port', 'value': true, 'required': true } ]); subscriber.on(\"error\", function(err) { sys.debug(err); }); publisher.on(\"error\", function(err) { sys.debug(err); }); subscriber.subscribe(\"chat\"); subscriber.on(\"message\", function(channel, message) { sys.puts(message); server.broadcast(message); }); server.addListener(\"connection\", function(connection) { sys.puts(\"client connected: \" + connection.id); connection.addListener(\"message\", function(message) { publisher.publish(\"chat\", message); }); }); server.addListener(\"close\", function(connection) { sys.puts(\"client disconnected: \" + connection.id); }); server.listen(opts.get('port')); 上記コードをapp.jsとして保存し、複数のポートで立ち上げます（別途 npm で websocket-server と opts をインストールする必要があります）。\n$ node app.js -p 8001 $ node app.js -p 8002 $ node app.js -p 8003 $ node app.js -p 8004 Google Chrome の JavaScript コンソールを複数のタブで開き、下記のように入力します。\nvar connection = new WebSocket(\"ws://localhost:8001\"); connection.onmessage = function(event) { console.log(event.data) } connection.send(\"Hello!!\"); 複数のタブで connection.send(……) をたくさん入力してみると分かりやすいと思います。どのタブで入力してもメッセージが表示されるはずです。\nまとめ 今回は Redis の Pub/Sub を試す目的でしたので、チャットプログラム自体はメッセージを broadcast する事しか出来ません。しかし、Redis を通してやり取りするデータ形式をJSONにしておけば、色々な情報を各々の node.js サーバで共有する事ができるので、実用性が上がるのではないでしょうか。\nまた、Redis自体もレプリケーションが可能なので中継サーバもスケールする事が出来ると思います（未検証）。\n",
   "wordCount" : "1223",
   "inLanguage": "ja",
-  "datePublished": "2011-06-19T00:00:00Z",
+  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2011-06-19T00:00:00Z",
   "dateModified": "2011-06-19T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -190,7 +197,7 @@ if (!doNotTrack) {
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       Redis の Pub/Sub を使って Node.js &#43; WebSocket のスケールアウトを実現する方法
     </h1>
     <div class="post-meta"><span title='2011-06-19 00:00:00 +0000 UTC'>2011/6/19</span>

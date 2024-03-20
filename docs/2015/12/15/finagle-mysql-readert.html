@@ -10,15 +10,15 @@
 <meta name="description" content="下準備としてパッケージオブジェクトあたりに以下のおまじないを書いておく1 この時点ですでに面倒だ！ import com.twitter.util.Future import scalaz._ import Scalaz._ implicit def FutureFunctor: Functor[Future] = new Functor[Future] { def map[A, B](f: Future[A])(map: A =&gt; B): Future[B]">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,7 +56,7 @@
 
     </style>
 </noscript>
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,13 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="finagle-mysqlのClient (IO Context) をReaderTで受け取る" />
 <meta property="og:description" content="下準備としてパッケージオブジェクトあたりに以下のおまじないを書いておく1 この時点ですでに面倒だ！ import com.twitter.util.Future import scalaz._ import Scalaz._ implicit def FutureFunctor: Functor[Future] = new Functor[Future] { def map[A, B](f: Future[A])(map: A =&gt; B): Future[B]" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="article:section" content="post" />
 <meta property="article:published_time" content="2015-12-15T00:00:00+00:00" />
 <meta property="article:modified_time" content="2015-12-15T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
 <meta name="twitter:title" content="finagle-mysqlのClient (IO Context) をReaderTで受け取る"/>
 <meta name="twitter:description" content="下準備としてパッケージオブジェクトあたりに以下のおまじないを書いておく1 この時点ですでに面倒だ！ import com.twitter.util.Future import scalaz._ import Scalaz._ implicit def FutureFunctor: Functor[Future] = new Functor[Future] { def map[A, B](f: Future[A])(map: A =&gt; B): Future[B]"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -87,6 +88,12 @@ if (!doNotTrack) {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.dakatsuka.jp/post.html"
+    }
     {
       "@type": "ListItem",
       "position":  1 ,
@@ -109,7 +116,7 @@ if (!doNotTrack) {
   "articleBody": "下準備としてパッケージオブジェクトあたりに以下のおまじないを書いておく1 この時点ですでに面倒だ！\nimport com.twitter.util.Future import scalaz._ import Scalaz._ implicit def FutureFunctor: Functor[Future] = new Functor[Future] { def map[A, B](f: Future[A])(map: A =\u003e B): Future[B] = f.map(map(_)) } implicit def FutureMonad: Monad[Future] = new Monad[Future] { def point[A](a: =\u003e A) = Future.value(a) def bind[A, B](f: Future[A])(fmap: A =\u003e Future[B]) = f.flatMap(fmap(_)) } type ReaderTFuture[A, B] = ReaderT[Future, A, B] object ReaderTFuture extends KleisliInstances with KleisliFunctions { def apply[A, B](f: A =\u003e Future[B]): ReaderTFuture[A, B] = kleisli(f) } Finch + MySQLでREST APIサーバを構築するで書いたUserがimplicit parameterを使ってClientを受け取っているので、これをReaderTに置き換えてみた。\nimport com.twitter.finagle.exp.mysql._ case class User(id: Long, email: String, screen_name: String) object User { def find(id: Long): ReaderTFuture[Client, Option[User]] = ReaderTFuture { client =\u003e client.prepare(\"SELECT * FROM users WHERE id = ?\")(id) map { result =\u003e result.asInstanceOf[ResultSet].rows.map(convertToEntity).headOption } } def create(email: String, screen_name: String): ReaderTFuture[Client, Long] = ReaderTFuture { client =\u003e client.prepare(\"INSERT INTO users (email, screen_name) VALUES(?, ?)\")(email, screen_name) map { result =\u003e result.asInstanceOf[OK].insertId } } def convertToEntity(row: Row): User = { val LongValue(id) = row(\"id\").get val StringValue(email) = row(\"email\").get val StringValue(screen_name) = row(\"screen_name\").get User(id, email, screen_name) } } こんな感じで使うことができる。\nval client = Mysql.client .withCredentials(\"user\", \"password\") .withDatabase(\"database\") .newRichClient(\"127.0.0.1:3306\") (for { id \u003c- User.create(\"user1@example.com\", \"user1\") user \u003c- User.find(id) } yield user match { case Some(v) =\u003e Created(v) case _ =\u003e NotFound(new Exception(\"xxxxx\")) }).run(client) 上記のように.runでまとめて渡すことも出来るしval user = User.find(id)(client)と直接渡すことも出来るので、使いやすいほうを選べば良さそう。\n参考文献 独習 Scalaz — モナド変換子 Scala における Repository の実装パターンを考える -模索篇- - sandbox Scala で IO コンテキストの共有を implicit 以外で解決する方法 (0) - sandbox Scalaにおける最適なDependency Injectionの方法を考察する 〜なぜドワンゴアカウントシステムの生産性は高いのか〜 - Qiita 【Scala Days 2014】The Reader Monad for Dependency Injection を解説してみた | Scala Tech Blog FutureをFunctorとMonadの型クラスのインスタンスにしておく必要がある。ReaderTではなくReader使う場合は不要。 ↩︎\n",
   "wordCount" : "678",
   "inLanguage": "ja",
-  "datePublished": "2015-12-15T00:00:00Z",
+  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2015-12-15T00:00:00Z",
   "dateModified": "2015-12-15T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -190,7 +197,7 @@ if (!doNotTrack) {
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       finagle-mysqlのClient (IO Context) をReaderTで受け取る
     </h1>
     <div class="post-meta"><span title='2015-12-15 00:00:00 +0000 UTC'>2015/12/15</span>

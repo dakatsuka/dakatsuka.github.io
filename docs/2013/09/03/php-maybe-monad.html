@@ -10,15 +10,15 @@
 <meta name="description" content="PHPを仕事で使っているとis_nullとかissetとかemptyとか===とかの存在にイライラしてくる訳ですよ。そこでなんちゃってMay">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2013/09/03/php-maybe-monad.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2013/09/03/php-maybe-monad.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,7 +56,7 @@
 
     </style>
 </noscript>
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,13 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="ついカッとなってPHPでMaybeモナドを実装した" />
 <meta property="og:description" content="PHPを仕事で使っているとis_nullとかissetとかemptyとか===とかの存在にイライラしてくる訳ですよ。そこでなんちゃってMay" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2013/09/03/php-maybe-monad.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2013/09/03/php-maybe-monad.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="article:section" content="post" />
 <meta property="article:published_time" content="2013-09-03T00:00:00+00:00" />
 <meta property="article:modified_time" content="2013-09-03T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
 <meta name="twitter:title" content="ついカッとなってPHPでMaybeモナドを実装した"/>
 <meta name="twitter:description" content="PHPを仕事で使っているとis_nullとかissetとかemptyとか===とかの存在にイライラしてくる訳ですよ。そこでなんちゃってMay"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -87,6 +88,12 @@ if (!doNotTrack) {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.dakatsuka.jp/post.html"
+    }
     {
       "@type": "ListItem",
       "position":  1 ,
@@ -109,7 +116,7 @@ if (!doNotTrack) {
   "articleBody": "PHPを仕事で使っているとis_nullとかissetとかemptyとか===とかの存在にイライラしてくる訳ですよ。そこでなんちゃってMaybeモナドの登場です。\nなんちゃってモナドなので実用性は怪しいですが、以下のように使えます（注意：ネタ記事なので真に受けないように）\n\u003c?php public function testLookupFunction() { $lookup = function($key) { return function(array $d) use($key) { return isset($d[$key]) ? Maybe::ret($d[$key]) : Maybe::ret(); }; }; $dictionary = ['a' =\u003e ['b' =\u003e ['c' =\u003e 10]]]; $result1 = Maybe::ret($dictionary) [$lookup('a')] [$lookup('b')] [$lookup('c')]; $result2 = Maybe::ret($dictionary) [$lookup('a')] [$lookup('Z')] [$lookup('c')]; $this-\u003eassertInstanceOf('Just', $result1); $this-\u003eassertInstanceOf('Nothing', $result2); $this-\u003eassertEquals(10, $result1-\u003eget()); $this-\u003eassertEquals(10, $result1-\u003egetOrElse(30)); $this-\u003eassertNull($result2-\u003eget()); $this-\u003eassertEquals(30, $result2-\u003egetOrElse(30)); } モナド則（ちょっと自信無いかも）コードからPHPっぽさが消えた気が…\n\u003c?php /** * return a \u003e\u003e= f ≡ f a */ public function testMonadLaw1() { $f = function($a) { return Maybe::ret($a * 3); }; $l = Maybe::ret(5) [$f]; $r = $f(5); $this-\u003eassertEquals($l, $r); } /** * m \u003e\u003e= return ≡ m */ public function testMonadLaw2() { $m = Maybe::ret(5); $l = $m [function($x) { return Maybe::ret($x); }]; $this-\u003eassertEquals($l, $m); } /** * (m \u003e\u003e= f) \u003e\u003e= g ≡ m \u003e\u003e= (\\x -\u003e f x \u003e\u003e= g) */ public function testMonadLaw3() { $f = function($a) { return Maybe::ret($a * 3); }; $g = function($a) { return Maybe::ret($a * 5); }; $m = Maybe::ret(7); $l = $m [$f] [$g]; $r = $m [function($x) use($f, $g) { return $f($x) [$g]; }]; $this-\u003eassertEquals($l, $r); } 実装 まずはMonadクラスを定義します。PHPは演算子のオーバーロードや新たな演算子を定義出来ないので、\u003e\u003e=はoffsetGetメソッドを書き換えて配列のブラケットで代用することにします。ブラケットの中にfunction {}って書けるので超キモイですね。\n\u003c?php abstract class Monad implements \\ArrayAccess { abstract public function bind(callable $f); public function offsetExists($offset) { throw new \\BadMethodCallException(); } public function offsetGet($offset) { return $this-\u003ebind($offset); } public function offsetSet($offset, $value) { throw new \\BadMethodCallException(); } public function offsetUnset($offset) { throw new \\BadMethodCallException(); } } 次はMaybe、Just、Nothingクラスを定義します。NothingはNothingしか存在しないのでシングルトンにしてみました。また、ScalaのOption型で便利だったいくつかのメソッドを実装しています。\n\u003c?php abstract class Maybe extends Monad { protected $value; public static function ret($value = null) { if (is_null($value)) { return Nothing::ret(); } else { return Just::ret($value); } } public function __construct($value) { $this-\u003evalue = $value; } public function bind(callable $f) { if ($this instanceof Just \u0026\u0026 is_callable($f)) { return $f($this-\u003evalue); } else { return $this; } } abstract public function get(); abstract public function getOrElse($default); abstract public function getOrCall(callable $fn); abstract public function getOrThrow(\\Exception $ex); abstract public function isEmpty(); abstract public function isDefined(); } final class Just extends Maybe { public static function ret($value = null) { return new Just($value); } public function get() { return $this-\u003evalue; } public function getOrElse($default) { return $this-\u003eget(); } public function getOrCall(callable $fn) { return $this-\u003eget(); } public function getOrThrow(\\Exception $ex) { return $this-\u003eget(); } public function isEmpty() { return false; } public function isDefined() { return true; } } final class Nothing extends Maybe { private static $instance; public function __construct($value = null) { if (static::$instance) { throw new \\InvalidArgumentException(); } } public static function ret($value = null) { if (is_null(static::$instance)) { return static::$instance = new static(); } else { return static::$instance; } } public function get() { return null; } public function getOrElse($default) { return $default; } public function getOrCall(callable $fn) { return $fn(); } public function getOrThrow(\\Exception $ex) { throw $ex; } public function isEmpty() { return true; } public function isDefined() { return false; } } Enjoy functional PHP!\n",
   "wordCount" : "871",
   "inLanguage": "ja",
-  "datePublished": "2013-09-03T00:00:00Z",
+  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2013-09-03T00:00:00Z",
   "dateModified": "2013-09-03T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -190,7 +197,7 @@ if (!doNotTrack) {
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       ついカッとなってPHPでMaybeモナドを実装した
     </h1>
     <div class="post-meta"><span title='2013-09-03 00:00:00 +0000 UTC'>2013/9/3</span>

@@ -10,15 +10,15 @@
 <meta name="description" content="前回に引き続き Chef に関するエントリです。このエントリではChef Serverのインストールと初期設定、更にNodeの接続までを書いていこうと思">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/2011/12/08/chef-install.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
+<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2011/12/08/chef-install.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,7 +56,7 @@
 
     </style>
 </noscript>
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,13 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="Chefで始めるシステム構成管理入門 その2 – インストールと初期設定" />
 <meta property="og:description" content="前回に引き続き Chef に関するエントリです。このエントリではChef Serverのインストールと初期設定、更にNodeの接続までを書いていこうと思" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2011/12/08/chef-install.html" /><meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png"/><meta property="article:section" content="post" />
+<meta property="og:url" content="https://blog.dakatsuka.jp/2011/12/08/chef-install.html" />
+<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="article:section" content="post" />
 <meta property="article:published_time" content="2011-12-08T00:00:00+00:00" />
 <meta property="article:modified_time" content="2011-12-08T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png"/>
-
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
 <meta name="twitter:title" content="Chefで始めるシステム構成管理入門 その2 – インストールと初期設定"/>
 <meta name="twitter:description" content="前回に引き続き Chef に関するエントリです。このエントリではChef Serverのインストールと初期設定、更にNodeの接続までを書いていこうと思"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -87,6 +88,12 @@ if (!doNotTrack) {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://blog.dakatsuka.jp/post.html"
+    }
     {
       "@type": "ListItem",
       "position":  1 ,
@@ -109,7 +116,7 @@ if (!doNotTrack) {
   "articleBody": "前回に引き続き Chef に関するエントリです。このエントリではChef Serverのインストールと初期設定、更にNodeの接続までを書いていこうと思います。自分のメモ書きを整理して書き出しているので、何かおかしな箇所があったら是非指摘してください！\nさて、作業を進めていく上で複数のマシンが出てくるので、便宜上、下図のようなネットワーク構成にしようと思います。192.168.50.100はグローバルIPだと思ってください。また、Chef Server, 各Nodeは全てUbuntu 11.10 Serverと仮定します（Debian squeezeでも大丈夫）。\nChef Server はパッケージシステムからインストールするのが無難 前回の「Chefの仕組み」でも書いたように、自力で Chef Server をセットアップするのは骨が折れます。サーバの構築を自動化したいのに肝心のChefで手間取るなど本末転倒ですね。なるべくならディストリビューション付属のパッケージシステムで導入したいところです。\n有り難いことに開発元の Opscode が、Debina/Ubuntu用のAPT Repositoryを提供して下さっていますので迷わず利用しましょう。…CentOSは…美味しいんでしょうか…\n作業手順は下記の通り。まずChef ServerにSSHでログインし、KeyとRepositoryを登録して apt-get で chef-server をインストールします。\n# Ubuntu chefserver:$ echo \"deb http://apt.opscode.com/ `lsb_release -cs`-0.10 main\" | sudo tee /etc/apt/sources.list.d/opscode.list # Debian chefserver:$ echo \"deb http://apt.opscode.com/ squeeze-0.10 main\" | sudo tee /etc/apt/sources.list.d/opscode.list chefserver:$ sudo apt-get update chefserver:$ sudo apt-get install opscode-keyring chefserver:$ sudo apt-get update chefserver:$ sudo apt-get install chef-server インストールの途中で3回質問が出ますので入力が必要になります。\nこれはChef Server内にインストールされるChef ClientからみたChef Server APIのURIを入力します。同一サーバなのでここでは http://localhost:4000 と入力してください。\nAMQP Server（RabbitMQ）のパスワードを入力します。任意の文字列を入力してください。ここで入力したパスワードは /etc/chef/solr.rb 内に記述されます。\nWebUIの初期ユーザー（admin）のパスワードを設定します。任意の文字列を入力してください。\nインストールが無事終わるとChef Serverが自動的に立ち上がります。結構な量のパッケージが入りますので多少時間がかかると思います。\n管理用Clientを登録する Chef Serverのインストールが終わったら管理用Clientを登録します。ここで登録するClientはChef Server内でのみ使用します。\nまずホームディレクトリに.chefディレクトリを作成し、鍵二種類を/etc/chefからコピーしてきます。\nchefserver:$ mkdir -p ~/.chef chefserver:$ sudo cp /etc/chef/validation.pem /etc/chef/webui.pem ~/.chef chefserver:$ sudo chown -R $USER:$USER ~/.chef そのあとにknifeコマンドで初期設定を行います。\nchefserver:$ knife configure -i WARNING: No knife configuration file found Where should I put the config file? [~/.chef/knife.rb] [ENTER] Please enter the chef server URL: [http://chefserver:4000] http://localhost:4000 Please enter a clientname for the new client: [username] master Please enter the existing admin clientname: [chef-webui] [ENTER] Please enter the location of the existing admin client's private key: [/etc/chef/webui.pem] /home/username/.chef/webui.pem Please enter the validation clientname: [chef-validator] [ENTER] Please enter the location of the validation key: [/etc/chef/validation.pem] /home/username/.chef/validation.pem Please enter the path to a chef repository (or leave blank): [ENTER] Creating initial API user... Created client[master] Configuration file written to /home/username/.chef/knife.rb これでmasterという管理用Clientが登録されました。試しに下記コマンドを叩いてみましょう。\nchefserver:$ knife client list 次のように返ってくれば成功です。\nchefserver:$ knife client list chef chef-validator chef-webui master Clientの詳細をみることも出来ます。\nchefserver:$ knife client show master _rev: 1-2901b7c2eb6d33b01f8f12951933b709 admin: true chef_type: client json_class: Chef::ApiClient name: master public_key: -----BEGIN RSA PUBLIC KEY----- snip -----END RSA PUBLIC KEY----- ローカル環境用に管理用Clientを作成する 今後、Chefの操作はほぼKnifeコマンドで行う事になるのですが、毎回サーバにログインして作業するのは微妙です。Cookbookなどは別の環境で作成してGitなどのSCMで管理したいですよね。\nですので別の環境からでもアクセス出来る管理用Clientを作成したいと思います。\n下記コマンドを実行しましょう。これはakatsukaという管理用Clientを作成するコマンドになります。Client名は適宜置き換えて下さい。\nchefserver:$ knife client create akatsuka -n -a -f /tmp/akatsuka.pem Created client[akatsuka] ちゃんと作成出来ているか確認します。\nchefserver:$ knife client list akatsuka chef chef-validator chef-webui master あとは上記コマンドで生成された/tmp/akatsuka.pemと~/.chef/validation.pemの二つの鍵をSCPなどでローカル環境にコピーしてください。\nローカル環境の準備 ローカル環境側はknifeコマンドを使うだけですので、RubyとRubygemsが入っていればgem installだけで済みます（Rubyのインストールは割愛します）。\nworkstation:$ gem install chef インストールが終わったら先ほどSCPで持ってきた akatsuka.pem と validation.pem を ~/.chef にコピーして、下記コマンドを実行します。\nworkstation: $ knife configure WARNING: No knife configuration file found Where should I put the config file? [~/.chef/knife.rb] [ENTER] Please enter the chef server URL: [http://workstation:4000] http://192.168.50.100:4000 Please enter an existing username or clientname for the API: [username] akatsuka Please enter the validation clientname: [chef-validator] [ENTER] Please enter the location of the validation key: [/etc/chef/validation.pem] /Users/username/.chef/validation.pem Please enter the path to a chef repository (or leave blank): [ENTER] ***** You must place your client key in: /Users/username/.chef/akatsuka.pem Before running commands with Knife! ***** You must place your validation key in: /Users/username/.chef/validation.pem Before generating instance data with Knife! ***** Configuration file written to /Users/username/.chef/knife.rb ローカル環境からでも接続出来るか確認してみましょう。\nworkstation:$ knife client list akatsuka chef chef-validator chef-webui master Chef Server APIをHTTPSにしてセキュアにする Chef Server APIのプロトコルは普通のHTTPなので、フロントエンドに nginx を置いてHTTPSに対応させます。\nchefserver:$ sudo apt-get install nginx OpenSSLを使って鍵を生成します。\nchefserver:$ cd /etc/nginx chefserver:$ sudo mkdir ssl chefserver:$ sudo openssl req -new -key ssl/server.key -out ssl/server.csr chefserver:$ sudo openssl x509 -in ssl/server.csr -out ssl/server.crt -req -signkey ssl/server.key -days 365 chefserver:$ sudo chmod 400 ssl/server.* nginxのデフォルトファイルを削除します。\nsudo rm -rf /etc/nginx/sites-enabled/default /etc/nginx/conf.d/proxy.confを作成します。\n# /etc/nginx/conf.d/proxy.conf proxy_redirect off; proxy_set_header Host $host; proxy_set_header X-Real-IP $remote_addr; proxy_set_header X-Forwarded-Host $host; proxy_set_header X-Forwarded-Server $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_set_header X-Forwarded-Proto https; /etc/nginx/sites-available/sslを作成します。\n# /etc/nginx/sites-available/ssl server { listen 443; server_name localhost; ssl on; ssl_certificate /etc/nginx/ssl/server.crt; ssl_certificate_key /etc/nginx/ssl/server.key; ssl_session_timeout 5m; ssl_protocols SSLv2 SSLv3 TLSv1; ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP; ssl_prefer_server_ciphers on; location / { proxy_pass http://127.0.0.1:4000/; } } 上で作ったファイルのシンボリックリンクを/etc/nginx/sites-enabled内に作成します。\nchefserver:$ sudo ln -s /etc/nginx/sites-available/ssl /etc/nginx/sites-enabled/ssl nginxを起動させます。\nchefserver:$ sudo /etc/init.d/nginx start これでChef ServerはHTTPS対応になりました。ローカル環境のほうもHTTPSで繋がるように変更しておきましょう。~/.chef/knife.rbを開いてchef_server_urlの値を修正します。\n-chef_server_url 'http://192.168.50.100:4000' +chef_server_url 'https://192.168.50.100' まとめ うーん・・・。書いていて思ったのはやはり手間ですね！もう少し何とかならないものか・・・。あと完全にWebUIをスルーしておりますが、今後もスルーする方向で行こうと思っています。理由は、WebUIだけだと出来ない事がある、何故かOpenIDを使ってログイン出来てしまう（致命的なような…）、そもそも使い勝手的にどうなんだ、といったところです。あと設定ファイルもローカルに残らないのでそれもマイナスですね。\nさて、次はいよいよNodeを登録して実際にレシピを書いていこうと思います。年内に書ければいいなぁ\n",
   "wordCount" : "2654",
   "inLanguage": "ja",
-  "datePublished": "2011-12-08T00:00:00Z",
+  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2011-12-08T00:00:00Z",
   "dateModified": "2011-12-08T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -190,7 +197,7 @@ if (!doNotTrack) {
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       Chefで始めるシステム構成管理入門 その2 – インストールと初期設定
     </h1>
     <div class="post-meta"><span title='2011-12-08 00:00:00 +0000 UTC'>2011/12/8</span>

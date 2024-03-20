@@ -11,141 +11,112 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 18 Feb 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dakatsuka.jp/tags/scala/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 18 Feb 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.dakatsuka.jp/tags/scala/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>The Magnet PatternでAkka HTTPのonSuccessで処理できる型を増やす</title>
       <link>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</link>
       <pubDate>Sat, 18 Feb 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2017/02/18/akka-http-onsuccess-magnet.html</guid>
       <description>Akka HTTPの onSuccess ディレクティブは The Magnet Pattern によって実装されているのでOnSuccessMagnet型クラスのインスタンスさえ定義してしまえば割りと</description>
     </item>
-    
     <item>
       <title>Akka HTTPのDirective0の使い勝手が良くないのでどうにかする話</title>
       <link>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</link>
       <pubDate>Sat, 04 Feb 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2017/02/04/akka-http-directive.html</guid>
       <description>まずDirective0とDirective1の型定義を見て欲しい。 type Directive0 = Directive[Unit] type Directive1[T] = Directive[Tuple1[T]] Directive0がDirective1[Unit]で</description>
     </item>
-    
     <item>
       <title>Akka HTTPで認証機能を手軽に実装する方法</title>
       <link>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</link>
       <pubDate>Mon, 05 Dec 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</guid>
       <description>これはScala Advent Calendar 2016の5日目です。埋まっていなかったので1日遅れでしれっと書くよ。 Akka HTTPには AuthenticationDirective という認証のためのディレクティブが</description>
     </item>
-    
     <item>
       <title>ScalaでNumeric型クラスをつかう</title>
       <link>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</link>
       <pubDate>Sun, 27 Dec 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/12/27/numeric-typeclass.html</guid>
       <description>すごいHaskell本の序盤に次のような関数が出てくる。この関数はxが整数でも浮動小数点数でも動く。 doubleMe x = x + x ScalaでもNumeric</description>
     </item>
-    
     <item>
       <title>finagle-mysqlのClient (IO Context) をReaderTで受け取る</title>
       <link>https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html</link>
       <pubDate>Tue, 15 Dec 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/12/15/finagle-mysql-readert.html</guid>
       <description>下準備としてパッケージオブジェクトあたりに以下のおまじないを書いておく1 この時点ですでに面倒だ！ import com.twitter.util.Future import scalaz._ import Scalaz._ implicit def FutureFunctor: Functor[Future] = new Functor[Future] { def map[A, B](f: Future[A])(map: A =&amp;gt; B): Future[B]</description>
     </item>
-    
     <item>
       <title>FinchのEndpointのテスト方法を調べた</title>
       <link>https://blog.dakatsuka.jp/2015/12/13/finch-endpoint-test.html</link>
       <pubDate>Sun, 13 Dec 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/12/13/finch-endpoint-test.html</guid>
       <description>Finchはエンドポイントを作るときに戻り値を型で縛れるので、正常系のレスポンスに関してはコンパイラを信用して大丈夫だろう。ただし、ステータ</description>
     </item>
-    
     <item>
       <title>ScalaでLuaスクリプトを動かして遊ぶ</title>
       <link>https://blog.dakatsuka.jp/2015/12/10/luaj.html</link>
       <pubDate>Thu, 10 Dec 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/12/10/luaj.html</guid>
       <description>これはScala Advent Calendar 2015（Adventar版）10日目です。9日目はShinpeimさんの既存のクラスをScalazで定義されている型ク</description>
     </item>
-    
     <item>
       <title>Finch &#43; MySQLでREST APIサーバを構築する</title>
       <link>https://blog.dakatsuka.jp/2015/12/07/finch.html</link>
       <pubDate>Mon, 07 Dec 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/12/07/finch.html</guid>
       <description>これはScala Advent Calendar 2015（Adventar版）7日目です。6日目はHiroyuki-NagataさんのScalatraとnon-bloc</description>
     </item>
-    
     <item>
       <title>http4sでHTTPSを有効にする</title>
       <link>https://blog.dakatsuka.jp/2015/11/22/http4s-with-ssl.html</link>
       <pubDate>Sun, 22 Nov 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/11/22/http4s-with-ssl.html</guid>
       <description>SSLSupportパッケージをインポートしてBlazeBuilderの.withSSLにKeyStoreの情報を渡せばHTTPSが有効にな</description>
     </item>
-    
     <item>
       <title>ScalaのHTTPインターフェース http4s 超入門</title>
       <link>https://blog.dakatsuka.jp/2015/11/14/http4s.html</link>
       <pubDate>Sat, 14 Nov 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/11/14/http4s.html</guid>
       <description>What&amp;rsquo;s http4s RackやWSGIのScala版といったところ。公式サイトの説明も次のように書いてある。 http4s is a minimal, idiomatic Scala interface for HTTP. http4s is Scala&amp;rsquo;s answer to Ruby&amp;rsquo;s Rack, Python&amp;rsquo;s WSGI, Haskell&amp;rsquo;s WAI, and Java&amp;rsquo;s Servlets. ま</description>
     </item>
-    
     <item>
       <title>scala.concurrent.Futureをscalaz.concurrent.Taskに変換する方法</title>
       <link>https://blog.dakatsuka.jp/2015/11/07/future-to-task-transformer.html</link>
       <pubDate>Sat, 07 Nov 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/11/07/future-to-task-transformer.html</guid>
       <description>あまり良い方法では無さそうだけど他に思いつかなかった import scala.concurrent.Future import scala.concurrent.ExecutionContext.Implicits.global import scala.util.{Success, Failure} import scalaz.concurrent.Task import scalaz.syntax.either._ implicit class FutureToTaskTransformer[+A](future: Future[A]) { def toTask: Task[A] = { Task.async { register =&amp;gt; future.onComplete { case Success(v) =&amp;gt; register(v.right) case Failure(e) =&amp;gt; register(e.left) } } } } Futur</description>
     </item>
-    
     <item>
       <title>Play Framework 2.x でマルチプロジェクト構成にするには</title>
       <link>https://blog.dakatsuka.jp/2015/06/11/play-multiple-project.html</link>
       <pubDate>Thu, 11 Jun 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/06/11/play-multiple-project.html</guid>
       <description>ドメイン層（普通のScalaプロジェクト）とアプリケーション層（Play）でsbtプロジェクトを分けたい場合は、sbtのマルチプロジェクトを</description>
     </item>
-    
     <item>
       <title>sbtでAmazon S3をMavenリポジトリとして扱う方法</title>
       <link>https://blog.dakatsuka.jp/2015/05/16/sbt-publish-to-s3.html</link>
       <pubDate>Sat, 16 May 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2015/05/16/sbt-publish-to-s3.html</guid>
       <description>fm-sbt-s3-resolverというプラグインを入れることでS3をMaven Repositoryとして扱えるようになります。社内のサー</description>
     </item>
-    
     <item>
       <title>Play framework を CircleCI でテストする</title>
       <link>https://blog.dakatsuka.jp/2014/08/24/play2-on-circleci.html</link>
       <pubDate>Sun, 24 Aug 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2014/08/24/play2-on-circleci.html</guid>
       <description>Play framework 2.3 (Scala版）で開発しているアプリをTravis ProでCIしていたのだけど、ビルド時間がネックになってきたのでインスタンス性能が高</description>
     </item>
-    
     <item>
       <title>Play framework 2.3.x と Scaldi で Dependency Injection</title>
       <link>https://blog.dakatsuka.jp/2014/08/01/play2-scaldi.html</link>
       <pubDate>Fri, 01 Aug 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://blog.dakatsuka.jp/2014/08/01/play2-scaldi.html</guid>
       <description>Play2でDIをどうしようか悩んでいたところscaldiというライブラリが目に止まった。Playに組み込むためのライブラリをあるし、公式サ</description>
     </item>
-    
   </channel>
 </rss>
