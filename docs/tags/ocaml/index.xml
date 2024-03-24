@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 20 Mar 2024 22:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 24 Mar 2024 22:00:00 +0900</lastBuildDate>
     <atom:link href="https://blog.dakatsuka.jp/tags/ocaml/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ファーストクラスモジュール</title>
+      <link>https://blog.dakatsuka.jp/2024/03/24/ocaml-first-class-module-memo.html</link>
+      <pubDate>Sun, 24 Mar 2024 22:00:00 +0900</pubDate>
+      <guid>https://blog.dakatsuka.jp/2024/03/24/ocaml-first-class-module-memo.html</guid>
+      <description>OCamlにはファーストクラスモジュール（第一級モジュール）という言語機能があり、関数の引数にモジュールを渡したりモジュールを戻り値にするこ</description>
+    </item>
     <item>
       <title>OCamlでモノイド</title>
       <link>https://blog.dakatsuka.jp/2024/03/20/ocaml-monoid.html</link>
