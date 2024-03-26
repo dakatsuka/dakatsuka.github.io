@@ -5,9 +5,9 @@ date: 2024-03-24T22:00:00+09:00
 tags: [OCaml]
 ---
 
-OCamlにはファーストクラスモジュール（第一級モジュール）という言語機能があり、関数の引数にモジュールを渡したりモジュールを戻り値にすることができる。
+OCamlにはファーストクラスモジュール（第一級モジュール）という言語機能があり、関数の引数にモジュールを渡したりモジュールを戻り値にすることができる。要するにモジュールを値のように扱える。
 
-典型的な使い方は、関数の引数に要求するモジュール型を指定しておきそのシグネチャに合致したモジュールを渡せるようにして、関数内でモジュールの実装を呼び出す。Strategy PatternやDIとして使えるだろう。[公式マニュアル](https://v2.ocaml.org/manual/firstclassmodules.html)でも select at run-time among several implementations と言っているのでそういう使い方を想定しているはず。
+典型的な使い方は、関数の引数にモジュール型を指定して、そのシグネチャに合致したモジュールを渡せるようにする。関数内でモジュールの実装を呼び出せるのでStrategy PatternやDIとして使えるだろう。[公式マニュアル](https://v2.ocaml.org/manual/firstclassmodules.html)でも select at run-time among several implementations と言っているのでそういう使い方を想定しているはず。
 
 ```ocaml
 (* インターフェースを定義 *)
@@ -33,7 +33,7 @@ let () =
   print_hex_digest (module DigestSHA1) "test"; (* a94a8fe5ccb19ba61c4c0873d391e987982fbbd3 *)
 ```
 
-また、以下のように `t` 型を抽象化することで、引数や戻り値の型も変えることができる。これはScalaの[Dependent function types](https://docs.scala-lang.org/scala3/book/types-dependent-function.html)に近く、なかなかpowerfulだなぁと感じる。
+また、以下のように型を抽象化することで、引数や戻り値の型も変えることができる。これはScalaの[Dependent function types](https://docs.scala-lang.org/scala3/book/types-dependent-function.html)に近く、なかなかpowerfulだなぁと感じる。
 
 ```ocaml
 module type Monoid = sig
