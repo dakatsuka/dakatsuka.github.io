@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sun, 24 Mar 2024 22:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 08 Apr 2024 19:00:00 +0900</lastBuildDate>
     <atom:link href="https://blog.dakatsuka.jp/tags/ocaml/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Extensible variant types</title>
+      <link>https://blog.dakatsuka.jp/2024/04/08/ocaml-extensible-variant-types.html</link>
+      <pubDate>Mon, 08 Apr 2024 19:00:00 +0900</pubDate>
+      <guid>https://blog.dakatsuka.jp/2024/04/08/ocaml-extensible-variant-types.html</guid>
+      <description>Extensible variant types とは OCaml の言語拡張のひとつで、後からコンストラクタを拡張できる性質を持ったバリアント型を定義できる。 型を宣言するときは .. を使う type color = .. バ</description>
+    </item>
     <item>
       <title>ファーストクラスモジュール</title>
       <link>https://blog.dakatsuka.jp/2024/03/24/ocaml-first-class-module-memo.html</link>

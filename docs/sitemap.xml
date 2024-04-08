@@ -3,16 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.dakatsuka.jp/</loc>
-    <lastmod>2024-03-24T22:00:00+09:00</lastmod>
+    <lastmod>2024-04-08T19:00:00+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/2024/04/08/ocaml-extensible-variant-types.html</loc>
+    <lastmod>2024-04-08T19:00:00+09:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/tags/ocaml.html</loc>
-    <lastmod>2024-03-24T22:00:00+09:00</lastmod>
+    <lastmod>2024-04-08T19:00:00+09:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/post.html</loc>
-    <lastmod>2024-03-24T22:00:00+09:00</lastmod>
+    <lastmod>2024-04-08T19:00:00+09:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/tags.html</loc>
-    <lastmod>2024-03-24T22:00:00+09:00</lastmod>
+    <lastmod>2024-04-08T19:00:00+09:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/2024/03/24/ocaml-first-class-module-memo.html</loc>
     <lastmod>2024-03-24T22:00:00+09:00</lastmod>
