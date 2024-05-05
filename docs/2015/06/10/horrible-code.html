@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,16 +9,16 @@
 <meta name="keywords" content="Python">
 <meta name="description" content="PackerのログからAMI IDを取得するコードがInvokeのタスクに書かれていた。全然書いた記憶がないのだけど（すごい忙しかったという記">
 <meta name="author" content="">
-<link rel="canonical" href="https://blog.dakatsuka.jp/2015/06/10/horrible-code.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.4201f63805ab0f01947eba3e5b33eb2beb5e2408698c2b500cd801b67759ea61.css" integrity="sha256-QgH2OAWrDwGUfro&#43;WzPrK&#43;teJAhpjCtQDNgBtndZ6mE=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://blog.dakatsuka.jp/apple-icon-180x180.png">
-<link rel="mask-icon" href="https://blog.dakatsuka.jp/safari-pinned-tab.svg">
+<link rel="canonical" href="http://localhost:1313/2015/06/10/horrible-code.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3473843d9d2c74e671103115da111d115951ed0688d612aab7889e5a270bd11c.css" integrity="sha256-NHOEPZ0sdOZxEDEV2hEdEVlR7QaI1hKqt4ieWicL0Rw=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-icon-180x180.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="ja" href="https://blog.dakatsuka.jp/2015/06/10/horrible-code.html">
+<link rel="alternate" hreflang="ja" href="http://localhost:1313/2015/06/10/horrible-code.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -70,14 +70,14 @@ if (!doNotTrack) {
 </script><meta property="og:title" content="今年に入って生み出した糞コード" />
 <meta property="og:description" content="PackerのログからAMI IDを取得するコードがInvokeのタスクに書かれていた。全然書いた記憶がないのだけど（すごい忙しかったという記" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.dakatsuka.jp/2015/06/10/horrible-code.html" />
-<meta property="og:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta property="og:url" content="http://localhost:1313/2015/06/10/horrible-code.html" />
+<meta property="og:image" content="http://localhost:1313/images/card.png" />
 <meta property="article:section" content="post" />
 <meta property="article:published_time" content="2015-06-10T00:00:00+00:00" />
 <meta property="article:modified_time" content="2015-06-10T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:image" content="https://blog.dakatsuka.jp/images/card.png" />
+<meta name="twitter:image" content="http://localhost:1313/images/card.png" />
 <meta name="twitter:title" content="今年に入って生み出した糞コード"/>
 <meta name="twitter:description" content="PackerのログからAMI IDを取得するコードがInvokeのタスクに書かれていた。全然書いた記憶がないのだけど（すごい忙しかったという記"/>
 <meta name="twitter:site" content="@d_akatsuka"/>
@@ -92,13 +92,13 @@ if (!doNotTrack) {
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://blog.dakatsuka.jp/post.html"
+      "item": "http://localhost:1313/post.html"
     }
     {
       "@type": "ListItem",
       "position":  1 ,
       "name": "今年に入って生み出した糞コード",
-      "item": "https://blog.dakatsuka.jp/2015/06/10/horrible-code.html"
+      "item": "http://localhost:1313/2015/06/10/horrible-code.html"
     }
   ]
 }
@@ -116,18 +116,18 @@ if (!doNotTrack) {
   "articleBody": "PackerのログからAMI IDを取得するコードがInvokeのタスクに書かれていた。全然書いた記憶がないのだけど（すごい忙しかったという記憶だけはある）blameしてみると自分なのできっと妖精さんが書いたのだろう。。。\nami_id = commands.getoutput(\"ruby -e 'puts `tail -n1 /tmp/packer.log`.split(\\\": \\\").last'\") 書きなおすとしたらこうかな。Pythonはたまにしか書かないのでもっと良い書き方がある気がする。\nwith open(\"/tmp/packer.log\", \"r\") as file: xs = file.read().split(\"\\n\") ami_id = [x for x in xs if x][-1].split(\": \")[-1] 別にtailコマンド使うのは良い気がしてきた。\nami_id = commands.getoutput(\"tail -n1 /tmp/packer.log\").split(\": \")[-1] 追記：これだ\nami_id = commands.getoutput(\"tail -n1 /tmp/packer.log | sed -e 's/^ami: //'\") ",
   "wordCount" : "230",
   "inLanguage": "ja",
-  "image": "https://blog.dakatsuka.jp/images/card.png","datePublished": "2015-06-10T00:00:00Z",
+  "image": "http://localhost:1313/images/card.png","datePublished": "2015-06-10T00:00:00Z",
   "dateModified": "2015-06-10T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://blog.dakatsuka.jp/2015/06/10/horrible-code.html"
+    "@id": "http://localhost:1313/2015/06/10/horrible-code.html"
   },
   "publisher": {
     "@type": "Organization",
     "name": "dakatsuka's blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://blog.dakatsuka.jp/favicon.ico"
+      "url": "http://localhost:1313/favicon.ico"
     }
   }
 }
@@ -149,7 +149,7 @@ if (!doNotTrack) {
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://blog.dakatsuka.jp/" accesskey="h" title="dakatsuka&#39;s blog (Alt + H)">dakatsuka&#39;s blog</a>
+            <a href="http://localhost:1313/" accesskey="h" title="dakatsuka&#39;s blog (Alt + H)">dakatsuka&#39;s blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -175,17 +175,17 @@ if (!doNotTrack) {
         </div>
         <ul id="menu">
             <li>
-                <a href="https://blog.dakatsuka.jp/about.html" title="About">
+                <a href="http://localhost:1313/about.html" title="About">
                     <span>About</span>
                 </a>
             </li>
             <li>
-                <a href="https://blog.dakatsuka.jp/archives.html" title="Archives">
+                <a href="http://localhost:1313/archives.html" title="Archives">
                     <span>Archives</span>
                 </a>
             </li>
             <li>
-                <a href="https://blog.dakatsuka.jp/tags.html" title="Tags">
+                <a href="http://localhost:1313/tags.html" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
@@ -220,14 +220,14 @@ if (!doNotTrack) {
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://blog.dakatsuka.jp/tags/python.html">Python</a></li>
+      <li><a href="http://localhost:1313/tags/python.html">Python</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://blog.dakatsuka.jp/">dakatsuka&#39;s blog</a></span>
+    <span>&copy; 2024 <a href="http://localhost:1313/">dakatsuka&#39;s blog</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

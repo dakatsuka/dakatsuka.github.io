@@ -12,8 +12,6 @@ enableEmoji: true
 
 publishDir: "docs"
 
-googleAnalytics: "UA-45923728-1"
-
 permalinks:
   post: "/:year/:month/:day/:slug"
 

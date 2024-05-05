@@ -10,7 +10,7 @@
 <meta name="description" content="Posts - dakatsuka&#39;s blog">
 <meta name="author" content="">
 <link rel="canonical" href="https://blog.dakatsuka.jp/post.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.4201f63805ab0f01947eba3e5b33eb2beb5e2408698c2b500cd801b67759ea61.css" integrity="sha256-QgH2OAWrDwGUfro&#43;WzPrK&#43;teJAhpjCtQDNgBtndZ6mE=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.f8bfc6dd6394042fe0d56830852c789dca6c40dad90c77e7572e8145528e17e2.css" integrity="sha256-&#43;L/G3WOUBC/g1WgwhSx4ncpsQNrZDHfnVy6BRVKOF&#43;I=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://blog.dakatsuka.jp/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://blog.dakatsuka.jp/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://blog.dakatsuka.jp/favicon-32x32.png">
@@ -56,19 +56,7 @@
         }
 
     </style>
-</noscript>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-45923728-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script><meta property="og:title" content="Posts" />
+</noscript><meta property="og:title" content="Posts" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://blog.dakatsuka.jp/post.html" />
@@ -165,30 +153,6 @@ if (!doNotTrack) {
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">PHPで無限リストを作る
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>PHPで range(0, 10000000); とかやるとメモリ不足で死んでしまうので、無限ループするイテレータを作ってみましょう。 &lt;?php class Stream implements \Iterator { private $position; private $offset; private $limit; public function __construct($offset, $limit = null) { $this-&gt;position = $offset;...</p>
-  </div>
-  <footer class="entry-footer"><span title='2013-09-02 00:00:00 +0000 UTC'>2013/9/2</span></footer>
-  <a class="entry-link" aria-label="post link to PHPで無限リストを作る" href="https://blog.dakatsuka.jp/2013/09/02/php-infinite-list.html"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Symfony2(Doctrine2)でENUMを使うならDoctrineEnumBundleが便利
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>DoctrineEnumBundleというBundleを導入することによって、Doctrine2でMySQLのENUM型を扱うことができます...</p>
-  </div>
-  <footer class="entry-footer"><span title='2013-08-13 00:00:00 +0000 UTC'>2013/8/13</span></footer>
-  <a class="entry-link" aria-label="post link to Symfony2(Doctrine2)でENUMを使うならDoctrineEnumBundleが便利" href="https://blog.dakatsuka.jp/2013/08/13/doctrine-enum-bundle.html"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
     <h2 class="entry-hint-parent">PHPのmcrypt関数が遅すぎて辛い
     </h2>
   </header>
@@ -221,6 +185,30 @@ if (!doNotTrack) {
   </div>
   <footer class="entry-footer"><span title='2012-09-13 00:00:00 +0000 UTC'>2012/9/13</span></footer>
   <a class="entry-link" aria-label="post link to Rails3にBackbone.jsを導入する" href="https://blog.dakatsuka.jp/2012/09/13/rails-backbone-intro.html"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">OpenIndiana (Solaris) のDTraceでNode.jsをプロファイリングする
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>昨年辺りから開発を進めているNodeアプリが大変残念なパフォーマンスだったので、DTraceでプロファイリングしてボトルネックを探してみる作...</p>
+  </div>
+  <footer class="entry-footer"><span title='2012-07-17 00:00:00 +0000 UTC'>2012/7/17</span></footer>
+  <a class="entry-link" aria-label="post link to OpenIndiana (Solaris) のDTraceでNode.jsをプロファイリングする" href="https://blog.dakatsuka.jp/2012/07/17/dtrace-nodejs.html"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Rails3 &#43; unicornからRabbitMQに接続するには
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>ruby-amqpはEventMachineに依存しているので、unicorn上のRailsアプリからRabbitMQに接続する場合は少し手...</p>
+  </div>
+  <footer class="entry-footer"><span title='2012-05-14 00:00:00 +0000 UTC'>2012/5/14</span></footer>
+  <a class="entry-link" aria-label="post link to Rails3 &#43; unicornからRabbitMQに接続するには" href="https://blog.dakatsuka.jp/2012/05/14/rails3-rabbitmq.html"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

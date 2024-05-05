@@ -28,13 +28,6 @@
       <description></description>
     </item>
     <item>
-      <title>Random</title>
-      <link>https://blog.dakatsuka.jp/tags/random.html</link>
-      <pubDate>Thu, 04 Jan 2024 22:00:00 +0900</pubDate>
-      <guid>https://blog.dakatsuka.jp/tags/random.html</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Kotlin</title>
       <link>https://blog.dakatsuka.jp/tags/kotlin.html</link>
       <pubDate>Sat, 06 May 2023 17:30:00 +0900</pubDate>
@@ -67,6 +60,13 @@
       <link>https://blog.dakatsuka.jp/tags/asset.html</link>
       <pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
       <guid>https://blog.dakatsuka.jp/tags/asset.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Random</title>
+      <link>https://blog.dakatsuka.jp/tags/random.html</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      <guid>https://blog.dakatsuka.jp/tags/random.html</guid>
       <description></description>
     </item>
     <item>
@@ -151,13 +151,6 @@
       <link>https://blog.dakatsuka.jp/tags/sbt.html</link>
       <pubDate>Thu, 11 Jun 2015 00:00:00 +0000</pubDate>
       <guid>https://blog.dakatsuka.jp/tags/sbt.html</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Python</title>
-      <link>https://blog.dakatsuka.jp/tags/python.html</link>
-      <pubDate>Wed, 10 Jun 2015 00:00:00 +0000</pubDate>
-      <guid>https://blog.dakatsuka.jp/tags/python.html</guid>
       <description></description>
     </item>
     <item>

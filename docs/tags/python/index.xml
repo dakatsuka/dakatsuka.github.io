@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Python on dakatsuka&#39;s blog</title>
-    <link>https://blog.dakatsuka.jp/tags/python.html</link>
+    <link>http://localhost:1313/tags/python.html</link>
     <description>Recent content in Python on dakatsuka&#39;s blog</description>
     <image>
       <title>dakatsuka&#39;s blog</title>
-      <url>https://blog.dakatsuka.jp/images/card.png</url>
-      <link>https://blog.dakatsuka.jp/images/card.png</link>
+      <url>http://localhost:1313/images/card.png</url>
+      <link>http://localhost:1313/images/card.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Wed, 10 Jun 2015 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://blog.dakatsuka.jp/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>今年に入って生み出した糞コード</title>
-      <link>https://blog.dakatsuka.jp/2015/06/10/horrible-code.html</link>
+      <link>http://localhost:1313/2015/06/10/horrible-code.html</link>
       <pubDate>Wed, 10 Jun 2015 00:00:00 +0000</pubDate>
-      <guid>https://blog.dakatsuka.jp/2015/06/10/horrible-code.html</guid>
+      <guid>http://localhost:1313/2015/06/10/horrible-code.html</guid>
       <description>PackerのログからAMI IDを取得するコードがInvokeのタスクに書かれていた。全然書いた記憶がないのだけど（すごい忙しかったという記</description>
     </item>
   </channel>

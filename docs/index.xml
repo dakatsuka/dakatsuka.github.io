@@ -49,13 +49,6 @@
       <description>bundle install of grpc-1.60.0-x86_64-linux reports that it is incompatible with Ruby 3.3.0 during GitHub CI #35396 手元のM3 Macだと問題なくbundle installできたのでx86_64特有の問題っぽい。すでにIssu</description>
     </item>
     <item>
-      <title>2023年の振り返り</title>
-      <link>https://blog.dakatsuka.jp/2024/01/04/wrap-up-2023.html</link>
-      <pubDate>Thu, 04 Jan 2024 22:00:00 +0900</pubDate>
-      <guid>https://blog.dakatsuka.jp/2024/01/04/wrap-up-2023.html</guid>
-      <description>2023年は病に振り回された年だった。 8月、ついにといって良いのかは分からないがコロナに感染。猛烈に喉が痛くなり、5日間ほど発熱で寝込んでし</description>
-    </item>
-    <item>
       <title>Kotlin &#43; Gradleで別パッケージの src/test/resources を参照する方法</title>
       <link>https://blog.dakatsuka.jp/2023/05/06/kotlin-src-test.html</link>
       <pubDate>Sat, 06 May 2023 17:30:00 +0900</pubDate>
@@ -229,13 +222,6 @@
       <pubDate>Thu, 11 Jun 2015 00:00:00 +0000</pubDate>
       <guid>https://blog.dakatsuka.jp/2015/06/11/play-multiple-project.html</guid>
       <description>ドメイン層（普通のScalaプロジェクト）とアプリケーション層（Play）でsbtプロジェクトを分けたい場合は、sbtのマルチプロジェクトを</description>
-    </item>
-    <item>
-      <title>今年に入って生み出した糞コード</title>
-      <link>https://blog.dakatsuka.jp/2015/06/10/horrible-code.html</link>
-      <pubDate>Wed, 10 Jun 2015 00:00:00 +0000</pubDate>
-      <guid>https://blog.dakatsuka.jp/2015/06/10/horrible-code.html</guid>
-      <description>PackerのログからAMI IDを取得するコードがInvokeのタスクに書かれていた。全然書いた記憶がないのだけど（すごい忙しかったという記</description>
     </item>
     <item>
       <title>sbtでAmazon S3をMavenリポジトリとして扱う方法</title>
@@ -840,11 +826,11 @@
       <description>サブで使用しているノートPC（NEC LaVie G Type J）にUbuntu 7.04βを入れたのでそのメモ。 マシンスペックはこんな感じです。二世代ほど前のB</description>
     </item>
     <item>
-      <title>About</title>
+      <title>About me</title>
       <link>https://blog.dakatsuka.jp/about.html</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://blog.dakatsuka.jp/about.html</guid>
-      <description>Webシステムの開発やプログラミング周りの話を中心にブログを書いています。更新ペースはあまり安定していませんが、2007年から細々続けていま</description>
+      <description>Summary Dai AKatsuka I am a software engineer working at TRUSTDOCK Inc, specializing in server-side programming, architecture design, and infrastructure building. I am interested in functional programming, theory of computation, abstract algebra, and software engineering such as distributed architecture and domain-driven design. My avatar icon was created by @hajipion. Engineering skills Programming Languages Scala Ruby PHP Go JavaScript (Node.js) Infrastructures On-premises Amazon Web Services Google Cloud さくらの</description>
     </item>
   </channel>
 </rss>

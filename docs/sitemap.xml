@@ -32,12 +32,6 @@
     <loc>https://blog.dakatsuka.jp/tags/ruby.html</loc>
     <lastmod>2024-01-06T20:00:00+09:00</lastmod>
   </url><url>
-    <loc>https://blog.dakatsuka.jp/2024/01/04/wrap-up-2023.html</loc>
-    <lastmod>2024-01-04T22:00:00+09:00</lastmod>
-  </url><url>
-    <loc>https://blog.dakatsuka.jp/tags/random.html</loc>
-    <lastmod>2024-01-04T22:00:00+09:00</lastmod>
-  </url><url>
     <loc>https://blog.dakatsuka.jp/categories.html</loc>
     <lastmod>2023-05-06T17:30:00+09:00</lastmod>
   </url><url>
@@ -81,6 +75,9 @@
     <lastmod>2017-01-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/2017/01/01/bought-in-2016.html</loc>
+    <lastmod>2017-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.dakatsuka.jp/tags/random.html</loc>
     <lastmod>2017-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/2016/12/05/akka-http-authentication.html</loc>
@@ -172,12 +169,6 @@
   </url><url>
     <loc>https://blog.dakatsuka.jp/tags/sbt.html</loc>
     <lastmod>2015-06-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.dakatsuka.jp/tags/python.html</loc>
-    <lastmod>2015-06-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.dakatsuka.jp/2015/06/10/horrible-code.html</loc>
-    <lastmod>2015-06-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://blog.dakatsuka.jp/tags/aws.html</loc>
     <lastmod>2015-05-16T00:00:00+00:00</lastmod>

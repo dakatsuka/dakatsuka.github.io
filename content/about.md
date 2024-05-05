@@ -1,35 +1,59 @@
 ---
-title: About
+title: About me
 ---
 
-Webシステムの開発やプログラミング周りの話を中心にブログを書いています。更新ペースはあまり安定していませんが、2007年から細々続けています。
-
-## プロフィール
-
+## Summary
 {{<figure align=center src="/images/logo.png" width="200" height="200" title="Dai AKatsuka">}}
 
-ソフトウェアエンジニアのお仕事をしています。バックエンドシステムの設計や開発が専門です。証券システムやソーシャルゲームを作ったりしていました。
+I am a software engineer working at [TRUSTDOCK Inc](https://biz.trustdock.io/), specializing in server-side programming, architecture design, and infrastructure building. 
 
-Scala, Ruby, PHP, JavaScript, Go辺りがちょっと分かります。Haskell, OCaml, Rustも趣味で弄っていますが全然わかりません。
+I am interested in functional programming, theory of computation, abstract algebra, and software engineering such as distributed architecture and domain-driven design.
 
-アイコンは [@hajipion](https://twitter.com/hajipion) に作っていただきました。
+My avatar icon was created by [@hajipion](https://twitter.com/hajipion).
 
-## 問い合わせ
+## Engineering skills
+### Programming Languages
+- Scala
+- Ruby
+- PHP
+- Go
+- JavaScript (Node.js)
 
-御用の方は下記アカウントまたはメールアドレスまでお問い合わせください。
+### Infrastructures
+- On-premises
+- Amazon Web Services
+- Google Cloud
+- さくらのクラウド
 
+### Other
+- Git
+- Linux
+- Akka
+- Infrastructure as Code
+
+## Experiences
+- IST Inc. Full-time software engineer, Dec. 2004 ～ Jun. 2011
+  - Development, operations, and maitenance of portal site and recruitment service
+- Dazzle Inc. Jun. Director CTO, 2011 ～ Feb. 2013, Jul. 2014 ～ Nov. 2017
+  - Development, operations, and maitenance of real-time communication game for smartphone
+  - Development of growth hack service for VR products
+- Altplus Inc. Full-time software engineer, Mar. 2013 ～ Nov. 2013
+  - Development of real-time communication game for browsers
+- FOLIO Inc. Full-time software engineer, Dec. 2017 ～ Feb. 2023
+  - Development, operations, and maintenance of securities systems
+  - Development, operations, and maintenance of customer management systems
+- SmartShare Inc. Full-time software engineer, Mar. 2023 ～ Nov. 2023
+  - Manager and architect in system integration team
+- TRUSTDOCK Inc. Full-time software engineer, Dec. 2023 ～ Present
+  - Development, operations, and maintenance of eKYC systems
+  - Improving DevOps
+
+## Contacts
 * [d.akatsuka@gmail.com](mailto:d.akatsuka@gmail.com)
-* [Twitter](http://twitter.com/d_akatsuka)
+* [X(Twitter)](http://twitter.com/d_akatsuka)
 * [Facebook](http://facebook.com/dai.akatsuka)
 * [GitHub](http://github.com/dakatsuka)
 
+## License
 
-## ライセンス
-
-このサイト内の全ての文章及び画像は、ページ内・ファイル内にライセンス情報が明記されていない限り[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.ja)でライセンスされています
-
-## プライバシーポリシー
-
-### 訪問者の追跡
-
-当サイトでは、[Google アナリティクス](https://www.google.com/analytics/)を利用しています。アナリティクスはデータの収集のためにCookieを使用しています。このデータは匿名で収集されており、個人を特定するものではありません。また、データの収集を完全に無効化するには[Google アナリティクス オプトアウト アドオン](https://tools.google.com/dlpage/gaoptout)をご使用のブラウザにインストールする必要があります。
+All text and images on this site are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.ja) unless otherwise indicated with license information within the page or file.
