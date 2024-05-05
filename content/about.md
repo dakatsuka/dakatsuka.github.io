@@ -34,7 +34,7 @@ My avatar icon was created by [@hajipion](https://twitter.com/hajipion).
 ## Experiences
 - IST Inc. Full-time software engineer, Dec. 2004 ～ Jun. 2011
   - Development, operations, and maitenance of portal site and recruitment service
-- Dazzle Inc. Jun. Director CTO, 2011 ～ Feb. 2013, Jul. 2014 ～ Nov. 2017
+- Dazzle Inc. Director CTO, Jun. 2011 ～ Feb. 2013, Jul. 2014 ～ Nov. 2017
   - Development, operations, and maitenance of real-time communication game for smartphone
   - Development of growth hack service for VR products
 - Altplus Inc. Full-time software engineer, Mar. 2013 ～ Nov. 2013
